@@ -145,8 +145,8 @@ names(colData(sp))
 # Visualization of some examples
 # x and y from above
 ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1.5)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1.5)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
 ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
 ```
 ```{r plottingSpotlightVisium, echo=FALSE}
