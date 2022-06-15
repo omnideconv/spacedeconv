@@ -155,6 +155,82 @@ ggspavis::plotVisium(sp, x_coord = x, y_coord = y, fill="NK.cell", palette = c("
 # here white means a higher NK amount, note the red circle in the middle
 ```
 
+## RCTD (spacexr)
+
+```{r rctdsetup}
+library(spacexr)
+sc2 <- sc # using a copy in this case because we are removing cells
+
+# first subset the sc reference, every cell type needs to be present more than 25 times!!!!!
+cellTable <- as.data.frame(table(sc2[["cell_ontology_class"]])) # table of all factors and their count
+cellTable <- cellTable[cellTable$Freq>=25,] # drop all below 25
+cellsToKeep <- as.character(cellTable$Var1) # character vector for subsetting
+
+sc2 <- sc2[, sc2[["cell_ontology_class"]] %in% cellsToKeep] # subset cells (columns)
+sc2[["cell_ontology_class"]] <- droplevels(sc2[["cell_ontology_class"]]) # drop zero levels in factor
+
+```
+
+#### Construct Single Cell Reference
+```{r rctdSC}
+# counts as dgC 
+counts <- as(counts(sc2), "dgCMatrix")  # convert from delayed matrix to dgC
+
+# named cell type factor
+cell_types <- colData(sc2)[, "cell_ontology_class"] # get cell type factor
+names(cell_types) <- rownames(colData(sc2)) # name it!
+cell_types <- as.factor(cell_types) # ensure factor
+
+# named Umi Count
+nUMI <- colData(sc2)[, "n_counts"]
+names(nUMI) <- rownames(colData(sc2)) # name it!
+
+# create Reference
+reference <- spacexr::Reference(counts, cell_types, nUMI)
+
+```
+
+#### Construct Spatial Dataset
+```{r rctdSP}
+coords <- SpatialExperiment::spatialCoords(sp) # spatial coordinates
+coords <- as.data.frame(coords)
+counts <- counts(sp) # counts
+nUMI <- colData(sp)[, "nCounts"] 
+# all three above are already named but that does not have to be the case
+
+# in this specific case we must make gene names unique! There are duplicates
+rownames(counts) <- make.names(rownames(counts), unique=T)
+
+puck <- spacexr::SpatialRNA(coords, counts, nUMI)
+```
+
+#### Create RCTD Object and run
+```{r rctdRUN, echo=TRUE, message=FALSE, error=FALSE}
+RCTDObject <- spacexr::create.RCTD(puck, reference, max_cores = 3, UMI_min = 0) # NOTE UMI_min = 0!!!!
+RCTDObject <- spacexr::run.RCTD(RCTDObject)
+
+results <- RCTDObject@results
+norm_weights <- spacexr::normalize_weights(results$weights) # normalize the weights to sum to one
+norm_weights <- as.matrix(norm_weights)
+```
+
+
+#### Plot Results
+```{r rctdResults, echo=FALSE}
+colnames(norm_weights) <- make.names(colnames(norm_weights))
+
+for (i in colnames(norm_weights)){ # each separately
+  sp[[i]] <- norm_weights[, i] 
+}
+
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+```
+
+
+
 
 
 ## Cell2location
