@@ -1,0 +1,34 @@
+library("Giotto")
+
+
+path_file <- "/home/czackl/Documents/DataSpaceDeconv/BREAST_CANCER_BLOCK_A_SECTION_1/"
+path_result <- "/home/czackl/Documents/DataSpaceDeconv/"
+path_python <- reticulate::py_config()$python # python path
+
+
+# create Giotto Instructions
+instrs <- Giotto::createGiottoInstructions(save_dir = path_result, 
+                                           save_plot = TRUE, 
+                                           show_plot = TRUE)
+
+# create Giotto Object
+visium <- Giotto::createGiottoVisiumObject(visium_dir = path_file, expr_data = "raw", 
+                                     png_name = "tissue_lowres_image.png", instructions = instrs)
+
+# position image properly
+visium <- updateGiottoImage(visium, image_name="image", xmax_adj = 3500, xmin_adj = 3000, ymax_adj = 4800, ymin_adj = 2000)
+
+# use only in_tissue cells
+metadata <- pDataDT(visium)
+in_tissue_bc <- metadata[in_tissue==1]$cell_ID
+visium <- subsetGiotto(visium, cell_ids = in_tissue_bc)
+
+visium <- normalizeGiotto(visium)
+
+# create Reference Matrix
+mat <- counts(sc)
+cell_types <- as.vector(sc$cell_ontology_class)
+signature <- Giotto::makeSignMatrixDWLSfromMatrix(mat,   sign_gene = rownames(sc), cell_type_vector = cell_types)
+
+
+deconvolution <- runDWLSDeconv(visium,sign_matrix =  signature)

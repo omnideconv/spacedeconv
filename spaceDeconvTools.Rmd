@@ -239,7 +239,7 @@ NOTE: This omnideconv example worked but i had some errors with different method
 library(omnideconv)
 ```
 
-## Single Cell Reference
+### Single Cell Reference
 ```{r omnideconvSignature, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
 # works directly with the singleCellExperiment
 batch_ids <- colData(sc)$mouse.id # batch id not cell id!!!!
@@ -247,7 +247,7 @@ batch_ids <- colData(sc)$mouse.id # batch id not cell id!!!!
 signature <- omnideconv::build_model(sc, method = "scdc", cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids, verbose=TRUE) 
 ```
 
-## Deconvolution
+### Deconvolution
 ```{r omnideconvDeconvolution, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
 # this spatial dataset has duplicate rownames
 rownames(sp) <- make.names(rownames(sp), unique = T)
@@ -277,7 +277,7 @@ ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
 
 Note: Immundeconv requires HGNC Symbols. This might not be the case for all datasets so we should add a note/ give options to translate the names???
 
-```{r}
+```{r echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
 library(immunedeconv)
 ```
 ```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
@@ -309,8 +309,8 @@ for (i in colnames(deconvolution)){ # each separately
 }
 
 ggspavis::plotSpots(sp, x, y, annotate = "B.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=2)
 ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
 ```
 
