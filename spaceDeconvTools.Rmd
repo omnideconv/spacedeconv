@@ -229,6 +229,92 @@ ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epit
 ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
 ```
 
+## omnideconv
+
+Omnideconv does take singleCellExperiments as input! The bulk needs to be a matrix and can be extracted by counts(sp). batch IDs can also be extracted from the singleCellExperiment.
+
+NOTE: This omnideconv example worked but i had some errors with different methods. This is to showcase the overall omnideconv usage in spaceDeconv.
+
+```{r}
+library(omnideconv)
+```
+
+## Single Cell Reference
+```{r omnideconvSignature, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
+# works directly with the singleCellExperiment
+batch_ids <- colData(sc)$mouse.id # batch id not cell id!!!!
+
+signature <- omnideconv::build_model(sc, method = "scdc", cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids, verbose=TRUE) 
+```
+
+## Deconvolution
+```{r omnideconvDeconvolution, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
+# this spatial dataset has duplicate rownames
+rownames(sp) <- make.names(rownames(sp), unique = T)
+
+#extract bulk matrix
+bulk <- counts(sp) # could be different!
+
+# deconvolute
+deconvolution <- omnideconv::deconvolute(counts(sp), signature=signature, method="scdc", verbose=TRUE, single_cell_object=sc, cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids)
+
+```
+
+```{r omnidconvAddResult, echo=FALSE}
+colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
+
+for (i in colnames(deconvolution)){ # each separately
+  sp[[i]] <- deconvolution[, i] 
+}
+
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+```
+
+## Immunedeconv
+
+Note: Immundeconv requires HGNC Symbols. This might not be the case for all datasets so we should add a note/ give options to translate the names???
+
+```{r}
+library(immunedeconv)
+```
+```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
+# needs to be a real matric or Data Frame
+bulk <- counts(sp)
+bulk <- as.matrix(bulk) # make.names already called
+
+# HGNC Symbols! In this case just uppercase is enough
+rownames(bulk) <- toupper(rownames(bulk))
+
+deconvolution <- immunedeconv::deconvolute(bulk, method="epic")
+```
+
+```{r}
+# move first column to colnames
+deconvolution <- as.matrix(deconvolution)
+rownames <- deconvolution[, 1]
+deconvolution <- deconvolution[, -1]
+deconvolution <- apply(deconvolution, 2, as.numeric) # turn into numeric
+rownames(deconvolution) <- rownames
+
+# transpose
+deconvolution <- t(deconvolution)
+
+colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
+
+for (i in colnames(deconvolution)){ # each separately
+  sp[[i]] <- deconvolution[, i] 
+}
+
+ggspavis::plotSpots(sp, x, y, annotate = "B.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
+```
+
+
 
 
 
