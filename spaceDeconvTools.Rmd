@@ -256,7 +256,7 @@ rownames(sp) <- make.names(rownames(sp), unique = T)
 bulk <- counts(sp) # could be different!
 
 # deconvolute
-deconvolution <- omnideconv::deconvolute(counts(sp), signature=signature, method="scdc", verbose=TRUE, single_cell_object=sc, cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids)
+deconvolution <- omnideconv::deconvolute(bulk, signature=signature, method="scdc", verbose=TRUE, single_cell_object=sc, cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids)
 
 ```
 
@@ -280,6 +280,7 @@ Note: Immundeconv requires HGNC Symbols. This might not be the case for all data
 ```{r echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
 library(immunedeconv)
 ```
+
 ```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
 # needs to be a real matric or Data Frame
 bulk <- counts(sp)
@@ -307,7 +308,8 @@ colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the wh
 for (i in colnames(deconvolution)){ # each separately
   sp[[i]] <- deconvolution[, i] 
 }
-
+```
+```{r echo=FALSE}
 ggspavis::plotSpots(sp, x, y, annotate = "B.cell", size=2)
 ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size=2)
 ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=2)
