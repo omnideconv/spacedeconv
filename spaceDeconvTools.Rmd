@@ -331,6 +331,8 @@ colnames(spCoord) <- c("x", "y") # need to be x and y
 scExp <- counts(sc) %>% as("dgCMatrix") # sc expression matrix
 scMeta <- data.frame(cellType = colData(sc)$cell_ontology_class, sampleInfo=colData(sc)$mouse.id, row.names = colnames(sc)) # annotation
 
+cts <- as.vector(unique(sc$cell_ontology_class))
+
 cardObj <- createCARDObject(sc_count = scExp, sc_meta = scMeta, spatial_count = spExp, spatial_location = spCoord, sample.varname = "sampleInfo", ct.varname = "cellType", ct.select = cts, minCountSpot = 0, minCountGene = 0) # last two set to zero that we get results for all spots
 
 cardObj <- CARD_deconvolution(cardObj)
