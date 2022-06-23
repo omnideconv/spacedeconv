@@ -25,9 +25,9 @@ library(SPOTlight)
 ```
 ```{r python, echo=TRUE}
 # setup python
-reticulate::use_condaenv("cell2loc_env")
-scanpy <- reticulate::import("scanpy")
-reticulate::py_available()
+#reticulate::use_condaenv("cell2loc_env")
+#scanpy <- reticulate::import("scanpy")
+#reticulate::py_available()
 ```
 
 
@@ -206,7 +206,7 @@ puck <- spacexr::SpatialRNA(coords, counts, nUMI)
 
 #### Create RCTD Object and run
 ```{r rctdRUN, echo=TRUE, message=FALSE, error=FALSE}
-RCTDObject <- spacexr::create.RCTD(puck, reference, max_cores = 3, UMI_min = 0) # NOTE UMI_min = 0!!!!
+RCTDObject <- spacexr::create.RCTD(puck, reference, max_cores = 20, UMI_min = 0) # NOTE UMI_min = 0!!!!
 RCTDObject <- spacexr::run.RCTD(RCTDObject)
 
 results <- RCTDObject@results
@@ -316,6 +316,38 @@ ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=2)
 ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
 ```
 
+
+## CARD 
+```{r}
+library(CARD)
+```
+
+
+```{r, echo=TRUE, message=FALSE, error=FALSE, warning=FALSE}
+spExp <- counts(sp) # sp expression
+spCoord <- SpatialExperiment::spatialCoords(sp) %>% as.data.frame() # coords
+colnames(spCoord) <- c("x", "y") # need to be x and y
+
+scExp <- counts(sc) %>% as("dgCMatrix") # sc expression matrix
+scMeta <- data.frame(cellType = colData(sc)$cell_ontology_class, sampleInfo=colData(sc)$mouse.id, row.names = colnames(sc)) # annotation
+
+cardObj <- createCARDObject(sc_count = scExp, sc_meta = scMeta, spatial_count = spExp, spatial_location = spCoord, sample.varname = "sampleInfo", ct.varname = "cellType", ct.select = cts, minCountSpot = 0, minCountGene = 0) # last two set to zero that we get results for all spots
+
+cardObj <- CARD_deconvolution(cardObj)
+```
+```{r echo=FALSE, error=FALSE, message=FALSE}
+deconvolution <- cardObj@Proportion_CARD
+colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
+
+for (i in colnames(deconvolution)){ # each separately
+  sp[[i]] <- deconvolution[, i] 
+}
+
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+```
 
 
 

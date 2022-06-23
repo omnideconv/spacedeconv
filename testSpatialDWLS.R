@@ -1,8 +1,9 @@
 library("Giotto")
+library("SingleCellExperiment")
 
 
-path_file <- "/home/czackl/Documents/DataSpaceDeconv/BREAST_CANCER_BLOCK_A_SECTION_1/"
-path_result <- "/home/czackl/Documents/DataSpaceDeconv/"
+path_file <- "/home/czackl/Dokumente/exchange/BREAST_CANCER_BLOCK_A_SECTION_1"
+path_result <- "/home/czackl/Dokumente/exchange/"
 #path_python <- reticulate::py_config()$python # python path
 
 
@@ -26,19 +27,22 @@ visium <- subsetGiotto(visium, cell_ids = in_tissue_bc)
 visium <- normalizeGiotto(visium)
 
 # create Reference Matrix
+
 sc <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues= "Kidney")$Kidney
 
 mat <- counts(sc)
 cell_types <- as.vector(sc$cell_ontology_class)
 signature <- Giotto::makeSignMatrixDWLSfromMatrix(mat,   sign_gene = rownames(sc), cell_type_vector = cell_types)
+signature <- signature[1:500, ] # subset for performance
 
 
 library("org.Hs.eg.db")
 ids <- mapIds(org.Hs.eg.db, keys= toupper(rownames(signature)), keytype = "SYMBOL", column = "ENSEMBL" ) # translate symbol to ensemblID
 rownames(signature) <- ids  # set rownames
-signature <- signature[!is.na(rownames(signature)),] # remove all unmapped genes
+signature <- signature[!is.na(rownames(signature)),] # remove all unmapped genes, is there a better way to do this?
 
 
+head(signature)
 
 
 visium <- runHyperGeometricEnrich(visium, signature)
@@ -50,4 +54,8 @@ visium <- runPCA(visium)
 visium <- createNearestNetwork(visium)
 visium <- doLeidenCluster(visium, name = "leiden_clus")
 
-deconvolution <- runDWLSDeconv(visium,sign_matrix =  signature)
+message("Started Deconvolution")
+
+deconvolution <- runDWLSDeconv(visium, sign_matrix =  signature, return_gobject = FALSE)
+
+saveRDS(deconvolution, "/home/czackl/Dokumente/exchange/result.rds")
