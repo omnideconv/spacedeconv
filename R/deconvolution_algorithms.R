@@ -1,7 +1,7 @@
 #' List of supported deconvolution methods
 #' @export
 #'
-deconvolution_methods <- c("RCTD" = "rctd")
+deconvolution_methods <- c("RCTD" = "rctd", "DWLS" = "dwls")
 
 
 
@@ -35,6 +35,9 @@ deconvolute <- function(spatial_object, single_cell_object, cell_type_col = "cel
   deconv <- switch(method,
     rctd = {
       deconvolute_rctd(...)
+    },
+    dwls = {
+      deconvolute_omnideconv(method="dwls", ...)
     }
   )
   return(deconv)

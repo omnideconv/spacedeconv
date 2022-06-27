@@ -12,3 +12,5 @@ RoxygenNote: 7.2.0
 Imports: 
     spacexr,
     SpatialExperiment
+Suggests: 
+    omnideconv
