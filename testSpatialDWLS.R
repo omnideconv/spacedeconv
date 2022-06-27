@@ -18,8 +18,6 @@ instrs <- Giotto::createGiottoInstructions(save_dir = path_result,
 visium <- Giotto::createGiottoVisiumObject(visium_dir = path_file, expr_data = "raw", 
                                      png_name = "tissue_lowres_image.png", instructions = instrs)
 
-# optional filtering?????
-visium <- filterGiotto(visium) # remove all zero genes
 
 # position image properly
 visium <- updateGiottoImage(visium, image_name="image", xmax_adj = 3500, xmin_adj = 3000, ymax_adj = 4800, ymin_adj = 2000)
@@ -28,6 +26,10 @@ visium <- updateGiottoImage(visium, image_name="image", xmax_adj = 3500, xmin_ad
 metadata <- pDataDT(visium)
 in_tissue_bc <- metadata[in_tissue==1]$cell_ID
 visium <- subsetGiotto(visium, cell_ids = in_tissue_bc)
+
+# optional filtering?????
+visium <- filterGiotto(visium, expression_threshold = 1, verbose = T) # remove all zero genes
+
 
 visium <- normalizeGiotto(visium)
 
@@ -38,7 +40,7 @@ sc <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues= "Kidney")$Kidney
 mat <- counts(sc)
 cell_types <- as.vector(sc$cell_ontology_class)
 signature <- Giotto::makeSignMatrixDWLSfromMatrix(mat,   sign_gene = rownames(sc), cell_type_vector = cell_types)
-signature <- signature[1:500, ] # subset for performance
+#signature <- signature[1:100, ] # subset for performance
 signature <- signature[rowSums(signature)!=0, ] # remove all zero genes?????
 
 
@@ -49,10 +51,10 @@ signature <- signature[!is.na(rownames(signature)),] # remove all unmapped genes
 signature <- signature[rowSums(signature)!=0, ] # remove all zero genes, eigen error!
 
 
-head(signature)
+#head(signature)
 
 
-visium <- runHyperGeometricEnrich(visium, signature)
+# visium <- runHyperGeometricEnrich(visium, signature)
 
 
 # i dont know why but we need to cluster
@@ -63,6 +65,6 @@ visium <- doLeidenCluster(visium, name = "leiden_clus")
 
 message("Started Deconvolution")
 
-deconvolution <- runDWLSDeconv(visium, sign_matrix =  signature, return_gobject = FALSE)
+deconvolution <- runDWLSDeconv(visium, sign_matrix =  signature, n_cell = 10, return_gobject = FALSE)
 
 saveRDS(deconvolution, "/home/czackl/Dokumente/exchange/result2.rds")
