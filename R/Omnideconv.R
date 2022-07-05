@@ -1,3 +1,7 @@
+########################################################################
+# This might be deleted as it is just a useless wrapper for omnideconv #
+########################################################################
+
 #' Deconvolute Omnideconv
 #' @param bulk_gene_expression A matrix or dataframe with the bulk data. Rows are genes, columns are spots.
 #' @param signature A signature matrix
@@ -11,19 +15,19 @@
 
 # note, if we decide to treat everything as an object internally we can remove celL_type_annotations from here
 deconvolute_omnideconv <- function(bulk_gene_expression, signature, method = NULL, single_cell_object = NULL, cell_type_annotations = NULL, batch_ids = NULL, cell_type_column_name = NULL, verbose = FALSE, ...) {
-  if (is.null(bulk_gene_expression)){
+  if (is.null(bulk_gene_expression)) {
     stop("Parameter 'bulk_gene_expression' is missing or null, but is required.")
   }
 
-  if (is.null(signature)){
+  if (is.null(signature)) {
     stop("Parameter 'signature' is missing or null, but is required.")
   }
 
-  if (is.null(method)){
+  if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required.")
   }
 
-  if (!(method %in% omnideconv::deconvolution_methods)){
+  if (!(method %in% omnideconv::deconvolution_methods)) {
     stop("Method not supported by omnideconv")
   }
 

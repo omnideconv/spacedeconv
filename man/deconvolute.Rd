@@ -6,20 +6,29 @@
 \usage{
 deconvolute(
   spatial_object,
+  signature = NULL,
   single_cell_object,
   cell_type_col = "cell_ontology_class",
   method = NULL,
+  return_object = TRUE,
+  verbose = FALSE,
   ...
 )
 }
 \arguments{
 \item{spatial_object}{A SpatialExperiment}
 
+\item{signature}{Gene Expression Signature}
+
 \item{single_cell_object}{A SingleCellExperiment}
 
 \item{cell_type_col}{Column name of the single_cell_object where the cell type can be found}
 
 \item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
+
+\item{return_object}{Return an Object or result Table, TRUE = Object}
+
+\item{verbose}{display more detailed information}
 
 \item{...}{Further parameters passed to the selected deconvolution method}
 }
