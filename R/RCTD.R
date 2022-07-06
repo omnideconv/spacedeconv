@@ -1,34 +1,63 @@
-#' RCTD Deconvolution
-#' @param sc_counts (dgC) matrix of single cell counts
-#' @param cell_types Named factor of cell types for the sc_counts matrix
+#' RCTD Deconvolution, but better
+#' @param sce SingleCellExperiment
+#' @param cell_type_col Column containting cell type annotation
+#' @param spe SpatialExperiment
 #' @param n_umi_sc (optional) named list of umi counts for each cell
-#' @param spatial_counts (dgC) matrix of spatial counts
-#' @param spatial_coords data frame containing spatial coordinates
 #' @param n_umi_sp (optional) named list of umi counts for each spot
-#' @param n_cores Number of CPU cores to use for the calculation
+#' @param n_cores Number of CPU cores to use for the calculation, NULL = use all cores
 #' @export
 
-deconvolute_rctd <- function(sc_counts, cell_types, n_umi_sc = NULL, spatial_counts, spatial_coords, n_umi_sp = NULL, n_cores = 20) {
-  if (is.null(sc_counts)) {
-    stop("Parameter 'sc_counts' is missing or null, but is required.")
+deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp = NULL, n_cores = NULL) {
+  if (is.null(sce)) {
+    stop("Parameter 'sce' is missing or null, but is required.")
   }
 
-  if (is.null(cell_types)) {
-    stop("Parameter 'cell_types' is missing or null, but is required.")
+  if (is.null(cell_type_col)) {
+    stop("Parameter 'cell_type_col' is missing or null, but is required.")
   }
 
-  if (is.null(spatial_counts)) {
-    stop("Parameter 'spatial_counts' is missing or null, but is required.")
-  }
-
-  if (is.null(spatial_coords)) {
-    stop("Parameter 'spatial_coords' is missing or null, but is required.")
-  }
-  if (n_cores < 1) {
+  if (!is.null(n_cores) && n_cores < 1) {
     stop("Parameter 'n_cores' needs to be a positive integer")
   }
 
-  # create reference
+  if (!checkCol(sce, cell_type_col)){
+    stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
+  }
+
+  message("Preparing Data for RCTD")
+
+  # sc counts
+  sc_counts <- SingleCellExperiment::counts(sce)
+  sc_counts <- methods::as(sc_counts, "dgCMatrix") # ensure datatype
+  # in this specific case we must make gene names unique! There are duplicates
+
+
+  # named cell type factor
+  cell_types <- SingleCellExperiment::colData(sce)[, cell_type_col] # get cell type factor
+  names(cell_types) <- rownames(colData(sce)) # name it
+  cell_types <- as.factor(cell_types) # ensure factor
+
+  # spatial_counts
+  spatial_counts <- SingleCellExperiment::counts(spe)
+  spatial_counts <- methods::as(spatial_counts, "dgCMatrix")
+  # in this specific case we must make gene names unique! There are duplicates
+  rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique=T)
+
+  # spatial coords
+  spatial_coords <- SpatialExperiment::spatialCoords(spe)
+  spatial_coords <- as.data.frame(spatial_coords) # ensure dataframe for RCTD
+
+  # n_umi_sc Optional!!!
+  # n_umi_sp, optional!!!
+
+
+  # n_cores, if null = max available
+  if (is.null(n_cores)){
+    n_cores = parallel::detectCores()
+  }
+
+
+  # create reference object
   reference <- spacexr::Reference(
     counts = sc_counts,
     cell_types = cell_types,
@@ -46,8 +75,10 @@ deconvolute_rctd <- function(sc_counts, cell_types, n_umi_sc = NULL, spatial_cou
   rctd_object <- spacexr::create.RCTD(
     spatialRNA = puck,
     reference = reference,
-    max_cores = parallel::detectCores() - 1
+    max_cores = n_cores
   )
+
+  message ("Starting RCTD Deconvolution")
 
   # perform deconvolution
   rctd_object <- spacexr::run.RCTD(rctd_object)
@@ -59,3 +90,65 @@ deconvolute_rctd <- function(sc_counts, cell_types, n_umi_sc = NULL, spatial_cou
 
   return(normalized_results)
 }
+
+
+# #' RCTD Deconvolution
+# #' @param sc_counts (dgC) matrix of single cell counts
+# #' @param cell_types Named factor of cell types for the sc_counts matrix
+# #' @param n_umi_sc (optional) named list of umi counts for each cell
+# #' @param spatial_counts (dgC) matrix of spatial counts
+# #' @param spatial_coords data frame containing spatial coordinates
+# #' @param n_umi_sp (optional) named list of umi counts for each spot
+# #' @param n_cores Number of CPU cores to use for the calculation
+# #' @export
+# # deconvolute_rctd <- function(sc_counts, cell_types, n_umi_sc = NULL, spatial_counts, spatial_coords, n_umi_sp = NULL, n_cores = 20) {
+#   if (is.null(sc_counts)) {
+#     stop("Parameter 'sc_counts' is missing or null, but is required.")
+#   }
+#
+#   if (is.null(cell_types)) {
+#     stop("Parameter 'cell_types' is missing or null, but is required.")
+#   }
+#
+#   if (is.null(spatial_counts)) {
+#     stop("Parameter 'spatial_counts' is missing or null, but is required.")
+#   }
+#
+#   if (is.null(spatial_coords)) {
+#     stop("Parameter 'spatial_coords' is missing or null, but is required.")
+#   }
+#   if (n_cores < 1) {
+#     stop("Parameter 'n_cores' needs to be a positive integer")
+#   }
+#
+#   # create reference object
+#   reference <- spacexr::Reference(
+#     counts = sc_counts,
+#     cell_types = cell_types,
+#     nUMI = n_umi_sc
+#   )
+#
+#   # create spatial dataset
+#   puck <- spacexr::SpatialRNA(
+#     coords = spatial_coords,
+#     counts = spatial_counts,
+#     nUMI = n_umi_sp
+#   )
+#
+#   # create rctd dataset
+#   rctd_object <- spacexr::create.RCTD(
+#     spatialRNA = puck,
+#     reference = reference,
+#     max_cores = parallel::detectCores() - 1
+#   )
+#
+#   # perform deconvolution
+#   rctd_object <- spacexr::run.RCTD(rctd_object)
+#
+#   # manage results
+#   results <- rctd_object@results
+#   normalized_results <- spacexr::normalize_weights(results$weights)
+#   normalized_results <- as.matrix(normalized_results)
+#
+#   return(normalized_results)
+# }

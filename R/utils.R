@@ -16,3 +16,9 @@ getMatricesFromSCE <- function(single_cell_object, cell_type_col = "cell_ontolog
 
   return(list(counts = counts, cell_type_annotation = cell_type_annotation))
 }
+
+#' Check if Column exists in object
+
+checkCol <- function(object, column){
+  return (column %in% names(colData(object)))
+}
