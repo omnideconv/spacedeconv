@@ -17,4 +17,26 @@ Imports:
     SpatialExperiment
 Suggests: 
     spacexr,
-    omnideconv
+    omnideconv,
+    BisqueRNA,
+    bseqsc,
+    CDSeq,
+    devtools,
+    DWLS,
+    MOMF,
+    MuSiC,
+    pkgdown,
+    reticulate,
+    rmarkdown,
+    scBio,
+    SCDC,
+    uuid
+Remotes:
+    amitfrish/scBio,
+    grst/MOMF,
+    grst/SCDC,
+    PelzKo/CDSeq_R_Package,
+    PelzKo/dwls,
+    shenorrlab/bseqsc,
+    xuranw/MuSiC
+
