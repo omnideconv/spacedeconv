@@ -5,19 +5,18 @@
 \title{Deconvolute Omnideconv}
 \usage{
 deconvolute_omnideconv(
-  bulk_gene_expression,
+  spe,
   signature,
   method = NULL,
   single_cell_object = NULL,
-  cell_type_annotations = NULL,
+  cell_type_col = "cell_ontology_class",
   batch_ids = NULL,
-  cell_type_column_name = NULL,
   verbose = FALSE,
   ...
 )
 }
 \arguments{
-\item{bulk_gene_expression}{A matrix or dataframe with the bulk data. Rows are genes, columns are spots.}
+\item{spe}{SpatialExperiment}
 
 \item{signature}{A signature matrix}
 
@@ -25,11 +24,9 @@ deconvolute_omnideconv(
 
 \item{single_cell_object}{Needed for MOMF and Bisque, either a matrix with cell type annotations in the cell_type_annotations parameter or a singleCellExperiment / AnnData where the cell_type_column_name specifies the corresponding column where the cell type annotation is located in the object}
 
-\item{cell_type_annotations}{Vector of cell type annotations, required if single_cell_object is a matrix}
+\item{cell_type_col}{column name of single_cell_object where cell type information is found}
 
 \item{batch_ids}{A vector of the ids of samples or individuals}
-
-\item{cell_type_column_name}{Required if single_cell_object is a SingleCellExperiment or Anndata. Specifing the column name where the cell type annotation can be found}
 
 \item{verbose}{Whether to produce output on the console}
 

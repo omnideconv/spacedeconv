@@ -45,7 +45,12 @@ deconvolution_methods <- c(
 #' @export
 build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE) {
   if (is.null(single_cell_object)) {
-    stop("Patameter 'single_cell_object' missing or null, but is required")
+    stop("Parameter 'single_cell_object' missing or null, but is required")
+  }
+
+  # check if method null or not supported
+  if(is.null(method) || !(method %in% deconvolution_methods)){
+    stop("Parameter 'method' is null or not supported")
   }
 
   # if got the methods name and not the token
@@ -53,6 +58,7 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     method <- deconvolution_methods[[method]]
   }
   method <- tolower(method)
+  check_and_install(method)
 
   # check if cell_type_col in names(colData(sc)^)
 
@@ -129,12 +135,13 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 #' @param single_cell_object A SingleCellExperiment
 #' @param cell_type_col Column name of the single_cell_object where the cell type can be found
 #' @param method Deconvolution Method to use, see deconvolution_methods() for a full list of available methods
+#' @param batch_ids vector of batch ids
 #' @param return_object Return an Object or result Table, TRUE = Object
 #' @param verbose display more detailed information
 #' @param ... Further parameters passed to the selected deconvolution method
 #' @returns The deconvolution result as a table
 #' @export
-deconvolute <- function(spatial_object, signature = NULL, single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, return_object = TRUE, verbose = FALSE, ...) {
+deconvolute <- function(spatial_object, signature = NULL, single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, batch_ids = NULL, return_object = TRUE, verbose = FALSE, ...) {
   if (is.null(spatial_object)) {
     stop("Parameter 'spatial_object' is missing or null, but is required.")
   }
@@ -147,13 +154,14 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
     method <- deconvolution_methods[[method]]
   }
   method <- tolower(method)
+  check_and_install(method)
 
   # TODO Type checks for the spatial and single cell object
   # General type checks will be performed here, also matrix + annotation handling
   # Method specific processing steps will be located in the switch statement
 
-  if (!(cell_type_col %in% names(colData(spatial_object)))) {
-    stop(paste0("Provided col name \"", cell_type_col, "\" can not be found in spatial_object"))
+  if (!(cell_type_col %in% names(colData(single_cell_object)))) {
+    stop(paste0("Provided col name \"", cell_type_col, "\" can not be found in single_cell_object"))
   }
 
   deconv <- switch(method,
@@ -177,8 +185,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
     cpm = {
     },
     dwls = {
-      bulk <- counts(spatial_object)
-      omnideconv::deconvolute(bulk, signature, method = "dwls", verbose = verbose)
+      deconvolute_omnideconv(spatial_object, signature, method, single_cell_object, cell_type_col, batch_ids = batch_ids, verbose=verbose )
     },
     momf = {
     },

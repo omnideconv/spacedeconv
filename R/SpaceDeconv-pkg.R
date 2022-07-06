@@ -4,6 +4,8 @@
 #'
 #' @importFrom methods as
 #' @importFrom SingleCellExperiment counts colData
+#' @importFrom utils askYesNo install.packages
+#' @importFrom remotes install_github
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package
