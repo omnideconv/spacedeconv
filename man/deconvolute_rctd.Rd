@@ -5,29 +5,26 @@
 \title{RCTD Deconvolution}
 \usage{
 deconvolute_rctd(
-  sc_counts,
-  cell_types,
+  sce,
+  cell_type_col,
+  spe,
   n_umi_sc = NULL,
-  spatial_counts,
-  spatial_coords,
   n_umi_sp = NULL,
-  n_cores = 20
+  n_cores = NULL
 )
 }
 \arguments{
-\item{sc_counts}{(dgC) matrix of single cell counts}
+\item{sce}{SingleCellExperiment}
 
-\item{cell_types}{Named factor of cell types for the sc_counts matrix}
+\item{cell_type_col}{Column containting cell type annotation}
+
+\item{spe}{SpatialExperiment}
 
 \item{n_umi_sc}{(optional) named list of umi counts for each cell}
 
-\item{spatial_counts}{(dgC) matrix of spatial counts}
-
-\item{spatial_coords}{data frame containing spatial coordinates}
-
 \item{n_umi_sp}{(optional) named list of umi counts for each spot}
 
-\item{n_cores}{Number of CPU cores to use for the calculation}
+\item{n_cores}{Number of CPU cores to use for the calculation, NULL = use all cores}
 }
 \description{
 RCTD Deconvolution

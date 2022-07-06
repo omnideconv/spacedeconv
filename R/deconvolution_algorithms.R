@@ -3,11 +3,39 @@
 #'
 deconvolution_methods <- c(
   "RCTD" = "rctd",
-  omnideconv::deconvolution_methods,
-  immunedeconv::deconvolution_methods,
-  immunedeconv::deconvolution_methods_mouse
-) # i could also hardcode this considering the dependencies
-# this fails if omnideconv/immunedeconv are not installed
+  "SPOTlight" = "spotlight",
+  "CARD" = "card",
+  "cell2location" = "cell2location",
+  "SpatialDecon" = "spatialdecon",
+  "DestVi" = "destvi",
+  # omnideconv
+  "AutoGeneS" = "autogenes",
+  "Bisque" = "bisque",
+  "BSeq-sc" = "bseqsc",
+  "CIBERSORTx" = "cibersortx",
+  "CDSeq" = "cdseq",
+  "CPM" = "cpm",
+  "DWLS" = "dwls",
+  "MOMF" = "momf",
+  "MuSiC" = "music",
+  "Scaden" = "scaden",
+  "SCDC" = "scdc",
+  # immunedeconv
+  "MCPcounter" = "mcp_counter",
+  "EPIC" = "epic",
+  "quanTIseq" = "quantiseq",
+  "xCell" = "xcell",
+  "CIBERSORT" = "cibersort",
+  "CIBERSORT (abs.)" = "cibersort_abs",
+  "TIMER" = "timer",
+  "ConsensurTME" = "consensus_tme",
+  "ABIS" = "abis",
+  # immunedeconv mouse
+  "mMCPcounter" = "mmcp_counter",
+  "seqImmuCC" = "seqimmucc",
+  "DCQ" = "dcq",
+  "BASE" = "base"
+)
 
 #' Build Reference
 #' @param single_cell_object Single Cell Expression Object
@@ -30,9 +58,7 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 
 
   signature <- switch(method,
-    rctd = {
-      NULL
-    },
+    rctd = {build_model_rctd()},
 
     ##############
     # omnideconv #
@@ -132,7 +158,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
 
   deconv <- switch(method,
     rctd = {
-      NULL
+      deconvolute_rctd(single_cell_object, cell_type_col, spatial_object, ...)
     },
 
     ##############

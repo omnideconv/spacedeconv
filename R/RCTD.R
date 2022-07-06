@@ -1,4 +1,14 @@
-#' RCTD Deconvolution, but better
+#' RCTD builds the model internally, please just use the deconvolute method
+#'
+#' @return NULL
+#' @export
+build_model_rctd <- function(){
+  message("RCTD builds it's model internally, please just use the deconvolute method")
+  return (NULL)
+}
+
+
+#' RCTD Deconvolution
 #' @param sce SingleCellExperiment
 #' @param cell_type_col Column containting cell type annotation
 #' @param spe SpatialExperiment
