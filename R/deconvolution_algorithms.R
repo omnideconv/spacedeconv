@@ -49,7 +49,7 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
   }
 
   # check if method null or not supported
-  if(is.null(method) || !(method %in% deconvolution_methods)){
+  if (is.null(method) || !(method %in% deconvolution_methods)) {
     stop("Parameter 'method' is null or not supported")
   }
 
@@ -64,7 +64,9 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 
 
   signature <- switch(method,
-    rctd = {build_model_rctd()},
+    rctd = {
+      build_model_rctd()
+    },
 
     ##############
     # omnideconv #
@@ -185,7 +187,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
     cpm = {
     },
     dwls = {
-      deconvolute_omnideconv(spatial_object, signature, method, single_cell_object, cell_type_col, batch_ids = batch_ids, verbose=verbose )
+      deconvolute_omnideconv(spatial_object, signature, method, single_cell_object, cell_type_col, batch_ids = batch_ids, verbose = verbose)
     },
     momf = {
     },

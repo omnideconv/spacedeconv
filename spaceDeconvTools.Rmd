@@ -25,9 +25,9 @@ library(SPOTlight)
 ```
 ```{r python, echo=TRUE}
 # setup python
-#reticulate::use_condaenv("cell2loc_env")
-#scanpy <- reticulate::import("scanpy")
-#reticulate::py_available()
+# reticulate::use_condaenv("cell2loc_env")
+# scanpy <- reticulate::import("scanpy")
+# reticulate::py_available()
 ```
 
 
@@ -41,8 +41,8 @@ We are using two sample datasets from mouse kidneys.
 sp <- TENxVisiumData::MouseKidneyCoronal()
 rownames(sp) <- rowData(sp)$symbol # overwrite EnsemblID
 
-# Single Cell 
-sc <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues= "Kidney")$Kidney
+# Single Cell
+sc <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues = "Kidney")$Kidney
 ```
 
 Let's have a look inside the datasets. The console output shows the available cell types and the corresponding number of available cells. The Plot visualizes the number of gene counts per spot and the corresponding Visium Image.
@@ -55,9 +55,8 @@ knitr::kable(table(sc$free_annotation, sc$age))
 colData(sp)$nCounts <- colSums(counts(sp))
 x <- "pxl_row_in_fullres" # x coord
 y <- "pxl_col_in_fullres" # y coord, from spatialCoords(sp)
-ggspavis::plotSpots(sp, x, y, annotate="nCounts", size=2)
-ggspavis::plotVisium(sp, x_coord = x, y_coord =  y, spots = FALSE)
-
+ggspavis::plotSpots(sp, x, y, annotate = "nCounts", size = 2)
+ggspavis::plotVisium(sp, x_coord = x, y_coord = y, spots = FALSE)
 ```
 
 
@@ -70,20 +69,20 @@ This section will further include normalization steps.
 
 ```{r preprocessing}
 # We are only using data from 18m old cells
-sc <- sc[, sc$age=="18m"]
+sc <- sc[, sc$age == "18m"]
 sc <- sc[, !sc$free_annotation %in% c("nan", "CD45")] # remove false data
 
 # downsampling for performance reasons, copied from MarcElosua/SPOTlight
 idx <- split(seq(ncol(sc)), sc$free_annotation)
 n_cells <- 50
 cs_keep <- lapply(idx, function(i) {
-    n <- length(i)
-    if (n < n_cells)
-        n_cells <- n
-    sample(i, n_cells)
+  n <- length(i)
+  if (n < n_cells) {
+    n_cells <- n
+  }
+  sample(i, n_cells)
 })
 sc <- sc[, unlist(cs_keep)]
-
 ```
 
 
@@ -105,7 +104,7 @@ mgs <- NULL # DataFrame of scored Marker genes
 ```{r SPOTlight}
 colLabels(sc) <- colData(sc)[[slot]] # add Labels
 
-# norm 
+# norm
 sc <- scuttle::logNormCounts(sc) # score marksers
 
 mgs <- scran::scoreMarkers(sc) # can include a subset step, requires logcounts slot/assay?
@@ -125,17 +124,17 @@ mgs_fil <- lapply(names(mgs), function(i) {
 })
 mgs_df <- do.call(rbind, mgs_fil)
 
-deconvolution <- SPOTlight::SPOTlight(sc, sp, mgs=mgs_df, weight_id = "mean.AUC", verbose=TRUE)
+deconvolution <- SPOTlight::SPOTlight(sc, sp, mgs = mgs_df, weight_id = "mean.AUC", verbose = TRUE)
 deconvolution <- deconvolution$mat # extract the result
 knitr::kable(head(deconvolution[, 4:6])) # just a subset
-
 ```
 ```{r addToObject, echo=TRUE, message = FALSE}
 # adding the results to colData
 colnames(deconvolution) <- make.names(colnames(deconvolution))
 
-for (i in colnames(deconvolution)){ # each separately
-  sp[[i]] <- deconvolution[, i] 
+for (i in colnames(deconvolution)) {
+  # each separately
+  sp[[i]] <- deconvolution[, i]
 }
 
 # the colData annotation of the spatialExperiment now looks like this:
@@ -144,14 +143,14 @@ names(colData(sp))
 ```{r plottingSpotlight, echo=FALSE}
 # Visualization of some examples
 # x and y from above
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size = 2)
 ```
 ```{r plottingSpotlightVisium, echo=FALSE}
 # You could overlay the image
-ggspavis::plotVisium(sp, x_coord = x, y_coord = y, fill="NK.cell", palette = c("red", "white"))
+ggspavis::plotVisium(sp, x_coord = x, y_coord = y, fill = "NK.cell", palette = c("red", "white"))
 # here white means a higher NK amount, note the red circle in the middle
 ```
 
@@ -163,18 +162,17 @@ sc2 <- sc # using a copy in this case because we are removing cells
 
 # first subset the sc reference, every cell type needs to be present more than 25 times!!!!!
 cellTable <- as.data.frame(table(sc2[["cell_ontology_class"]])) # table of all factors and their count
-cellTable <- cellTable[cellTable$Freq>=25,] # drop all below 25
+cellTable <- cellTable[cellTable$Freq >= 25, ] # drop all below 25
 cellsToKeep <- as.character(cellTable$Var1) # character vector for subsetting
 
 sc2 <- sc2[, sc2[["cell_ontology_class"]] %in% cellsToKeep] # subset cells (columns)
 sc2[["cell_ontology_class"]] <- droplevels(sc2[["cell_ontology_class"]]) # drop zero levels in factor
-
 ```
 
 #### Construct Single Cell Reference
 ```{r rctdSC}
-# counts as dgC 
-counts <- as(counts(sc2), "dgCMatrix")  # convert from delayed matrix to dgC
+# counts as dgC
+counts <- as(counts(sc2), "dgCMatrix") # convert from delayed matrix to dgC
 
 # named cell type factor
 cell_types <- colData(sc2)[, "cell_ontology_class"] # get cell type factor
@@ -187,7 +185,6 @@ names(nUMI) <- rownames(colData(sc2)) # name it!
 
 # create Reference
 reference <- spacexr::Reference(counts, cell_types, nUMI)
-
 ```
 
 #### Construct Spatial Dataset
@@ -195,11 +192,11 @@ reference <- spacexr::Reference(counts, cell_types, nUMI)
 coords <- SpatialExperiment::spatialCoords(sp) # spatial coordinates
 coords <- as.data.frame(coords)
 counts <- counts(sp) # counts
-nUMI <- colData(sp)[, "nCounts"] 
+nUMI <- colData(sp)[, "nCounts"]
 # all three above are already named but that does not have to be the case
 
 # in this specific case we must make gene names unique! There are duplicates
-rownames(counts) <- make.names(rownames(counts), unique=T)
+rownames(counts) <- make.names(rownames(counts), unique = T)
 
 puck <- spacexr::SpatialRNA(coords, counts, nUMI)
 ```
@@ -219,14 +216,15 @@ norm_weights <- as.matrix(norm_weights)
 ```{r rctdResults, echo=FALSE}
 colnames(norm_weights) <- make.names(colnames(norm_weights))
 
-for (i in colnames(norm_weights)){ # each separately
-  sp[[i]] <- norm_weights[, i] 
+for (i in colnames(norm_weights)) {
+  # each separately
+  sp[[i]] <- norm_weights[, i]
 }
 
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size = 2)
 ```
 
 ## omnideconv
@@ -244,7 +242,7 @@ library(omnideconv)
 # works directly with the singleCellExperiment
 batch_ids <- colData(sc)$mouse.id # batch id not cell id!!!!
 
-signature <- omnideconv::build_model(sc, method = "scdc", cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids, verbose=TRUE) 
+signature <- omnideconv::build_model(sc, method = "scdc", cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids, verbose = TRUE)
 ```
 
 ### Deconvolution
@@ -252,25 +250,25 @@ signature <- omnideconv::build_model(sc, method = "scdc", cell_type_column_name 
 # this spatial dataset has duplicate rownames
 rownames(sp) <- make.names(rownames(sp), unique = T)
 
-#extract bulk matrix
+# extract bulk matrix
 bulk <- counts(sp) # could be different!
 
 # deconvolute
-deconvolution <- omnideconv::deconvolute(bulk, signature=signature, method="scdc", verbose=TRUE, single_cell_object=sc, cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids)
-
+deconvolution <- omnideconv::deconvolute(bulk, signature = signature, method = "scdc", verbose = TRUE, single_cell_object = sc, cell_type_column_name = "cell_ontology_class", batch_ids = batch_ids)
 ```
 
 ```{r omnidconvAddResult, echo=FALSE}
 colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
 
-for (i in colnames(deconvolution)){ # each separately
-  sp[[i]] <- deconvolution[, i] 
+for (i in colnames(deconvolution)) {
+  # each separately
+  sp[[i]] <- deconvolution[, i]
 }
 
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size = 2)
 ```
 
 ## Immunedeconv
@@ -289,7 +287,7 @@ bulk <- as.matrix(bulk) # make.names already called
 # HGNC Symbols! In this case just uppercase is enough
 rownames(bulk) <- toupper(rownames(bulk))
 
-deconvolution <- immunedeconv::deconvolute(bulk, method="epic")
+deconvolution <- immunedeconv::deconvolute(bulk, method = "epic")
 ```
 
 ```{r}
@@ -305,15 +303,16 @@ deconvolution <- t(deconvolution)
 
 colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
 
-for (i in colnames(deconvolution)){ # each separately
-  sp[[i]] <- deconvolution[, i] 
+for (i in colnames(deconvolution)) {
+  # each separately
+  sp[[i]] <- deconvolution[, i]
 }
 ```
 ```{r echo=FALSE}
-ggspavis::plotSpots(sp, x, y, annotate = "B.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "B.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "Macrophage", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "Endothelial.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "NK.cell", size = 2)
 ```
 
 
@@ -329,7 +328,7 @@ spCoord <- SpatialExperiment::spatialCoords(sp) %>% as.data.frame() # coords
 colnames(spCoord) <- c("x", "y") # need to be x and y
 
 scExp <- counts(sc) %>% as("dgCMatrix") # sc expression matrix
-scMeta <- data.frame(cellType = colData(sc)$cell_ontology_class, sampleInfo=colData(sc)$mouse.id, row.names = colnames(sc)) # annotation
+scMeta <- data.frame(cellType = colData(sc)$cell_ontology_class, sampleInfo = colData(sc)$mouse.id, row.names = colnames(sc)) # annotation
 
 cts <- as.vector(unique(sc$cell_ontology_class))
 
@@ -341,14 +340,15 @@ cardObj <- CARD_deconvolution(cardObj)
 deconvolution <- cardObj@Proportion_CARD
 colnames(deconvolution) <- make.names(colnames(deconvolution)) # removing the whitespace
 
-for (i in colnames(deconvolution)){ # each separately
-  sp[[i]] <- deconvolution[, i] 
+for (i in colnames(deconvolution)) {
+  # each separately
+  sp[[i]] <- deconvolution[, i]
 }
 
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size=2)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size=1)
-ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size=2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.cortex.artery.cell", size = 2)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.loop.of.Henle.thick.ascending.limb.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "kidney.proximal.convoluted.tubule.epithelial.cell", size = 1)
+ggspavis::plotSpots(sp, x, y, annotate = "brush.cell", size = 2)
 ```
 
 
