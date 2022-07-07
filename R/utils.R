@@ -25,6 +25,65 @@ checkCol <- function(object, column){
   return (column %in% names(colData(object)))
 }
 
+#' Add results to object colData
+#'
+#' @param spe SpatialExperiment
+#' @param result deconvolution result, rows = spots, columns = cell types
+addResultToObject <- function(spe, result){
+  if (is.null(spe)){
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  if (is.null(result)){
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  message("saving results to object")
+
+  # make cell type names unique
+  colnames(result) <- make.names(colnames(result))
+
+  # check if number of spots matches result, might not be the case for all methods
+  if (nrow(result) == ncol(spe)){
+    # add to spatialExperiment interatively
+    for (celltype in colnames(result)){
+      spe[[celltype]] <- result[, celltype]
+    }
+  } else {
+    # get the missing spots and input zero for them
+    message("While saving results: dimensions don't match")
+
+    # v1 shorter???
+    # v2 longer
+    v1 <- colnames(spe)
+    v2 <- rownames(result)
+
+    # get the ones from v1 missing in v2
+    missing  = v1[!v1 %in% v2]
+
+    # construct "missing data" and set all to NA
+    missing_mat <- matrix(data = NA, nrow = length(missing), ncol = ncol(result))
+    rownames(missing_mat) <- missing
+    colnames(missing_mat) <- colnames(result)
+
+    # construct full dataframe
+    full <- rbind(result, missing_mat)
+
+    # order accordingly
+    full <- full[order(match(rownames(full), rownames(result))), ]
+
+    # add to object
+    for (celltype in colnames(full)){
+      spe[[celltype]] <- full[, celltype]
+    }
+
+  }
+
+  return (spe)
+
+}
+
+
 
 #' The dependencies for each method
 #'

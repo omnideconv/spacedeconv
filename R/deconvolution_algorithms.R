@@ -70,37 +70,37 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     # omnideconv #
     ##############
     autogenes = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "autogenes", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "autogenes", verbose = verbose)
     },
     bisque = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "bisque", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "bisque", verbose = verbose)
     },
     bseqsc = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "bseqsc", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "bseqsc", verbose = verbose)
     },
     cibersortx = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "dwls", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "dwls", verbose = verbose)
     },
     cdseq = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "cdseq", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "cdseq", verbose = verbose)
     },
     cpm = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "cpm", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "cpm", verbose = verbose)
     },
     dwls = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "dwls", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "dwls", verbose = verbose)
     },
     momf = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "momf", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "momf", verbose = verbose)
     },
     music = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "music", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "music", verbose = verbose)
     },
     scaden = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "scaden", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "scaden", verbose = verbose)
     },
     scdc = {
-      omnideconv::build_model(single_cell_object, cell_type_column_name = cell_type_col, method = "scdc", verbose = verbose)
+      omnideconv::build_model(single_cell_object, cell_type_col = cell_type_col, method = "scdc", verbose = verbose)
     },
 
     ################
@@ -217,5 +217,13 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
     dcq = {},
     base = {}
   )
-  return(deconv)
+
+  message("finished deconvolution")
+
+  # save to object or return table
+  if (return_object){
+    return (addResultToObject(spatial_object, deconv))
+  } else {
+    return(deconv)
+  }
 }

@@ -37,9 +37,9 @@ deconvolute_omnideconv <- function(spe, signature, method = NULL, single_cell_ob
     signature = signature,
     method = method,
     single_cell_object = single_cell_object,
-    cell_type_annotations = cell_type_annotations,
+    #cell_type_annotations = cell_type_annotations,
     batch_ids = batch_ids,
-    cell_type_column_name = cell_type_column_name,
+    cell_type_column_name = cell_type_col,
     verbose = verbose,
     ...
   )
