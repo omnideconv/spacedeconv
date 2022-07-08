@@ -144,12 +144,9 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 #' @param ... Further parameters passed to the selected deconvolution method
 #' @returns The deconvolution result as a table
 #' @export
-deconvolute <- function(spatial_object, signature = NULL, single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, batch_ids = NULL, return_object = TRUE, verbose = FALSE, ...) {
+deconvolute <- function(spatial_object, signature = NULL, single_cell_object = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_ids = NULL, return_object = TRUE, verbose = FALSE, ...) {
   if (is.null(spatial_object)) {
     stop("Parameter 'spatial_object' is missing or null, but is required.")
-  }
-  if (is.null(single_cell_object)) {
-    stop("Parameter 'single_cell_object' is missing or null, but is required.")
   }
 
   # if got the methods name and not the token
