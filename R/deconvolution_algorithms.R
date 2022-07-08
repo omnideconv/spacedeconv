@@ -160,7 +160,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
   # General type checks will be performed here, also matrix + annotation handling
   # Method specific processing steps will be located in the switch statement
 
-  if (!(cell_type_col %in% names(colData(single_cell_object)))) {
+  if (!is.null(single_cell_object) && !(cell_type_col %in% names(colData(single_cell_object)))) {
     stop(paste0("Provided col name \"", cell_type_col, "\" can not be found in single_cell_object"))
   }
 

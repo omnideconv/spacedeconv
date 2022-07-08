@@ -7,7 +7,7 @@
 deconvolute(
   spatial_object,
   signature = NULL,
-  single_cell_object,
+  single_cell_object = NULL,
   cell_type_col = "cell_ontology_class",
   method = NULL,
   batch_ids = NULL,
