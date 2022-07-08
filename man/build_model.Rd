@@ -8,7 +8,9 @@ build_model(
   single_cell_object,
   cell_type_col = "cell_ontology_class",
   method = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  spatial_object = NULL,
+  ...
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ build_model(
 \item{method}{signature calculation method}
 
 \item{verbose}{Display more information on console}
+
+\item{spatial_object}{SpatialExperiment, required for SPOTlight}
+
+\item{...}{additional parameters passed to the functions}
 }
 \description{
 Build Reference

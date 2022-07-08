@@ -42,8 +42,10 @@ deconvolution_methods <- c(
 #' @param cell_type_col Name of the anntotation column containing cell type information
 #' @param method signature calculation method
 #' @param verbose Display more information on console
+#' @param spatial_object SpatialExperiment, required for SPOTlight
+#' @param ... additional parameters passed to the functions
 #' @export
-build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE) {
+build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_object = NULL,  ...) {
   if (is.null(single_cell_object)) {
     stop("Parameter 'single_cell_object' missing or null, but is required")
   }
@@ -65,6 +67,7 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 
   signature <- switch(method,
     rctd = {build_model_rctd()},
+    spotlight = {build_model_spotlight(single_cell_object, cell_type_col, spatial_object, ...)},
 
     ##############
     # omnideconv #
@@ -168,6 +171,8 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object, ce
     rctd = {
       deconvolute_rctd(single_cell_object, cell_type_col, spatial_object, ...)
     },
+
+    spotlight ={deconvolute_spotlight(spe = spatial_object, model = signature)},
 
     ##############
     # omnideconv #

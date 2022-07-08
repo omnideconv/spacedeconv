@@ -16,10 +16,19 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
   groups <- colData(sce)[[cell_type_col]] # cell type vector
   if (is.null(markers)) {
     message("No markers provided, calculating markers based on the authors suggestion")
-    mgs <- getMarkersSPOTlight(sce, cell_type_col)
+    mgs <- getMarkersSPOTlight(
+      sce = sce,
+      cell_type_col = cell_type_col
+    )
   }
 
-  model <- SPOTlight::trainNMF(sce, spe, groups = groups, mgs = mgs, weight_id = "mean.AUC")
+  model <- SPOTlight::trainNMF(
+    x = sce,
+    y = spe,
+    groups = groups,
+    mgs = mgs,
+    weight_id = "mean.AUC"
+  )
 
   return(model)
 }
@@ -30,7 +39,7 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
 #' @param spe SpatialExperiment
 #' @param model SPOTlight Model
 deconvolute_spotlight <- function(spe, model = NULL) {
-  if (is.null(spe)){
+  if (is.null(spe)) {
     stop("Parameter 'spe' missing or null, but is required")
   }
 
@@ -43,8 +52,12 @@ deconvolute_spotlight <- function(spe, model = NULL) {
   ref <- model$topic
 
   # deconvolute
-  deconv <- SPOTlight::runDeconvolution(spe, mod = mod, ref = ref)
-  return (deconv$mat)
+  deconv <- SPOTlight::runDeconvolution(
+    x = spe,
+    mod = mod,
+    ref = ref
+  )
+  return(deconv$mat)
 }
 
 #' Calculate Markers
