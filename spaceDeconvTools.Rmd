@@ -36,7 +36,7 @@ library(SPOTlight)
 We are using two sample datasets from mouse kidneys.
 
 
-```{r Datasets, echo=TRUE, results='hide', message=FALSE, warning=FALSE, error=FALSE}
+```{r Datasets, echo=TRUE, error=FALSE, message=FALSE, warning=FALSE, results='hide'}
 # Spatial
 sp <- TENxVisiumData::MouseKidneyCoronal()
 rownames(sp) <- rowData(sp)$symbol # overwrite EnsemblID
@@ -103,19 +103,19 @@ mgs <- NULL # DataFrame of scored Marker genes
 
 
 ```{r SPOTlight}
-colLabels(sc) <- colData(sc)[[slot]] # add Labels
-
+#colLabels(sc) <- colData(sc)[[slot]] # add Labels
+groups = colData(sc)[[slot]]
 # norm 
 sc <- scuttle::logNormCounts(sc) # score marksers
 
-mgs <- scran::scoreMarkers(sc) # can include a subset step, requires logcounts slot/assay?
+mgs <- scran::scoreMarkers(sc) # can include a subset step, requires logcounts assay!!!
 
 # this code is from the vignette
 # one could perform this differently but the final dataframe needs to be present
 mgs_fil <- lapply(names(mgs), function(i) {
   x <- mgs[[i]]
   # Filter and keep relevant marker genes, those with AUC > 0.8
-  x <- x[x$mean.AUC > 0.8, ]
+  x <- x[x$mean.AUC > 0.8 , ]
   # Sort the genes from highest to lowest weight
   x <- x[order(x$mean.AUC, decreasing = TRUE), ]
   # Add gene and cluster id to the dataframe
@@ -125,7 +125,11 @@ mgs_fil <- lapply(names(mgs), function(i) {
 })
 mgs_df <- do.call(rbind, mgs_fil)
 
-deconvolution <- SPOTlight::SPOTlight(sc, sp, mgs=mgs_df, weight_id = "mean.AUC", verbose=TRUE)
+model <- trainNMF(sc, sp, mgs=mgs_df, weight_id = "mean.AUC", groups = groups)
+
+
+
+deconvolution <- SPOTlight::SPOTlight(sc, sp, mgs=mgs_df, weight_id = "mean.AUC", verbose=TRUE, groups = groups)
 deconvolution <- deconvolution$mat # extract the result
 knitr::kable(head(deconvolution[, 4:6])) # just a subset
 

@@ -17,6 +17,7 @@ Imports:
     SpatialExperiment
 Suggests: 
     spacexr,
+    SPOTlight,
     omnideconv,
     BisqueRNA,
     bseqsc,
@@ -30,7 +31,9 @@ Suggests:
     rmarkdown,
     scBio,
     SCDC,
-    uuid
+    uuid, 
+    scuttle, 
+    scran
 Remotes:
     amitfrish/scBio,
     grst/MOMF,
