@@ -10,6 +10,7 @@ build_model(
   method = NULL,
   verbose = FALSE,
   spatial_object = NULL,
+  batch_id_col = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ build_model(
 \item{verbose}{Display more information on console}
 
 \item{spatial_object}{SpatialExperiment, required for SPOTlight}
+
+\item{batch_id_col}{column of singleCellExperiment containing batch ids}
 
 \item{...}{additional parameters passed to the functions}
 }

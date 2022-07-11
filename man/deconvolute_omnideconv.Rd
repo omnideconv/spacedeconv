@@ -6,11 +6,11 @@
 \usage{
 deconvolute_omnideconv(
   spe,
-  signature,
+  signature = NULL,
   method = NULL,
   single_cell_object = NULL,
   cell_type_col = "cell_ontology_class",
-  batch_ids = NULL,
+  batch_id_col = NULL,
   verbose = FALSE,
   ...
 )
@@ -26,7 +26,7 @@ deconvolute_omnideconv(
 
 \item{cell_type_col}{column name of single_cell_object where cell type information is found}
 
-\item{batch_ids}{A vector of the ids of samples or individuals}
+\item{batch_id_col}{column name of single_cell_object where batch ids can be found}
 
 \item{verbose}{Whether to produce output on the console}
 

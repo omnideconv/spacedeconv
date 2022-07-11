@@ -18,6 +18,7 @@ Imports:
 Suggests: 
     spacexr,
     SPOTlight,
+    immunedeconv,
     omnideconv,
     BisqueRNA,
     bseqsc,

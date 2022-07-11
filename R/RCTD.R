@@ -85,8 +85,10 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
   rctd_object <- spacexr::create.RCTD(
     spatialRNA = puck,
     reference = reference,
-    max_cores = n_cores
+    max_cores = n_cores,
+    CELL_MIN_INSTANCE = 1
     #UMI_min = 0
+
   )
 
   message ("Starting RCTD Deconvolution")

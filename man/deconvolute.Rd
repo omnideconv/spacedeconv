@@ -10,7 +10,7 @@ deconvolute(
   single_cell_object = NULL,
   cell_type_col = "cell_ontology_class",
   method = NULL,
-  batch_ids = NULL,
+  batch_id_col = NULL,
   return_object = TRUE,
   verbose = FALSE,
   ...
@@ -27,7 +27,7 @@ deconvolute(
 
 \item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
 
-\item{batch_ids}{vector of batch ids}
+\item{batch_id_col}{column name of batch ids in single cell object}
 
 \item{return_object}{Return an Object or result Table, TRUE = Object}
 
