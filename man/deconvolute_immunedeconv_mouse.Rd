@@ -4,12 +4,22 @@
 \alias{deconvolute_immunedeconv_mouse}
 \title{Deconvolute Immunedeconv mouse}
 \usage{
-deconvolute_immunedeconv_mouse(spe, method = NULL, ...)
+deconvolute_immunedeconv_mouse(
+  spe,
+  method = NULL,
+  rmgenes = NULL,
+  algorithm = NULL,
+  ...
+)
 }
 \arguments{
 \item{spe}{SpatialExperiment}
 
 \item{method}{deconvolution algorithm}
+
+\item{rmgenes}{genes to remove from the analysis}
+
+\item{algorithm}{statistical algorithm for SeqImmuCC (ignored by all other methods)}
 
 \item{...}{additional parameters passed to function}
 }

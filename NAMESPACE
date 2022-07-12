@@ -3,7 +3,6 @@
 export(build_model)
 export(build_model_rctd)
 export(deconvolute)
-export(deconvolute_rctd)
 export(deconvolution_methods)
 importFrom(SingleCellExperiment,colData)
 importFrom(SingleCellExperiment,counts)

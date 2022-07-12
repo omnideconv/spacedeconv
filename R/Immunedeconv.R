@@ -36,14 +36,7 @@ deconvolute_immunedeconv <- function(spe, method = NULL, ...){
     tumor = TRUE,
     arrays=FALSE)
 
-  # convert data to matrix where cell types are rows and samples are columns
-  deconv = as.data.frame(deconv)
-  rownames(deconv) = deconv$cell_type
-  deconv = deconv[, -1]
-  deconv = t(deconv)
-  deconv = as.matrix(deconv) # ???
-
-  return(deconv)
+  return(convertImmunedeconvMatrix(deconv))
 
 }
 
@@ -51,14 +44,16 @@ deconvolute_immunedeconv <- function(spe, method = NULL, ...){
 #' Deconvolute Immunedeconv mouse
 #' @param spe SpatialExperiment
 #' @param method deconvolution algorithm
+#' @param rmgenes genes to remove from the analysis
+#' @param algorithm statistical algorithm for SeqImmuCC (ignored by all other methods)
 #' @param ... additional parameters passed to function
 #'
-deconvolute_immunedeconv_mouse <- function (spe, method=NULL, ...){
-  if (is.null(spe)){
+deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, algorithm = NULL, ...) {
+  if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if(is.null(method)){
+  if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required")
   }
 
@@ -66,5 +61,28 @@ deconvolute_immunedeconv_mouse <- function (spe, method=NULL, ...){
   bulk <- SingleCellExperiment::counts(spe)
   bulk <- as.matrix(bulk)
 
-  deconv = immunedeconv::deconvolute_mouse(bulk, method = method)
+  deconv <- immunedeconv::deconvolute_mouse(
+    gene_expression_matrix = bulk,
+    method = method,
+    rmgenes = rmgenes,
+    algorithm = algorithm
+  )
+
+  return(convertImmunedeconvMatrix(deconv))
+
+}
+
+#' Convert Immunedeconv Matrix to match SpaceDeconv Format
+#' @param deconvResult immunedeconv result matrix
+#' @returns transformed matrix where cell types are columns
+convertImmunedeconvMatrix = function (deconvResult){
+  # TODO Checks
+
+
+  result = deconvResult[, 2:ncol(deconvResult)]
+  result = as.matrix(result)
+  rownames(result) = deconvResult$cell_type
+  result = t(result)
+
+  return(result)
 }

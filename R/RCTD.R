@@ -15,8 +15,6 @@ build_model_rctd <- function(){
 #' @param n_umi_sc (optional) named list of umi counts for each cell
 #' @param n_umi_sp (optional) named list of umi counts for each spot
 #' @param n_cores Number of CPU cores to use for the calculation, NULL = use all cores
-#' @export
-
 deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp = NULL, n_cores = NULL) {
   if (is.null(sce)) {
     stop("Parameter 'sce' is missing or null, but is required.")

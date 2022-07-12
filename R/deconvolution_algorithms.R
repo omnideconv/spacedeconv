@@ -2,6 +2,7 @@
 #' @export
 #'
 deconvolution_methods <- c(
+  # spatial
   "RCTD" = "rctd",
   "SPOTlight" = "spotlight",
   "CARD" = "card",
@@ -46,13 +47,13 @@ deconvolution_methods <- c(
 #' @param batch_id_col column of singleCellExperiment containing batch ids
 #' @param ... additional parameters passed to the functions
 #' @export
-build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_object = NULL,  batch_id_col = NULL, ...) {
+build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_object = NULL, batch_id_col = NULL, ...) {
   if (is.null(single_cell_object)) {
     stop("Parameter 'single_cell_object' missing or null, but is required")
   }
 
   # check if method null or not supported
-  if(is.null(method) || !(method %in% deconvolution_methods)){
+  if (is.null(method) || !(method %in% deconvolution_methods)) {
     stop("Parameter 'method' is null or not supported")
   }
 
@@ -67,66 +68,96 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 
 
   signature <- switch(method,
-    rctd = {build_model_rctd()},
-    spotlight = {build_model_spotlight(single_cell_object, cell_type_col, spatial_object, ...)},
+    rctd = {
+      build_model_rctd()
+    },
+    spotlight = {
+      build_model_spotlight(single_cell_object, cell_type_col, spatial_object, ...)
+    },
 
     ##############
     # omnideconv #
     ##############
     autogenes = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="autogenes", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "autogenes", spatial_object, batch_id_col, ...)
     },
     bisque = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="bisque", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "bisque", spatial_object, batch_id_col, ...)
     },
     bseqsc = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="bseqsc", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "bseqsc", spatial_object, batch_id_col, ...)
     },
     cibersortx = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="cibersortx", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cibersortx", spatial_object, batch_id_col, ...)
     },
     cdseq = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="cdseq", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cdseq", spatial_object, batch_id_col, ...)
     },
     cpm = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="cpm", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cpm", spatial_object, batch_id_col, ...)
     },
     dwls = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="dwls", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "dwls", spatial_object, batch_id_col, ...)
     },
     momf = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="momf", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "momf", spatial_object, batch_id_col, ...)
     },
     music = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="music", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "music", spatial_object, batch_id_col, ...)
     },
     scaden = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="scaden", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "scaden", spatial_object, batch_id_col, ...)
     },
     scdc = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method="scdc", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "scdc", spatial_object, batch_id_col, ...)
     },
 
     ################
     # immunedeconv #
     ################
-    mcp_counter = {build_model_immunedeconv()},
-    epic = {build_model_immunedeconv()},
-    quantiseq = {build_model_immunedeconv()},
-    xcell = {build_model_immunedeconv()},
-    cibersort = {build_model_immunedeconv()},
-    cibersort_abs = {build_model_immunedeconv()},
-    timer = {build_model_immunedeconv()},
-    consensus_tme = {build_model_immunedeconv()},
-    abis = {build_model_immunedeconv()},
+    mcp_counter = {
+      build_model_immunedeconv()
+    },
+    epic = {
+      build_model_immunedeconv()
+    },
+    quantiseq = {
+      build_model_immunedeconv()
+    },
+    xcell = {
+      build_model_immunedeconv()
+    },
+    cibersort = {
+      build_model_immunedeconv()
+    },
+    cibersort_abs = {
+      build_model_immunedeconv()
+    },
+    timer = {
+      build_model_immunedeconv()
+    },
+    consensus_tme = {
+      build_model_immunedeconv()
+    },
+    abis = {
+      build_model_immunedeconv()
+    },
 
     ######################
     # immunedeconv mouse #
     ######################
-    mmcp_counter = {build_model_immunedeconv()},
-    seqimmucc = {build_model_immunedeconv()},
-    dcq = {build_model_immunedeconv()},
-    base = {build_model_immunedeconv()}
+    mmcp_counter = {
+      build_model_immunedeconv()
+    },
+    seqimmucc = {
+      build_model_immunedeconv()
+    },
+    dcq = {
+      build_model_immunedeconv()
+    },
+    base = {
+      build_model_immunedeconv()
+    }
   )
 
   return(signature)
@@ -169,73 +200,100 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     rctd = {
       deconvolute_rctd(single_cell_object, cell_type_col, spatial_object, ...)
     },
-
-    spotlight ={deconvolute_spotlight(spe = spatial_object, model = signature)},
+    spotlight = {
+      deconvolute_spotlight(spe = spatial_object, model = signature)
+    },
 
     ##############
     # omnideconv #
     ##############
     autogenes = {
-      deconvolute_omnideconv(spatial_object, signature, method="autogenes", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "autogenes", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     bisque = {
-      deconvolute_omnideconv(spatial_object, signature, method="bisque", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "bisque", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     bseqsc = {
-      deconvolute_omnideconv(spatial_object, signature, method="bseqsc", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "bseqsc", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     cibersortx = {
-      deconvolute_omnideconv(spatial_object, signature, method="cibersortx", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "cibersortx", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     cdseq = {
-      deconvolute_omnideconv(spatial_object, signature, method="cdseq", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "cdseq", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     cpm = {
-      deconvolute_omnideconv(spatial_object, signature, method="cpm", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "cpm", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     dwls = {
-      deconvolute_omnideconv(spatial_object, signature, method="dwls", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "dwls", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     momf = {
-      deconvolute_omnideconv(spatial_object, signature, method="momf", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "momf", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     music = {
-      deconvolute_omnideconv(spatial_object, signature, method="music", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "music", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     scaden = {
-      deconvolute_omnideconv(spatial_object, signature, method="scaden", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "scaden", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
     scdc = {
-      deconvolute_omnideconv(spatial_object, signature, method="scdc", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose=verbose)
+      deconvolute_omnideconv(spatial_object, signature, method = "scdc", single_cell_object, cell_type_col, batch_id_col = batch_id_col, verbose = verbose)
     },
 
     ################
     # immunedeconv #
     ################
-    mcp_counter = {deconvolute_immunedeconv(spatial_object, method="mcp_counter", ...)},
-    epic = {deconvolute_immunedeconv(spatial_object, method="epic", ...)},
-    quantiseq = {deconvolute_immunedeconv(spatial_object, method="quantiseq", ...)},
-    xcell = {deconvolute_immunedeconv(spatial_object, method="xcell", ...)},
-    cibersort = {deconvolute_immunedeconv(spatial_object, method="cibersort", ...)},
-    cibersort_abs = {deconvolute_immunedeconv(spatial_object, method="cibersort_abs", ...)},
-    timer = {deconvolute_immunedeconv(spatial_object, method="timer", ...)},
-    consensus_tme = {deconvolute_immunedeconv(spatial_object, method="consensus_tme", ...)},
-    abis = {deconvolute_immunedeconv(spatial_object, method="abis", ...)},
+    mcp_counter = {
+      deconvolute_immunedeconv(spatial_object, method = "mcp_counter", ...)
+    },
+    epic = {
+      deconvolute_immunedeconv(spatial_object, method = "epic", ...)
+    },
+    quantiseq = {
+      deconvolute_immunedeconv(spatial_object, method = "quantiseq", ...)
+    },
+    xcell = {
+      deconvolute_immunedeconv(spatial_object, method = "xcell", ...)
+    },
+    cibersort = {
+      deconvolute_immunedeconv(spatial_object, method = "cibersort", ...)
+    },
+    cibersort_abs = {
+      deconvolute_immunedeconv(spatial_object, method = "cibersort_abs", ...)
+    },
+    timer = {
+      deconvolute_immunedeconv(spatial_object, method = "timer", ...)
+    },
+    consensus_tme = {
+      deconvolute_immunedeconv(spatial_object, method = "consensus_tme", ...)
+    },
+    abis = {
+      deconvolute_immunedeconv(spatial_object, method = "abis", ...)
+    },
 
     ######################
     # immunedeconv mouse #
     ######################
-    mmcp_counter = {},
-    seqimmucc = {},
-    dcq = {},
-    base = {}
+    mmcp_counter = {
+      deconvolute_immunedeconv_mouse(spatial_object, method = "mmcp_counter", ...)
+    },
+    seqimmucc = {
+      deconvolute_immunedeconv_mouse(spatial_object, method = "seqimmucc", ...)
+    },
+    dcq = {
+      deconvolute_immunedeconv_mouse(spatial_object, method = "dcq", ...)
+    },
+    base = {
+      deconvolute_immunedeconv_mouse(spatial_object, method = "base", ...)
+    }
   )
 
   message("finished deconvolution")
 
   # save to object or return table
-  if (return_object){
-    return (addResultToObject(spatial_object, deconv))
+  if (return_object) {
+    return(addResultToObject(spatial_object, deconv))
   } else {
     return(deconv)
   }
