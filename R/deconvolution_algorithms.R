@@ -64,6 +64,10 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
   method <- tolower(method)
   check_and_install(method)
 
+  # convert data
+  single_cell_object <- convert_to_sce(single_cell_object)
+
+
   # check if cell_type_col in names(colData(sc)^)
 
 
@@ -79,37 +83,37 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     # omnideconv #
     ##############
     autogenes = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "autogenes", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "autogenes", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     bisque = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "bisque", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "bisque", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     bseqsc = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "bseqsc", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "bseqsc", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     cibersortx = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "cibersortx", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cibersortx", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     cdseq = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "cdseq", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cdseq", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     cpm = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "cpm", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "cpm", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     dwls = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "dwls", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "dwls", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     momf = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "momf", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "momf", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     music = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "music", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "music", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     scaden = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "scaden", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "scaden", spatial_object, batch_id_col, verbose=verbose, ...)
     },
     scdc = {
-      build_model_omnideconv(single_cell_object, cell_type_col, method = "scdc", spatial_object, batch_id_col, ...)
+      build_model_omnideconv(single_cell_object, cell_type_col, method = "scdc", spatial_object, batch_id_col, verbose=verbose, ...)
     },
 
     ################
@@ -195,6 +199,12 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
   if (!is.null(single_cell_object) && !(cell_type_col %in% names(colData(single_cell_object)))) {
     stop(paste0("Provided col name \"", cell_type_col, "\" can not be found in single_cell_object"))
   }
+
+  # convert data
+  if (!is.null(single_cell_object)){
+    single_cell_object <- convert_to_sce(single_cell_object)
+  }
+
 
   deconv <- switch(method,
     rctd = {

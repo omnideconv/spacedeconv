@@ -2,9 +2,9 @@
 #'
 #' @return NULL
 #' @export
-build_model_rctd <- function(){
+build_model_rctd <- function() {
   message("RCTD builds it's model internally, please just use the deconvolute method")
-  return (NULL)
+  return(NULL)
 }
 
 
@@ -28,7 +28,7 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
     stop("Parameter 'n_cores' needs to be a positive integer")
   }
 
-  if (!checkCol(sce, cell_type_col)){
+  if (!checkCol(sce, cell_type_col)) {
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
 
@@ -49,7 +49,7 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
   spatial_counts <- SingleCellExperiment::counts(spe)
   spatial_counts <- methods::as(spatial_counts, "dgCMatrix")
   # in this specific case we must make gene names unique! There are duplicates
-  rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique=T)
+  rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique = T)
 
   # spatial coords
   spatial_coords <- SpatialExperiment::spatialCoords(spe)
@@ -60,8 +60,8 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
 
 
   # n_cores, if null = max available
-  if (is.null(n_cores)){
-    n_cores = parallel::detectCores()
+  if (is.null(n_cores)) {
+    n_cores <- parallel::detectCores()
   }
 
 
@@ -85,11 +85,10 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
     reference = reference,
     max_cores = n_cores,
     CELL_MIN_INSTANCE = 1
-    #UMI_min = 0
-
+    # UMI_min = 0
   )
 
-  message ("Starting RCTD Deconvolution")
+  message("Starting RCTD Deconvolution")
 
   # perform deconvolution
   rctd_object <- spacexr::run.RCTD(rctd_object)

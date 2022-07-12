@@ -21,20 +21,20 @@ getMatricesFromSCE <- function(single_cell_object, cell_type_col = "cell_ontolog
 #' @param object SingleCellExperiment or SpatialExperiment
 #' @param column column name to check for existence
 #' @returns if column exists in object
-checkCol <- function(object, column){
-  return (column %in% names(colData(object)))
+checkCol <- function(object, column) {
+  return(column %in% names(colData(object)))
 }
 
 #' Add results to object colData
 #'
 #' @param spe SpatialExperiment
 #' @param result deconvolution result, rows = spots, columns = cell types
-addResultToObject <- function(spe, result){
-  if (is.null(spe)){
+addResultToObject <- function(spe, result) {
+  if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if (is.null(result)){
+  if (is.null(result)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
@@ -44,9 +44,9 @@ addResultToObject <- function(spe, result){
   colnames(result) <- make.names(colnames(result))
 
   # check if number of spots matches result, might not be the case for all methods
-  if (nrow(result) == ncol(spe)){
+  if (nrow(result) == ncol(spe)) {
     # add to spatialExperiment interatively
-    for (celltype in colnames(result)){
+    for (celltype in colnames(result)) {
       spe[[celltype]] <- result[, celltype]
     }
   } else {
@@ -59,7 +59,7 @@ addResultToObject <- function(spe, result){
     v2 <- rownames(result)
 
     # get the ones from v1 missing in v2
-    missing  = v1[!v1 %in% v2]
+    missing <- v1[!v1 %in% v2]
 
     # construct "missing data" and set all to NA
     missing_mat <- matrix(data = NA, nrow = length(missing), ncol = ncol(result))
@@ -73,16 +73,13 @@ addResultToObject <- function(spe, result){
     full <- full[order(match(rownames(full), rownames(result))), ]
 
     # add to object
-    for (celltype in colnames(full)){
+    for (celltype in colnames(full)) {
       spe[[celltype]] <- full[, celltype]
     }
-
   }
 
-  return (spe)
-
+  return(spe)
 }
-
 
 
 #' The dependencies for each method

@@ -1,9 +1,9 @@
 #' No signature calculated, just call the deconvolute method
 #' @returns NULL
 
-build_model_immunedeconv <- function (){
+build_model_immunedeconv <- function() {
   message("This method does not build a signature, just call the deconvolute method")
-  return (NULL)
+  return(NULL)
 }
 
 
@@ -11,33 +11,32 @@ build_model_immunedeconv <- function (){
 #' @param spe SpatialExperiment
 #' @param method deconvolution algorithm
 #' @param ... further parameters passed to the selected method
-deconvolute_immunedeconv <- function(spe, method = NULL, ...){
-
-  if (is.null(spe)){
+deconvolute_immunedeconv <- function(spe, method = NULL, ...) {
+  if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if(is.null(method)){
+  if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required")
   }
 
   # check for HGNC Symbols!!!
-  rownames(spe) = toupper(rownames(spe)) # temporary fix
+  rownames(spe) <- toupper(rownames(spe)) # temporary fix
 
   # extract bulk
   bulk <- SingleCellExperiment::counts(spe)
   bulk <- as.matrix(bulk)
 
   # some parameters are handled with the ... option
-  deconv = immunedeconv::deconvolute(
+  deconv <- immunedeconv::deconvolute(
     gene_expression = bulk,
-    method=method,
-    indications =NULL,
+    method = method,
+    indications = NULL,
     tumor = TRUE,
-    arrays=FALSE)
+    arrays = FALSE
+  )
 
   return(convertImmunedeconvMatrix(deconv))
-
 }
 
 
@@ -69,20 +68,19 @@ deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, a
   )
 
   return(convertImmunedeconvMatrix(deconv))
-
 }
 
 #' Convert Immunedeconv Matrix to match SpaceDeconv Format
 #' @param deconvResult immunedeconv result matrix
 #' @returns transformed matrix where cell types are columns
-convertImmunedeconvMatrix = function (deconvResult){
+convertImmunedeconvMatrix <- function(deconvResult) {
   # TODO Checks
 
 
-  result = deconvResult[, 2:ncol(deconvResult)]
-  result = as.matrix(result)
-  rownames(result) = deconvResult$cell_type
-  result = t(result)
+  result <- deconvResult[, 2:ncol(deconvResult)]
+  result <- as.matrix(result)
+  rownames(result) <- deconvResult$cell_type
+  result <- t(result)
 
   return(result)
 }

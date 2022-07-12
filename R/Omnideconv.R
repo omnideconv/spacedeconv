@@ -61,8 +61,8 @@ deconvolute_omnideconv <- function(spe, signature = NULL, method = NULL, single_
   bulk_gene_expression <- SingleCellExperiment::counts(spe)
 
   # extract batch ids from single cell object
-  batch_ids = NULL
-  if (!is.null(single_cell_object) && !is.null(batch_id_col)){
+  batch_ids <- NULL
+  if (!is.null(single_cell_object) && !is.null(batch_id_col)) {
     batch_ids <- colData(single_cell_object)[[batch_id_col]]
   }
 

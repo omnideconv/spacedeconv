@@ -14,7 +14,9 @@ Imports:
     methods,
     remotes,
     SingleCellExperiment,
-    SpatialExperiment
+    SpatialExperiment, 
+    Seurat, 
+    anndata
 Suggests: 
     spacexr,
     SPOTlight,
@@ -34,7 +36,7 @@ Suggests:
     SCDC,
     uuid, 
     scuttle, 
-    scran
+    scran, 
 Remotes:
     amitfrish/scBio,
     grst/MOMF,
