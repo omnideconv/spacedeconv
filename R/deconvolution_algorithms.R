@@ -31,6 +31,7 @@ deconvolution_methods <- c(
   "TIMER" = "timer",
   "ConsensurTME" = "consensus_tme",
   "ABIS" = "abis",
+  "ESTIMATE" = "estimate",
   # immunedeconv mouse
   "mMCPcounter" = "mmcp_counter",
   "seqImmuCC" = "seqimmucc",
@@ -146,6 +147,9 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     abis = {
       build_model_immunedeconv()
     },
+    estimate = {
+      build_model_immunedeconv()
+    },
 
     ######################
     # immunedeconv mouse #
@@ -190,7 +194,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     method <- deconvolution_methods[[method]]
   }
   method <- tolower(method)
-  check_and_install(method)
+  #check_and_install(method)
 
   # TODO Type checks for the spatial and single cell object
   # General type checks will be performed here, also matrix + annotation handling
@@ -280,6 +284,9 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     },
     abis = {
       deconvolute_immunedeconv(spatial_object, method = "abis", ...)
+    },
+    estimate = {
+      deconvolute_immunedeconv(spatial_object, method = "estimate", ...)
     },
 
     ######################
