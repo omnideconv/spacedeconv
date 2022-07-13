@@ -16,7 +16,8 @@ Imports:
     SingleCellExperiment,
     SpatialExperiment, 
     Seurat, 
-    anndata
+    anndata, 
+    edgeR
 Suggests: 
     spacexr,
     SPOTlight,
