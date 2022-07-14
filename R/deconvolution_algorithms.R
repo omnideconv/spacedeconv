@@ -194,7 +194,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     method <- deconvolution_methods[[method]]
   }
   method <- tolower(method)
-  #check_and_install(method)
+  check_and_install(method)
 
   # TODO Type checks for the spatial and single cell object
   # General type checks will be performed here, also matrix + annotation handling
