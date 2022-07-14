@@ -179,12 +179,14 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
 #' @param cell_type_col Column name of the single_cell_object where the cell type can be found
 #' @param method Deconvolution Method to use, see deconvolution_methods() for a full list of available methods
 #' @param batch_id_col column name of batch ids in single cell object
+#' @param assay_sc which single cell assay to use for computation
+#' @param assay_sp which spatial assay to use for computation
 #' @param return_object Return an Object or result Table, TRUE = Object
 #' @param verbose display more detailed information
 #' @param ... Further parameters passed to the selected deconvolution method
 #' @returns The deconvolution result as a table
 #' @export
-deconvolute <- function(spatial_object, signature = NULL, single_cell_object = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, return_object = TRUE, verbose = FALSE, ...) {
+deconvolute <- function(spatial_object, signature = NULL, single_cell_object = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
   if (is.null(spatial_object)) {
     stop("Parameter 'spatial_object' is missing or null, but is required.")
   }
@@ -212,7 +214,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
 
   deconv <- switch(method,
     rctd = {
-      deconvolute_rctd(single_cell_object, cell_type_col, spatial_object, ...)
+      deconvolute_rctd(single_cell_object, cell_type_col, spatial_object, assay_sc =assay_sc, assay_sp = assay_sp, ...)
     },
     spotlight = {
       deconvolute_spotlight(spe = spatial_object, model = signature)

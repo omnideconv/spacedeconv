@@ -6,15 +6,17 @@
 #' @param spatial_object SpatialExperiment
 #' @param batch_id_col column of single_cell_object containing batch_ids
 #' @param markers List of marker genes, only used for bseqsc
+#' @param assay_sc single cell assay to use
+#' @param assay_sp spatial assay to use
 #' @param ... additional parameters passed to the selected algorithm
 #'
 #' @returns Gene Expression signature or NULL, if methods don't export signatures
-build_model_omnideconv <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, spatial_object = NULL, batch_id_col = NULL, markers = NULL, ...) {
+build_model_omnideconv <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, spatial_object = NULL, batch_id_col = NULL, markers = NULL, assay_sc = "counts", assay_sp= "counts", ...) {
   # TODO checks
 
 
   # extract matrices from object
-  bulk_gene_expression <- SingleCellExperiment::counts(spatial_object)
+  bulk_gene_expression <- SummarizedExperiment::assay(spatial_object, assay_sp)
 
   # extract batch ids from single cell object
   batch_ids <- NULL

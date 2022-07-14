@@ -12,10 +12,12 @@ build_model_rctd <- function() {
 #' @param sce SingleCellExperiment
 #' @param cell_type_col Column containting cell type annotation
 #' @param spe SpatialExperiment
+#' @param assay_sc single cell assay to use
+#' @param assay_sp spatial assay to use
 #' @param n_umi_sc (optional) named list of umi counts for each cell
 #' @param n_umi_sp (optional) named list of umi counts for each spot
 #' @param n_cores Number of CPU cores to use for the calculation, NULL = use all cores
-deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp = NULL, n_cores = NULL) {
+deconvolute_rctd <- function(sce, cell_type_col, spe, assay_sc = "counts", assay_sp = "counts", n_umi_sc = NULL, n_umi_sp = NULL, n_cores = NULL) {
   if (is.null(sce)) {
     stop("Parameter 'sce' is missing or null, but is required.")
   }
@@ -35,7 +37,7 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
   message("Preparing Data for RCTD")
 
   # sc counts
-  sc_counts <- SingleCellExperiment::counts(sce)
+  sc_counts <- SummarizedExperiment::assay(sce, assay_sc)
   sc_counts <- methods::as(sc_counts, "dgCMatrix") # ensure datatype
   # in this specific case we must make gene names unique! There are duplicates
 
@@ -46,7 +48,7 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, n_umi_sc = NULL, n_umi_sp 
   cell_types <- as.factor(cell_types) # ensure factor
 
   # spatial_counts
-  spatial_counts <- SingleCellExperiment::counts(spe)
+  spatial_counts <- SummarizedExperiment::assay(spe, assay_sp)
   spatial_counts <- methods::as(spatial_counts, "dgCMatrix")
   # in this specific case we must make gene names unique! There are duplicates
   rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique = T)

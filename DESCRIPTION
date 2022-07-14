@@ -15,7 +15,8 @@ Imports:
     remotes,
     SingleCellExperiment,
     SpatialExperiment, 
-    Seurat, 
+    SummarizedExperiment,
+    Seurat,
     anndata, 
     edgeR
 Suggests: 

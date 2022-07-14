@@ -11,6 +11,8 @@ deconvolute(
   cell_type_col = "cell_ontology_class",
   method = NULL,
   batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   return_object = TRUE,
   verbose = FALSE,
   ...
@@ -28,6 +30,10 @@ deconvolute(
 \item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
 
 \item{batch_id_col}{column name of batch ids in single cell object}
+
+\item{assay_sc}{which single cell assay to use for computation}
+
+\item{assay_sp}{which spatial assay to use for computation}
 
 \item{return_object}{Return an Object or result Table, TRUE = Object}
 

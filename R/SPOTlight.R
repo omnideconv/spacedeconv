@@ -3,8 +3,10 @@
 #' @param sce SingleCellExperiment
 #' @param cell_type_col Column where cell type information can be found
 #' @param spe SpatialExperiment
+#' @param assay_sc single cell assay to use
+#' @param assay_sp spatial assay to use
 #' @param markers (Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'sce' based on the authors suggestion
-build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", spe, markers = NULL) {
+build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", spe, assay_sc = "counts", assay_sp="counts", markers = NULL) {
   if (is.null(sce)) {
     stop("Parameter 'sce' is null or missing, but is required")
   }
@@ -27,7 +29,9 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
     y = spe,
     groups = groups,
     mgs = mgs,
-    weight_id = "mean.AUC"
+    weight_id = "mean.AUC",
+    slot_sc = assay_sc, # not sure about this one!
+    slot_sp = assay_sp
   )
 
   return(model)
@@ -38,7 +42,8 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
 #'
 #' @param spe SpatialExperiment
 #' @param model SPOTlight Model
-deconvolute_spotlight <- function(spe, model = NULL) {
+#' @param assay_sp spatial assay to use for the computation
+deconvolute_spotlight <- function(spe, model = NULL, assay_sp = "counts") {
   if (is.null(spe)) {
     stop("Parameter 'spe' missing or null, but is required")
   }
@@ -55,7 +60,8 @@ deconvolute_spotlight <- function(spe, model = NULL) {
   deconv <- SPOTlight::runDeconvolution(
     x = spe,
     mod = mod,
-    ref = ref
+    ref = ref,
+    slot = assay_sp
   )
   return(deconv$mat)
 }
@@ -68,7 +74,7 @@ deconvolute_spotlight <- function(spe, model = NULL) {
 #' This Procedure reflects the suggestions of the SPOTlight authors, however,
 #' they also state that there are other ways to calculate markers
 getMarkersSPOTlight <- function(sce, cell_type_col = "cell_ontology_class") {
-  # TODO checks
+  # TODO checks! Check if cell_type_col actually exists in sce
 
   groups <- colData(sce)[[cell_type_col]]
   sce <- scuttle::logNormCounts(sce) #  only if not log normalized yet!?

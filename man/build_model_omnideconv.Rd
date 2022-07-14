@@ -11,6 +11,8 @@ build_model_omnideconv(
   spatial_object = NULL,
   batch_id_col = NULL,
   markers = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   ...
 )
 }
@@ -26,6 +28,10 @@ build_model_omnideconv(
 \item{batch_id_col}{column of single_cell_object containing batch_ids}
 
 \item{markers}{List of marker genes, only used for bseqsc}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{...}{additional parameters passed to the selected algorithm}
 }

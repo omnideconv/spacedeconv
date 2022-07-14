@@ -4,12 +4,14 @@
 \alias{deconvolute_spotlight}
 \title{Deconvolute SPOTlight}
 \usage{
-deconvolute_spotlight(spe, model = NULL)
+deconvolute_spotlight(spe, model = NULL, assay_sp = "counts")
 }
 \arguments{
 \item{spe}{SpatialExperiment}
 
 \item{model}{SPOTlight Model}
+
+\item{assay_sp}{spatial assay to use for the computation}
 }
 \description{
 Deconvolute SPOTlight

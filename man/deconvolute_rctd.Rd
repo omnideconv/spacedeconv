@@ -8,6 +8,8 @@ deconvolute_rctd(
   sce,
   cell_type_col,
   spe,
+  assay_sc = "counts",
+  assay_sp = "counts",
   n_umi_sc = NULL,
   n_umi_sp = NULL,
   n_cores = NULL
@@ -19,6 +21,10 @@ deconvolute_rctd(
 \item{cell_type_col}{Column containting cell type annotation}
 
 \item{spe}{SpatialExperiment}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{n_umi_sc}{(optional) named list of umi counts for each cell}
 

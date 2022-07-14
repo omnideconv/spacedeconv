@@ -8,6 +8,8 @@ build_model_spotlight(
   sce,
   cell_type_col = "cell_ontology_class",
   spe,
+  assay_sc = "counts",
+  assay_sp = "counts",
   markers = NULL
 )
 }
@@ -17,6 +19,10 @@ build_model_spotlight(
 \item{cell_type_col}{Column where cell type information can be found}
 
 \item{spe}{SpatialExperiment}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{markers}{(Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'sce' based on the authors suggestion}
 }
