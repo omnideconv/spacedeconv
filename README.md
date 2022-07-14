@@ -9,6 +9,9 @@ install.packages("devtools")
 
 # quick install, methods will be installed upon request
 devtools::install_github("omnideconv/SpaceDeconv")
+
+# full installation 
+devtools::install_github("omnideconv/SpaceDeconv", dependencies = TRUE)
 ``` 
 
 ## Usage 
