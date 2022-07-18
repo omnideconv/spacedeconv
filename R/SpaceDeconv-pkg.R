@@ -8,7 +8,8 @@
 #' @importFrom remotes install_github
 #' @importFrom Seurat as.SingleCellExperiment
 #' @importFrom SummarizedExperiment assay
-#'
+#' @importFrom ggplot2 aes aes_string ggplot geom_density theme_classic geom_vline
+#' @importFrom cowplot plot_grid
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package

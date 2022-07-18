@@ -18,7 +18,10 @@ Imports:
     SummarizedExperiment,
     Seurat,
     anndata, 
-    edgeR
+    edgeR, 
+    ggplot2, 
+    cowplot, 
+    spatialLIBD
 Suggests: 
     spacexr,
     SPOTlight,
