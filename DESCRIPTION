@@ -21,7 +21,8 @@ Imports:
     edgeR, 
     ggplot2, 
     cowplot, 
-    spatialLIBD
+    spatialLIBD, 
+    ggridges
 Suggests: 
     spacexr,
     SPOTlight,
