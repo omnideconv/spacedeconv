@@ -16,6 +16,12 @@ devtools::install_github("omnideconv/SpaceDeconv", dependencies = TRUE)
 
 ## Usage 
 
+### Load Spatial Dataset
+You can easily load 10xVisium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment Documentation for further details. 
+``` r
+spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
+``` 
+
 ### 1. Build a Signature Matrix 
 
 ``` r
@@ -25,5 +31,21 @@ signature <- SpaceDeconv::build_model(single_cell_object, cell_type_col = "cell_
 ### 2. Deconvolute 
 
 ```r
+# save the results to an annotated SpatialExperiment
 result <- SpaceDeconv::deconvolute(spatial_object, signature, method = "spotlight")
+
+# return deconvolution results as a table
+result <- SpaceDeconv::deconvolute(spatial_object, signature, method = "spotlight", return_object = FALSE)
+```
+
+
+### Visualization 
+SpaceDeconv includes multiple visualization functions. 
+```r
+# sample does refer to the first column of ColData(spe)
+# for cell_type input a celltype present in the deconvolution result
+plot_celltype(spe, sample="sammple01", cell_type"B.cells")
+
+# threshold changes the minimum cell type fraction for a cell to be considered present in a specific spot
+plot_cells_per_spot(spe, threshold=0.01)
 ```
