@@ -16,7 +16,10 @@ build_model_omnideconv <- function(single_cell_object, cell_type_col = "cell_ont
 
 
   # extract matrices from object
-  bulk_gene_expression <- SummarizedExperiment::assay(spatial_object, assay_sp)
+  bulk_gene_expression <- NULL
+  if (!is.null(spatial_object)){
+    bulk_gene_expression <- SummarizedExperiment::assay(spatial_object, assay_sp)
+  }
 
   # extract batch ids from single cell object
   batch_ids <- NULL

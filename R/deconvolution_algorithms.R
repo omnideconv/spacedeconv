@@ -317,3 +317,47 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     return(deconv)
   }
 }
+
+#' Build Model and Deconvolute in one step
+#'
+#' @param single_cell_obj Single Cell Object containing reference data to build the model
+#' @param spatial_obj SpatialExperiment to be deconvoluted
+#' @param method deconvolution method
+#' @param cell_type_col column of single_cell_obj containing cell type information
+#' @param batch_id_col column of SpatialObject containing batch_id information
+#' @param assay_sc the assay of the single cell object to use, default = "counts"
+#' @param assay_sp the assay of the spatialExperiment to use, default = "counts"
+#' @param return_object if true return anotation spatialExperiment, if false return table
+#' @param verbose output more information
+#' @param ... further parameters passed to the selected function
+#' @export
+build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
+
+  # TODO useful checks
+
+  signature <- build_model(
+    single_cell_obj,
+    cell_type_col = cell_type_col,
+    spatial_object = spatial_obj,
+    method = method,
+    batch_id_col = batch_id_col,
+    assay_sc = assay_sc,
+    assay_sp = assay_sp,
+    verbose = verbose,
+    ...
+  )
+
+  deconv <- deconvolute(
+    spatial_object = spatial_obj,
+    signature = signature,
+    single_cell_object = single_cell_obj,
+    cell_type_col = cell_type_col,
+    batch_id_col = batch_id_col,
+    assay_sc = assay_sc,
+    assay_sp = assay_sp,
+    verbose = verbose,
+    return_object = return_object,
+    ...
+  )
+  return(deconv)
+}
