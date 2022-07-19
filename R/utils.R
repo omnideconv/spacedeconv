@@ -81,6 +81,18 @@ addResultToObject <- function(spe, result) {
   return(spe)
 }
 
+#' get deconvolution results from object
+#' @param spatial_obj SpatialExperiment
+get_results_from_object = function(spatial_obj){
+  if (is.null(spatial_obj)){
+    stop("Parameter 'spatial_obj' is null or missing, but is required")
+  }
+
+  tmp <- SingleCellExperiment::colData(spatial_obj)
+  tmp <- as.matrix(tmp[, -1]) # ???
+
+  return (tmp)
+}
 
 #' The dependencies for each method
 #'

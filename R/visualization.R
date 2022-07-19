@@ -49,3 +49,52 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
 
   cowplot::plot_grid(spatial, density)
 }
+
+#' Plot Cells per Spot
+#'
+#' @param spatial_obj SpatialExperiment containing deconvolution results
+#' @param treshold treshold for presence/absence, single value or vector of length nrow(spatial_obj)
+#' @export
+plot_cells_per_spot <- function(spatial_obj, treshold = 0){
+  if (is.null(spatial_obj)){
+    stop("Paramter 'spatial_obj' is missing or null, but is required")
+  }
+
+  mat <- get_results_from_object(spatial_obj)
+
+
+  # initialize result matrix with zeros
+  res <- matrix(0, nrow = nrow(mat), ncol=ncol(mat))
+
+  # single treshold or vector
+  if (length(treshold)==1){
+    res[mat>treshold]<-1
+  } else if (length(treshold)==nrow(mat)){ # vector matches matrix
+    for (i in 1:nrow(mat)){
+      res[i, mat[i, ] > treshold[i]] <- 1
+    }
+  }
+
+  rownames(res) <- rownames(mat)
+  colnames(res) <- colnames(mat)
+
+  # count cells
+  plot_data <- data.frame(spot = rownames(res), value = apply(res, 1, sum), id=1)
+
+  # make plot
+  density <- ggplot2::ggplot(plot_data, mapping = ggplot2::aes_string(x = "value", y="id")) +
+    ggridges::geom_density_ridges() +
+    ggplot2::scale_x_discrete() +
+    ggplot2::geom_vline(
+      ggplot2::aes(xintercept = mean(unlist(plot_data["value"]))),
+      color = "red",
+      linetype = "dashed",
+      size = 1
+    ) +
+    ggplot2::theme_classic() +
+    ggplot2::theme(axis.line.y = ggplot2::element_blank(),
+                   axis.ticks.y = ggplot2::element_blank(),
+                   axis.title.y = ggplot2::element_blank(),
+                   axis.text.y = ggplot2::element_blank())
+  return (density)
+}
