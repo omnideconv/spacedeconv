@@ -47,6 +47,9 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
                    axis.title = ggplot2::element_blank())
     #ggplot2::ylim(0, max(data["values"]))
 
+  print (class(spatial))
+  print (class(density))
+
   #cowplot::plot_grid(spatial, density)
   gridExtra::grid.arrange(spatial, density, ncol=2)
 }
