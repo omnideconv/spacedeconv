@@ -3,8 +3,9 @@
 #' @param spatial_obj SpatialExperiment containing deconvolution results
 #' @param sample sample to plot
 #' @param cell_type Cell Type to plot
+#' @param plot_density (default = FALSE) wheter to plot the density
 #' @export
-plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
+plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density=FALSE) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
@@ -24,34 +25,35 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
     geneid = cell_type, point_size = 1.8
   )
 
-  # extract distribution from object
 
-  data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id=rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
-  density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y="id")) + # fill... see ggridges docs
-    #ggplot2::geom_density() +
-    ggridges::geom_density_ridges() + # _gradient()
-    #ggplot2::scale_fill_viridis_c() +
-    ggplot2::scale_y_discrete() +
-    ggplot2::geom_vline(
-      ggplot2::aes(xintercept = mean(unlist(data["values"]))),
-      color = "red",
-      linetype = "dashed",
-      size = 1
-    ) +
-    ggplot2::theme_classic() +
-    #ggplot2::ylim(c(0, 1000)) +
-    ggplot2::theme(legend.position = "none",
-                   axis.text.y = ggplot2::element_blank(),
-                   axis.ticks.y = ggplot2::element_blank(),
-                   axis.line.y = ggplot2::element_blank(),
-                   axis.title = ggplot2::element_blank())
+  if (!plot_density){
+    return (spatial)
+  } else {
+    # extract distribution from object
+    data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id=rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
+    density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y="id")) + # fill... see ggridges docs
+      #ggplot2::geom_density() +
+      ggridges::geom_density_ridges() + # _gradient()
+      #ggplot2::scale_fill_viridis_c() +
+      ggplot2::scale_y_discrete() +
+      ggplot2::geom_vline(
+        ggplot2::aes(xintercept = mean(unlist(data["values"]))),
+        color = "red",
+        linetype = "dashed",
+        size = 1
+      ) +
+      ggplot2::theme_classic() +
+      #ggplot2::ylim(c(0, 1000)) +
+      ggplot2::theme(legend.position = "none",
+                     axis.text.y = ggplot2::element_blank(),
+                     axis.ticks.y = ggplot2::element_blank(),
+                     axis.line.y = ggplot2::element_blank(),
+                     axis.title = ggplot2::element_blank())
     #ggplot2::ylim(0, max(data["values"]))
 
-  print (class(spatial))
-  print (class(density))
-
-  #cowplot::plot_grid(spatial, density)
-  gridExtra::grid.arrange(spatial, density, ncol=2)
+    #cowplot::plot_grid(spatial, density)
+    return(gridExtra::grid.arrange(spatial, density, ncol=2))
+  }
 }
 
 #' Plot Cells per Spot
