@@ -5,7 +5,7 @@
 #' @param cell_type Cell Type to plot
 #' @param plot_density (default = FALSE) wheter to plot the density
 #' @export
-plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density=FALSE) {
+plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density=TRUE) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
