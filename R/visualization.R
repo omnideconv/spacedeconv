@@ -21,13 +21,13 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
   # make plots
   spatial <- spatialLIBD::vis_gene(
     spe = spatial_obj, sampleid = sample,
-    geneid = cell_type, point_size = 2
+    geneid = cell_type, point_size = 1.8
   )
 
   # extract distribution from object
 
   data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id=rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
-  density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = values, y=id, fill=ggplot2::after_stat(x))) +
+  density <- ggplot2::ggplot(data, mapping = ggplot2::aes_(x = ~values, y=~id, fill=ggplot2::after_stat(~x))) +
     #ggplot2::geom_density() +
     ggridges::geom_density_ridges_gradient() +
     ggplot2::scale_fill_viridis_c() +
@@ -47,7 +47,8 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
                    axis.title = ggplot2::element_blank())
     #ggplot2::ylim(0, max(data["values"]))
 
-  cowplot::plot_grid(spatial, density)
+  #cowplot::plot_grid(spatial, density)
+  gridExtra::grid.arrange(spatial, density, ncol=2)
 }
 
 #' Plot Cells per Spot
