@@ -8,7 +8,7 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Imports: 
     utils,
     methods,
@@ -20,9 +20,9 @@ Imports:
     anndata, 
     edgeR, 
     ggplot2, 
-    cowplot, 
     spatialLIBD, 
-    ggridges
+    ggridges, 
+    gridExtra
 Suggests: 
     spacexr,
     SPOTlight,
@@ -51,4 +51,3 @@ Remotes:
     PelzKo/dwls,
     shenorrlab/bseqsc,
     xuranw/MuSiC
-

@@ -4,7 +4,12 @@
 \alias{plot_celltype}
 \title{Plot Spatial Object}
 \usage{
-plot_celltype(spatial_obj, sample = "sample01", cell_type = NULL)
+plot_celltype(
+  spatial_obj,
+  sample = "sample01",
+  cell_type = NULL,
+  plot_density = TRUE
+)
 }
 \arguments{
 \item{spatial_obj}{SpatialExperiment containing deconvolution results}
@@ -12,6 +17,8 @@ plot_celltype(spatial_obj, sample = "sample01", cell_type = NULL)
 \item{sample}{sample to plot}
 
 \item{cell_type}{Cell Type to plot}
+
+\item{plot_density}{(default = FALSE) wheter to plot the density}
 }
 \description{
 Plot Spatial Object

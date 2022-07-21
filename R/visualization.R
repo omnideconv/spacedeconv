@@ -25,10 +25,9 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
     geneid = cell_type, point_size = 1.8
   )
 
+  plot <- spatial
 
-  if (!plot_density){
-    return (spatial)
-  } else {
+  if (plot_density){
     # extract distribution from object
     data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id=rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
     density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y="id")) + # fill... see ggridges docs
@@ -52,8 +51,10 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
     #ggplot2::ylim(0, max(data["values"]))
 
     #cowplot::plot_grid(spatial, density)
-    return(gridExtra::grid.arrange(spatial, density, ncol=2))
+    plot <- gridExtra::grid.arrange(spatial, density, ncol=2)
   }
+
+  plot
 }
 
 #' Plot Cells per Spot
@@ -89,8 +90,8 @@ plot_cells_per_spot <- function(spatial_obj, treshold = 0){
 
   # make plot
   density <- ggplot2::ggplot(plot_data, mapping = ggplot2::aes_string(x = "value", y="id")) +
-    ggridges::geom_density_ridges() +
-    ggplot2::scale_x_discrete() +
+    ggridges::geom_density_ridges(stat="density", mapping = aes(height=ggplot2::stat(density))) +
+    ggplot2::scale_x_continuous() +
     ggplot2::geom_vline(
       ggplot2::aes(xintercept = mean(unlist(plot_data["value"]))),
       color = "red",
@@ -98,9 +99,11 @@ plot_cells_per_spot <- function(spatial_obj, treshold = 0){
       size = 1
     ) +
     ggplot2::theme_classic() +
-    ggplot2::theme(axis.line.y = ggplot2::element_blank(),
-                   axis.ticks.y = ggplot2::element_blank(),
+   ggplot2::theme(axis.title.x = ggplot2::element_blank(),
                    axis.title.y = ggplot2::element_blank(),
-                   axis.text.y = ggplot2::element_blank())
-  return (density)
+                  axis.line.y = ggplot2::element_blank(),
+                  axis.ticks.y = ggplot2::element_blank(),
+                  axis.text.y = ggplot2::element_blank())
+
+  density
 }
