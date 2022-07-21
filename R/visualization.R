@@ -27,7 +27,7 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL) {
   # extract distribution from object
 
   data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id=rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
-  density <- ggplot2::ggplot(data, mapping = ggplot2::aes_(x = ~values, y=~id, fill=ggplot2::after_stat(~x))) +
+  density <- ggplot2::ggplot(data, mapping = ggplot2::aes_(x = ~values, y=~id, fill=ggplot2::after_stat(~values))) +
     #ggplot2::geom_density() +
     ggridges::geom_density_ridges_gradient() +
     ggplot2::scale_fill_viridis_c() +

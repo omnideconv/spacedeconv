@@ -8,7 +8,7 @@
 #' @importFrom remotes install_github
 #' @importFrom Seurat as.SingleCellExperiment
 #' @importFrom SummarizedExperiment assay
-#' @importFrom ggplot2 aes aes_string ggplot geom_density theme_classic geom_vline scale_fill_viridis_c scale_y_discrete theme
+#' @importFrom ggplot2 aes aes_string aes_ ggplot geom_density theme_classic geom_vline scale_fill_viridis_c scale_y_discrete theme
 #' @importFrom cowplot plot_grid
 #' @importFrom ggridges geom_density_ridges_gradient
 #'
