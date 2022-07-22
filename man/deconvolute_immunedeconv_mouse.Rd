@@ -9,6 +9,7 @@ deconvolute_immunedeconv_mouse(
   method = NULL,
   rmgenes = NULL,
   algorithm = NULL,
+  assay_sp = "counts",
   ...
 )
 }
@@ -20,6 +21,8 @@ deconvolute_immunedeconv_mouse(
 \item{rmgenes}{genes to remove from the analysis}
 
 \item{algorithm}{statistical algorithm for SeqImmuCC (ignored by all other methods)}
+
+\item{assay_sp}{assay of spatial object to use}
 
 \item{...}{additional parameters passed to function}
 }

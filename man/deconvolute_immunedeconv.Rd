@@ -4,12 +4,14 @@
 \alias{deconvolute_immunedeconv}
 \title{Deconvolute Immundeconv}
 \usage{
-deconvolute_immunedeconv(spe, method = NULL, ...)
+deconvolute_immunedeconv(spe, method = NULL, assay_sp = "counts", ...)
 }
 \arguments{
 \item{spe}{SpatialExperiment}
 
 \item{method}{deconvolution algorithm}
+
+\item{assay_sp}{assay of spatial object to use}
 
 \item{...}{further parameters passed to the selected method}
 }

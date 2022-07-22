@@ -7,11 +7,17 @@ build_model_immunedeconv <- function() {
 }
 
 
+# is this located better somewhere else?
+if (requireNamespace("xCell")){
+  xCell.data <- xCell::xCell.data
+}
+
 #' Deconvolute Immundeconv
 #' @param spe SpatialExperiment
 #' @param method deconvolution algorithm
+#' @param assay_sp assay of spatial object to use
 #' @param ... further parameters passed to the selected method
-deconvolute_immunedeconv <- function(spe, method = NULL, ...) {
+deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -24,8 +30,11 @@ deconvolute_immunedeconv <- function(spe, method = NULL, ...) {
   rownames(spe) <- toupper(rownames(spe)) # temporary fix
 
   # extract bulk
-  bulk <- SingleCellExperiment::counts(spe)
-  bulk <- as.matrix(bulk)
+  bulk <- NULL
+  if (!is.null(spe)){
+    bulk <- SummarizedExperiment::assay(spe, assay_sp)
+    bulk <- as.matrix(bulk)
+  }
 
   # some parameters are handled with the ... option
   deconv <- immunedeconv::deconvolute(
@@ -45,9 +54,10 @@ deconvolute_immunedeconv <- function(spe, method = NULL, ...) {
 #' @param method deconvolution algorithm
 #' @param rmgenes genes to remove from the analysis
 #' @param algorithm statistical algorithm for SeqImmuCC (ignored by all other methods)
+#' @param assay_sp assay of spatial object to use
 #' @param ... additional parameters passed to function
 #'
-deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, algorithm = NULL, ...) {
+deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -57,8 +67,11 @@ deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, a
   }
 
   # extract bulk
-  bulk <- SingleCellExperiment::counts(spe)
-  bulk <- as.matrix(bulk)
+  bulk <- NULL
+  if (!is.null(spe)){
+    bulk <- SummarizedExperiment::assay(spe, assay_sp)
+    bulk <- as.matrix(bulk)
+  }
 
   deconv <- immunedeconv::deconvolute_mouse(
     gene_expression_matrix = bulk,

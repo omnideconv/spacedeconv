@@ -11,6 +11,8 @@ build_model(
   verbose = FALSE,
   spatial_object = NULL,
   batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   ...
 )
 }
@@ -26,6 +28,10 @@ build_model(
 \item{spatial_object}{SpatialExperiment, required for SPOTlight}
 
 \item{batch_id_col}{column of singleCellExperiment containing batch ids}
+
+\item{assay_sc}{assay of single cell object to use}
+
+\item{assay_sp}{assay of spatial object to use}
 
 \item{...}{additional parameters passed to the functions}
 }
