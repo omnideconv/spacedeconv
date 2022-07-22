@@ -23,7 +23,7 @@ spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
 ``` 
 
 ### Normalization 
-SpaceDeconv offers an addition function for convenient normalization of SpatialExperiments. The normalization is saved in an additional assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`
+SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
 ``` r
 spe <- SpaceDeconv::normalize(spe, method="cpm")
 
@@ -34,7 +34,7 @@ spe <- SpaceDeconv::normalize(spe, method="cpm")
 signature <- SpaceDeconv::build_model(single_cell_object, cell_type_col = "cell_ontology_class", method = "spotlight", assay_sc="cpm")
 ```
 ### Deconvolution
-To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `SpaceDeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object for convenient visualization. You can obtain the results in table form by setting `return_object=FALSE`.
+To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `SpaceDeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object to simplify the visualization. You can obtain the results in table form by setting `return_object=FALSE`.
 ```r
 # save the results to an annotated SpatialExperiment
 result <- SpaceDeconv::deconvolute(spatial_object, signature, method = "spotlight")
