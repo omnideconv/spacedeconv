@@ -70,7 +70,7 @@ addResultToObject <- function(spe, result) {
     full <- rbind(result, missing_mat)
 
     # order accordingly
-    full <- full[order(match(rownames(full), rownames(result))), ]
+    full <- full[order(match(rownames(full), rownames(result))), , drop=FALSE]
 
     # add to object
     for (celltype in colnames(full)) {

@@ -17,19 +17,24 @@ devtools::install_github("omnideconv/SpaceDeconv", dependencies = TRUE)
 ## Usage 
 
 ### Load Spatial Dataset
-You can easily load 10xVisium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment Documentation for further details. 
+You can easily load 10xVisium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details. 
 ``` r
 spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
 ``` 
 
-### 1. Build a Signature Matrix 
-
+### Normalization 
+SpaceDeconv offers an addition function for convenient normalization of SpatialExperiments. The normalization is saved in an additional assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`
 ``` r
-signature <- SpaceDeconv::build_model(single_cell_object, cell_type_col = "cell_ontology_class", method = "spotlight")
+spe <- SpaceDeconv::normalize(spe, method="cpm")
+
 ```
 
-### 2. Deconvolute 
-
+### Build a Signature Matrix 
+``` r
+signature <- SpaceDeconv::build_model(single_cell_object, cell_type_col = "cell_ontology_class", method = "spotlight", assay_sc="cpm")
+```
+### Deconvolution
+To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `SpaceDeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object for convenient visualization. You can obtain the results in table form by setting `return_object=FALSE`.
 ```r
 # save the results to an annotated SpatialExperiment
 result <- SpaceDeconv::deconvolute(spatial_object, signature, method = "spotlight")
