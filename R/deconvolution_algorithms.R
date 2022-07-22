@@ -82,6 +82,9 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     spotlight = {
       build_model_spotlight(single_cell_object, cell_type_col, spatial_object, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
+    card = {
+      build_model_card()
+    },
 
     ##############
     # omnideconv #
@@ -221,6 +224,9 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
     },
     spotlight = {
       deconvolute_spotlight(spe = spatial_object, model = signature, assay_sp = assay_sp)
+    },
+    card = {
+      deconvolute_card(single_cell_object, spatial_object, cell_type_col=cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
     },
 
     ##############

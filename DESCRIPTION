@@ -22,7 +22,8 @@ Imports:
     ggplot2, 
     spatialLIBD, 
     ggridges, 
-    gridExtra
+    gridExtra, 
+    magrittr
 Suggests: 
     spacexr,
     SPOTlight,
@@ -43,6 +44,7 @@ Suggests:
     uuid, 
     scuttle, 
     scran, 
+    CARD
 Remotes:
     amitfrish/scBio,
     grst/MOMF,

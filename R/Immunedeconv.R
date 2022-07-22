@@ -6,12 +6,6 @@ build_model_immunedeconv <- function() {
   return(NULL)
 }
 
-
-# is this located better somewhere else?
-if (requireNamespace("xCell")){
-  xCell.data <- xCell::xCell.data
-}
-
 #' Deconvolute Immundeconv
 #' @param spe SpatialExperiment
 #' @param method deconvolution algorithm
@@ -24,6 +18,11 @@ deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ..
 
   if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required")
+  }
+
+  # manual workaround for xCell
+  if (method == "xcell" && requireNamespace("xCell")){
+    xCell.data <- xCell::xCell.data
   }
 
   # check for HGNC Symbols!!!
