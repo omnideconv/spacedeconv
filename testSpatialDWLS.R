@@ -10,16 +10,15 @@ path_result <- "/home/czackl/Dokumente/exchange/"
 
 
 # create Giotto Instructions
-instrs <- Giotto::createGiottoInstructions(save_dir = path_result, 
-                                           save_plot = TRUE, 
+instrs <- Giotto::createGiottoInstructions(save_dir = path_result,
+                                           save_plot = TRUE,
                                            show_plot = TRUE)
 
 # create Giotto Object
-visium <- Giotto::createGiottoVisiumObject(visium_dir = path_file, expr_data = "raw", 
-                                     png_name = "tissue_lowres_image.png", instructions = instrs)
+visium <- Giotto::createGiottoVisiumObject(visium_dir = "~/data/renal/ffpe_c45", expr_data = "filter", h5_visium_path = "~/data/renal/ffpe_c45/filtered_feature_bc_matrix.h5",
+                                     png_name = "tissue_lowres_image.png", instructions = instrs, h5_tissue_positions_path = "~/data/renal/ffpe_c45/spatial/tissue_positions_list.csv")
 
 
-# position image properly
 visium <- updateGiottoImage(visium, image_name="image", xmax_adj = 3500, xmin_adj = 3000, ymax_adj = 4800, ymin_adj = 2000)
 
 # use only in_tissue cells
@@ -33,9 +32,11 @@ visium <- filterGiotto(visium, expression_threshold = 1, verbose = T) # remove a
 
 visium <- normalizeGiotto(visium)
 
+
 # create Reference Matrix
 
 sc <- TabulaMurisSenisData::TabulaMurisSenisDroplet(tissues= "Kidney")$Kidney
+rownames(sc) <- toupper(rownames(sc))
 
 mat <- counts(sc)
 cell_types <- as.vector(sc$cell_ontology_class)
@@ -58,10 +59,10 @@ signature <- signature[rowSums(signature)!=0, ] # remove all zero genes, eigen e
 
 
 # i dont know why but we need to cluster
-visium <- calculateHVG(visium)
-visium <- runPCA(visium)
+visium <- calculateHVG(visium) # variable but standard = TRUE
+visium <- runPCA(visium) # or UMAP, TSNE
 visium <- createNearestNetwork(visium)
-visium <- doLeidenCluster(visium, name = "leiden_clus")
+visium <- doLeidenCluster(visium, name = "leiden_clus") # Kmeans, Hclust, Louvain, Leiden
 
 message("Started Deconvolution")
 
