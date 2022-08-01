@@ -44,7 +44,9 @@ Suggests:
     uuid, 
     scuttle, 
     scran, 
-    CARD
+    CARD, 
+    xCell, 
+    Giotto
 Remotes:
     amitfrish/scBio,
     grst/MOMF,

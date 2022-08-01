@@ -86,7 +86,7 @@ build_model <- function(single_cell_object, cell_type_col = "cell_ontology_class
     card = {
       build_model_card()
     },
-    spatialdwls = {build_model_spatial_dwls(sce, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)},
+    spatialdwls = {build_model_spatial_dwls(single_cell_object, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)},
 
     ##############
     # omnideconv #
@@ -231,7 +231,7 @@ deconvolute <- function(spatial_object, signature = NULL, single_cell_object = N
       deconvolute_card(single_cell_object, spatial_object, cell_type_col=cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
     },
     spatialdwls = {
-      deconvolute_spatial_dwls(spe, signature, assay_sp = assay_sp, ...)
+      deconvolute_spatial_dwls(spatial_object, signature, assay_sp = assay_sp, ...)
     },
 
     ##############

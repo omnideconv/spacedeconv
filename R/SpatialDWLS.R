@@ -97,7 +97,7 @@ doGiottoWorkflow <- function(obj, calculateHVG = TRUE, dim_method = "pca", clust
 
   # Dimension Reduction
   message("Giotto: Performing Dimension Reduction")
-  obj <- runPCA(obj) # run anayway, either pca is used or it needs to be run for tnse and umap?
+  obj <- Giotto::runPCA(obj) # run anayway, either pca is used or it needs to be run for tnse and umap?
   obj <- switch(dim_method,
                 pca = {obj}, # just return the object, already performed
                 tsne = {

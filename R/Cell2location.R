@@ -1,6 +1,5 @@
 #' Build Model Cell2location
 #'
-#' @param sce SingleCellExperiment
 
 
 
