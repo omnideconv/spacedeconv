@@ -9,6 +9,8 @@ build_model_spatial_dwls(
   assay_sc = "counts",
   marker_method = "scran",
   cell_type_col = "cell_ontology_class",
+  dim_method = "pca",
+  cluster_method = "leiden",
   ...
 )
 }
@@ -21,7 +23,11 @@ build_model_spatial_dwls(
 
 \item{cell_type_col}{column of sce containing cell type information}
 
+\item{dim_method}{dimension reduction method}
+
 \item{...}{additional paramters}
+
+\item{cluser_method}{cluster method to  use when calculating marker genes}
 }
 \description{
 Build Model Spatial DWLS
