@@ -8,7 +8,7 @@ build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "
 
 
   # TODO Checks
-  if (checkCol(sce, cell_type_col)) {
+  if (!checkCol(sce, cell_type_col)) {
     stop("cell_type_col not available")
   }
 
