@@ -22,7 +22,7 @@ getMatricesFromSCE <- function(single_cell_object, cell_type_col = "cell_ontolog
 #' @param column column name to check for existence
 #' @returns if column exists in object
 checkCol <- function(object, column) {
-  return(column %in% names(colData(object)))
+  return(column %in% names(SingleCellExperiment::colData(object)))
 }
 
 #' Add results to object colData
