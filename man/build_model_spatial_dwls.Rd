@@ -25,9 +25,9 @@ build_model_spatial_dwls(
 
 \item{dim_method}{dimension reduction method}
 
-\item{...}{additional paramters}
+\item{cluster_method}{cluster method to  use when calculating marker genes}
 
-\item{cluser_method}{cluster method to  use when calculating marker genes}
+\item{...}{additional paramters}
 }
 \description{
 Build Model Spatial DWLS

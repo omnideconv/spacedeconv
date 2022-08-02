@@ -4,20 +4,28 @@ Unified interface for the deconvolution of spatial transcriptomics data
 
 ## Installation 
 
+There are two ways to install `SpaceDeconv`:
+* The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand. 
+* The _complete_ installtation installs all dependencies including all deconvolution methods. This may take a considerable time. 
+
+Since not all dependencies are on CRAN or Bioconductor, `SpaceDeconv`is available from GitHub only. We recommend installing trough the pak package manager: 
+
 ``` r
-install.packages("devtools")
+# install the pak package manager
+install.packages("pak")
 
-# quick install, methods will be installed upon request
-devtools::install_github("omnideconv/SpaceDeconv")
+# minimal installation 
+pak::pkg_install("omnideconv/SpaceDeconv")
 
-# full installation 
-devtools::install_github("omnideconv/SpaceDeconv", dependencies = TRUE)
+# complete installation, including Python dependencies
+pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
+# SpaceDeconv::install_all_python()
 ``` 
 
 ## Usage 
 
 ### Load Spatial Dataset
-You can easily load 10xVisium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details. 
+You can load 10X Visium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details. 
 ``` r
 spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
 ``` 

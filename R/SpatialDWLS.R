@@ -4,7 +4,7 @@
 #' @param marker_method provide list of marker genes or method to calculate markers (scran, gini, mast)
 #' @param cell_type_col column of sce containing cell type information
 #' @param dim_method dimension reduction method
-#' @param cluser_method cluster method to  use when calculating marker genes
+#' @param cluster_method cluster method to  use when calculating marker genes
 #' @param ... additional paramters
 build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "scran", cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
 
@@ -32,6 +32,7 @@ build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "
     message("Calculating Markers")
     # calculate based on selection
     # TODO add assay to use or select default one by handling all that during Giotto object creation
+    # TODO Cluster, probably just add _clus
     markers = Giotto::findMarkers(obj,  method = marker_method, cluster_column = cluster_method)
 
   } else {
