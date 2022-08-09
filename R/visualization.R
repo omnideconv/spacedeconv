@@ -4,8 +4,9 @@
 #' @param sample sample to plot
 #' @param cell_type Cell Type to plot
 #' @param plot_density (default = FALSE) wheter to plot the density
+#' @param point_size
 #' @export
-plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density=TRUE) {
+plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density=TRUE, spot_size = 1) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
@@ -22,7 +23,7 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
   # make plots
   spatial <- spatialLIBD::vis_gene(
     spe = spatial_obj, sampleid = sample,
-    geneid = cell_type, point_size = 1.8
+    geneid = cell_type, point_size = spot_size
   )
 
   plot <- spatial
