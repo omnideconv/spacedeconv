@@ -1,3 +1,29 @@
+#' Set Path to CIBERSORT R script (`CIBERSORT.R`)
+#'
+#' CIBERSORT is only freely available to academic users.
+#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path path to cibersort R script.
+#'
+#' @export
+set_cibersort_binary <- function(path) {
+  immunedeconv::set_cibersort_binary(path) # set the same for immunedeconv
+  assign("cibersort_binary", path, envir = config_env)
+}
+
+#' Set Path to CIBERSORT matrix file (`LM22.txt`)
+#'
+#' CIBERSORT is only freely available to academic users.
+#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path path to cibersort matrix.
+#'
+#' @export
+set_cibersort_mat <- function(path) {
+  immunedeconv::set_cibersort_mat(path)
+  assign("cibersort_mat", path, envir = config_env)
+}
+
 #' get matrices from SingleCellExperiment
 #' @param single_cell_object SingleCellExperiment
 #' @param cell_type_col column containing the cell type

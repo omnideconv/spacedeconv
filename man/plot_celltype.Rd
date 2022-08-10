@@ -8,7 +8,8 @@ plot_celltype(
   spatial_obj,
   sample = "sample01",
   cell_type = NULL,
-  plot_density = TRUE
+  plot_density = TRUE,
+  spot_size = 1
 )
 }
 \arguments{

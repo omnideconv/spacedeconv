@@ -23,7 +23,8 @@ Imports:
     spatialLIBD, 
     ggridges, 
     gridExtra, 
-    magrittr
+    magrittr, 
+    testit
 Suggests: 
     spacexr,
     SPOTlight,

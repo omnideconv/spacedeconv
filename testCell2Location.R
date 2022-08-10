@@ -10,7 +10,9 @@ cl <- import("cell2location")
 sc <- import("scanpy")
 pd <- import("pandas")
 np <- import("numpy")
-ad <- import("anndata") #?
+#ad <- import("anndata") #?
+
+library(anndata) # muss unbedingt geladen werden?
 
 
 adata_vis = sc$datasets$visium_sge(sample_id="V1_Human_Lymph_Node")
@@ -23,10 +25,11 @@ adata_ref = sc$read(
 
 adata_vis$obs["sample"] <- list(names(adata_vis$uns[["spatial"]])) # add sample information to spots, in case there are more?
 adata_vis$var["SYMBOL"] <- adata_vis$var_names # add symbols to "colData"
+# das hier oben produziert eine Warning, funktioniert aber trotzdem
 
 
 # this is the set_index part!!!
-# rename genes to ensebml
+# rename genes to ensebml, this could also be symbols
 rownames(adata_vis$var) <- adata_vis$var$gene_ids
 rownames(adata_ref$var) <- adata_ref$var[["GeneID-2"]]
 
@@ -70,14 +73,16 @@ colnames(inf_aver) <- adata_ref_after$uns[["mod"]][["factor_names"]]  # availabl
 
 ######### now the mapping part
 
-intersect =  np$intersect1d(adata_ref_after$var_names, rownames(inf_aver) )
+intersect =  np$intersect1d(adata_vis$var_names, rownames(inf_aver) )
+intersect = as.vector(intersect)
 vin = adata_vis$var_names %in% intersect
 # subset both objects
 
 # adata
 inf_aver = inf_aver[intersect, ]
-adata_vis = adata_vis[, intersect]
+adata_vis = adata_vis[ , vin]
 
 cl$models$Cell2location$setup_anndata(adata = adata_vis, batch_key = "sample")
 
-mod = cl$models$Cell2location(adata_vis, cell_state_df = inf_aver, N_cells_per_location = 10, detection_alpha = 20)
+mod = cl$models$Cell2location(adata_vis, cell_state_df = inf_aver, N_cells_per_location = 10, detection_alpha = 200)
+

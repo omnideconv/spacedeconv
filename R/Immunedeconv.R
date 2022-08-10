@@ -35,6 +35,26 @@ deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ..
     bulk <- as.matrix(bulk)
   }
 
+  # if method is "cibersort" remove spots with zero expression in signature genes
+  if (method=="cibersort"){
+    # check if cibersort variables are set
+
+    testit::assert("CIBERSORT.R is provided", exists("cibersort_binary", envir = config_env))
+    testit::assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir = config_env))
+
+    sig = read.table(get("cibersort_mat", envir = config_env), header = TRUE, sep="\t", row.names = 1, check.names = FALSE)
+
+    #intersect genes
+    sig_genes <- rownames(sig)
+    bulk_genes <- rownames(bulk)
+    bulk_in_sig <- bulk_genes %in% sig_genes
+    tmp <- colSums(bulk[bulk_in_sig, ])==0
+    if (sum(tmp)>0){
+      message("Removing unsusable spots")
+      bulk = bulk[, !tmp]
+    }
+  }
+
   # some parameters are handled with the ... option
   deconv <- immunedeconv::deconvolute(
     gene_expression = bulk,
