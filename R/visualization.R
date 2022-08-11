@@ -63,9 +63,9 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
 #' Plot Cells per Spot
 #'
 #' @param spatial_obj SpatialExperiment containing deconvolution results
-#' @param treshold treshold for presence/absence, single value or vector of length nrow(spatial_obj)
+#' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
 #' @export
-plot_cells_per_spot <- function(spatial_obj, treshold = 0) {
+plot_cells_per_spot <- function(spatial_obj, threshold = 0) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -76,12 +76,12 @@ plot_cells_per_spot <- function(spatial_obj, treshold = 0) {
   # initialize result matrix with zeros
   res <- matrix(0, nrow = nrow(mat), ncol = ncol(mat))
 
-  # single treshold or vector
-  if (length(treshold) == 1) {
-    res[mat > treshold] <- 1
-  } else if (length(treshold) == nrow(mat)) { # vector matches matrix
+  # single threshold or vector
+  if (length(threshold) == 1) {
+    res[mat > threshold] <- 1
+  } else if (length(threshold) == nrow(mat)) { # vector matches matrix
     for (i in 1:nrow(mat)) {
-      res[i, mat[i, ] > treshold[i]] <- 1
+      res[i, mat[i, ] > threshold[i]] <- 1
     }
   }
 

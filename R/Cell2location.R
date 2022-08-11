@@ -14,3 +14,9 @@ build_model_cell2location <- function(){
 
 
 }
+
+#' Deconvolute Cell2location
+
+deconvolute_cell2location <- function(){
+
+}
