@@ -61,3 +61,12 @@ anndata_to_singlecellexperiment <- function(ad) {
 
   return(sce)
 }
+#' Convert Seurat to SpatialExperiment
+seurat_to_spatialexperiment <- function(){
+
+}
+
+#' Convert SpatialExperiment to AnnData
+anndata_to_spatialexperiment <- function(){
+
+}

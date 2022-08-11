@@ -75,10 +75,11 @@ def py_build_model_cell2location(adata_ref, epochs = 20, cell_count_cutoff=5, ce
                        
   from cell2location.models import RegressionModel
   mod = RegressionModel(adata_ref)
-
+  print ("Training Model")
   mod.train(max_epochs = epochs)
-
+  
   # export model to anndata object
+  print ("finished training, extracting results")
   adata_ref = mod.export_posterior(
     adata_ref, sample_kwargs={'num_samples': 1000, 'batch_size': 2500, 'use_gpu': False}
   )
