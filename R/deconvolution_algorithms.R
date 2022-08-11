@@ -8,8 +8,6 @@ deconvolution_methods <- c(
   "CARD" = "card",
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
-  "SpatialDecon" = "spatialdecon",
-  "DestVi" = "destvi",
   # omnideconv
   "AutoGeneS" = "autogenes",
   "Bisque" = "bisque",
