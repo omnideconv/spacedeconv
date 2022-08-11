@@ -12,6 +12,7 @@
 #' @importFrom ggridges geom_density_ridges_gradient
 #' @importFrom magrittr %>%
 #' @importFrom testit assert
+#' @importFrom utils read.table
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package

@@ -4,12 +4,12 @@
 \alias{plot_cells_per_spot}
 \title{Plot Cells per Spot}
 \usage{
-plot_cells_per_spot(spatial_obj, treshold = 0)
+plot_cells_per_spot(spatial_obj, threshold = 0)
 }
 \arguments{
 \item{spatial_obj}{SpatialExperiment containing deconvolution results}
 
-\item{treshold}{treshold for presence/absence, single value or vector of length nrow(spatial_obj)}
+\item{threshold}{threshold for presence/absence, single value or vector of length nrow(spatial_obj)}
 }
 \description{
 Plot Cells per Spot

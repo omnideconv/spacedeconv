@@ -4,7 +4,7 @@
 #' @param sample sample to plot
 #' @param cell_type Cell Type to plot
 #' @param plot_density (default = FALSE) wheter to plot the density
-#' @param point_size
+#' @param spot_size size of the spots in the plot
 #' @export
 plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density = TRUE, spot_size = 1) {
   if (is.null(spatial_obj)) {
@@ -93,7 +93,7 @@ plot_cells_per_spot <- function(spatial_obj, threshold = 0) {
 
   # make plot
   density <- ggplot2::ggplot(plot_data) +
-    ggplot2::geom_bar(aes(x = value), stat = "count", fill = "black") +
+    ggplot2::geom_bar(aes_string(x = "value"), stat = "count", fill = "black") +
     ggplot2::geom_vline(
       ggplot2::aes(xintercept = mean(unlist(plot_data["value"]))),
       color = "red",

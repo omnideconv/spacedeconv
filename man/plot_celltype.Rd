@@ -20,6 +20,8 @@ plot_celltype(
 \item{cell_type}{Cell Type to plot}
 
 \item{plot_density}{(default = FALSE) wheter to plot the density}
+
+\item{spot_size}{size of the spots in the plot}
 }
 \description{
 Plot Spatial Object
