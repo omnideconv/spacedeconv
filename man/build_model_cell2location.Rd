@@ -4,7 +4,24 @@
 \alias{build_model_cell2location}
 \title{Build Model Cell2location}
 \usage{
-build_model_cell2location()
+build_model_cell2location(
+  sc_obj,
+  epochs = 20,
+  cell_count_cutoff = 5,
+  cell_percentage_cutoff = 0.03,
+  nonz_mean_cutoff = 1.12
+)
+}
+\arguments{
+\item{sc_obj}{SingleCellExperiment containing reference expression}
+
+\item{epochs}{number of epochs to train the network}
+
+\item{cell_count_cutoff}{cell2location parameter}
+
+\item{cell_percentage_cutoff}{cell2location parameter}
+
+\item{nonz_mean_cutoff}{cell2location parameter}
 }
 \description{
 Build Model Cell2location

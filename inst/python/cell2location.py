@@ -6,29 +6,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from matplotlib import rcParams
-rcParams["pdf.fonttype"] = 42
+#from matplotlib import rcParams
+#rcParams["pdf.fonttype"] = 42
 
 
-sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
-sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
+#sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+#sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
 
-sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
-sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
+#sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
+#sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
 
-adata_ref = sc.read(
-    f'./data/sc.h5ad',
-    backup_url='https://cell2location.cog.sanger.ac.uk/paper/integrated_lymphoid_organ_scrna/RegressionNBV4Torch_57covariates_73260cells_10237genes/sc.h5ad'
-)
-
-adata_ref.var['SYMBOL'] = adata_ref.var.index
+# adata_ref = sc.read(
+#     f'./data/sc.h5ad',
+#    backup_url='https://cell2location.cog.sanger.ac.uk/paper/integrated_lymphoid_organ_scrna/RegressionNBV4Torch_57covariates_73260cells_10237genes/sc.h5ad'
+# )
+# 
+# adata_ref.var['SYMBOL'] = adata_ref.var.index
 # rename 'GeneID-2' as necessary for your data
-adata_ref.var.set_index('GeneID-2', drop=True, inplace=True)
-
+# adata_ref.var.set_index('GeneID-2', drop=True, inplace=True)
+# 
 # delete unnecessary raw slot (to be removed in a future version of the tutorial)
-del adata_ref.raw
+# del adata_ref.raw
 
-def py_build_model_cell2location(adata_ref, epochs = 250, cell_count_cutoff=5, cell_percentage_cutoff=0.03, nonz_mean_cutoff=1.12):
+def py_build_model_cell2location(adata_ref, epochs = 20, cell_count_cutoff=5, cell_percentage_cutoff=0.03, nonz_mean_cutoff=1.12):
   
   """
   Build a model using cell2location
@@ -49,16 +49,15 @@ def py_build_model_cell2location(adata_ref, epochs = 250, cell_count_cutoff=5, c
     cell2location parameter
   """
   
+  print ("this is the type" + str(type(adata_ref)))
+  
   # a filtering step, outsource parameters
   from cell2location.utils.filtering import filter_genes
-  
   # filter genes
-  selected <- filter_genes(adata_ref, 
+  selected = filter_genes(adata_ref, 
     cell_count_cutoff = cell_count_cutoff, 
     cell_percentage_cutoff2 = cell_percentage_cutoff, 
     nonz_mean_cutoff = nonz_mean_cutoff)
-
-  # subset the object
   adata_ref = adata_ref[:, selected].copy()
 
 
