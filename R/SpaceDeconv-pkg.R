@@ -13,6 +13,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom testit assert
 #' @importFrom utils read.table
+#' @importFrom grDevices colorRampPalette
+#' @importFrom RColorBrewer brewer.pal
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package

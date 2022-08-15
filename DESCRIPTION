@@ -24,7 +24,8 @@ Imports:
     ggridges, 
     gridExtra, 
     magrittr, 
-    testit
+    testit, 
+    RColorBrewer
 Suggests: 
     spacexr,
     SPOTlight,
