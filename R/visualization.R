@@ -114,7 +114,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
   } else if (plot_type=="spatial"){
     obj = spatial_obj
     tmp = SingleCellExperiment::colData(obj)
-    SingleCellExperiment::colData(obj) <- cbind(tmp, value=plot_data[["value"]])
+    SummarizedExperiment::colData(obj) <- cbind(tmp, value=plot_data[["value"]])
 
     pal = colorRampPalette(RColorBrewer::brewer.pal(9, "Spectral"))
 
