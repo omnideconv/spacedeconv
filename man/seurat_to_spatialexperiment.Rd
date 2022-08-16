@@ -4,7 +4,13 @@
 \alias{seurat_to_spatialexperiment}
 \title{Convert Seurat to SpatialExperiment}
 \usage{
-seurat_to_spatialexperiment()
+seurat_to_spatialexperiment(seurat)
+}
+\arguments{
+\item{seurat}{Seurat Object}
+}
+\value{
+SpatialExperiment
 }
 \description{
 Convert Seurat to SpatialExperiment

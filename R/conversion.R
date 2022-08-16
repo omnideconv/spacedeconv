@@ -62,8 +62,32 @@ anndata_to_singlecellexperiment <- function(ad) {
   return(sce)
 }
 #' Convert Seurat to SpatialExperiment
-seurat_to_spatialexperiment <- function(){
+#' @param seurat Seurat Object
+#' @returns SpatialExperiment
+#'
+#' @export
+seurat_to_spatialexperiment <- function(seurat){
 
+  #sce = Seurat::as.SingleCellExperiment(seurat)
+
+  #assay_names = SummarizedExperiment::assays(sce) %>% names()
+
+  images = Seurat::Images(seurat)
+
+  raster = SpatialExperiment::SpatialImage(as.raster(seurat@images[[images]]@image))
+
+  img = DataFrame(sample_id="sample01", image_id = "lowres", data= I(list(raster)),
+                    scaleFactor = seurat@images[[images]]@scale.factors[["lowres"]])
+
+
+  spe = SpatialExperiment::SpatialExperiment(
+    assays = list(counts = Seurat::GetAssayData(seurat, "Spatial", slot = "counts")),
+    #spatialCoords = as.matrix(Seurat::GetTissueCoordinates(seurat)) ,
+    spatialCoords = as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")]),
+    imgData = img
+  )
+
+  return (spe)
 }
 
 #' Convert SpatialExperiment to AnnData
