@@ -27,8 +27,8 @@ pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
 ### Data requirements
 SpaceDeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. 
 
-* SpatialExperiment, will be deconvoluted
-* SingleCellExperiment containing cell type information, for second-generation tools
+* _SpatialExperiment_, will be deconvoluted
+* _SingleCellExperiment_ containing cell type information, for second-generation tools
 
 ### Load Spatial Dataset
 You can load 10X Visium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details. 
@@ -79,8 +79,9 @@ SpaceDeconv includes multiple visualization functions.
 # for cell_type input a celltype present in the deconvolution result
 plot_celltype(spe, sample="sammple01", cell_type"B.cells")
 
-# threshold changes the minimum cell type fraction for a cell to be considered present in a specific spot
-plot_cells_per_spot(spe, threshold=0.01)
+# threshold changes the minimum cell type fraction 
+# for a cell to be considered present in a specific spot
+plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
 ```
 
 ## Additional Requirements
