@@ -36,6 +36,26 @@ deconvolute_rctd <- function(sce, cell_type_col, spe, assay_sc = "counts", assay
 
   message("Preparing Data for RCTD")
 
+  # check if requested assay exists
+  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+    message(
+      "requested assay ",
+      assay_sc,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+  }
+
+  # check if requested assay exists
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+  }
+
   # sc counts
   sc_counts <- SummarizedExperiment::assay(sce, assay_sc)
   sc_counts <- methods::as(sc_counts, "dgCMatrix") # ensure datatype

@@ -15,6 +15,26 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
 
+  # check if requested assay exists
+  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+    message(
+      "requested assay ",
+      assay_sc,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+  }
+
+  # check if requested assay exists
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+  }
+
   groups <- colData(sce)[[cell_type_col]] # cell type vector
   if (is.null(markers)) {
     message("No markers provided, calculating markers based on the authors suggestion")

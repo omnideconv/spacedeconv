@@ -10,14 +10,15 @@ normalize <- function(object, method = "cpm") {
 
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
     if (method == "cpm") {
-      #SingleCellExperiment::cpm(object) <- as(edgeR::cpm(object), "dgCMatrix")
-      SingleCellExperiment::counts(object) <- as(edgeR::cpm(object), "dgCMatrix")
+      # SingleCellExperiment::cpm(object) <- as(edgeR::cpm(object), "dgCMatrix")
+      # SingleCellExperiment::counts(object) <- as(edgeR::cpm(object), "dgCMatrix")
+      SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(object), "dgCMatrix")
     }
   } else {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")
   }
 
-  message("Normalized object using ", method)
+  message("Normalized object using ", method, ". Note that the normalization is saved in an additional assay.")
 
   return(object)
 }

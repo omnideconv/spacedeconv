@@ -28,6 +28,16 @@ deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ..
   # check for HGNC Symbols!!!
   rownames(spe) <- toupper(rownames(spe)) # temporary fix
 
+  # check if requested assay exists
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+  }
+
   # extract bulk
   bulk <- NULL
   if (!is.null(spe)){
@@ -83,6 +93,16 @@ deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, a
 
   if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required")
+  }
+
+  # check if requested assay exists
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in single cell object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
   }
 
   # extract bulk

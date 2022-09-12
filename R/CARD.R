@@ -26,6 +26,25 @@ deconvolute_card <- function(sce, spe, cell_type_col = "cell_ontology_class", as
     stop("Parameter 'spe' is missing or null, but is required")
   }
 
+  # check if requested assay exists
+  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+    message(
+      "requested assay ",
+      assay_sc,
+      " not available in single cell object. Using first available assay."
+    )
+    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+  }
+
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in spatial object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spe))[1]
+  }
+
   # spatial expression
   spExpression <- SummarizedExperiment::assay(spe, assay_sp) %>% as("dgCMatrix")
 

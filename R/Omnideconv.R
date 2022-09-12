@@ -14,6 +14,25 @@
 build_model_omnideconv <- function(single_cell_object, cell_type_col = "cell_ontology_class", method = NULL, spatial_object = NULL, batch_id_col = NULL, markers = NULL, assay_sc = "counts", assay_sp= "counts", ...) {
   # TODO checks
 
+  # check if requested assay exists
+  if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_object))) {
+    message(
+      "requested assay ",
+      assay_sc,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sc <- names(SummarizedExperiment::assays(single_cell_object))[1] # change to first available assay request not available
+  }
+
+  # check if requested assay exists
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_object))) {
+    message(
+      "requested assay ",
+      assay_sp,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sp <- names(SummarizedExperiment::assays(spatial_object))[1] # change to first available assay request not available
+  }
 
   # extract matrices from object
   bulk_gene_expression <- NULL

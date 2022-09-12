@@ -76,7 +76,7 @@ seurat_to_spatialexperiment <- function(seurat){
 
   raster = SpatialExperiment::SpatialImage(as.raster(seurat@images[[images]]@image))
 
-  img = DataFrame(sample_id="sample01", image_id = "lowres", data= I(list(raster)),
+  img = S4Vectors::DataFrame(sample_id="sample01", image_id = "lowres", data= I(list(raster)),
                     scaleFactor = seurat@images[[images]]@scale.factors[["lowres"]])
 
 

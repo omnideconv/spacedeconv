@@ -14,6 +14,16 @@ build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "
     stop("cell_type_col not available")
   }
 
+  # check if requested assay exists
+  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+    message(
+      "requested assay ",
+      assay_sc,
+      " not available in expression object. Using first available assay."
+    )
+    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+  }
+
   # spatial expression
   scExpression <- SummarizedExperiment::assay(sce, assay_sc) %>% as("dgCMatrix")
 
