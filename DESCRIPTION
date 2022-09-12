@@ -25,7 +25,8 @@ Imports:
     gridExtra, 
     magrittr, 
     testit, 
-    RColorBrewer
+    RColorBrewer, 
+    S4Vectors
 Suggests: 
     spacexr,
     SPOTlight,
