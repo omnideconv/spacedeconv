@@ -1,0 +1,33 @@
+---
+title: "Getting started with SpaceDeconv"
+author: "Constantin Zackl"
+date: "2022-09-12"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>"
+)
+```
+
+# Installation 
+
+
+# Introduction 
+
+# Getting started 
+
+## Normalization
+
+## Building a reference Signature
+
+## Deconvolution ¸
+
+# Visualization 
+
+# References

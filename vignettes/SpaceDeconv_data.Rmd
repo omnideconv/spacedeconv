@@ -1,0 +1,45 @@
+---
+title: "Data Input"
+author: "Constantin Zackl"
+date: "2022-09-12"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Loading Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>"
+)
+```
+
+# Introduction 
+SpaceDeconv integrates first- and second-generation deconvolution algorithms for transcriptome data. While first-generation tools deconvolute based on internal precomputed signatures, second-generation deconvolution tools compute cell-type specific expression signatures from annotated single-cell expression data. In the following requirements and workflow details for both types of data are explained in detail.
+
+# Reference Data
+
+# Spatial Data
+Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the data folder. More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
+
+```{r loadSpatialExperiment, eval=FALSE}
+spe = SpatialExperiment::read10xVisium(path_to_folder)
+```
+
+Spatial data available as a Seurat Object can be converted into a SpatialExperiment:
+
+```{r seuratConversion, eval=FALSE}
+spe = seurat_to_spatialexperiment(seurat_object)
+```
+
+# Normalization
+SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
+
+```{r, eval = FALSE}
+spe <- normalize(spe, method="cpm")
+
+# make sure to use cpm assay in deconvolution step
+deconvolution = deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
+```
+
