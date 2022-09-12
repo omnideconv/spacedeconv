@@ -19,12 +19,34 @@ knitr::opts_chunk$set(
 SpaceDeconv integrates first- and second-generation deconvolution algorithms for transcriptome data. While first-generation tools deconvolute based on internal precomputed signatures, second-generation deconvolution tools compute cell-type specific expression signatures from annotated single-cell expression data. In the following requirements and workflow details for both types of data are explained in detail.
 
 # Reference Data
+To build cell-type specific signatures for second-generation deconvolution SpaceDeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats: 
+
+* [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure) (recommended)
+* [AnnData](https://anndata.dynverse.org/)
+* [Seurat](https://satijalab.org/seurat/)
+
+Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for ... with the parameter `batch_id_col`.
+
+```{r annotationParameters, eval=FALSE}
+signature <- build_model(single_cell_object,
+  method = "dwls",
+  cell_type_col = "cell_ontology_class"
+)
+
+# ... requires batch_id information as well
+sigature <- build_model(single_cell_object,
+  method = "",
+  cell_type_col = "cell_ontology_class",
+  batch_id_col = "batch_id"
+)
+```
+
 
 # Spatial Data
 Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the data folder. More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
 
 ```{r loadSpatialExperiment, eval=FALSE}
-spe = SpatialExperiment::read10xVisium(path_to_folder)
+spe = SpatialExperiment::read10xVisium(path_to_directory)
 ```
 
 Spatial data available as a Seurat Object can be converted into a SpatialExperiment:

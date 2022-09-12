@@ -1,0 +1,26 @@
+---
+title: "Example"
+author: "Constantin Zackl"
+date: "2022-09-12"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>"
+)
+```
+
+# Sample Data
+
+# Preprocessing and Normalization
+
+# Build Model
+
+# Deconvolution
+
+# Visualization 
