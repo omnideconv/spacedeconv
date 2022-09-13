@@ -1,4 +1,22 @@
 #' List of supported deconvolution methods
+#'
+#' @details Spatial Algorithms \cr
+#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`
+#'
+#' @details Second-generation Algorithms (Omnideconv) \cr
+#' `AutoGeneS`, `Bisque`, `BSeq-sc`, `CIBERSORTx`, `CDSeq`, `CPM`, `DWLS`, `MOMF`,
+#' `MuSiC`, `Scaden`, `SCDC`
+#'
+#' @details First-generation Methods (Immunedeconv) \cr
+#' `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`, `CIBERSORT`, `CIBERSORT (abs.)`,
+#' `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`
+#'
+#' @details First-generation Mouse Methods (Immunedeconv) \cr
+#' `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`
+#'
+#' This object is a named vector. The names correspond to the display name of the method,
+#' the values to the internal name.
+#'
 #' @export
 #'
 deconvolution_methods <- c(
@@ -28,7 +46,7 @@ deconvolution_methods <- c(
   "CIBERSORT" = "cibersort",
   "CIBERSORT (abs.)" = "cibersort_abs",
   "TIMER" = "timer",
-  "ConsensurTME" = "consensus_tme",
+  "ConsensusTME" = "consensus_tme",
   "ABIS" = "abis",
   "ESTIMATE" = "estimate",
   # immunedeconv mouse
@@ -39,16 +57,23 @@ deconvolution_methods <- c(
 )
 
 
-#' Build Reference
-#' @param single_cell_obj Single Cell Expression Object
-#' @param cell_type_col Name of the anntotation column containing cell type information
-#' @param method signature calculation method
+#' Build a reference signature
+#'
+#' @description
+#' Build_model calculates a reference signature from annotated scRNA-seq expression data
+#'
+#' @param single_cell_obj Single-cell Object
+#' @param cell_type_col Name of the annotation column containing cell type information
+#' @param method Signature calculation Algorithm
 #' @param verbose Display more information on console
 #' @param spatial_obj SpatialExperiment, required for SPOTlight
 #' @param batch_id_col column of singleCellExperiment containing batch ids
 #' @param assay_sc assay of single cell object to use
 #' @param assay_sp assay of spatial object to use
 #' @param ... additional parameters passed to the functions
+#'
+#' @returns cell-type specific expression signature
+#'
 #' @export
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   if (is.null(single_cell_obj)) {
@@ -178,7 +203,10 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 }
 
 
-#' Deconvolution
+#' Deconvolution with SpaceDeconv
+#'
+#' Perform cell type deconvolution with SpaceDeconv.
+#'
 #' @param spatial_obj A SpatialExperiment
 #' @param signature Gene Expression Signature
 #' @param single_cell_obj A SingleCellExperiment
@@ -223,7 +251,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
       deconvolute_rctd(single_cell_obj, cell_type_col, spatial_obj, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
     spotlight = {
-      deconvolute_spotlight(spe = spatial_obj, model = signature, assay_sp = assay_sp)
+      deconvolute_spotlight(spatial_obj = spatial_obj, model = signature, assay_sp = assay_sp)
     },
     card = {
       deconvolute_card(single_cell_obj, spatial_obj, cell_type_col=cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
