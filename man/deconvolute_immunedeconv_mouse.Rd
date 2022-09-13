@@ -5,7 +5,7 @@
 \title{Deconvolute Immunedeconv mouse}
 \usage{
 deconvolute_immunedeconv_mouse(
-  spe,
+  spatial_obj,
   method = NULL,
   rmgenes = NULL,
   algorithm = NULL,
@@ -14,7 +14,7 @@ deconvolute_immunedeconv_mouse(
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{method}{deconvolution algorithm}
 

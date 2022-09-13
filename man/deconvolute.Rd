@@ -5,9 +5,9 @@
 \title{Deconvolution}
 \usage{
 deconvolute(
-  spatial_object,
+  spatial_obj,
   signature = NULL,
-  single_cell_object = NULL,
+  single_cell_obj = NULL,
   cell_type_col = "cell_ontology_class",
   method = NULL,
   batch_id_col = NULL,
@@ -19,13 +19,13 @@ deconvolute(
 )
 }
 \arguments{
-\item{spatial_object}{A SpatialExperiment}
+\item{spatial_obj}{A SpatialExperiment}
 
 \item{signature}{Gene Expression Signature}
 
-\item{single_cell_object}{A SingleCellExperiment}
+\item{single_cell_obj}{A SingleCellExperiment}
 
-\item{cell_type_col}{Column name of the single_cell_object where the cell type can be found}
+\item{cell_type_col}{Column name of the single_cell_obj where the cell type can be found}
 
 \item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
 

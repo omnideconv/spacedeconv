@@ -5,7 +5,7 @@
 \title{Build Model Spatial DWLS}
 \usage{
 build_model_spatial_dwls(
-  sce,
+  single_cell_obj,
   assay_sc = "counts",
   marker_method = "scran",
   cell_type_col = "cell_ontology_class",
@@ -15,13 +15,13 @@ build_model_spatial_dwls(
 )
 }
 \arguments{
-\item{sce}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{assay_sc}{Single Cell Object assay to use}
 
 \item{marker_method}{provide list of marker genes or method to calculate markers (scran, gini, mast)}
 
-\item{cell_type_col}{column of sce containing cell type information}
+\item{cell_type_col}{column of single_cell_obj containing cell type information}
 
 \item{dim_method}{dimension reduction method}
 

@@ -5,8 +5,8 @@
 \title{Deconvolute CARD}
 \usage{
 deconvolute_card(
-  sce,
-  spe,
+  single_cell_obj,
+  spatial_obj,
   cell_type_col = "cell_ontology_class",
   assay_sc = "counts",
   assay_sp = "counts",
@@ -14,15 +14,15 @@ deconvolute_card(
 )
 }
 \arguments{
-\item{sce}{Single Cell Experiment}
+\item{single_cell_obj}{Single Cell Experiment}
 
-\item{spe}{Spatial Experiment}
+\item{spatial_obj}{Spatial Experiment}
 
 \item{cell_type_col}{column of SCE containing cell type information}
 
-\item{assay_sc}{assay of sce to use}
+\item{assay_sc}{assay of single_cell_obj to use}
 
-\item{assay_sp}{assay of spe to use}
+\item{assay_sp}{assay of spatial_obj to use}
 
 \item{batch_id_col}{batch id column in spatialExperiment}
 }

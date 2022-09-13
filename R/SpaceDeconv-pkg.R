@@ -16,6 +16,7 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom S4Vectors DataFrame
+#' @importFrom grDevices as.raster
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package

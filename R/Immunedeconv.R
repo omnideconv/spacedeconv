@@ -7,13 +7,13 @@ build_model_immunedeconv <- function() {
 }
 
 #' Deconvolute Immundeconv
-#' @param spe SpatialExperiment
+#' @param spatial_obj SpatialExperiment
 #' @param method deconvolution algorithm
 #' @param assay_sp assay of spatial object to use
 #' @param ... further parameters passed to the selected method
-deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ...) {
-  if (is.null(spe)) {
-    stop("Parameter 'spe' is null or missing, but is required")
+deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "counts", ...) {
+  if (is.null(spatial_obj)) {
+    stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
 
   if (is.null(method)) {
@@ -26,22 +26,22 @@ deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ..
   }
 
   # check for HGNC Symbols!!!
-  rownames(spe) <- toupper(rownames(spe)) # temporary fix
+  rownames(spatial_obj) <- toupper(rownames(spatial_obj)) # temporary fix
 
   # check if requested assay exists
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
       assay_sp,
       " not available in expression object. Using first available assay."
     )
-    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+    assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1] # change to first available assay request not available
   }
 
   # extract bulk
   bulk <- NULL
-  if (!is.null(spe)){
-    bulk <- SummarizedExperiment::assay(spe, assay_sp)
+  if (!is.null(spatial_obj)){
+    bulk <- SummarizedExperiment::assay(spatial_obj, assay_sp)
     bulk <- as.matrix(bulk)
   }
 
@@ -79,16 +79,16 @@ deconvolute_immunedeconv <- function(spe, method = NULL, assay_sp = "counts", ..
 
 
 #' Deconvolute Immunedeconv mouse
-#' @param spe SpatialExperiment
+#' @param spatial_obj SpatialExperiment
 #' @param method deconvolution algorithm
 #' @param rmgenes genes to remove from the analysis
 #' @param algorithm statistical algorithm for SeqImmuCC (ignored by all other methods)
 #' @param assay_sp assay of spatial object to use
 #' @param ... additional parameters passed to function
 #'
-deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", ...) {
-  if (is.null(spe)) {
-    stop("Parameter 'spe' is null or missing, but is required")
+deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", ...) {
+  if (is.null(spatial_obj)) {
+    stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
 
   if (is.null(method)) {
@@ -96,19 +96,19 @@ deconvolute_immunedeconv_mouse <- function(spe, method = NULL, rmgenes = NULL, a
   }
 
   # check if requested assay exists
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
       assay_sp,
       " not available in single cell object. Using first available assay."
     )
-    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+    assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1] # change to first available assay request not available
   }
 
   # extract bulk
   bulk <- NULL
-  if (!is.null(spe)){
-    bulk <- SummarizedExperiment::assay(spe, assay_sp)
+  if (!is.null(spatial_obj)){
+    bulk <- SummarizedExperiment::assay(spatial_obj, assay_sp)
     bulk <- as.matrix(bulk)
   }
 

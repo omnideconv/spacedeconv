@@ -5,9 +5,9 @@
 \title{RCTD Deconvolution}
 \usage{
 deconvolute_rctd(
-  sce,
+  single_cell_obj,
   cell_type_col,
-  spe,
+  spatial_obj,
   assay_sc = "counts",
   assay_sp = "counts",
   n_umi_sc = NULL,
@@ -16,11 +16,11 @@ deconvolute_rctd(
 )
 }
 \arguments{
-\item{sce}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{cell_type_col}{Column containting cell type annotation}
 
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{assay_sc}{single cell assay to use}
 
