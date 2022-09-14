@@ -89,11 +89,18 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
   if (method %in% names(deconvolution_methods)) {
     method <- deconvolution_methods[[method]]
   }
+
+  # check if method available
   method <- tolower(method)
   check_and_install(method)
 
   # convert data
   single_cell_obj <- convert_to_sce(single_cell_obj)
+
+  # check if rownames and colnames are set
+  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
+    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  }
 
   # ensure library size > 0
   single_cell_obj <- removeZeroExpression(single_cell_obj)
@@ -250,6 +257,11 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     single_cell_obj <- convert_to_sce(single_cell_obj)
   }
 
+  # check if rownames and colnames are set
+  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
+    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  }
+
   # ensure library size > 0
   spatial_obj <- removeZeroExpression(spatial_obj)
   if (!is.null(spatial_obj)){
@@ -385,6 +397,11 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
 
   # TODO useful checks
+
+  # check if rownames and colnames are set
+  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
+    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  }
 
   # ensure library size > 0
   spatial_obj <- removeZeroExpression(spatial_obj)

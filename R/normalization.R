@@ -8,6 +8,11 @@ normalize <- function(object, method = "cpm") {
     stop("Parameter 'object' is null or missing, but is required!")
   }
 
+  # check if rownames and colnames are set
+  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
+    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  }
+
   # ensure library size > 0
   object <- removeZeroExpression(object)
 

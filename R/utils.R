@@ -235,3 +235,14 @@ removeZeroExpression <- function (object){
 
   return (object)
 }
+
+#' Check Rowname/Colname Presence
+#'
+#' Check for Rowname and Column Name existence in expression objects
+#'
+#' @param object SingleCellExperiment or SpatialExperiment
+#'
+#' @returns boolean, TRUE if one of rownames/colnames is NULL
+checkRowColumn <- function (object){
+  return (is.null(rownames(object)) || is.null(colnames(object)))
+}

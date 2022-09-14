@@ -15,9 +15,14 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
     stop("Parameter 'cell_types' is null or missing, but is required")
   }
 
+  # check if sample exists in colData
+  if (!(sample %in% names(SingleCellExperiment::colData(spatial_obj)))){
+    stop("Provided sample name not present in object")
+  }
+
   # check if cell types exist in colData
   if (!(cell_type %in% names(SingleCellExperiment::colData(spatial_obj)))) {
-    stop("provided cell types are not available in spatial object")
+    stop("Provided cell types are not available in spatial object")
   }
 
   # make plots
@@ -70,6 +75,10 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 0, spot_size = 1.5) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
+  }
+
+  if (!plot_type %in% c("spatial", "bar")){
+    stop("Plot_type not supported")
   }
 
   mat <- get_results_from_object(spatial_obj)
