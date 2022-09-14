@@ -5,10 +5,10 @@
 \title{Build Reference}
 \usage{
 build_model_omnideconv(
-  single_cell_object,
+  single_cell_obj,
   cell_type_col = "cell_ontology_class",
   method = NULL,
-  spatial_object = NULL,
+  spatial_obj = NULL,
   batch_id_col = NULL,
   markers = NULL,
   assay_sc = "counts",
@@ -17,15 +17,15 @@ build_model_omnideconv(
 )
 }
 \arguments{
-\item{single_cell_object}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{cell_type_col}{column containing cell type annotation}
 
 \item{method}{select deconvolution method}
 
-\item{spatial_object}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
-\item{batch_id_col}{column of single_cell_object containing batch_ids}
+\item{batch_id_col}{column of single_cell_obj containing batch_ids}
 
 \item{markers}{List of marker genes, only used for bseqsc}
 

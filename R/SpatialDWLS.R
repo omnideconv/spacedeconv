@@ -1,31 +1,31 @@
 #' Build Model Spatial DWLS
-#' @param sce SingleCellExperiment
+#' @param single_cell_obj SingleCellExperiment
 #' @param assay_sc Single Cell Object assay to use
 #' @param marker_method provide list of marker genes or method to calculate markers (scran, gini, mast)
-#' @param cell_type_col column of sce containing cell type information
+#' @param cell_type_col column of single_cell_obj containing cell type information
 #' @param dim_method dimension reduction method
 #' @param cluster_method cluster method to  use when calculating marker genes
 #' @param ... additional paramters
-build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "scran", cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
+build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
 
 
   # TODO Checks
-  if (!checkCol(sce, cell_type_col)) {
+  if (!checkCol(single_cell_obj, cell_type_col)) {
     stop("cell_type_col not available")
   }
 
   # check if requested assay exists
-  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+  if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
       "requested assay ",
       assay_sc,
       " not available in expression object. Using first available assay."
     )
-    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+    assay_sc <- names(SummarizedExperiment::assays(single_cell_obj))[1] # change to first available assay request not available
   }
 
   # spatial expression
-  scExpression <- SummarizedExperiment::assay(sce, assay_sc) %>% as("dgCMatrix")
+  scExpression <- SummarizedExperiment::assay(single_cell_obj, assay_sc) %>% as("dgCMatrix")
 
 
   # markers
@@ -51,7 +51,7 @@ build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "
   }
 
   # get cell type vector from object
-  cell_types <- as.vector(sce[[cell_type_col]])
+  cell_types <- as.vector(single_cell_obj[[cell_type_col]])
 
   # TODO Check if markers are necessary!!!
   signature <- Giotto::makeSignMatrixDWLSfromMatrix(matrix = scExpression, sign_gene = markers, cell_type_vector = cell_types)
@@ -61,17 +61,17 @@ build_model_spatial_dwls <- function(sce, assay_sc = "counts", marker_method = "
 
 #' Deconvolute Spatial DWLS
 #'
-#' @param spe Spatial Experiment
+#' @param spatial_obj Spatial Experiment
 #' @param signature Signature
 #' @param assay_sp Assay of SpatialExperiment to use
 #' @param ... additional parameters
-deconvolute_spatial_dwls <- function(spe, signature, assay_sp = "counts", ...) {
+deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts", ...) {
 
   # TODO checks
 
   # create Giotto Object
-  spExpression <- SummarizedExperiment::assay(spe, assay_sp) %>% as("dgCMatrix")
-  spCoords <- SpatialExperiment::spatialCoords(spe)
+  spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
+  spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   obj <- Giotto::createGiottoObject(raw_exprs = spExpression, spatial_locs = spCoords)
 

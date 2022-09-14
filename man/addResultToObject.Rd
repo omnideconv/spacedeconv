@@ -4,10 +4,10 @@
 \alias{addResultToObject}
 \title{Add results to object colData}
 \usage{
-addResultToObject(spe, result)
+addResultToObject(spatial_obj, result)
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{result}{deconvolution result, rows = spots, columns = cell types}
 }

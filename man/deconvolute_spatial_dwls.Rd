@@ -4,10 +4,10 @@
 \alias{deconvolute_spatial_dwls}
 \title{Deconvolute Spatial DWLS}
 \usage{
-deconvolute_spatial_dwls(spe, signature, assay_sp = "counts", ...)
+deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = "counts", ...)
 }
 \arguments{
-\item{spe}{Spatial Experiment}
+\item{spatial_obj}{Spatial Experiment}
 
 \item{signature}{Signature}
 

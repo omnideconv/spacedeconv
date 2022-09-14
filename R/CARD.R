@@ -8,66 +8,66 @@ build_model_card <- function() {
 
 #' Deconvolute CARD
 #'
-#' @param sce Single Cell Experiment
-#' @param spe Spatial Experiment
+#' @param single_cell_obj Single Cell Experiment
+#' @param spatial_obj Spatial Experiment
 #' @param cell_type_col column of SCE containing cell type information
-#' @param assay_sc assay of sce to use
-#' @param assay_sp assay of spe to use
+#' @param assay_sc assay of single_cell_obj to use
+#' @param assay_sp assay of spatial_obj to use
 #' @param batch_id_col batch id column in spatialExperiment
-deconvolute_card <- function(sce, spe, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = NULL) {
+deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = NULL) {
 
 
   # checks
-  if (is.null(sce)) {
-    stop("Parameter 'sce' is missing or null, but is required!")
+  if (is.null(single_cell_obj)) {
+    stop("Parameter 'single_cell_obj' is missing or null, but is required!")
   }
 
-  if (is.null(spe)) {
-    stop("Parameter 'spe' is missing or null, but is required")
+  if (is.null(spatial_obj)) {
+    stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
 
   # check if requested assay exists
-  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+  if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
       "requested assay ",
       assay_sc,
       " not available in single cell object. Using first available assay."
     )
-    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+    assay_sc <- names(SummarizedExperiment::assays(single_cell_obj))[1] # change to first available assay request not available
   }
 
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
       assay_sp,
       " not available in spatial object. Using first available assay."
     )
-    assay_sp <- names(SummarizedExperiment::assays(spe))[1]
+    assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1]
   }
 
   # spatial expression
-  spExpression <- SummarizedExperiment::assay(spe, assay_sp) %>% as("dgCMatrix")
+  spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
 
   # spatial coords
-  spCoords <- SpatialExperiment::spatialCoords(spe) %>% as.data.frame()
+  spCoords <- SpatialExperiment::spatialCoords(spatial_obj) %>% as.data.frame()
   colnames(spCoords) <- c("x", "y")
 
   # single cell expression
-  scExpression <- SummarizedExperiment::assay(sce, assay_sc) %>% as("dgCMatrix")
+  scExpression <- SummarizedExperiment::assay(single_cell_obj, assay_sc) %>% as("dgCMatrix")
 
   # create Metadata
   if (!is.null(batch_id_col)) {
-    batchIDs <- SingleCellExperiment::colData(sce)[[batch_id_col]]
+    batchIDs <- SingleCellExperiment::colData(single_cell_obj)[[batch_id_col]]
     scMeta <- data.frame(
-      cellType = SingleCellExperiment::colData(sce)[[cell_type_col]],
-      batchIDs = SingleCellExperiment::colData(sce)[[batch_id_col]],
-      row.names = colnames(sce)
+      cellType = SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]],
+      batchIDs = SingleCellExperiment::colData(single_cell_obj)[[batch_id_col]],
+      row.names = colnames(single_cell_obj)
     )
     sample.varname <- "batchIDs"
   } else {
     scMeta <- data.frame(
-      cellType = SingleCellExperiment::colData(sce)[[cell_type_col]],
-      row.names = colnames(sce)
+      cellType = SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]],
+      row.names = colnames(single_cell_obj)
     )
     sample.varname <- NULL
   }

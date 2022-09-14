@@ -5,26 +5,26 @@
 \title{Build Model SPOTlight}
 \usage{
 build_model_spotlight(
-  sce,
+  single_cell_obj,
   cell_type_col = "cell_ontology_class",
-  spe,
+  spatial_obj,
   assay_sc = "counts",
   assay_sp = "counts",
   markers = NULL
 )
 }
 \arguments{
-\item{sce}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{cell_type_col}{Column where cell type information can be found}
 
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{assay_sc}{single cell assay to use}
 
 \item{assay_sp}{spatial assay to use}
 
-\item{markers}{(Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'sce' based on the authors suggestion}
+\item{markers}{(Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'single_cell_obj' based on the authors suggestion}
 }
 \description{
 Build Model SPOTlight

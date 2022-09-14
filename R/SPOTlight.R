@@ -1,52 +1,52 @@
 #' Build Model SPOTlight
 #'
-#' @param sce SingleCellExperiment
+#' @param single_cell_obj SingleCellExperiment
 #' @param cell_type_col Column where cell type information can be found
-#' @param spe SpatialExperiment
+#' @param spatial_obj SpatialExperiment
 #' @param assay_sc single cell assay to use
 #' @param assay_sp spatial assay to use
-#' @param markers (Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'sce' based on the authors suggestion
-build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", spe, assay_sc = "counts", assay_sp="counts", markers = NULL) {
-  if (is.null(sce)) {
-    stop("Parameter 'sce' is null or missing, but is required")
+#' @param markers (Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'single_cell_obj' based on the authors suggestion
+build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class", spatial_obj, assay_sc = "counts", assay_sp="counts", markers = NULL) {
+  if (is.null(single_cell_obj)) {
+    stop("Parameter 'single_cell_obj' is null or missing, but is required")
   }
 
-  if (!checkCol(sce, cell_type_col)) {
+  if (!checkCol(single_cell_obj, cell_type_col)) {
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
 
   # check if requested assay exists
-  if (!assay_sc %in% names(SummarizedExperiment::assays(sce))) {
+  if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
       "requested assay ",
       assay_sc,
       " not available in expression object. Using first available assay."
     )
-    assay_sc <- names(SummarizedExperiment::assays(sce))[1] # change to first available assay request not available
+    assay_sc <- names(SummarizedExperiment::assays(single_cell_obj))[1] # change to first available assay request not available
   }
 
   # check if requested assay exists
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spe))) {
+  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
       assay_sp,
       " not available in expression object. Using first available assay."
     )
-    assay_sp <- names(SummarizedExperiment::assays(spe))[1] # change to first available assay request not available
+    assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1] # change to first available assay request not available
   }
 
-  groups <- colData(sce)[[cell_type_col]] # cell type vector
+  groups <- colData(single_cell_obj)[[cell_type_col]] # cell type vector
   if (is.null(markers)) {
     message("No markers provided, calculating markers based on the authors suggestion")
     mgs <- getMarkersSPOTlight(
-      sce = sce,
+      single_cell_obj = single_cell_obj,
       cell_type_col = cell_type_col
     )
   }
 
   model <- SPOTlight::trainNMF(
-    x = sce,
-    y = spe,
+    x = single_cell_obj,
+    y = spatial_obj,
     groups = groups,
     mgs = mgs,
     weight_id = "mean.AUC",
@@ -60,12 +60,12 @@ build_model_spotlight <- function(sce, cell_type_col = "cell_ontology_class", sp
 
 #' Deconvolute SPOTlight
 #'
-#' @param spe SpatialExperiment
+#' @param spatial_obj SpatialExperiment
 #' @param model SPOTlight Model
 #' @param assay_sp spatial assay to use for the computation
-deconvolute_spotlight <- function(spe, model = NULL, assay_sp = "counts") {
-  if (is.null(spe)) {
-    stop("Parameter 'spe' missing or null, but is required")
+deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts") {
+  if (is.null(spatial_obj)) {
+    stop("Parameter 'spatial_obj' missing or null, but is required")
   }
 
   if (is.null(model)) {
@@ -78,7 +78,7 @@ deconvolute_spotlight <- function(spe, model = NULL, assay_sp = "counts") {
 
   # deconvolute
   deconv <- SPOTlight::runDeconvolution(
-    x = spe,
+    x = spatial_obj,
     mod = mod,
     ref = ref,
     slot = assay_sp
@@ -88,17 +88,17 @@ deconvolute_spotlight <- function(spe, model = NULL, assay_sp = "counts") {
 
 #' Calculate Markers
 #'
-#' @param sce SingleCellExperiment
+#' @param single_cell_obj SingleCellExperiment
 #' @param cell_type_col Column containing the cell type
 #'
 #' This Procedure reflects the suggestions of the SPOTlight authors, however,
 #' they also state that there are other ways to calculate markers
-getMarkersSPOTlight <- function(sce, cell_type_col = "cell_ontology_class") {
-  # TODO checks! Check if cell_type_col actually exists in sce
+getMarkersSPOTlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class") {
+  # TODO checks! Check if cell_type_col actually exists in single_cell_obj
 
-  groups <- colData(sce)[[cell_type_col]]
-  sce <- scuttle::logNormCounts(sce) #  only if not log normalized yet!?
-  mgs <- scran::scoreMarkers(sce, groups = groups)
+  groups <- colData(single_cell_obj)[[cell_type_col]]
+  single_cell_obj <- scuttle::logNormCounts(single_cell_obj) #  only if not log normalized yet!?
+  mgs <- scran::scoreMarkers(single_cell_obj, groups = groups)
   mgs_fil <- lapply(names(mgs), function(i) {
     x <- mgs[[i]]
     # Filter and keep relevant marker genes, those with AUC > 0.8

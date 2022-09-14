@@ -1,11 +1,11 @@
 #' Build Model Cell2location
 #'
-#' @param sc_obj SingleCellExperiment containing reference expression
+#' @param single_cell_obj SingleCellExperiment containing reference expression
 #' @param epochs number of epochs to train the network
 #' @param cell_count_cutoff cell2location parameter
 #' @param cell_percentage_cutoff cell2location parameter
 #' @param nonz_mean_cutoff cell2location parameter
-build_model_cell2location <- function(sc_obj, epochs = 20, cell_count_cutoff=5, cell_percentage_cutoff=0.03, nonz_mean_cutoff=1.12){
+build_model_cell2location <- function(single_cell_obj, epochs = 20, cell_count_cutoff=5, cell_percentage_cutoff=0.03, nonz_mean_cutoff=1.12){
 
 
   # build anndata, gene names as rownames

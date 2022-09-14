@@ -4,10 +4,10 @@
 \alias{getMarkersSPOTlight}
 \title{Calculate Markers}
 \usage{
-getMarkersSPOTlight(sce, cell_type_col = "cell_ontology_class")
+getMarkersSPOTlight(single_cell_obj, cell_type_col = "cell_ontology_class")
 }
 \arguments{
-\item{sce}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{cell_type_col}{Column containing the cell type
 

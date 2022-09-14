@@ -8,10 +8,16 @@ normalize <- function(object, method = "cpm") {
     stop("Parameter 'object' is null or missing, but is required!")
   }
 
+  # ensure that library size > 0
+  nspots = sum (Matrix::colSums(counts(object))==0)
+  if (nspots>0){
+    # remove spots with all zero expression
+    message ("removing ", nspots, " spots with zero expression")
+    object <- object[, !Matrix::colSums(counts(object))==0]
+  }
+
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
     if (method == "cpm") {
-      # SingleCellExperiment::cpm(object) <- as(edgeR::cpm(object), "dgCMatrix")
-      # SingleCellExperiment::counts(object) <- as(edgeR::cpm(object), "dgCMatrix")
       SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(object), "dgCMatrix")
     }
   } else {

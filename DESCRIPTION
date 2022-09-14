@@ -26,7 +26,8 @@ Imports:
     magrittr, 
     testit, 
     RColorBrewer, 
-    S4Vectors
+    S4Vectors, 
+    Matrix
 Suggests: 
     spacexr,
     SPOTlight,
