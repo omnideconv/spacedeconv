@@ -95,6 +95,11 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
   # convert data
   single_cell_obj <- convert_to_sce(single_cell_obj)
 
+  # ensure library size > 0
+  single_cell_obj <- removeZeroExpression(single_cell_obj)
+  if (!is.null(spatial_obj)){
+    spatial_obj <- removeZeroExpression(spatial_obj)
+  }
 
   # check if cell_type_col in names(colData(sc)^)
 
@@ -245,6 +250,12 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     single_cell_obj <- convert_to_sce(single_cell_obj)
   }
 
+  # ensure library size > 0
+  spatial_obj <- removeZeroExpression(spatial_obj)
+  if (!is.null(spatial_obj)){
+    single_cell_obj <- removeZeroExpression(single_cell_obj)
+  }
+
 
   deconv <- switch(method,
     rctd = {
@@ -374,6 +385,12 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
 
   # TODO useful checks
+
+  # ensure library size > 0
+  spatial_obj <- removeZeroExpression(spatial_obj)
+  if (!is.null(spatial_obj)){
+    single_cell_obj <- removeZeroExpression(single_cell_obj)
+  }
 
   signature <- build_model(
     single_cell_obj,
