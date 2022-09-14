@@ -17,6 +17,7 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom S4Vectors DataFrame
 #' @importFrom grDevices as.raster
+#' @importFrom Matrix colSums
 #'
 #' @name SpaceDeconv-pkg
 #' @docType package

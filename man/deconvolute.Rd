@@ -2,7 +2,7 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{deconvolute}
 \alias{deconvolute}
-\title{Deconvolution}
+\title{Deconvolution with SpaceDeconv}
 \usage{
 deconvolute(
   spatial_obj,
@@ -45,5 +45,5 @@ deconvolute(
 The deconvolution result as a table
 }
 \description{
-Deconvolution
+Perform cell type deconvolution with SpaceDeconv.
 }
