@@ -216,3 +216,22 @@ check_and_install <- function(method) {
     stop(paste0(method, " can not be run without installing the required packages: ", packages))
   }
 }
+
+#' Remove Spots with zero expression
+#'
+#' This function removes spots/columns with zero expression detected. These spots might result in errors during computation
+#'
+#' @param object SummarizedExperiment or any related datatypes
+#'
+#' @returns Expression Object without all zero columns
+removeZeroExpression <- function (object){
+  # ensure that library size > 0
+  nspots = sum (Matrix::colSums(counts(object))==0)
+  if (nspots>0){
+    # remove spots with all zero expression
+    message ("removing ", nspots, " spots with zero expression")
+    object <- object[, !Matrix::colSums(counts(object))==0]
+  }
+
+  return (object)
+}
