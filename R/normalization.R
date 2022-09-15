@@ -9,8 +9,8 @@ normalize <- function(object, method = "cpm") {
   }
 
   # check if rownames and colnames are set
-  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
-    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  if (checkRowColumn(object)){
+    stop ("Rownames or colnames not set for expression object but need to be available!")
   }
 
   # ensure library size > 0
