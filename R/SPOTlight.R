@@ -72,6 +72,8 @@ deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts"
     stop("Model is missing or null, but is required")
   }
 
+  # check for model integrity: names(signature) must be "mod" "topic"
+
   # extract model information
   mod <- model$mod
   ref <- model$topic

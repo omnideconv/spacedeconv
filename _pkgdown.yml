@@ -46,3 +46,5 @@ reference:
   - init_python
   - python_available
   - required_packages
+  - checkRowColumn
+  - removeZeroExpression
