@@ -8,18 +8,85 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 
   comment = "#>"
 )
 ```
 
+SpaceDeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total SpaceDeconv gives access to `length(SpaceDeconv::deconvolution_methods)` deconvolution methods: 
+```{r echo=FALSE}
+SpaceDeconv::deconvolution_methods
+```
+
 # Sample Data
+For this tutorial we will use one of SpaceDeconvs sample dataset and the deconvolution algorithm "SPOTlight".
+```{r loadData, message=FALSE}
+library(SpaceDeconv)
+library(SpatialExperiment)
+
+data("single_cell_data_3")
+data("spatial_data_3")
+```
+
 
 # Preprocessing and Normalization
+To get a first insight into the data we typye the dataset name into the terminal: 
+
+```{r viewData}
+single_cell_data_3
+```
+
+
+We can see that the single-cell data is in form of a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html). In total this dataset includes expression values from 29733 genes and 7986 cells. It can further be seen that cell-type information is available in `colData` where cell related annotation is stored. 
+
+As the next step we normalize the data as `cpm` ("Counts Per Million")
+
+```{r normalization, warning=FALSE}
+single_cell_data_3 <- SpaceDeconv::normalize(single_cell_data_3, method = "cpm")
+spatial_data_3 <- SpaceDeconv::normalize(spatial_data_3, method = "cpm")
+```
+
+When we access the object again we can see that the normalization has been added to the object in an additional assay called `"cpm"`. 
+
+```{r viewData2}
+single_cell_data_3
+```
 
 # Build Model
+
+To build a model we need to provide a single cell expression object annotated with cell type information. Let's have a look into the object to see which annotation is available. 
+```{r viewData3}
+names(colData(single_cell_data_3))
+```
+There are three columns with cell_type information available. We will inspect these columns further to decide which one we are going to use for signature calculation. 
+
+```{r inspectAnnotation}
+# celtype_subset
+unique(colData(single_cell_data_3)$celltype_subset)
+
+# celltype_minor
+unique(colData(single_cell_data_3)$celltype_minor)
+
+# celltype_major
+unique(colData(single_cell_data_3)$celltype_major)
+```
+
+There are three different resolutions of cell-type annotation available. For this tutorial we will choose `"celltype_major"` as cell-type annotation. 
+
+Next we can calculate a model using the annotated single-data and the deconvolution tool "SPOTlight". 
+```{r build_model}
+signature <- SpaceDeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "spotlight",
+  spatial_obj = spatial_data_3,
+  assay_sc = "cpm",
+  assay_sp = "cpm"
+)
+```
+
 
 # Deconvolution
 

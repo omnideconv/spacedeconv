@@ -18,6 +18,22 @@ knitr::opts_chunk$set(
 # Introduction 
 SpaceDeconv integrates first- and second-generation deconvolution algorithms for transcriptome data. While first-generation tools deconvolute based on internal precomputed signatures, second-generation deconvolution tools compute cell-type specific expression signatures from annotated single-cell expression data. In the following requirements and workflow details for both types of data are explained in detail.
 
+# Example Data
+SpaceDeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:
+
+```{r}
+library(SpaceDeconv)
+data("single_cell_data_1")
+data("single_cell_data_2")
+data("single_cell_data_3")
+data("single_cell_data_4")
+data("spatial_data_1")
+data("spatial_data_2")
+data("spatial_data_3")
+data("spatial_data_4")
+```
+
+
 # Reference Data
 To build cell-type specific signatures for second-generation deconvolution SpaceDeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats: 
 
