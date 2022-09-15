@@ -5,18 +5,20 @@
 \title{Deconvolute Omnideconv}
 \usage{
 deconvolute_omnideconv(
-  spe,
+  spatial_obj,
   signature = NULL,
   method = NULL,
   single_cell_obj = NULL,
   cell_type_col = "cell_ontology_class",
   batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   verbose = FALSE,
   ...
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{signature}{A signature matrix}
 
@@ -27,6 +29,10 @@ deconvolute_omnideconv(
 \item{cell_type_col}{column name of single_cell_obj where cell type information is found}
 
 \item{batch_id_col}{column name of single_cell_obj where batch ids can be found}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{verbose}{Whether to produce output on the console}
 
