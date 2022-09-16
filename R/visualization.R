@@ -16,7 +16,7 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
   }
 
   # check if sample exists in colData
-  if (!(sample %in% unlist(SingleCellExperiment::colData(spatial_obj)[1]))){
+  if (!(sample %in% unlist(SingleCellExperiment::colData(spatial_obj)$sample_id))){
     stop("Provided sample name not present in object")
   }
 

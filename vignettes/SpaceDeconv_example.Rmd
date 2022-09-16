@@ -25,6 +25,7 @@ For this tutorial we will use one of SpaceDeconvs sample dataset and the deconvo
 ```{r loadData, message=FALSE}
 library(SpaceDeconv)
 library(SpatialExperiment)
+reticulate::use_condaenv("giotto_env")
 
 data("single_cell_data_3")
 data("spatial_data_3")
@@ -80,7 +81,7 @@ Next we can calculate a model using the annotated single-data and the deconvolut
 signature <- SpaceDeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "spotlight",
+  method = "spatialdwls",
   spatial_obj = spatial_data_3,
   assay_sc = "cpm",
   assay_sp = "cpm"
