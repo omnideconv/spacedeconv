@@ -41,14 +41,14 @@ SpaceDeconv offers convenient access to perform first- and second-generation dec
 * _SpatialExperiment_, will be deconvoluted
 * _SingleCellExperiment_ containing cell type information, for second-generation tools
 
-```{r, eval=FALSE}
+```{r readData, eval=FALSE}
 spe = SpatialExperiment::read10xVisium("path_to_directory")
 ```
 
 
 # Normalization
 SpaceDeconv offers a function to normalize spatial expression data. The normalization is saved in an additional assay, so make sure to use the correct data during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
-```  {r, eval=FALSE}
+```  {r normalization, eval=FALSE}
 spe <- SpaceDeconv::normalize(spe, method = "cpm")
 
 # specify expression assay to use
@@ -91,14 +91,14 @@ result <- SpaceDeconv::deconvolute(
 ```
 # Visualization 
 
-```r
+```{r visualization, eval=FALSE}
 # sample does refer to the first column of ColData(spe)
 # for cell_type input a celltype present in the deconvolution result
-plot_celltype(spe, sample="sammple01", cell_type"B.cells")
+SpaceDeconv::plot_celltype(spe, sample="sample01", cell_type="B.cells")
 
 # threshold changes the minimum cell type fraction 
 # for a cell to be considered present in a specific spot
-plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
+SpaceDeconv::plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
 ```
 
 # Additional Requirements

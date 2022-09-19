@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 
   comment = "#>"
@@ -21,7 +21,7 @@ SpaceDeconv integrates first- and second-generation deconvolution algorithms for
 # Example Data
 SpaceDeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:
 
-```{r}
+```{r loadingData}
 library(SpaceDeconv)
 data("single_cell_data_1")
 data("single_cell_data_2")
@@ -74,7 +74,7 @@ spe = seurat_to_spatialexperiment(seurat_object)
 # Normalization
 SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
 
-```{r, eval = FALSE}
+```{r deconvolution, eval = FALSE}
 spe <- normalize(spe, method="cpm")
 
 # make sure to use cpm assay in deconvolution step
