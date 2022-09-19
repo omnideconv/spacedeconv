@@ -8,6 +8,7 @@ build_model_spatial_dwls(
   single_cell_obj,
   assay_sc = "counts",
   marker_method = "scran",
+  topNgenes = 100,
   cell_type_col = "cell_ontology_class",
   dim_method = "pca",
   cluster_method = "leiden",
@@ -20,6 +21,8 @@ build_model_spatial_dwls(
 \item{assay_sc}{Single Cell Object assay to use}
 
 \item{marker_method}{provide list of marker genes or method to calculate markers (scran, gini, mast)}
+
+\item{topNgenes}{Number of top ranked marker genes to use from each cluster}
 
 \item{cell_type_col}{column of single_cell_obj containing cell type information}
 

@@ -30,6 +30,10 @@ reference:
   contents:
   - plot_cells_per_spot
   - plot_celltype
+- title: Sample Data
+  contents:
+  - starts_with("single_cell_data")
+  - starts_with("spatial_data")
 - title: internal
   contents:
   - SpaceDeconv-pkg

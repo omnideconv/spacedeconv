@@ -101,3 +101,17 @@ deconv <- SpaceDeconv::deconvolute(spatial_data_3, signature = signature, method
 
 
 # Visualization 
+
+The deconvolution results are stored in the spatial object to simplify visualizations. SpaceDeconv offers two visualization function and the resulting SpatialExperiment are also compatible with other available visualization frameworks like [spatialLIBD](http://spatial.libd.org/spatialLIBD/).
+
+We can see the available deconvolution results by accessing the objects `colData`: 
+
+```{r accessColData}
+colData(deconv)[, 1:4]
+```
+For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. SpaceDeconvs visualization enable easy plotting by providing a cell type name. 
+
+```{r visualization}
+SpaceDeconv::plot_celltype(deconv, cell_type = "B.cells.Naive")
+```
+
