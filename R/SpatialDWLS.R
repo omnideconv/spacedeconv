@@ -2,11 +2,12 @@
 #' @param single_cell_obj SingleCellExperiment
 #' @param assay_sc Single Cell Object assay to use
 #' @param marker_method provide list of marker genes or method to calculate markers (scran, gini, mast)
+#' @param topNgenes Number of top ranked marker genes to use from each cluster
 #' @param cell_type_col column of single_cell_obj containing cell type information
 #' @param dim_method dimension reduction method
 #' @param cluster_method cluster method to  use when calculating marker genes
 #' @param ... additional paramters
-build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
+build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
 
 
   # TODO Checks
@@ -42,19 +43,30 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     message("Calculating Markers")
     # calculate based on selection
     # TODO add assay to use or select default one by handling all that during Giotto object creation
-    # TODO Cluster, probably just add _clus
-    markers = Giotto::findMarkers(obj,  method = marker_method, cluster_column = cluster_method)
+
+    markers = Giotto::findMarkers(obj,  method = marker_method, cluster_column = paste0(cluster_method, "_clus"))
+
+    # markers are a complex list with marker genes for each cluster
+    # extract the top genes for each cluster and intersect
+    genes = character()
+    for (cluster in markers){
+     genes <- c(genes, cluster$genes[1:topNgenes])
+    }
+
+    genes <- unique(genes)
+
+    message("Giotto: extracted a total of ", length(genes), " marker genes")
 
   } else {
     message("Using the provided marker genes")
-    markers <- marker_method
+    genes <- marker_method
   }
 
   # get cell type vector from object
   cell_types <- as.vector(single_cell_obj[[cell_type_col]])
 
   # TODO Check if markers are necessary!!!
-  signature <- Giotto::makeSignMatrixDWLSfromMatrix(matrix = scExpression, sign_gene = markers, cell_type_vector = cell_types)
+  signature <- Giotto::makeSignMatrixDWLSfromMatrix(matrix = scExpression, sign_gene = genes, cell_type_vector = cell_types)
 
   return(signature)
 }

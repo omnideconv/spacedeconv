@@ -81,14 +81,22 @@ Next we can calculate a model using the annotated single-data and the deconvolut
 signature <- SpaceDeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "spatialdwls",
+  method = "dwls",
   spatial_obj = spatial_data_3,
   assay_sc = "cpm",
   assay_sp = "cpm"
 )
 ```
+```{r}
+knitr::kable(signature[1:10, ])
+```
 
 
 # Deconvolution
+
+```{r deconvolution}
+deconv <- SpaceDeconv::deconvolute(spatial_data_3, signature = signature, method = "dwls", assay_sp = "cpm")
+```
+
 
 # Visualization 

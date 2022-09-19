@@ -268,7 +268,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 
   # ensure library size > 0
   spatial_obj <- removeZeroExpression(spatial_obj)
-  if (!is.null(spatial_obj)){
+  if (!is.null(single_cell_obj)){
     single_cell_obj <- removeZeroExpression(single_cell_obj)
   }
 
