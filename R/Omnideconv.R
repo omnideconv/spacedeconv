@@ -53,6 +53,7 @@ build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontolo
     markers = markers,
     bulk_gene_expression = bulk_gene_expression,
     batch_ids = batch_ids,
+    assay_name = assay_sc,
     ...
   )
 
@@ -104,6 +105,7 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
     batch_ids = batch_ids,
     cell_type_column_name = cell_type_col,
     verbose = verbose,
+    assay_name = assay_sc,
     ...
   )
 }
