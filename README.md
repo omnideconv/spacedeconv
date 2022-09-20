@@ -81,7 +81,7 @@ SpaceDeconv includes multiple visualization functions.
 ```r
 # sample does refer to the first column of ColData(spe)
 # for cell_type input a celltype present in the deconvolution result
-plot_celltype(spe, sample="sample01", cell_type="B.cells")
+plot_celltype(spe, cell_type="B.cells")
 
 # threshold changes the minimum cell type fraction 
 # for a cell to be considered present in a specific spot
