@@ -5,7 +5,7 @@
 \alias{deconvolution_methods}
 \title{List of supported deconvolution methods}
 \format{
-An object of class \code{character} of length 30.
+An object of class \code{character} of length 31.
 }
 \usage{
 deconvolution_methods
@@ -18,7 +18,7 @@ Spatial Algorithms \cr
 \code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS}, \code{Cell2Location}
 
 Second-generation Algorithms (Omnideconv) \cr
-\code{AutoGeneS}, \code{Bisque}, \code{BSeq-sc}, \code{CIBERSORTx}, \code{CDSeq}, \code{CPM}, \code{DWLS}, \code{MOMF},
+\code{AutoGeneS}, \code{BayesPrism}, \code{Bisque}, \code{BSeq-sc}, \code{CIBERSORTx}, \code{CDSeq}, \code{CPM}, \code{DWLS}, \code{MOMF},
 \code{MuSiC}, \code{Scaden}, \code{SCDC}
 
 First-generation Methods (Immunedeconv) \cr
