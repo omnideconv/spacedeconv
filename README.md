@@ -1,5 +1,9 @@
 # SpaceDeconv
 
+[![R-CMD-check](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml)
+[![docs](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml)
+
+
 SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are available, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
 
 ## Installation 
