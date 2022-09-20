@@ -47,3 +47,29 @@ The deconvolution result as a table
 \description{
 Perform cell type deconvolution with SpaceDeconv.
 }
+\examples{
+# more examples can be found in the documentation website
+data("single_cell_data_1")
+data("spatial_data_1")
+
+single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+
+signature <- SpaceDeconv::build_model(
+  single_cell_data_1,
+  method="scdc",
+  cell_type_column ="celltype_major",
+  assay_sc="cpm",
+  spatial_obj = spatial_data_1,
+  assay_sp = "cpm",
+  batch_id_col = "orig.ident"
+)
+
+deconvolution <- SpaceDeconv::deconvolute(
+  spatial_obj = spatial_data_1,
+  signature = signature,
+  method = "scdc",
+  single_cell_obj = single_cell_data_1,
+  cell_type_col = "celltype_major",
+  batch_id_col = "orig.ident"
+)
+}

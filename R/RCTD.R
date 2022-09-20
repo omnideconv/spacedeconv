@@ -1,7 +1,6 @@
 #' RCTD builds the model internally, please just use the deconvolute method
 #'
 #' @return NULL
-#' @export
 build_model_rctd <- function() {
   message("RCTD builds it's model internally, please just use the deconvolute method")
   return(NULL)

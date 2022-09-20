@@ -76,6 +76,23 @@ deconvolution_methods <- c(
 #' @returns cell-type specific expression signature
 #'
 #' @export
+#'
+#' @examples
+#' # more examples can be found in the documentation website
+#' data("single_cell_data_1")
+#' data("spatial_data_1")
+#'
+#' single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+#'
+#' signature <- SpaceDeconv::build_model(
+#'   single_cell_data_1,
+#'   method="scdc",
+#'   cell_type_col ="celltype_major",
+#'   assay_sc="cpm",
+#'   spatial_obj = spatial_data_1,
+#'   assay_sp = "cpm",
+#'   batch_id_col = "orig.ident"
+#' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' missing or null, but is required")
@@ -236,6 +253,32 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' @param ... Further parameters passed to the selected deconvolution method
 #' @returns The deconvolution result as a table
 #' @export
+#'
+#' @examples
+#' # more examples can be found in the documentation website
+#' data("single_cell_data_1")
+#' data("spatial_data_1")
+#'
+#' single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+#'
+#' signature <- SpaceDeconv::build_model(
+#'   single_cell_data_1,
+#'   method="scdc",
+#'   cell_type_col ="celltype_major",
+#'   assay_sc="cpm",
+#'   spatial_obj = spatial_data_1,
+#'   assay_sp = "cpm",
+#'   batch_id_col = "orig.ident"
+#' )
+#'
+#' deconvolution <- SpaceDeconv::deconvolute(
+#'   spatial_obj = spatial_data_1,
+#'   signature = signature,
+#'   method = "scdc",
+#'   single_cell_obj = single_cell_data_1,
+#'   cell_type_col = "celltype_major",
+#'   batch_id_col = "orig.ident"
+#' )
 deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required.")
