@@ -4,7 +4,7 @@
 #' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`
 #'
 #' @details Second-generation Algorithms (Omnideconv) \cr
-#' `AutoGeneS`, `Bisque`, `BSeq-sc`, `CIBERSORTx`, `CDSeq`, `CPM`, `DWLS`, `MOMF`,
+#' `AutoGeneS`, `BayesPrism`, `Bisque`, `BSeq-sc`, `CIBERSORTx`, `CDSeq`, `CPM`, `DWLS`, `MOMF`,
 #' `MuSiC`, `Scaden`, `SCDC`
 #'
 #' @details First-generation Methods (Immunedeconv) \cr
@@ -28,6 +28,7 @@ deconvolution_methods <- c(
   "cell2location" = "cell2location",
   # omnideconv
   "AutoGeneS" = "autogenes",
+  "BayesPrism" = "bayesprism",
   "Bisque" = "bisque",
   "BSeq-sc" = "bseqsc",
   "CIBERSORTx" = "cibersortx",
@@ -128,6 +129,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     ##############
     autogenes = {
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "autogenes", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
+    },
+    bayesprism = {
+      build_model_omnideconv(single_cell_obj, cell_type_col, method="bayesprism", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bisque = {
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "bisque", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
@@ -292,6 +296,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     ##############
     autogenes = {
       deconvolute_omnideconv(spatial_obj, signature, method = "autogenes", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+    },
+    bayesprism = {
+      deconvolute_omnideconv(spatial_obj, signature, method="bayesprism", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
     },
     bisque = {
       deconvolute_omnideconv(spatial_obj, signature, method = "bisque", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
