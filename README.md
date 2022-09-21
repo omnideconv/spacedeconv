@@ -9,6 +9,7 @@ SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spati
 ## Installation 
 
 There are two ways to install `SpaceDeconv`:
+
 * The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand. 
 * The _complete_ installtation installs all dependencies including all deconvolution methods. This may take a considerable time. 
 

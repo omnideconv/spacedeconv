@@ -57,7 +57,7 @@ single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
 signature <- SpaceDeconv::build_model(
   single_cell_data_1,
   method="scdc",
-  cell_type_column ="celltype_major",
+  cell_type_col ="celltype_major",
   assay_sc="cpm",
   spatial_obj = spatial_data_1,
   assay_sp = "cpm",

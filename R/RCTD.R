@@ -35,24 +35,12 @@ deconvolute_rctd <- function(single_cell_obj, cell_type_col, spatial_obj, assay_
 
   message("Preparing Data for RCTD")
 
-  # check if requested assay exists
-  if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
-    message(
-      "requested assay ",
-      assay_sc,
-      " not available in expression object. Using first available assay."
-    )
-    assay_sc <- names(SummarizedExperiment::assays(single_cell_obj))[1] # change to first available assay request not available
-  }
-
-  # check if requested assay exists
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
-    message(
-      "requested assay ",
-      assay_sp,
-      " not available in expression object. Using first available assay."
-    )
-    assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1] # change to first available assay request not available
+  # check if assay_sc/sp is "counts"
+  if (assay_sc != "counts" || assay_sp != "counts") {
+    message("RCTD requires unnormalized count data but ", assay_sc, " / ", assay_sp, " was requested.")
+    message("Using 'counts' assay")
+    assay_sc <- "counts"
+    assay_sp <- "counts"
   }
 
   # sc counts

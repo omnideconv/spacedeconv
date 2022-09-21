@@ -21,11 +21,10 @@ SpaceDeconv::deconvolution_methods
 ```
 
 # Sample Data
-For this tutorial we will use one of SpaceDeconvs sample dataset and the deconvolution algorithm "SPOTlight".
+For this tutorial we will use one of SpaceDeconvs sample dataset and the deconvolution algorithm "SCDC".
 ```{r loadData, message=FALSE}
 library(SpaceDeconv)
 library(SpatialExperiment)
-reticulate::use_condaenv("giotto_env")
 
 data("single_cell_data_3")
 data("spatial_data_3")
@@ -124,7 +123,7 @@ For a quick overview over the available results you can use `colData` function t
 names(colData(deconv))
 ```
 
-For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. SpaceDeconvs visualization enable easy plotting by providing a cell type name. 
+For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. 
 
 ```{r visualization}
 SpaceDeconv::plot_celltype(deconv, cell_type = "B.cells.Memory", plot_density = FALSE)
