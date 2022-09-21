@@ -16,20 +16,27 @@ library(SpaceDeconv)
 data("single_cell_data_3")
 data("spatial_data_3")
 
-deconv <- SpaceDeconv::deconvolute(spatial_data_3, signature = NULL, single_cell_obj = single_cell_data_3, cell_type_col = "celltype_major", method="rctd")
+deconv <- SpaceDeconv::deconvolute(
+  spatial_data_3,
+  signature = NULL,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "rctd"
+)
 ```
 
 At the moment SpaceDeconv offers two visualization functions. 
+
 * `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
 * `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 SpaceDeconv::plot_celltype(deconv, cell_type = "T.cells")
 ```
 
 
 To render the distribution of the number of detected cell types per spot a user-selected treshold is required. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 1%. 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.01)
 ```
 
