@@ -63,4 +63,6 @@ Remotes:
     omnideconv/dwls,
     shenorrlab/bseqsc,
     omnideconv/MuSiC, 
-    omnideconv/BayesPrism
+    omnideconv/BayesPrism, 
+    drighelli/SpatialExperiment, 
+    LieberInstitute/spatialLIBD
