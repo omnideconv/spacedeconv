@@ -49,6 +49,8 @@ Perform cell type deconvolution with SpaceDeconv.
 }
 \examples{
 # more examples can be found in the documentation website
+library(SpaceDeconv)
+library(data.table)
 data("single_cell_data_2")
 data("spatial_data_2")
 
@@ -60,8 +62,8 @@ signature <- SpaceDeconv::build_model(
   method="dwls",
   cell_type_col ="celltype_major",
   assay_sc="cpm",
-  dwls_metho="mast_optimized",
-  ncores = 20
+  dwls_method="mast_optimized",
+  ncores = 12
 )
 
 deconvolution <- SpaceDeconv::deconvolute(

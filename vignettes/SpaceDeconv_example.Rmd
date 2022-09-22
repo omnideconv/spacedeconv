@@ -5,7 +5,7 @@ date: "2022-09-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Example}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 ```{r setup, include=FALSE}

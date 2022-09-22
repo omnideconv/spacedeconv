@@ -5,8 +5,9 @@
 #' @param cell_type Cell Type to plot
 #' @param plot_density (default = FALSE) wheter to plot the density
 #' @param spot_size size of the spots in the plot
+#' @param show_image whether to show the histology image in the background
 #' @export
-plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density = TRUE, spot_size = 1) {
+plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, plot_density = TRUE, spot_size = 1, show_image = TRUE) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
@@ -27,8 +28,11 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
 
   # make plots
   spatial <- spatialLIBD::vis_gene(
-    spe = spatial_obj, sampleid = sample,
-    geneid = cell_type, point_size = spot_size
+    spe = spatial_obj,
+    sampleid = sample,
+    geneid = cell_type,
+    point_size = spot_size,
+    spatial = show_image
   )
 
   plot <- spatial
@@ -71,8 +75,9 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
 #' @param plot_type bar chart or spatial (bar, spatial)
 #' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
 #' @param spot_size size of the dots
+#' @param show_image whether to show the histology image in the background
 #' @export
-plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 0, spot_size = 1.5) {
+plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 0, spot_size = 1.5, show_image=TRUE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -127,7 +132,13 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
 
     pal = colorRampPalette(RColorBrewer::brewer.pal(9, "Spectral"))
 
-    plot <- spatialLIBD::vis_clus(obj, sampleid = "sample01", clustervar ="value", point_size = spot_size, colors = rev(pal(ncol(tmp))))
+    plot <- spatialLIBD::vis_clus(
+      obj,
+      sampleid = "sample01",
+      clustervar ="value",
+      point_size = spot_size,
+      spatial = show_image,
+      colors = rev(pal(ncol(tmp))))
   } else {
     plot = NULL
   }
