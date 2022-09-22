@@ -79,16 +79,18 @@ deconvolution_methods <- c(
 #'
 #' @examples
 #' # more examples can be found in the documentation website
-#' data("single_cell_data_1")
-#' data("spatial_data_1")
+#' data("single_cell_data_2")
+#' data("spatial_data_2")
 #'
-#' single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
 #'
 #' signature <- SpaceDeconv::build_model(
-#'   single_cell_data_1,
+#'   single_cell_data_2,
 #'   method="dwls",
 #'   cell_type_col ="celltype_major",
-#'   assay_sc="cpm"
+#'   assay_sc="cpm",
+#'   dwls_metho="mast_optimized",
+#'   ncores = 20
 #' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   if (is.null(single_cell_obj)) {
@@ -250,25 +252,27 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'
 #' @examples
 #' # more examples can be found in the documentation website
-#' data("single_cell_data_1")
-#' data("spatial_data_1")
+#' data("single_cell_data_2")
+#' data("spatial_data_2")
 #'
-#' single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
+#' spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method="cpm")
 #'
 #' signature <- SpaceDeconv::build_model(
-#'   single_cell_data_1,
+#'   single_cell_data_2,
 #'   method="dwls",
 #'   cell_type_col ="celltype_major",
 #'   assay_sc="cpm",
+#'   dwls_metho="mast_optimized",
+#'   ncores = 20
 #' )
 #'
 #' deconvolution <- SpaceDeconv::deconvolute(
-#'   spatial_obj = spatial_data_1,
+#'   spatial_obj = spatial_data_2,
 #'   signature = signature,
 #'   method = "dwls",
-#'   single_cell_obj = single_cell_data_1,
-#'   cell_type_col = "celltype_major",
-#'   batch_id_col = "orig.ident"
+#'   single_cell_obj = single_cell_data_2,
+#'   cell_type_col = "celltype_major"
 #' )
 deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
   if (is.null(spatial_obj)) {

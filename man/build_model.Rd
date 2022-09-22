@@ -43,18 +43,17 @@ Build_model calculates a reference signature from annotated scRNA-seq expression
 }
 \examples{
 # more examples can be found in the documentation website
-data("single_cell_data_1")
-data("spatial_data_1")
+data("single_cell_data_2")
+data("spatial_data_2")
 
-single_cell_data_1 <- SpaceDeconv::normalize(single_cell_data_1, method="cpm")
+single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
 
 signature <- SpaceDeconv::build_model(
-  single_cell_data_1,
-  method="scdc",
+  single_cell_data_2,
+  method="dwls",
   cell_type_col ="celltype_major",
   assay_sc="cpm",
-  spatial_obj = spatial_data_1,
-  assay_sp = "cpm",
-  batch_id_col = "orig.ident"
+  dwls_metho="mast_optimized",
+  ncores = 20
 )
 }
