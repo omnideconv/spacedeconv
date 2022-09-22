@@ -83,14 +83,14 @@ deconvolution_methods <- c(
 #' library(data.table)
 #' data("single_cell_data_2")
 #'
-#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
+#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
 #'
 #' signature <- SpaceDeconv::build_model(
 #'   single_cell_data_2,
-#'   method="dwls",
-#'   cell_type_col ="celltype_major",
-#'   assay_sc="cpm",
-#'   dwls_method="mast_optimized",
+#'   method = "dwls",
+#'   cell_type_col = "celltype_major",
+#'   assay_sc = "cpm",
+#'   dwls_method = "mast_optimized",
 #'   ncores = 12
 #' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
@@ -116,13 +116,13 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
   single_cell_obj <- convert_to_sce(single_cell_obj)
 
   # check if rownames and colnames are set
-  if (checkRowColumn(single_cell_obj)||(!is.null(spatial_obj) && checkRowColumn(spatial_obj))){
-    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  if (checkRowColumn(single_cell_obj) || (!is.null(spatial_obj) && checkRowColumn(spatial_obj))) {
+    stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
   # ensure library size > 0
   single_cell_obj <- removeZeroExpression(single_cell_obj)
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     spatial_obj <- removeZeroExpression(spatial_obj)
   }
 
@@ -136,7 +136,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     card = {
       build_model_card()
     },
-    spatialdwls = {build_model_spatial_dwls(single_cell_obj, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)},
+    spatialdwls = {
+      build_model_spatial_dwls(single_cell_obj, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)
+    },
 
     ##############
     # omnideconv #
@@ -145,7 +147,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "autogenes", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bayesprism = {
-      build_model_omnideconv(single_cell_obj, cell_type_col, method="bayesprism", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
+      build_model_omnideconv(single_cell_obj, cell_type_col, method = "bayesprism", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bisque = {
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "bisque", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
@@ -258,15 +260,15 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' data("single_cell_data_2")
 #' data("spatial_data_2")
 #'
-#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
-#' spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method="cpm")
+#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
+#' spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method = "cpm")
 #'
 #' signature <- SpaceDeconv::build_model(
 #'   single_cell_data_2,
-#'   method="dwls",
-#'   cell_type_col ="celltype_major",
-#'   assay_sc="cpm",
-#'   dwls_method="mast_optimized",
+#'   method = "dwls",
+#'   cell_type_col = "celltype_major",
+#'   assay_sc = "cpm",
+#'   dwls_method = "mast_optimized",
 #'   ncores = 12
 #' )
 #'
@@ -303,17 +305,17 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
   }
 
   # check if rownames and colnames are set
-  if (checkRowColumn(spatial_obj)){
-    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  if (checkRowColumn(spatial_obj)) {
+    stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
-  if (!is.null(single_cell_obj) && checkRowColumn(single_cell_obj)){
-    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  if (!is.null(single_cell_obj) && checkRowColumn(single_cell_obj)) {
+    stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
   # ensure library size > 0
   spatial_obj <- removeZeroExpression(spatial_obj)
-  if (!is.null(single_cell_obj)){
+  if (!is.null(single_cell_obj)) {
     single_cell_obj <- removeZeroExpression(single_cell_obj)
   }
 
@@ -326,7 +328,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
       deconvolute_spotlight(spatial_obj = spatial_obj, model = signature, assay_sp = assay_sp)
     },
     card = {
-      deconvolute_card(single_cell_obj, spatial_obj, cell_type_col=cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
+      deconvolute_card(single_cell_obj, spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
     },
     spatialdwls = {
       deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = assay_sp, ...)
@@ -339,7 +341,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
       deconvolute_omnideconv(spatial_obj, signature, method = "autogenes", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
     },
     bayesprism = {
-      deconvolute_omnideconv(spatial_obj, signature, method="bayesprism", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "bayesprism", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
     },
     bisque = {
       deconvolute_omnideconv(spatial_obj, signature, method = "bisque", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
@@ -376,7 +378,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     # immunedeconv #
     ################
     mcp_counter = {
-      deconvolute_immunedeconv(spatial_obj, method = "mcp_counter", assay_sp = assay_sp,  ...)
+      deconvolute_immunedeconv(spatial_obj, method = "mcp_counter", assay_sp = assay_sp, ...)
     },
     epic = {
       deconvolute_immunedeconv(spatial_obj, method = "epic", assay_sp = assay_sp, ...)
@@ -451,13 +453,13 @@ build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, c
   # TODO useful checks
 
   # check if rownames and colnames are set
-  if (checkRowColumn(single_cell_obj)||checkRowColumn(spatial_obj)){
-    stop ("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  if (checkRowColumn(single_cell_obj) || checkRowColumn(spatial_obj)) {
+    stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
   # ensure library size > 0
   spatial_obj <- removeZeroExpression(spatial_obj)
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     single_cell_obj <- removeZeroExpression(single_cell_obj)
   }
 

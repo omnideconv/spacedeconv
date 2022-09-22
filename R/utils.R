@@ -96,7 +96,7 @@ addResultToObject <- function(spatial_obj, result) {
     full <- rbind(result, missing_mat)
 
     # order accordingly
-    full <- full[order(match(rownames(full), rownames(result))), , drop=FALSE]
+    full <- full[order(match(rownames(full), rownames(result))), , drop = FALSE]
 
     # add to object
     for (celltype in colnames(full)) {
@@ -109,15 +109,15 @@ addResultToObject <- function(spatial_obj, result) {
 
 #' get deconvolution results from object
 #' @param spatial_obj SpatialExperiment
-get_results_from_object = function(spatial_obj){
-  if (is.null(spatial_obj)){
+get_results_from_object <- function(spatial_obj) {
+  if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
 
   tmp <- SingleCellExperiment::colData(spatial_obj)
   tmp <- as.matrix(tmp[, -1]) # ???
 
-  return (tmp)
+  return(tmp)
 }
 
 #' The dependencies for each method
@@ -224,16 +224,16 @@ check_and_install <- function(method) {
 #' @param object SummarizedExperiment or any related datatypes
 #'
 #' @returns Expression Object without all zero columns
-removeZeroExpression <- function (object){
+removeZeroExpression <- function(object) {
   # ensure that library size > 0
-  nspots = sum (Matrix::colSums(counts(object))==0)
-  if (nspots>0){
+  nspots <- sum(Matrix::colSums(counts(object)) == 0)
+  if (nspots > 0) {
     # remove spots with all zero expression
-    message ("removing ", nspots, " spots with zero expression")
-    object <- object[, !Matrix::colSums(counts(object))==0]
+    message("removing ", nspots, " spots with zero expression")
+    object <- object[, !Matrix::colSums(counts(object)) == 0]
   }
 
-  return (object)
+  return(object)
 }
 
 #' Check Rowname/Colname Presence
@@ -243,6 +243,6 @@ removeZeroExpression <- function (object){
 #' @param object SingleCellExperiment or SpatialExperiment
 #'
 #' @returns boolean, TRUE if one of rownames/colnames is NULL
-checkRowColumn <- function (object){
-  return (is.null(rownames(object)) || is.null(colnames(object)))
+checkRowColumn <- function(object) {
+  return(is.null(rownames(object)) || is.null(colnames(object)))
 }

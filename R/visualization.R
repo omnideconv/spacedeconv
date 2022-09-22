@@ -17,7 +17,7 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
   }
 
   # check if sample exists in colData
-  if (!(sample %in% unlist(SingleCellExperiment::colData(spatial_obj)$sample_id))){
+  if (!(sample %in% unlist(SingleCellExperiment::colData(spatial_obj)$sample_id))) {
     stop("Provided sample name not present in object")
   }
 
@@ -77,12 +77,12 @@ plot_celltype <- function(spatial_obj, sample = "sample01", cell_type = NULL, pl
 #' @param spot_size size of the dots
 #' @param show_image whether to show the histology image in the background
 #' @export
-plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 0, spot_size = 1.5, show_image=TRUE) {
+plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 0, spot_size = 1.5, show_image = TRUE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
 
-  if (!plot_type %in% c("spatial", "bar")){
+  if (!plot_type %in% c("spatial", "bar")) {
     stop("Plot_type not supported")
   }
 
@@ -108,7 +108,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
   plot_data <- data.frame(spot = rownames(res), value = as.integer(apply(res, 1, sum)))
 
   # make plot
-  if (plot_type=="bar"){
+  if (plot_type == "bar") {
     plot <- ggplot2::ggplot(plot_data) +
       ggplot2::geom_bar(aes_string(x = "value"), stat = "count", fill = "black") +
       ggplot2::geom_vline(
@@ -125,22 +125,23 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
         axis.line.y = ggplot2::element_blank(),
         axis.line.x = ggplot2::element_blank(),
       )
-  } else if (plot_type=="spatial"){
-    obj = spatial_obj
-    tmp = SingleCellExperiment::colData(obj)
-    SummarizedExperiment::colData(obj) <- cbind(tmp, value=plot_data[["value"]])
+  } else if (plot_type == "spatial") {
+    obj <- spatial_obj
+    tmp <- SingleCellExperiment::colData(obj)
+    SummarizedExperiment::colData(obj) <- cbind(tmp, value = plot_data[["value"]])
 
-    pal = colorRampPalette(RColorBrewer::brewer.pal(9, "Spectral"))
+    pal <- colorRampPalette(RColorBrewer::brewer.pal(9, "Spectral"))
 
     plot <- spatialLIBD::vis_clus(
       obj,
       sampleid = "sample01",
-      clustervar ="value",
+      clustervar = "value",
       point_size = spot_size,
       spatial = show_image,
-      colors = rev(pal(ncol(tmp))))
+      colors = rev(pal(ncol(tmp)))
+    )
   } else {
-    plot = NULL
+    plot <- NULL
   }
   plot
 }

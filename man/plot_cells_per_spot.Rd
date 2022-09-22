@@ -8,7 +8,8 @@ plot_cells_per_spot(
   spatial_obj,
   plot_type = "spatial",
   threshold = 0,
-  spot_size = 1.5
+  spot_size = 1.5,
+  show_image = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ plot_cells_per_spot(
 \item{threshold}{threshold for presence/absence, single value or vector of length nrow(spatial_obj)}
 
 \item{spot_size}{size of the dots}
+
+\item{show_image}{whether to show the histology image in the background}
 }
 \description{
 Plot Cells per Spot

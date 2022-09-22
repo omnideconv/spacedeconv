@@ -9,7 +9,8 @@ plot_celltype(
   sample = "sample01",
   cell_type = NULL,
   plot_density = TRUE,
-  spot_size = 1
+  spot_size = 1,
+  show_image = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ plot_celltype(
 \item{plot_density}{(default = FALSE) wheter to plot the density}
 
 \item{spot_size}{size of the spots in the plot}
+
+\item{show_image}{whether to show the histology image in the background}
 }
 \description{
 Plot Spatial Object

@@ -21,7 +21,7 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   }
 
   # manual workaround for xCell
-  if (method == "xcell" && requireNamespace("xCell")){
+  if (method == "xcell" && requireNamespace("xCell")) {
     xCell.data <- xCell::xCell.data
   }
 
@@ -40,28 +40,28 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
 
   # extract bulk
   bulk <- NULL
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     bulk <- SummarizedExperiment::assay(spatial_obj, assay_sp)
     bulk <- as.matrix(bulk)
   }
 
   # if method is "cibersort" remove spots with zero expression in signature genes
-  if (method=="cibersort"){
+  if (method == "cibersort") {
     # check if cibersort variables are set
 
     testit::assert("CIBERSORT.R is provided", exists("cibersort_binary", envir = config_env))
     testit::assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir = config_env))
 
-    sig = read.table(get("cibersort_mat", envir = config_env), header = TRUE, sep="\t", row.names = 1, check.names = FALSE)
+    sig <- read.table(get("cibersort_mat", envir = config_env), header = TRUE, sep = "\t", row.names = 1, check.names = FALSE)
 
-    #intersect genes
+    # intersect genes
     sig_genes <- rownames(sig)
     bulk_genes <- rownames(bulk)
     bulk_in_sig <- bulk_genes %in% sig_genes
-    tmp <- colSums(bulk[bulk_in_sig, ])==0
-    if (sum(tmp)>0){
+    tmp <- colSums(bulk[bulk_in_sig, ]) == 0
+    if (sum(tmp) > 0) {
       message("Removing unsusable spots")
-      bulk = bulk[, !tmp]
+      bulk <- bulk[, !tmp]
     }
   }
 
@@ -107,7 +107,7 @@ deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes =
 
   # extract bulk
   bulk <- NULL
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     bulk <- SummarizedExperiment::assay(spatial_obj, assay_sp)
     bulk <- as.matrix(bulk)
   }

@@ -11,7 +11,7 @@
 #' @param ... additional parameters passed to the selected algorithm
 #'
 #' @returns Gene Expression signature or NULL, if methods don't export signatures
-build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, spatial_obj = NULL, batch_id_col = NULL, markers = NULL, assay_sc = "counts", assay_sp= "counts", ...) {
+build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, spatial_obj = NULL, batch_id_col = NULL, markers = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   # TODO checks
 
   # check if requested assay exists
@@ -36,7 +36,7 @@ build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontolo
 
   # extract matrices from object
   bulk_gene_expression <- NULL
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     bulk_gene_expression <- SummarizedExperiment::assay(spatial_obj, assay_sp)
   }
 
@@ -71,7 +71,7 @@ build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontolo
 #' @param assay_sp spatial assay to use
 #' @param verbose Whether to produce output on the console
 #' @param ... Additional parameters, passed to the selected method
-deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp="counts", verbose = FALSE, ...) {
+deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", verbose = FALSE, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required.")
   }
@@ -86,7 +86,7 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
 
   # extract matrices from object
   bulk_gene_expression <- NULL
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     bulk_gene_expression <- SummarizedExperiment::assay(spatial_obj, assay_sp)
   }
 

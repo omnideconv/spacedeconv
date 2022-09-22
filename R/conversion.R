@@ -1,17 +1,17 @@
 #' Convert Input Files to SingleCellExperiment
 #'
 #' @param obj object provided by the user, will be converted to sce
-convert_to_sce <- function (obj){
-  sce = NULL
+convert_to_sce <- function(obj) {
+  sce <- NULL
 
-  if (!is.null(obj)){
+  if (!is.null(obj)) {
     # check object type and convert if necessary
-    if (class(obj)[[1]] == "SingleCellExperiment"){
-      sce = obj
-    } else if(class(obj)[[1]] == "AnnDataR6"){
-      sce = anndata_to_singlecellexperiment(obj)
+    if (class(obj)[[1]] == "SingleCellExperiment") {
+      sce <- obj
+    } else if (class(obj)[[1]] == "AnnDataR6") {
+      sce <- anndata_to_singlecellexperiment(obj)
       message("Converted Anndata to SCE")
-    } else if (class(obj)[[1]] == "Seurat"){
+    } else if (class(obj)[[1]] == "Seurat") {
       sce <- Seurat::as.SingleCellExperiment(obj)
       message("Converted Seurat to SCE")
     }
@@ -66,31 +66,33 @@ anndata_to_singlecellexperiment <- function(ad) {
 #' @returns SpatialExperiment
 #'
 #' @export
-seurat_to_spatialexperiment <- function(seurat){
+seurat_to_spatialexperiment <- function(seurat) {
 
-  #sce = Seurat::as.SingleCellExperiment(seurat)
+  # sce = Seurat::as.SingleCellExperiment(seurat)
 
-  #assay_names = SummarizedExperiment::assays(sce) %>% names()
+  # assay_names = SummarizedExperiment::assays(sce) %>% names()
 
-  images = Seurat::Images(seurat)
+  images <- Seurat::Images(seurat)
 
-  raster = SpatialExperiment::SpatialImage(as.raster(seurat@images[[images]]@image))
+  raster <- SpatialExperiment::SpatialImage(as.raster(seurat@images[[images]]@image))
 
-  img = S4Vectors::DataFrame(sample_id="sample01", image_id = "lowres", data= I(list(raster)),
-                    scaleFactor = seurat@images[[images]]@scale.factors[["lowres"]])
+  img <- S4Vectors::DataFrame(
+    sample_id = "sample01", image_id = "lowres", data = I(list(raster)),
+    scaleFactor = seurat@images[[images]]@scale.factors[["lowres"]]
+  )
 
 
-  spe = SpatialExperiment::SpatialExperiment(
+  spe <- SpatialExperiment::SpatialExperiment(
     assays = list(counts = Seurat::GetAssayData(seurat, "Spatial", slot = "counts")),
-    #spatialCoords = as.matrix(Seurat::GetTissueCoordinates(seurat)) ,
+    # spatialCoords = as.matrix(Seurat::GetTissueCoordinates(seurat)) ,
     spatialCoords = as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")]),
     imgData = img
   )
 
-  return (spe)
+  return(spe)
 }
 
 #' Convert SpatialExperiment to AnnData
-anndata_to_spatialexperiment <- function(){
+anndata_to_spatialexperiment <- function() {
 
 }

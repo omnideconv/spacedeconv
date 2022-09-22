@@ -7,7 +7,7 @@
 #' @param dim_method dimension reduction method
 #' @param cluster_method cluster method to  use when calculating marker genes
 #' @param ... additional paramters
-build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method="leiden", ...) {
+build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method = "leiden", ...) {
 
 
   # TODO Checks
@@ -44,19 +44,18 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     # calculate based on selection
     # TODO add assay to use or select default one by handling all that during Giotto object creation
 
-    markers = Giotto::findMarkers(obj,  method = marker_method, cluster_column = paste0(cluster_method, "_clus"))
+    markers <- Giotto::findMarkers(obj, method = marker_method, cluster_column = paste0(cluster_method, "_clus"))
 
     # markers are a complex list with marker genes for each cluster
     # extract the top genes for each cluster and intersect
-    genes = character()
-    for (cluster in markers){
-     genes <- c(genes, cluster$genes[1:topNgenes])
+    genes <- character()
+    for (cluster in markers) {
+      genes <- c(genes, cluster$genes[1:topNgenes])
     }
 
     genes <- unique(genes)
 
     message("Giotto: extracted a total of ", length(genes), " marker genes")
-
   } else {
     message("Using the provided marker genes")
     genes <- marker_method
@@ -105,9 +104,9 @@ doGiottoWorkflow <- function(obj, calculateHVG = TRUE, dim_method = "pca", clust
     stop("Object needs to be a Giotto object!")
   }
 
-  if (!dim_method %in% c("pca", "tsne", "umap"))
-
+  if (!dim_method %in% c("pca", "tsne", "umap")) {
     message("Starting Giotto Workflow")
+  }
 
   # TODO check if all those steps have already been performed???
   obj <- Giotto::normalizeGiotto(obj)
@@ -124,13 +123,15 @@ doGiottoWorkflow <- function(obj, calculateHVG = TRUE, dim_method = "pca", clust
   message("Giotto: Performing Dimension Reduction")
   obj <- Giotto::runPCA(obj) # run anayway, either pca is used or it needs to be run for tnse and umap?
   obj <- switch(dim_method,
-                pca = {obj}, # just return the object, already performed
-                tsne = {
-                  Giotto::runtSNE(obj) # run based on pca, could also be done directly
-                },
-                umap = {
-                  Giotto::runUMAP(obj) # run based on pca
-                }
+    pca = {
+      obj
+    }, # just return the object, already performed
+    tsne = {
+      Giotto::runtSNE(obj) # run based on pca, could also be done directly
+    },
+    umap = {
+      Giotto::runUMAP(obj) # run based on pca
+    }
   )
 
   # Create Network using the performed dimension reduction
@@ -146,24 +147,24 @@ doGiottoWorkflow <- function(obj, calculateHVG = TRUE, dim_method = "pca", clust
   # Clustering
   message("Giotto: Clustering")
   obj <- switch(cluster_method,
-                leiden = {
-                  Giotto::doLeidenCluster(obj)
-                },
-                louvain = {
-                  Giotto::doLouvainCluster(obj)
-                },
-                kmeans = {
-                  Giotto::doKmeans(obj,
-                                   dim_reduction_to_use = dim_method,
-                                   dim_reduction_name = dim_method
-                  )
-                },
-                hclust = {
-                  Giotto::doHclust(obj,
-                                   dim_reduction_to_use = dim_method,
-                                   dim_reduction_name = dim_method
-                  )
-                },
+    leiden = {
+      Giotto::doLeidenCluster(obj)
+    },
+    louvain = {
+      Giotto::doLouvainCluster(obj)
+    },
+    kmeans = {
+      Giotto::doKmeans(obj,
+        dim_reduction_to_use = dim_method,
+        dim_reduction_name = dim_method
+      )
+    },
+    hclust = {
+      Giotto::doHclust(obj,
+        dim_reduction_to_use = dim_method,
+        dim_reduction_name = dim_method
+      )
+    },
   )
 
   message("Giotto: Finished")
