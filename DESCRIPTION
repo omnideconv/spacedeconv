@@ -35,6 +35,7 @@ Suggests:
     immunedeconv,
     omnideconv,
     BisqueRNA,
+    BayesPrism, 
     bseqsc,
     CDSeq,
     devtools,
@@ -54,9 +55,10 @@ Suggests:
     Giotto
 Remotes:
     amitfrish/scBio,
-    grst/MOMF,
-    grst/SCDC,
-    PelzKo/CDSeq_R_Package,
-    PelzKo/dwls,
+    omnideconv/MOMF,
+    omnideconv/SCDC,
+    omnideconv/CDSeq,
+    omnideconv/dwls,
     shenorrlab/bseqsc,
-    xuranw/MuSiC
+    omnideconv/MuSiC, 
+    omnideconv/BayesPrism
