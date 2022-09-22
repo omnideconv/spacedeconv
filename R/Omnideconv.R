@@ -25,7 +25,7 @@ build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontolo
   }
 
   # check if requested assay exists
-  if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
+  if (!is.null(spatial_obj) && !assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
       assay_sp,

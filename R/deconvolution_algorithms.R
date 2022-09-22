@@ -86,12 +86,9 @@ deconvolution_methods <- c(
 #'
 #' signature <- SpaceDeconv::build_model(
 #'   single_cell_data_1,
-#'   method="scdc",
+#'   method="dwls",
 #'   cell_type_col ="celltype_major",
-#'   assay_sc="cpm",
-#'   spatial_obj = spatial_data_1,
-#'   assay_sp = "cpm",
-#'   batch_id_col = "orig.ident"
+#'   assay_sc="cpm"
 #' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   if (is.null(single_cell_obj)) {
@@ -125,9 +122,6 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
   if (!is.null(spatial_obj)){
     spatial_obj <- removeZeroExpression(spatial_obj)
   }
-
-  # check if cell_type_col in names(colData(sc)^)
-
 
   signature <- switch(method,
     rctd = {
@@ -263,18 +257,15 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'
 #' signature <- SpaceDeconv::build_model(
 #'   single_cell_data_1,
-#'   method="scdc",
+#'   method="dwls",
 #'   cell_type_col ="celltype_major",
 #'   assay_sc="cpm",
-#'   spatial_obj = spatial_data_1,
-#'   assay_sp = "cpm",
-#'   batch_id_col = "orig.ident"
 #' )
 #'
 #' deconvolution <- SpaceDeconv::deconvolute(
 #'   spatial_obj = spatial_data_1,
 #'   signature = signature,
-#'   method = "scdc",
+#'   method = "dwls",
 #'   single_cell_obj = single_cell_data_1,
 #'   cell_type_col = "celltype_major",
 #'   batch_id_col = "orig.ident"
