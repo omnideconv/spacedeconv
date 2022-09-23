@@ -97,6 +97,8 @@ Most methods do not require additional software/tokens, but there are a feq exce
   <https://cibersortx.stanford.edu/>
 - The CIBERSORT source code is required for BSeq-sc (see tutorial in
   ?omnideconv::bseqsc_config)
+- SpatialExperiment required `magick` to be installed: `sudo apt-get install libmakick++-dev`
+
   
 ## Available methods, Licenses, Citations
 
