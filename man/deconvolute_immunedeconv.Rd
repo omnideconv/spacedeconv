@@ -4,7 +4,13 @@
 \alias{deconvolute_immunedeconv}
 \title{Deconvolute Immundeconv}
 \usage{
-deconvolute_immunedeconv(spatial_obj, method = NULL, assay_sp = "counts", ...)
+deconvolute_immunedeconv(
+  spatial_obj,
+  method = NULL,
+  assay_sp = "counts",
+  result_name = NULL,
+  ...
+)
 }
 \arguments{
 \item{spatial_obj}{SpatialExperiment}
@@ -12,6 +18,8 @@ deconvolute_immunedeconv(spatial_obj, method = NULL, assay_sp = "counts", ...)
 \item{method}{deconvolution algorithm}
 
 \item{assay_sp}{assay of spatial object to use}
+
+\item{result_name}{token to identify deconvolution results in object, default = deconvolution method}
 
 \item{...}{further parameters passed to the selected method}
 }

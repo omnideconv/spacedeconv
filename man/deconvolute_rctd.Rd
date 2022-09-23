@@ -12,7 +12,8 @@ deconvolute_rctd(
   assay_sp = "counts",
   n_umi_sc = NULL,
   n_umi_sp = NULL,
-  n_cores = NULL
+  n_cores = NULL,
+  result_name = "rctd"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ deconvolute_rctd(
 \item{n_umi_sp}{(optional) named list of umi counts for each spot}
 
 \item{n_cores}{Number of CPU cores to use for the calculation, NULL = use all cores}
+
+\item{result_name}{token to identify deconvolution results in object, default = "rctd"}
 }
 \description{
 RCTD Deconvolution

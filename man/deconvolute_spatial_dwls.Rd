@@ -4,7 +4,13 @@
 \alias{deconvolute_spatial_dwls}
 \title{Deconvolute Spatial DWLS}
 \usage{
-deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = "counts", ...)
+deconvolute_spatial_dwls(
+  spatial_obj,
+  signature,
+  assay_sp = "counts",
+  result_name = "spatialdwls",
+  ...
+)
 }
 \arguments{
 \item{spatial_obj}{Spatial Experiment}
@@ -12,6 +18,8 @@ deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = "counts", ...)
 \item{signature}{Signature}
 
 \item{assay_sp}{Assay of SpatialExperiment to use}
+
+\item{result_name}{token to identify deconvolution results in object, default = "spatialdwls"}
 
 \item{...}{additional parameters}
 }

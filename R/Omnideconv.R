@@ -70,8 +70,9 @@ build_model_omnideconv <- function(single_cell_obj, cell_type_col = "cell_ontolo
 #' @param assay_sc single cell assay to use
 #' @param assay_sp spatial assay to use
 #' @param verbose Whether to produce output on the console
+#' @param result_name token to identify deconvolution results in object, default = selected deconvolution method
 #' @param ... Additional parameters, passed to the selected method
-deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", verbose = FALSE, ...) {
+deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", verbose = FALSE, result_name = NULL, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required.")
   }
@@ -82,6 +83,11 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
 
   if (!(method %in% omnideconv::deconvolution_methods)) {
     stop("Method not supported by omnideconv")
+  }
+
+  # if result_name is NULL then use method
+  if (is.null(result_name)){
+    result_name = method
   }
 
   # extract matrices from object
@@ -97,7 +103,7 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
   }
 
   # deconvolute
-  omnideconv::deconvolute(
+  deconv <- omnideconv::deconvolute(
     bulk_gene_expression = bulk_gene_expression,
     signature = signature,
     method = method,
@@ -108,4 +114,9 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
     assay_name = assay_sc,
     ...
   )
+
+  # attach result_name token
+  deconv <- attachToken(deconv, result_name)
+
+  return (deconv)
 }

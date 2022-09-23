@@ -246,3 +246,27 @@ removeZeroExpression <- function(object) {
 checkRowColumn <- function(object) {
   return(is.null(rownames(object)) || is.null(colnames(object)))
 }
+
+#' Attach method token to deconvolution result
+#'
+#' Rename Celltypes of deconvolution result and add method token
+#' @param deconvolution deconvolution result as matrix
+#' @param token method name or custom token
+#'
+#' @returns deconvolution result with renamed celltypes
+attachToken <- function(deconvolution, token="deconv"){
+  if (is.null(deconvolution)){
+    stop("Deconvolution result is missing but is required")
+  }
+
+  if (is.null(token)){
+    message("No token provided, using 'deconv' as token")
+  }
+
+  # get colnames, attach token and overwrite
+  celltypes = names(deconvolution)
+  celltypes = paste0(token, "_", celltypes)
+  names(deconvolution) <- celltypes
+
+  return (deconvolution)
+}

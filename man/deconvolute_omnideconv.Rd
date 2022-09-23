@@ -14,6 +14,7 @@ deconvolute_omnideconv(
   assay_sc = "counts",
   assay_sp = "counts",
   verbose = FALSE,
+  result_name = NULL,
   ...
 )
 }
@@ -35,6 +36,8 @@ deconvolute_omnideconv(
 \item{assay_sp}{spatial assay to use}
 
 \item{verbose}{Whether to produce output on the console}
+
+\item{result_name}{token to identify deconvolution results in object, default = selected deconvolution method}
 
 \item{...}{Additional parameters, passed to the selected method}
 }

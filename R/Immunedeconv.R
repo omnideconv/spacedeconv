@@ -10,8 +10,9 @@ build_model_immunedeconv <- function() {
 #' @param spatial_obj SpatialExperiment
 #' @param method deconvolution algorithm
 #' @param assay_sp assay of spatial object to use
+#' @param result_name token to identify deconvolution results in object, default = deconvolution method
 #' @param ... further parameters passed to the selected method
-deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "counts", ...) {
+deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "counts", result_name = NULL, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
@@ -23,6 +24,11 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   # manual workaround for xCell
   if (method == "xcell" && requireNamespace("xCell")) {
     xCell.data <- xCell::xCell.data
+  }
+
+  # if no result_name is provided use method
+  if (is.null(result_name)){
+    result_name = method
   }
 
   # check for HGNC Symbols!!!
@@ -74,7 +80,10 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
     arrays = FALSE
   )
 
-  return(convertImmunedeconvMatrix(deconv))
+  # attach token
+  deconv <- attachToken(convertImmunedeconvMatrix(deconv), result_name)
+
+  return(deconv)
 }
 
 
@@ -84,15 +93,21 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
 #' @param rmgenes genes to remove from the analysis
 #' @param algorithm statistical algorithm for SeqImmuCC (ignored by all other methods)
 #' @param assay_sp assay of spatial object to use
+#' @param result_name token to identify deconvolution results in object, default = deconvolution method
 #' @param ... additional parameters passed to function
 #'
-deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", ...) {
+deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", result_name = NULL, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
 
   if (is.null(method)) {
     stop("Parameter 'method' is missing or null, but is required")
+  }
+
+  # if result_name is NULL then use method
+  if (is.null(result_name)){
+    result_name <- method
   }
 
   # check if requested assay exists
@@ -119,7 +134,10 @@ deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes =
     algorithm = algorithm
   )
 
-  return(convertImmunedeconvMatrix(deconv))
+  # attach token
+  deconv <- attachToken(convertImmunedeconvMatrix(deconv), result_name)
+
+  return(deconv)
 }
 
 #' Convert Immunedeconv Matrix to match SpaceDeconv Format

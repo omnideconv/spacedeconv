@@ -14,7 +14,8 @@ build_model_card <- function() {
 #' @param assay_sc assay of single_cell_obj to use
 #' @param assay_sp assay of spatial_obj to use
 #' @param batch_id_col batch id column in spatialExperiment
-deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = NULL) {
+#' @param result_name token to identify deconvolution results in object, default = "card"
+deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = NULL, result_name = "card") {
 
 
   # checks
@@ -91,6 +92,9 @@ deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell
   # extract results
   deconvolution <- cardObj@Proportion_CARD
   colnames(deconvolution) <- make.names(colnames(deconvolution))
+
+  # attach token
+  deconvolution <- attachToken(deconvolution, result_name)
 
 
   return(deconvolution)

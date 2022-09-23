@@ -63,7 +63,8 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
 #' @param spatial_obj SpatialExperiment
 #' @param model SPOTlight Model
 #' @param assay_sp spatial assay to use for the computation
-deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts") {
+#' @param result_name token to identify deconvolution results in object, default = "spotlight"
+deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts", result_name = "spotlight") {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' missing or null, but is required")
   }
@@ -85,7 +86,13 @@ deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts"
     ref = ref,
     slot = assay_sp
   )
-  return(deconv$mat)
+
+  deconvolution <- deconv$mat
+
+  # attach method token
+  deconvolution <- attachToken(deconvolution, result_name)
+
+  return(deconvolution)
 }
 
 #' Calculate Markers

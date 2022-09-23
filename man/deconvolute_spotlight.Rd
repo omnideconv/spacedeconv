@@ -4,7 +4,12 @@
 \alias{deconvolute_spotlight}
 \title{Deconvolute SPOTlight}
 \usage{
-deconvolute_spotlight(spatial_obj, model = NULL, assay_sp = "counts")
+deconvolute_spotlight(
+  spatial_obj,
+  model = NULL,
+  assay_sp = "counts",
+  result_name = "spotlight"
+)
 }
 \arguments{
 \item{spatial_obj}{SpatialExperiment}
@@ -12,6 +17,8 @@ deconvolute_spotlight(spatial_obj, model = NULL, assay_sp = "counts")
 \item{model}{SPOTlight Model}
 
 \item{assay_sp}{spatial assay to use for the computation}
+
+\item{result_name}{token to identify deconvolution results in object, default = "spotlight"}
 }
 \description{
 Deconvolute SPOTlight
