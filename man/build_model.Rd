@@ -47,14 +47,14 @@ library(SpaceDeconv)
 library(data.table)
 data("single_cell_data_2")
 
-single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method="cpm")
+single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
 
 signature <- SpaceDeconv::build_model(
   single_cell_data_2,
-  method="dwls",
-  cell_type_col ="celltype_major",
-  assay_sc="cpm",
-  dwls_method="mast_optimized",
+  method = "dwls",
+  cell_type_col = "celltype_major",
+  assay_sc = "cpm",
+  dwls_method = "mast_optimized",
   ncores = 12
 )
 }
