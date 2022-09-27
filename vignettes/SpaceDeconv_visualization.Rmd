@@ -39,4 +39,3 @@ To render the distribution of the number of detected cell types per spot a user-
 ```{r, warning=FALSE, message=FALSE}
 SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.01)
 ```
-

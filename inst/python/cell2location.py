@@ -159,4 +159,3 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   
   
   return sp_obj.obsm['q05_cell_abundance_w_sf']
-

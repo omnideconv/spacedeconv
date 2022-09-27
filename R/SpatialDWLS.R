@@ -8,8 +8,6 @@
 #' @param cluster_method cluster method to  use when calculating marker genes
 #' @param ... additional paramters
 build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method = "leiden", ...) {
-
-
   # TODO Checks
   if (!checkCol(single_cell_obj, cell_type_col)) {
     stop("cell_type_col not available")
@@ -78,7 +76,6 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
 #' @param result_name token to identify deconvolution results in object, default = "spatialdwls"
 #' @param ... additional parameters
 deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts", result_name = "spatialdwls", ...) {
-
   # TODO checks
 
   # create Giotto Object

@@ -27,8 +27,8 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   }
 
   # if no result_name is provided use method
-  if (is.null(result_name)){
-    result_name = method
+  if (is.null(result_name)) {
+    result_name <- method
   }
 
   # check for HGNC Symbols!!!
@@ -106,7 +106,7 @@ deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes =
   }
 
   # if result_name is NULL then use method
-  if (is.null(result_name)){
+  if (is.null(result_name)) {
     result_name <- method
   }
 
