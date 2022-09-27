@@ -95,7 +95,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
   # single threshold or vector
   if (length(threshold) == 1) {
     res[mat > threshold] <- 1
-  } else if (length(threshold) == nrow(mat)) { # vector matches matrix
+  } else if (length(threshold) == nrow(mat)) {
+    # vector matches matrix
     for (i in 1:nrow(mat)) {
       res[i, mat[i, ] > threshold[i]] <- 1
     }

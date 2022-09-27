@@ -10,7 +10,7 @@ vignette: >
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, 
+  collapse = TRUE,
   comment = "#>"
 )
 ```
@@ -83,7 +83,7 @@ signature <- SpaceDeconv::build_model(
   method = "scdc",
   spatial_obj = spatial_data_3,
   assay_sc = "cpm",
-  assay_sp = "cpm", 
+  assay_sp = "cpm",
   batch_id_col = "orig.ident"
 )
 ```
@@ -119,7 +119,7 @@ colData(deconv)[, 1:4]
 ```
 For a quick overview over the available results you can use `colData` function too: 
 ```{r overviewColData}
-# available annotation 
+# available annotation
 names(colData(deconv))
 ```
 
@@ -128,4 +128,3 @@ For each Spot the estimated cell fraction is available as object annotation and 
 ```{r visualization}
 SpaceDeconv::plot_celltype(deconv, cell_type = "B.cells.Memory", plot_density = FALSE)
 ```
-

@@ -10,7 +10,7 @@ vignette: >
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, 
+  collapse = TRUE,
   comment = "#>"
 )
 ```
@@ -62,22 +62,21 @@ sigature <- build_model(single_cell_object,
 Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the data folder. More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
 
 ```{r loadSpatialExperiment, eval=FALSE}
-spe = SpatialExperiment::read10xVisium(path_to_directory)
+spe <- SpatialExperiment::read10xVisium(path_to_directory)
 ```
 
 Spatial data available as a Seurat Object can be converted into a SpatialExperiment:
 
 ```{r seuratConversion, eval=FALSE}
-spe = seurat_to_spatialexperiment(seurat_object)
+spe <- seurat_to_spatialexperiment(seurat_object)
 ```
 
 # Normalization
 SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
 
 ```{r deconvolution, eval = FALSE}
-spe <- normalize(spe, method="cpm")
+spe <- normalize(spe, method = "cpm")
 
 # make sure to use cpm assay in deconvolution step
-deconvolution = deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
+deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
 ```
-

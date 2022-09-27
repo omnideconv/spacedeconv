@@ -6,8 +6,6 @@
 #' @param cell_percentage_cutoff cell2location parameter
 #' @param nonz_mean_cutoff cell2location parameter
 build_model_cell2location <- function(single_cell_obj, epochs = 20, cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12) {
-
-
   # build anndata, gene names as rownames
 
 

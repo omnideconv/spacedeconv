@@ -16,8 +16,6 @@ build_model_card <- function() {
 #' @param batch_id_col batch id column in spatialExperiment
 #' @param result_name token to identify deconvolution results in object, default = "card"
 deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = NULL, result_name = "card") {
-
-
   # checks
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is missing or null, but is required!")
