@@ -1,0 +1,54 @@
+url: ~
+template:
+  bootstrap: 5
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+reference:
+- title: Setup
+  contents:
+  - set_cibersort_binary
+  - set_cibersort_mat
+- title: Datatype conversion
+  contents:
+  - anndata_to_singlecellexperiment
+  - anndata_to_spatialexperiment
+  - seurat_to_spatialexperiment
+- title: Main Workflow
+  contents:
+  - deconvolution_methods
+  - normalize
+  - build_model
+  - deconvolute
+  - build_and_deconvolute
+- title: Custom access to methods
+  contents:
+  - starts_with("build_model_")
+  - starts_with("deconvolute_")
+- title: Visualization
+  contents:
+  - plot_cells_per_spot
+  - plot_celltype
+- title: Sample Data
+  contents:
+  - starts_with("single_cell_data")
+  - starts_with("spatial_data")
+- title: internal
+  contents:
+  - SpaceDeconv-pkg
+  - addResultToObject
+  - anndata_checkload
+  - checkCol
+  - check_and_install
+  - convertImmunedeconvMatrix
+  - convert_to_sce
+  - doGiottoWorkflow
+  - getMarkersSPOTlight
+  - getMatricesFromSCE
+  - get_results_from_object
+  - init_python
+  - python_available
+  - required_packages
+  - checkRowColumn
+  - removeZeroExpression

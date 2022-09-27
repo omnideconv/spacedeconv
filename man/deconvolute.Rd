@@ -2,32 +2,38 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{deconvolute}
 \alias{deconvolute}
-\title{Deconvolution}
+\title{Deconvolution with SpaceDeconv}
 \usage{
 deconvolute(
-  spatial_object,
+  spatial_obj,
   signature = NULL,
-  single_cell_object,
+  single_cell_obj = NULL,
   cell_type_col = "cell_ontology_class",
   method = NULL,
-  batch_ids = NULL,
+  batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   return_object = TRUE,
   verbose = FALSE,
   ...
 )
 }
 \arguments{
-\item{spatial_object}{A SpatialExperiment}
+\item{spatial_obj}{A SpatialExperiment}
 
 \item{signature}{Gene Expression Signature}
 
-\item{single_cell_object}{A SingleCellExperiment}
+\item{single_cell_obj}{A SingleCellExperiment}
 
-\item{cell_type_col}{Column name of the single_cell_object where the cell type can be found}
+\item{cell_type_col}{Column name of the single_cell_obj where the cell type can be found}
 
 \item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
 
-\item{batch_ids}{vector of batch ids}
+\item{batch_id_col}{column name of batch ids in single cell object}
+
+\item{assay_sc}{which single cell assay to use for computation}
+
+\item{assay_sp}{which spatial assay to use for computation}
 
 \item{return_object}{Return an Object or result Table, TRUE = Object}
 
@@ -39,5 +45,32 @@ deconvolute(
 The deconvolution result as a table
 }
 \description{
-Deconvolution
+Perform cell type deconvolution with SpaceDeconv.
+}
+\examples{
+# more examples can be found in the documentation website
+library(SpaceDeconv)
+library(data.table)
+data("single_cell_data_2")
+data("spatial_data_2")
+
+single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
+spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method = "cpm")
+
+signature <- SpaceDeconv::build_model(
+  single_cell_data_2,
+  method = "dwls",
+  cell_type_col = "celltype_major",
+  assay_sc = "cpm",
+  dwls_method = "mast_optimized",
+  ncores = 12
+)
+
+deconvolution <- SpaceDeconv::deconvolute(
+  spatial_obj = spatial_data_2,
+  signature = signature,
+  method = "dwls",
+  single_cell_obj = single_cell_data_2,
+  cell_type_col = "celltype_major"
+)
 }

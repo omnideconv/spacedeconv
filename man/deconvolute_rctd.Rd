@@ -5,26 +5,35 @@
 \title{RCTD Deconvolution}
 \usage{
 deconvolute_rctd(
-  sce,
+  single_cell_obj,
   cell_type_col,
-  spe,
+  spatial_obj,
+  assay_sc = "counts",
+  assay_sp = "counts",
   n_umi_sc = NULL,
   n_umi_sp = NULL,
-  n_cores = NULL
+  n_cores = NULL,
+  result_name = "rctd"
 )
 }
 \arguments{
-\item{sce}{SingleCellExperiment}
+\item{single_cell_obj}{SingleCellExperiment}
 
 \item{cell_type_col}{Column containting cell type annotation}
 
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{n_umi_sc}{(optional) named list of umi counts for each cell}
 
 \item{n_umi_sp}{(optional) named list of umi counts for each spot}
 
 \item{n_cores}{Number of CPU cores to use for the calculation, NULL = use all cores}
+
+\item{result_name}{token to identify deconvolution results in object, default = "rctd"}
 }
 \description{
 RCTD Deconvolution

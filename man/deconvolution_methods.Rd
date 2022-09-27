@@ -5,12 +5,30 @@
 \alias{deconvolution_methods}
 \title{List of supported deconvolution methods}
 \format{
-An object of class \code{character} of length 30.
+An object of class \code{character} of length 31.
 }
 \usage{
 deconvolution_methods
 }
 \description{
 List of supported deconvolution methods
+}
+\details{
+Spatial Algorithms \cr
+\code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS}, \code{Cell2Location}
+
+Second-generation Algorithms (Omnideconv) \cr
+\code{AutoGeneS}, \code{BayesPrism}, \code{Bisque}, \code{BSeq-sc}, \code{CIBERSORTx}, \code{CDSeq}, \code{CPM}, \code{DWLS}, \code{MOMF},
+\code{MuSiC}, \code{Scaden}, \code{SCDC}
+
+First-generation Methods (Immunedeconv) \cr
+\code{MCPcounter}, \code{EPIC}, \code{quanTIseq}, \code{xCell}, \code{CIBERSORT}, \code{CIBERSORT (abs.)},
+\code{TIMER}, \code{ConsensusTME}, \code{ABIS}, \code{ESTIMATE}
+
+First-generation Mouse Methods (Immunedeconv) \cr
+\code{mMCPcounter}, \code{seqImmuCC}, \code{DCQ}, \code{BASE}
+
+This object is a named vector. The names correspond to the display name of the method,
+the values to the internal name.
 }
 \keyword{datasets}

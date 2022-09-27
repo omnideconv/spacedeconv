@@ -2,24 +2,59 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{build_model}
 \alias{build_model}
-\title{Build Reference}
+\title{Build a reference signature}
 \usage{
 build_model(
-  single_cell_object,
+  single_cell_obj,
   cell_type_col = "cell_ontology_class",
   method = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  spatial_obj = NULL,
+  batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
+  ...
 )
 }
 \arguments{
-\item{single_cell_object}{Single Cell Expression Object}
+\item{single_cell_obj}{Single-cell Object}
 
-\item{cell_type_col}{Name of the anntotation column containing cell type information}
+\item{cell_type_col}{Name of the annotation column containing cell type information}
 
-\item{method}{signature calculation method}
+\item{method}{Signature calculation Algorithm}
 
 \item{verbose}{Display more information on console}
+
+\item{spatial_obj}{SpatialExperiment, required for SPOTlight}
+
+\item{batch_id_col}{column of singleCellExperiment containing batch ids}
+
+\item{assay_sc}{assay of single cell object to use}
+
+\item{assay_sp}{assay of spatial object to use}
+
+\item{...}{additional parameters passed to the functions}
+}
+\value{
+cell-type specific expression signature
 }
 \description{
-Build Reference
+Build_model calculates a reference signature from annotated scRNA-seq expression data
+}
+\examples{
+# more examples can be found in the documentation website
+library(SpaceDeconv)
+library(data.table)
+data("single_cell_data_2")
+
+single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
+
+signature <- SpaceDeconv::build_model(
+  single_cell_data_2,
+  method = "dwls",
+  cell_type_col = "celltype_major",
+  assay_sc = "cpm",
+  dwls_method = "mast_optimized",
+  ncores = 12
+)
 }

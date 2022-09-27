@@ -1,0 +1,114 @@
+---
+title: "Getting started"
+author: "Constantin Zackl"
+date: "2022-09-12"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>"
+)
+```
+
+# SpaceDeconv 
+SpaceDeconv is a unified interface to `r length(SpaceDeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are available, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+
+# Installation 
+
+There are two ways to install `SpaceDeconv`:
+
+* The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand. 
+* The _complete_ installtation installs all dependencies including all deconvolution methods. This may take a considerable time. 
+
+Since not all dependencies are on CRAN or Bioconductor, `SpaceDeconv` is available from GitHub only. We recommend installing trough the pak package manager: 
+
+```{r, eval=FALSE}
+install.packages("pak")
+
+# minimal installation 
+pak::pkg_install("omnideconv/SpaceDeconv")
+
+# complete installation, including Python dependencies
+pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
+SpaceDeconv::install_all_python()
+```
+
+# Data requirements
+SpaceDeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While first-generation methods only require a spatial dataset to perform deconvolution, second-generation algorithms require an additional single-reference: 
+
+* _SpatialExperiment_, will be deconvoluted
+* _SingleCellExperiment_ containing cell type information, for second-generation tools
+
+```{r readData, eval=FALSE}
+spe = SpatialExperiment::read10xVisium("path_to_directory")
+```
+
+
+# Normalization
+SpaceDeconv offers a function to normalize spatial expression data. The normalization is saved in an additional assay, so make sure to use the correct data during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
+```  {r normalization, eval=FALSE}
+spe <- SpaceDeconv::normalize(spe, method = "cpm")
+
+# specify expression assay to use
+signature <- SpaceDeconv::build_model(spe,
+  method = "quantiseq",
+  assay_sp = "cpm"
+)
+
+```
+
+# Building a reference Signature
+
+``` {r, buildModel, eval=FALSE}
+signature <- SpaceDeconv::build_model(
+  single_cell_object, 
+  cell_type_col = "cell_ontology_class", 
+  method = "spotlight", 
+  assay_sc="cpm"
+)
+```
+
+# Deconvolution
+SpaceDeconv offers convenient access to a total of `r length(SpaceDeconv::deconvolution_methods)` deconvolution tools. Since first-generation deconvolution tools contain predefined expression signatures these tools can be used directly on the spatial data. Additionally second-generation tools require a single-cell expression signature, annotated with cell type information, to calculate custom made expression signatures. SpaceDeconv returns a SpatialExperiment object annotated with deconvolution results. 
+
+``` {r, deconvolution, eval=FALSE}
+# save the results to an annotated SpatialExperiment
+result <- SpaceDeconv::deconvolute(
+  spatial_object, 
+  signature, 
+  method = "spotlight"
+)
+
+# return deconvolution results in table form
+result <- SpaceDeconv::deconvolute(
+  spatial_object, 
+  signature, 
+  method = "spotlight", 
+  return_object = FALSE
+)
+```
+# Visualization 
+
+```{r visualization, eval=FALSE}
+# sample does refer to the first column of ColData(spe)
+# for cell_type input a celltype present in the deconvolution result
+SpaceDeconv::plot_celltype(spe, sample="sample01", cell_type="B.cells")
+
+# threshold changes the minimum cell type fraction 
+# for a cell to be considered present in a specific spot
+SpaceDeconv::plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
+```
+
+# Additional Requirements
+Most methods do not require additional software/tokens, but there are a few exceptions: 
+
+* A working version of Docker is required for CIBERSORTx
+* A token for CIBERSORTx is required from this website:
+  <https://cibersortx.stanford.edu/>
+* The CIBERSORT source code is required for BSeq-sc (see tutorial in
+  ?omnideconv::bseqsc_config)

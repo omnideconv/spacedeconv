@@ -5,30 +5,39 @@
 \title{Deconvolute Omnideconv}
 \usage{
 deconvolute_omnideconv(
-  spe,
-  signature,
+  spatial_obj,
+  signature = NULL,
   method = NULL,
-  single_cell_object = NULL,
+  single_cell_obj = NULL,
   cell_type_col = "cell_ontology_class",
-  batch_ids = NULL,
+  batch_id_col = NULL,
+  assay_sc = "counts",
+  assay_sp = "counts",
   verbose = FALSE,
+  result_name = NULL,
   ...
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spatial_obj}{SpatialExperiment}
 
 \item{signature}{A signature matrix}
 
 \item{method}{omnideconv deconvolution method, see omnideconv::deconvolution_methods() for details}
 
-\item{single_cell_object}{Needed for MOMF and Bisque, either a matrix with cell type annotations in the cell_type_annotations parameter or a singleCellExperiment / AnnData where the cell_type_column_name specifies the corresponding column where the cell type annotation is located in the object}
+\item{single_cell_obj}{Needed for MOMF and Bisque, either a matrix with cell type annotations in the cell_type_annotations parameter or a singleCellExperiment / AnnData where the cell_type_column_name specifies the corresponding column where the cell type annotation is located in the object}
 
-\item{cell_type_col}{column name of single_cell_object where cell type information is found}
+\item{cell_type_col}{column name of single_cell_obj where cell type information is found}
 
-\item{batch_ids}{A vector of the ids of samples or individuals}
+\item{batch_id_col}{column name of single_cell_obj where batch ids can be found}
+
+\item{assay_sc}{single cell assay to use}
+
+\item{assay_sp}{spatial assay to use}
 
 \item{verbose}{Whether to produce output on the console}
+
+\item{result_name}{token to identify deconvolution results in object, default = selected deconvolution method}
 
 \item{...}{Additional parameters, passed to the selected method}
 }

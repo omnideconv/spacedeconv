@@ -1,24 +1,43 @@
 Package: SpaceDeconv
-Title: What the Package Does (One Line, Title Case)
+Title: Unified Interface to spatial transcriptomics deconvolution tools
 Version: 0.0.0.9000
 Authors@R: 
-    person("Constantin", "Zackl", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: MIT + file LICENSE
+    person("Constantin", "Zackl", , "constantin.zackl@student.uibk.ac.at", role = c("aut", "cre"))
+Description: Collection of 31 deconvolution tools for spatial transcriptomics data.
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
+VignetteBuilder: knitr
+LazyData: true
+Depends: 
+    R (>= 4.1.0)
 Imports: 
     utils,
     methods,
     remotes,
     SingleCellExperiment,
-    SpatialExperiment
+    SpatialExperiment, 
+    SummarizedExperiment,
+    Seurat,
+    anndata, 
+    edgeR, 
+    ggplot2, 
+    spatialLIBD, 
+    ggridges, 
+    gridExtra, 
+    magrittr, 
+    testit, 
+    RColorBrewer, 
+    S4Vectors, 
+    Matrix
 Suggests: 
     spacexr,
+    SPOTlight,
+    immunedeconv,
     omnideconv,
     BisqueRNA,
+    BayesPrism, 
     bseqsc,
     CDSeq,
     devtools,
@@ -30,12 +49,21 @@ Suggests:
     rmarkdown,
     scBio,
     SCDC,
-    uuid
+    uuid, 
+    scuttle, 
+    scran, 
+    CARD, 
+    xCell, 
+    Giotto, 
+    knitr
 Remotes:
     amitfrish/scBio,
-    grst/MOMF,
-    grst/SCDC,
-    PelzKo/CDSeq_R_Package,
-    PelzKo/dwls,
+    omnideconv/MOMF,
+    omnideconv/SCDC,
+    omnideconv/CDSeq,
+    omnideconv/dwls,
     shenorrlab/bseqsc,
-    xuranw/MuSiC
+    omnideconv/MuSiC, 
+    omnideconv/BayesPrism, 
+    drighelli/SpatialExperiment, 
+    LieberInstitute/spatialLIBD

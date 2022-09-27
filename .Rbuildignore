@@ -1,7 +1,6 @@
 ^SpaceDeconv\.Rproj$
 ^\.Rproj\.user$
-^spaceDeconvTools\.html$
-^spaceDeconvTools\.Rmd$
-^testCell2Location\.R$
-^testSpatialDWLS\.R$
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
