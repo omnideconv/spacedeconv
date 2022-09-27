@@ -54,7 +54,8 @@ Suggests:
     scran, 
     CARD, 
     xCell, 
-    Giotto
+    Giotto, 
+    knitr
 Remotes:
     amitfrish/scBio,
     omnideconv/MOMF,
