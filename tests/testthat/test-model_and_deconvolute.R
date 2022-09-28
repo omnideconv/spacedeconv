@@ -53,7 +53,7 @@ test_that("SPOTlight model and deconvolution in one step works", {
     method = "dwls",
     cell_type_col = "celltype_major",
     return_object = FALSE,
-    dwls_method="mast_optimized"
+    dwls_method = "mast_optimized"
   )
 
   expect_equal(
@@ -119,7 +119,7 @@ test_that("DWLS model and deconvolution in one step works", {
     method = "dwls",
     cell_type_col = "celltype_major",
     return_object = FALSE,
-    dwls_method="mast_optimized"
+    dwls_method = "mast_optimized"
   )
 
   expect_equal(
@@ -136,7 +136,7 @@ test_that("quanTIseq model and deconvolution in one step works", {
     method = "quantiseq",
     cell_type_col = "celltype_major",
     return_object = FALSE,
-    dwls_method="mast_optimized"
+    dwls_method = "mast_optimized"
   )
 
   expect_equal(
@@ -144,8 +144,3 @@ test_that("quanTIseq model and deconvolution in one step works", {
     obj = sort(colnames(deconv)), expected = sort(unique(single_cell_data_2$celltype_major))
   )
 })
-
-
-
-
-
