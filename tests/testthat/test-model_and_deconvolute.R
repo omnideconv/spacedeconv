@@ -6,9 +6,6 @@ test_that("RCTD Model and deconvolution in one step works", {
     single_cell_obj = single_cell_data_2,
     spatial_obj = spatial_data_2,
     method = "rctd",
-    cell_type_col="celltype_major"
+    cell_type_col = "celltype_major"
   )
-
-
-
 })
