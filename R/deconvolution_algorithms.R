@@ -477,6 +477,7 @@ build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, c
   deconv <- deconvolute(
     spatial_obj = spatial_obj,
     signature = signature,
+    method=method,
     single_cell_obj = single_cell_obj,
     cell_type_col = cell_type_col,
     batch_id_col = batch_id_col,

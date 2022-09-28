@@ -37,7 +37,7 @@ Suggests:
     immunedeconv,
     omnideconv,
     BisqueRNA,
-    BayesPrism, 
+    BayesPrism,
     bseqsc,
     CDSeq,
     devtools,
@@ -49,13 +49,14 @@ Suggests:
     rmarkdown,
     scBio,
     SCDC,
-    uuid, 
-    scuttle, 
-    scran, 
-    CARD, 
-    xCell, 
-    Giotto, 
-    knitr
+    uuid,
+    scuttle,
+    scran,
+    CARD,
+    xCell,
+    Giotto,
+    knitr,
+    testthat (>= 3.0.0)
 Remotes:
     amitfrish/scBio,
     omnideconv/MOMF,
@@ -67,3 +68,4 @@ Remotes:
     omnideconv/BayesPrism, 
     drighelli/SpatialExperiment, 
     LieberInstitute/spatialLIBD
+Config/testthat/edition: 3
