@@ -46,21 +46,23 @@ test_that("SPOTlight model and deconvolution in one step works", {
 #   )
 # })
 
-# test_that("DWLS model and deconvolution in one step works", {
-#   deconv <- SpaceDeconv::build_and_deconvolute(
-#     single_cell_obj = single_cell_data_2,
-#     spatial_obj = spatial_data_2,
-#     method = "dwls",
-#     cell_type_col = "celltype_major",
-#     return_object = FALSE,
-#     dwls_method="mast_optimized"
-#   )
-#
-#   expect_equal(
-#     info = "deconvolution results for all cell types in single cell reference available",
-#     obj = sort(colnames(deconv)), expected = sort(unique(single_cell_data_2$celltype_major))
-#   )
-# })
+
+# currently the only omnideconv method
+test_that("DWLS model and deconvolution in one step works", {
+  deconv <- SpaceDeconv::build_and_deconvolute(
+    single_cell_obj = single_cell_data_2,
+    spatial_obj = spatial_data_2,
+    method = "dwls",
+    cell_type_col = "celltype_major",
+    return_object = FALSE,
+    dwls_method = "mast_optimized"
+  )
+
+  expect_equal(
+    info = "deconvolution results for all cell types in single cell reference available",
+    obj = sort(colnames(deconv)), expected = sort(unique(single_cell_data_2$celltype_major))
+  )
+})
 
 # currently the only immunedeconv method
 test_that("quanTIseq model and deconvolution in one step works", {
@@ -70,15 +72,10 @@ test_that("quanTIseq model and deconvolution in one step works", {
     method = "quantiseq",
     cell_type_col = "celltype_major",
     return_object = FALSE,
-    dwls_method="mast_optimized"
+    dwls_method = "mast_optimized"
   )
 
   expect_gt(object = dim(deconv)[1], expected = 1)
 
   expect_gt(object = dim(deconv)[2], expected = 1)
 })
-
-
-
-
-
