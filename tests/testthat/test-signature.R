@@ -123,7 +123,7 @@ test_that("RCTD signature creation works", {
     cell_type_col = "celltype_major",
     method = "rctd"
   )
-  expect_null(object=signature)
+  expect_null(object = signature)
 })
 
 test_that("SPOTlight signature creation works", {
