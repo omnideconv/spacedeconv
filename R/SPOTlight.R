@@ -15,6 +15,10 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
 
+  if (is.null(spatial_obj)){
+    stop("Parameter 'spatial'obj' is null or missing, but is required")
+  }
+
   # check if requested assay exists
   if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
