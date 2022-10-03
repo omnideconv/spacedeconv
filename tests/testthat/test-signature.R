@@ -123,6 +123,7 @@ test_that("RCTD signature creation works", {
     cell_type_col = "celltype_major",
     method = "rctd"
   )
+  expect_null(object=signature)
 })
 
 test_that("SPOTlight signature creation works", {
@@ -160,7 +161,24 @@ test_that("SPOTlight signature creation works", {
     spatial_obj = spatial_data_2,
     assay_sp = "abc"
   ), regexp = "not available in expression object")
+
+  # check that spotlight catches missing single_cell_obj
+  expect_error(object = SpaceDeconv::build_model(
+    single_cell_obj = NULL,
+    cell_type_col = "celltype_major",
+    method = "spotlight",
+    spatial_obj = spatial_data_2
+  ), regexp = "'single_cell_obj' missing or null")
+
+  # test that spotlight catches wrong cell type col names
+  expect_error(object = SpaceDeconv::build_model(
+    single_cell_obj = single_cell_data_2,
+    cell_type_col = "abc",
+    method = "spotlight",
+    spatial_obj = spatial_data_2
+  ), regexp = "can't be found in single cell object")
 })
+
 
 test_that("CARD signature creation works", {
   signature <- SpaceDeconv::build_model(

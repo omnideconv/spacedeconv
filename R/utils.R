@@ -255,6 +255,7 @@ checkRowColumn <- function(object) {
 #'
 #' @returns deconvolution result with renamed celltypes
 attachToken <- function(deconvolution, token = "deconv") {
+  message("attaching token")
   if (is.null(deconvolution)) {
     stop("Deconvolution result is missing but is required")
   }
@@ -264,9 +265,9 @@ attachToken <- function(deconvolution, token = "deconv") {
   }
 
   # get colnames, attach token and overwrite
-  celltypes <- names(deconvolution)
+  celltypes <- colnames(deconvolution)
   celltypes <- paste0(token, "_", celltypes)
-  names(deconvolution) <- celltypes
+  colnames(deconvolution) <- celltypes
 
   return(deconvolution)
 }

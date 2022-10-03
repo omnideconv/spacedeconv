@@ -83,9 +83,10 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   # attach token
   deconv <- attachToken(convertImmunedeconvMatrix(deconv), result_name)
 
+  View(deconv)
+
   return(deconv)
 }
-
 
 #' Deconvolute Immunedeconv mouse
 #' @param spatial_obj SpatialExperiment
