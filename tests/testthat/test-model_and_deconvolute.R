@@ -12,7 +12,7 @@ test_that("RCTD Model and deconvolution in one step works", {
 
   expect_equal(
     info = "deconvolution results for all cell types in single cell reference available",
-    obj = sort(colnames(deconv)), expected = sort(unique(single_cell_data_2$celltype_major))
+    obj = sort(colnames(deconv)), expected = sort(paste0("rctd_", unique(single_cell_data_2$celltype_major)))
   )
 })
 
@@ -27,7 +27,7 @@ test_that("SPOTlight model and deconvolution in one step works", {
 
   expect_equal(
     info = "deconvolution results for all cell types in single cell reference available",
-    obj = sort(colnames(deconv)), expected = sort(unique(single_cell_data_2$celltype_major))
+    obj = sort(colnames(deconv)), expected = sort(paste0("spotlight_", unique(single_cell_data_2$celltype_major)))
   )
 })
 

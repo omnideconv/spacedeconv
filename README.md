@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml)
 
-SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are available, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
 
 ## Installation
 
@@ -37,7 +37,7 @@ SpaceDeconv offers convenient access to perform first- and second-generation dec
 
 ### Load Spatial Dataset
 
-You can load 10X Visium Data by providing the spaceranger output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details.
+You can load 10X Visium Data by providing the [spaceranger](https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger) output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details.
 
 ```r
 spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
@@ -100,7 +100,7 @@ plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
 
 ## Additional Requirements
 
-Most methods do not require additional software/tokens, but there are a feq exceptions:
+Most methods do not require additional software/tokens, but there are a few exceptions:
 
 - A working version of Docker is required for CIBERSORTx
 - A token for CIBERSORTx is required from this website:
@@ -117,8 +117,8 @@ need to obtain a license to use the individual methods. See the table
 below for more information. If you use this package in your work, please
 cite both our package and the method(s) you are using.
 
-| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (omnideconv + spatial Methods)                                                                                                                                                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| First-gen (immunedeconv)       | First-gen mouse (immunedeconv)  | Second-gen (omnideconv + spatial Methods)              |
+| ------------- | ------------- | ------------------ |
 | <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>AutoGeneS</li><li>BayesPrism</li><li>Bisque</li><li>Bisque</li><li>Bseq-sc</li><li>CIBERSORTx</li><li>CDseq</li><li>CPM</li><li>DWLS</li><li>MOMF</li><li>MuSiC</li><li>Scaden</li><li>SCDC</li></ul> |
 
 # References

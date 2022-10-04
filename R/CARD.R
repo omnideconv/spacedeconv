@@ -15,7 +15,12 @@ build_model_card <- function() {
 #' @param assay_sp assay of spatial_obj to use
 #' @param batch_id_col batch id column in spatialExperiment
 #' @param result_name token to identify deconvolution results in object, default = "card"
-deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell_ontology_class", assay_sc = "counts", assay_sp = "counts", batch_id_col = "orig.ident", result_name = "card") {
+deconvolute_card <- function(single_cell_obj,
+                             spatial_obj,
+                             cell_type_col = "cell_ontology_class",
+                             assay_sc = "counts", assay_sp = "counts",
+                             batch_id_col = "orig.ident",
+                             result_name = "card") {
   # checks
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is missing or null, but is required!")
@@ -25,7 +30,7 @@ deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
 
-  if (is.null(batch_id_col) || !batch_id_col %in% names(colData(spatial_obj))){
+  if (is.null(batch_id_col) || !batch_id_col %in% names(colData(spatial_obj))) {
     stop("Paramter 'batch_id_col' is missing, null or not available in single cell object")
   }
 
@@ -49,7 +54,9 @@ deconvolute_card <- function(single_cell_obj, spatial_obj, cell_type_col = "cell
   }
 
   # spatial expression
-  spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
+  spExpression <- SummarizedExperiment::assay(
+    spatial_obj, assay_sp
+  ) %>% as("dgCMatrix")
 
   # spatial coords
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj) %>% as.data.frame()

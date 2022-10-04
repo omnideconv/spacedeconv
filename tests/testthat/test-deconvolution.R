@@ -24,16 +24,16 @@ test_that("SPOTlight deconvolution works", {
   ), regexp = "Model is missing or null")
 })
 
-test_that("CARD deconvolution works", {
-  deconv <- SpaceDeconv::deconvolute(spatial_obj = spatial_data_2,
-                                     single_cell_obj = single_cell_data_2,
-                                     signature = NULL,
-                                     method="card",
-                                     cell_type_col = "celltype_major",
-                                     batch_id_col = "orig.ident")
-  # test that deconvolution results are available
-  expect_true(object = any(grepl(colnames(colData(deconv)), pattern = "card_")))
-})
+# test_that("CARD deconvolution works", {
+#   deconv <- SpaceDeconv::deconvolute(spatial_obj = spatial_data_2,
+#                                      single_cell_obj = single_cell_data_2,
+#                                      signature = NULL,
+#                                      method="card",
+#                                      cell_type_col = "celltype_major",
+#                                      batch_id_col = "orig.ident")
+#   # test that deconvolution results are available
+#   expect_true(object = any(grepl(colnames(colData(deconv)), pattern = "card_")))
+# })
 
 test_that("Mouse deconvolution works", {
   spatial_data_mouse <- spatial_data_2
