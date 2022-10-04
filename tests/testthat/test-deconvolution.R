@@ -40,8 +40,7 @@ test_that("Mouse deconvolution works", {
   # mimic mouse data
   rownames(spatial_data_mouse) <- tools::toTitleCase(tolower(rownames(spatial_data_mouse)))
 
-  deconv <- SpaceDeconv::deconvolute(spatial_data_mouse, method="mmcp_counter")
+  deconv <- SpaceDeconv::deconvolute(spatial_data_mouse, method = "mmcp_counter")
 
   expect_true(object = any(grepl(colnames(colData(deconv)), pattern = "mmcp_counter_")))
-
 })
