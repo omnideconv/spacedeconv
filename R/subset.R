@@ -49,7 +49,6 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
       # check if enough cells available
       # if not use all
       if (length(locations) >= cells_per_type) {
-
         # select "cells_per_type" random cells
         x[sample(locations, size = cells_per_type, replace = FALSE)] <- TRUE
       } else {
