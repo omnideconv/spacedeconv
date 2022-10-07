@@ -162,16 +162,16 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
 #' @example
 #' # TODO
 new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", image_id = "lowres") {
-  if (is.null(spe)){
+  if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if (is.null(cell_type)){
+  if (is.null(cell_type)) {
     stop("Parameter 'cell_type' is null or missing, but is required")
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe)))){
+  if (!all(cell_type %in% names(colData(spe)))) {
     stop("Provides cell types are not presend in SpatialExperiment")
   }
 
@@ -215,13 +215,15 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
   # plot(sf_poly[cell_type], border = NA)
-  p <- ggplot()  +
+  p <- ggplot() +
     geom_sf(aes_string(fill = cell_type), lwd = 0, data = sf_poly) +
     colorspace::scale_fill_continuous_sequential("Rocket") +
-    theme(axis.text = element_blank(),
-          axis.ticks = element_blank(),panel.grid = element_blank())
+    theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(), panel.grid = element_blank()
+    )
 
-  return (p)
+  return(p)
 
   # TODO
   # add facet wrap
