@@ -30,7 +30,8 @@ Imports:
     testit, 
     RColorBrewer, 
     S4Vectors, 
-    Matrix
+    Matrix, 
+    colorspace
 Suggests: 
     spacexr,
     SPOTlight,
