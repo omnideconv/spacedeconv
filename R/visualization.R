@@ -146,3 +146,86 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
   }
   plot
 }
+
+#' Function to plot deconvolution results
+#'
+#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type one or more celltype to plot
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#'
+#' @returns plot of cell type fractions
+#'
+#' @export
+#' @example
+#' # TODO
+new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", image_id = "lowres") {
+  if (is.null(spe)){
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  if (is.null(cell_type)){
+    stop("Parameter 'cell_type' is null or missing, but is required")
+  }
+
+  # check that celltypes are present in object
+  if (!all(cell_type %in% names(colData(spe)))){
+    stop("Provides cell types are not presend in SpatialExperiment")
+  }
+
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  # img = SpatialExperiment::imgRaster(spe), for later
+
+  # scale coordinates with scalefactor
+  df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
+  df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
+
+  # need to work on this, does this work when first spot is completely separated from the rest?
+  distance_guess <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2))
+
+  # build_hex coordinates
+  get_hex_polygon <- function(x, y, dist) {
+    angle <- seq(0, 2 * pi, length.out = 7)[-7] # angles of
+    res <- cbind(
+      x = x + sin(angle + 0.5) * dist / 2, # rotated by 30 degrees
+      y = y + cos(angle + 0.5) * dist / 2
+    )
+    return(rbind(res, res[1, ]))
+  }
+
+  # get coordinates for all hex polygons
+  get_polygon_geometry <- function(grid, dist) {
+    res <- list()
+    for (i in seq_len(nrow(grid))) {
+      res <- c(res, list(sf::st_polygon(list(get_hex_polygon(grid$pxl_col_in_fullres[i], grid$pxl_row_in_fullres[i], dist)))))
+    }
+    return(sf::st_sfc(res)) # Convert to 'simple feature collection'
+  }
+
+  # polygons
+  new_geom <- get_polygon_geometry(df, distance_guess)
+
+  # preparing the dataframe with sf
+  sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
+
+  # no overwrite the polygon points with hex polygons
+  sf_poly <- sf::st_set_geometry(sf_points, new_geom)
+
+  # plot(sf_poly[cell_type], border = NA)
+  p <- ggplot()  +
+    geom_sf(aes_string(fill = cell_type), lwd = 0, data = sf_poly) +
+    colorspace::scale_fill_continuous_sequential("Rocket") +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),panel.grid = element_blank())
+
+  return (p)
+
+  # TODO
+  # add facet wrap
+  # add color selection
+  # add background image
+  # try to reducet the gap
+}
