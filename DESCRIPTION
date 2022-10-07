@@ -31,7 +31,8 @@ Imports:
     RColorBrewer, 
     S4Vectors, 
     Matrix, 
-    colorspace
+    colorspace, 
+    sf
 Suggests: 
     spacexr,
     SPOTlight,
