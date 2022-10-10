@@ -10,7 +10,7 @@ vignette: >
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, 
+  collapse = TRUE,
   comment = "#>"
 )
 ```
@@ -32,14 +32,14 @@ data("spatial_data_3")
 
 
 # Preprocessing and Normalization
-To get a first insight into the data we typye the dataset name into the terminal: 
+To get a first insight into the data we type the dataset name into the terminal: 
 
 ```{r viewData}
 single_cell_data_3
 ```
 
 
-We can see that the single-cell data is in form of a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html). In total this dataset includes expression values from 29733 genes and 7986 cells. It can further be seen that cell-type information is available in `colData` where cell related annotation is stored. 
+We can see that the single-cell data is in form of a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html). In total this dataset includes expression values from 29733 genes and 7986 cells. It can further be seen that cell type information is available in `colData` where cell related annotation is stored. 
 
 As the next step we normalize the data as `cpm` ("Counts Per Million")
 
@@ -60,7 +60,7 @@ To build a model we need to provide a single cell expression object annotated wi
 ```{r viewData3}
 names(colData(single_cell_data_3))
 ```
-There are three columns with cell_type information available. We will inspect these columns further to decide which one we are going to use for signature calculation. 
+There are three columns with cell_type information. We will inspect these columns further to decide which one we are going to use for signature calculation. 
 
 ```{r inspectAnnotation}
 # celtype_subset
@@ -73,7 +73,7 @@ unique(colData(single_cell_data_3)$celltype_minor)
 unique(colData(single_cell_data_3)$celltype_major)
 ```
 
-There are three different resolutions of cell-type annotation available. For this tutorial we will choose `"celltype_major"` as cell-type annotation. 
+There are three different resolutions of cell type annotation available. For this tutorial we will choose `"celltype_major"` as cell type  annotation. 
 
 Next we can calculate a model using the annotated single-data and the deconvolution tool "SCDC". 
 ```{r build_model, message=FALSE, warning=FALSE, results='hide'}
@@ -83,7 +83,7 @@ signature <- SpaceDeconv::build_model(
   method = "scdc",
   spatial_obj = spatial_data_3,
   assay_sc = "cpm",
-  assay_sp = "cpm", 
+  assay_sp = "cpm",
   batch_id_col = "orig.ident"
 )
 ```
@@ -119,7 +119,7 @@ colData(deconv)[, 1:4]
 ```
 For a quick overview over the available results you can use `colData` function too: 
 ```{r overviewColData}
-# available annotation 
+# available annotation
 names(colData(deconv))
 ```
 
@@ -128,4 +128,3 @@ For each Spot the estimated cell fraction is available as object annotation and 
 ```{r visualization}
 SpaceDeconv::plot_celltype(deconv, cell_type = "B.cells.Memory", plot_density = FALSE)
 ```
-

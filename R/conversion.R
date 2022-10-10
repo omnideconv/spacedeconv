@@ -67,7 +67,6 @@ anndata_to_singlecellexperiment <- function(ad) {
 #'
 #' @export
 seurat_to_spatialexperiment <- function(seurat) {
-
   # sce = Seurat::as.SingleCellExperiment(seurat)
 
   # assay_names = SummarizedExperiment::assays(sce) %>% names()
@@ -91,6 +90,10 @@ seurat_to_spatialexperiment <- function(seurat) {
 
   return(spe)
 }
+
+# spe_to_seurat <- function(spe){
+#   obj <- Seurat::CreateSeuratObject(counts = , assay = "Spatial", project = )
+# }
 
 #' Convert SpatialExperiment to AnnData
 anndata_to_spatialexperiment <- function() {

@@ -23,21 +23,22 @@ Imports:
     anndata, 
     edgeR, 
     ggplot2, 
-    spatialLIBD, 
     ggridges, 
     gridExtra, 
     magrittr, 
     testit, 
     RColorBrewer, 
     S4Vectors, 
-    Matrix
+    Matrix, 
+    colorspace, 
+    sf
 Suggests: 
     spacexr,
     SPOTlight,
     immunedeconv,
     omnideconv,
     BisqueRNA,
-    BayesPrism, 
+    BayesPrism,
     bseqsc,
     CDSeq,
     devtools,
@@ -49,13 +50,14 @@ Suggests:
     rmarkdown,
     scBio,
     SCDC,
-    uuid, 
-    scuttle, 
-    scran, 
-    CARD, 
-    xCell, 
-    Giotto, 
-    knitr
+    uuid,
+    scuttle,
+    scran,
+    CARD,
+    xCell,
+    Giotto,
+    knitr,
+    testthat (>= 3.0.0)
 Remotes:
     amitfrish/scBio,
     omnideconv/MOMF,
@@ -66,4 +68,4 @@ Remotes:
     omnideconv/MuSiC, 
     omnideconv/BayesPrism, 
     drighelli/SpatialExperiment, 
-    LieberInstitute/spatialLIBD
+Config/testthat/edition: 3

@@ -10,7 +10,7 @@ deconvolute_card(
   cell_type_col = "cell_ontology_class",
   assay_sc = "counts",
   assay_sp = "counts",
-  batch_id_col = NULL,
+  batch_id_col = "orig.ident",
   result_name = "card"
 )
 }

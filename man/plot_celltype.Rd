@@ -2,30 +2,30 @@
 % Please edit documentation in R/visualization.R
 \name{plot_celltype}
 \alias{plot_celltype}
-\title{Plot Spatial Object}
+\title{Function to plot deconvolution results}
 \usage{
 plot_celltype(
-  spatial_obj,
-  sample = "sample01",
+  spe,
   cell_type = NULL,
-  plot_density = TRUE,
-  spot_size = 1,
+  sample_id = "sample01",
+  image_id = "lowres",
   show_image = TRUE
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment containing deconvolution results}
+\item{spe}{deconvolution result in Form of a SpatialExperiment}
 
-\item{sample}{sample to plot}
+\item{cell_type}{one or more celltype to plot}
 
-\item{cell_type}{Cell Type to plot}
+\item{sample_id}{sample id to plot, default: "sample01"}
 
-\item{plot_density}{(default = FALSE) wheter to plot the density}
+\item{image_id}{which image to plot, default: "lowres"}
 
-\item{spot_size}{size of the spots in the plot}
-
-\item{show_image}{whether to show the histology image in the background}
+\item{show_image}{logical, wether to display the image, default = TRUE}
+}
+\value{
+plot of cell type fractions
 }
 \description{
-Plot Spatial Object
+Generate Hex Plot of a SpatialExperiment containing deconvolution results
 }

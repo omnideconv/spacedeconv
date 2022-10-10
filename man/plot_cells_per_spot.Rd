@@ -9,6 +9,8 @@ plot_cells_per_spot(
   plot_type = "spatial",
   threshold = 0,
   spot_size = 1.5,
+  sample_id = "sample01",
+  image_id = "lowres",
   show_image = TRUE
 )
 }

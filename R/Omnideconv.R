@@ -86,8 +86,8 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
   }
 
   # if result_name is NULL then use method
-  if (is.null(result_name)){
-    result_name = method
+  if (is.null(result_name)) {
+    result_name <- method
   }
 
   # extract matrices from object
@@ -118,5 +118,5 @@ deconvolute_omnideconv <- function(spatial_obj, signature = NULL, method = NULL,
   # attach result_name token
   deconv <- attachToken(deconv, result_name)
 
-  return (deconv)
+  return(deconv)
 }

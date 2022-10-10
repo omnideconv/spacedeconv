@@ -10,13 +10,13 @@ vignette: >
 ---
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, 
+  collapse = TRUE,
   comment = "#>"
 )
 ```
 
 # SpaceDeconv 
-SpaceDeconv is a unified interface to `r length(SpaceDeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are available, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+SpaceDeconv is a unified interface to `r length(SpaceDeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
 
 # Installation 
 
@@ -30,11 +30,11 @@ Since not all dependencies are on CRAN or Bioconductor, `SpaceDeconv` is availab
 ```{r, eval=FALSE}
 install.packages("pak")
 
-# minimal installation 
+# minimal installation
 pak::pkg_install("omnideconv/SpaceDeconv")
 
 # complete installation, including Python dependencies
-pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
+pak::pkg_install("omnideconv/SpaceDeconv", dependencies = TRUE)
 SpaceDeconv::install_all_python()
 ```
 
@@ -45,7 +45,7 @@ SpaceDeconv offers convenient access to perform first- and second-generation dec
 * _SingleCellExperiment_ containing cell type information, for second-generation tools
 
 ```{r readData, eval=FALSE}
-spe = SpatialExperiment::read10xVisium("path_to_directory")
+spe <- SpatialExperiment::read10xVisium("path_to_directory")
 ```
 
 
@@ -59,17 +59,16 @@ signature <- SpaceDeconv::build_model(spe,
   method = "quantiseq",
   assay_sp = "cpm"
 )
-
 ```
 
 # Building a reference Signature
 
 ``` {r, buildModel, eval=FALSE}
 signature <- SpaceDeconv::build_model(
-  single_cell_object, 
-  cell_type_col = "cell_ontology_class", 
-  method = "spotlight", 
-  assay_sc="cpm"
+  single_cell_object,
+  cell_type_col = "cell_ontology_class",
+  method = "spotlight",
+  assay_sc = "cpm"
 )
 ```
 
@@ -79,16 +78,16 @@ SpaceDeconv offers convenient access to a total of `r length(SpaceDeconv::deconv
 ``` {r, deconvolution, eval=FALSE}
 # save the results to an annotated SpatialExperiment
 result <- SpaceDeconv::deconvolute(
-  spatial_object, 
-  signature, 
+  spatial_object,
+  signature,
   method = "spotlight"
 )
 
 # return deconvolution results in table form
 result <- SpaceDeconv::deconvolute(
-  spatial_object, 
-  signature, 
-  method = "spotlight", 
+  spatial_object,
+  signature,
+  method = "spotlight",
   return_object = FALSE
 )
 ```
@@ -97,11 +96,11 @@ result <- SpaceDeconv::deconvolute(
 ```{r visualization, eval=FALSE}
 # sample does refer to the first column of ColData(spe)
 # for cell_type input a celltype present in the deconvolution result
-SpaceDeconv::plot_celltype(spe, sample="sample01", cell_type="B.cells")
+SpaceDeconv::plot_celltype(spe, sample = "sample01", cell_type = "B.cells")
 
-# threshold changes the minimum cell type fraction 
+# threshold changes the minimum cell type fraction
 # for a cell to be considered present in a specific spot
-SpaceDeconv::plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
+SpaceDeconv::plot_cells_per_spot(spe, plot_type = "spatial", threshold = 0.01)
 ```
 
 # Additional Requirements

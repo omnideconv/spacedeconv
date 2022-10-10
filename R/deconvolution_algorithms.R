@@ -449,7 +449,6 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 #' @param ... further parameters passed to the selected function
 #' @export
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
-
   # TODO useful checks
 
   # check if rownames and colnames are set
@@ -478,6 +477,7 @@ build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, c
   deconv <- deconvolute(
     spatial_obj = spatial_obj,
     signature = signature,
+    method = method,
     single_cell_obj = single_cell_obj,
     cell_type_col = cell_type_col,
     batch_id_col = batch_id_col,
