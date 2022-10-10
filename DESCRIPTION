@@ -23,7 +23,6 @@ Imports:
     anndata, 
     edgeR, 
     ggplot2, 
-    spatialLIBD, 
     ggridges, 
     gridExtra, 
     magrittr, 
@@ -69,5 +68,4 @@ Remotes:
     omnideconv/MuSiC, 
     omnideconv/BayesPrism, 
     drighelli/SpatialExperiment, 
-    LieberInstitute/spatialLIBD
 Config/testthat/edition: 3
