@@ -178,7 +178,7 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  img = SpatialExperiment::imgRaster(spe, image_id = image_id)
+  img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
   grob <- grid::rasterGrob(img, width = grid::unit(1, "npc"), height = grid::unit(1, "npc"))
 
   # scale coordinates with scalefactor
@@ -222,8 +222,8 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
   # plot(sf_poly[cell_type], border = NA) # früher benutzt für multiple plots
 
   # extract dimensions from image
-  width = dim (img)[2]
-  height = dim (img)[1]
+  width <- dim(img)[2]
+  height <- dim(img)[1]
 
   ######################
   # plot construction #
@@ -233,19 +233,19 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
   p <- ggplot()
 
   # add spatial image
-  if (spatial){
-     p <- p +  annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
+  if (spatial) {
+    p <- p + annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
   }
 
   # add hexagons
   p <- p +
     geom_sf(aes_string(fill = cell_type), lwd = 0, data = sf_poly) +
-    coord_sf(xlim = c(0, width), ylim = c(0, -height))+
+    coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
     colorspace::scale_fill_continuous_sequential("Rocket") +
     theme(
-     axis.text = element_blank(),
-     axis.ticks = element_blank(),
-     panel.grid = element_blank()
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid = element_blank()
     )
 
   return(p)
