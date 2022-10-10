@@ -109,12 +109,14 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
+#' @param scale_fixed for fractions, scale color between 0 and 1, colors can be compared between plots
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
 plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
-                          image_id = "lowres", show_image = TRUE) {
+                          image_id = "lowres", show_image = TRUE, discrete = FALSE,
+                          scale_fixed = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -132,7 +134,8 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 
   return(make_baseplot(spe, df,
     to_plot = cell_type, sample_id = sample_id,
-    image_id = image_id, show_image = show_image
+    image_id = image_id, show_image = show_image,
+    discrete = discrete
   ))
 
   # TODO
@@ -179,7 +182,7 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
 
 make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
                           image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE) {
+                          discrete = FALSE, scale_fixed = FALSE) {
   # scale coordinates with scalefactor
   df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
@@ -204,6 +207,16 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
   width <- dim(img)[2]
   height <- dim(img)[1]
 
+  # calculate color ranges
+  tmp = df[[to_plot]]
+  tmp <- tmp[!is.na(tmp)]
+
+  if (scale_fixed && all(tmp<=1 && tmp>=0)){
+    limits = c(0, 1) # fixed scale
+  } else {
+    limits = c(min(tmp), max(tmp))
+  }
+
   # initialize plot
   p <- ggplot()
 
@@ -224,9 +237,9 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
 
   # add color scale
   if (discrete) {
-    p <- p + colorspace::scale_fill_binned_sequential("Rocket")
+    p <- p + colorspace::scale_fill_discrete_sequential("Rocket")
   } else {
-    p <- p + colorspace::scale_fill_continuous_sequential("Rocket")
+    p <- p + colorspace::scale_fill_continuous_sequential("Rocket", limits = limits)
   }
 
   return(p)
