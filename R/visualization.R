@@ -155,13 +155,14 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial", threshold = 
 #' @param cell_type one or more celltype to plot
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
+#' @param spatial logical, wether to display the image, default = TRUE
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
 #' @example
 #' # TODO
-new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", image_id = "lowres") {
+new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", image_id = "lowres", spatial = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -177,26 +178,30 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  # img = SpatialExperiment::imgRaster(spe), for later
+  img = SpatialExperiment::imgRaster(spe, image_id = image_id)
+  grob <- grid::rasterGrob(img, width = grid::unit(1, "npc"), height = grid::unit(1, "npc"))
 
   # scale coordinates with scalefactor
   df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
 
-  # need to work on this, does this work when first spot is completely separated from the rest?
+  # due to reasons, flip y axis by hand
+  df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
+
+  # need to work on this, does this work when first spot is completely separated from the rest? Seems to work
   distance_guess <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2))
 
-  # build_hex coordinates
+  # build_hex coordinates, move to utils
   get_hex_polygon <- function(x, y, dist) {
     angle <- seq(0, 2 * pi, length.out = 7)[-7] # angles of
     res <- cbind(
-      x = x + sin(angle + 0.5) * dist / 2, # rotated by 30 degrees
-      y = y + cos(angle + 0.5) * dist / 2
+      x = x + sin(angle) * dist / 2, # rotated by 30 degrees
+      y = y + cos(angle) * dist / 2
     )
     return(rbind(res, res[1, ]))
   }
 
-  # get coordinates for all hex polygons
+  # get coordinates for all hex polygons, move to utils
   get_polygon_geometry <- function(grid, dist) {
     res <- list()
     for (i in seq_len(nrow(grid))) {
@@ -214,13 +219,33 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
   # no overwrite the polygon points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
-  # plot(sf_poly[cell_type], border = NA)
-  p <- ggplot() +
+  # plot(sf_poly[cell_type], border = NA) # früher benutzt für multiple plots
+
+  # extract dimensions from image
+  width = dim (img)[2]
+  height = dim (img)[1]
+
+  ######################
+  # plot construction #
+  #####################
+
+  # initialize plot
+  p <- ggplot()
+
+  # add spatial image
+  if (spatial){
+     p <- p +  annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
+  }
+
+  # add hexagons
+  p <- p +
     geom_sf(aes_string(fill = cell_type), lwd = 0, data = sf_poly) +
+    coord_sf(xlim = c(0, width), ylim = c(0, -height))+
     colorspace::scale_fill_continuous_sequential("Rocket") +
     theme(
-      axis.text = element_blank(),
-      axis.ticks = element_blank(), panel.grid = element_blank()
+     axis.text = element_blank(),
+     axis.ticks = element_blank(),
+     panel.grid = element_blank()
     )
 
   return(p)
@@ -228,6 +253,6 @@ new_plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01", ima
   # TODO
   # add facet wrap
   # add color selection
-  # add background image
-  # try to reducet the gap
+  # try to reduce the gap
+  # confirm the requested image is available in object
 }
