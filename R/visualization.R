@@ -208,13 +208,13 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
   height <- dim(img)[1]
 
   # calculate color ranges
-  tmp = df[[to_plot]]
+  tmp <- df[[to_plot]]
   tmp <- tmp[!is.na(tmp)]
 
-  if (scale_fixed && all(tmp<=1 && tmp>=0)){
-    limits = c(0, 1) # fixed scale
+  if (scale_fixed && all(tmp <= 1 && tmp >= 0)) {
+    limits <- c(0, 1) # fixed scale
   } else {
-    limits = c(min(tmp), max(tmp))
+    limits <- c(min(tmp), max(tmp))
   }
 
   # initialize plot

@@ -59,7 +59,7 @@ deconvolute_rctd <- function(single_cell_obj, cell_type_col, spatial_obj, assay_
   spatial_counts <- SummarizedExperiment::assay(spatial_obj, assay_sp)
   spatial_counts <- methods::as(spatial_counts, "dgCMatrix")
   # in this specific case we must make gene names unique! There are duplicates
-  rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique = T)
+  rownames(spatial_counts) <- make.names(rownames(spatial_counts), unique = TRUE)
 
   # spatial coords
   spatial_coords <- SpatialExperiment::spatialCoords(spatial_obj)
