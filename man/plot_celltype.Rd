@@ -23,6 +23,8 @@ plot_celltype(
 \item{image_id}{which image to plot, default: "lowres"}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
+
+\item{discrete}{logical, whether to scale the color discrete, default = FALSE}
 }
 \value{
 plot of cell type fractions

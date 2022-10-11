@@ -33,7 +33,8 @@
 #' @param spatial_obj SpatialExperiment containing deconvolution results
 #' @param plot_type bar chart or spatial (bar, spatial)
 #' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
-#' @param spot_size size of the dots
+#' @param sample_id sample of SpatialExperiment to be plotted
+#' @param image_id image of SpatialExperiment for the background annotation
 #' @param show_image whether to show the histology image in the background
 #'
 #' @returns A hex plot containing unique cell counts per spot
@@ -116,6 +117,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
+#' @param discrete logical, whether to scale the color discrete, default = FALSE
 #'
 #' @returns plot of cell type fractions
 #'
@@ -199,7 +201,8 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
 #'
 #' @param spe SpatialExperiment with deconvolution results
 #' @param df containing the annotation to be plotted
-#' @param sampel_id sample of the SpatialExperiment to be plotted
+#' @param to_plot column of df to plot
+#' @param sample_id sample of the SpatialExperiment to be plotted
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
 #' @param discrete should the color scale be discrete? Defaut = FALSE

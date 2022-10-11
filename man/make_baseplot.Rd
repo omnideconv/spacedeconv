@@ -19,13 +19,15 @@ make_baseplot(
 
 \item{df}{containing the annotation to be plotted}
 
+\item{to_plot}{column of df to plot}
+
+\item{sample_id}{sample of the SpatialExperiment to be plotted}
+
 \item{image_id}{image id for background image}
 
 \item{show_image}{whether to show the spatial image}
 
 \item{discrete}{should the color scale be discrete? Defaut = FALSE}
-
-\item{sampel_id}{sample of the SpatialExperiment to be plotted}
 }
 \description{
 Render spatial hex plot

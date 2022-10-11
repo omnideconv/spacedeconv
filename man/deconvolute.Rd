@@ -49,8 +49,6 @@ Perform cell type deconvolution with SpaceDeconv.
 }
 \examples{
 # more examples can be found in the documentation website
-library(SpaceDeconv)
-library(data.table)
 data("single_cell_data_2")
 data("spatial_data_2")
 
