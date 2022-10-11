@@ -42,7 +42,7 @@
 #'
 #' @examples
 #' data("spatial_data_1")
-#' deconv = SpaceDeconv::deconvolute(spatial_data_1, method="estimate")
+#' deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
 #' SpaceDeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0, spot_size = 1.5,
@@ -124,7 +124,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @export
 #' @examples
 #' data("spatial_data_2")
-#' deconv = SpaceDeconv::deconvolute(spatial_data_2, method="estimate")
+#' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 #' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
                           image_id = "lowres", show_image = TRUE, discrete = FALSE) {
@@ -171,7 +171,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #'
 #' @examples
 #' data("spatial_data_3")
-#' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method="estimate")
+#' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
 plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
                            show_image = TRUE) {
