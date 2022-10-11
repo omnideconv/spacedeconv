@@ -13,7 +13,7 @@
 #' @export
 #' @examples
 #' data("single_cell_data_1")
-#' sce = subsetSCE(single_cell_data_1, cell_type_col = "celltype_major", scenario = "even", ncells = 1000)
+#' sce <- subsetSCE(single_cell_data_1, cell_type_col = "celltype_major", scenario = "even", ncells = 1000)
 subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis") {
   if (is.null(sce)) {
     stop("SingleCellExperiment missing but required")
