@@ -35,7 +35,14 @@
 #' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
 #' @param spot_size size of the dots
 #' @param show_image whether to show the histology image in the background
+#'
+#' @returns A hex plot containing unique cell counts per spot
 #' @export
+#'
+#' @examples
+#' data("spatial_data_1")
+#' deconv = SpaceDeconv::deconvolute(spatial_data_1, method="estimate")
+#' SpaceDeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0, spot_size = 1.5,
                                 sample_id = "sample01", image_id = "lowres",
@@ -67,15 +74,15 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   colnames(res) <- colnames(mat)
 
   # remove unwanted columns
-  res <- res[, !colnames(res) %in% c("in_tissue", "sample_id", "array_col", "array_row")]
+  res <- res[, !colnames(res) %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
 
   # count cells
-  plot_data <- data.frame(spot = rownames(res), value = as.integer(apply(res, 1, sum)))
+  plot_data <- data.frame(spot = rownames(res), value = as.factor(apply(res, 1, sum)))
 
-  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), plot_data))
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spatial_obj), plot_data))
 
   return(make_baseplot(
-    spe = spe, df = df, to_plot = "value",
+    spe = spatial_obj, df = df, to_plot = "value",
     sample_id = sample_id, image_id = image_id,
     show_image = show_image, discrete = TRUE
   ))
@@ -109,14 +116,16 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
-#' @param scale_fixed for fractions, scale color between 0 and 1, colors can be compared between plots
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
+#' @examples
+#' data("spatial_data_2")
+#' deconv = SpaceDeconv::deconvolute(spatial_data_2, method="estimate")
+#' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
-                          image_id = "lowres", show_image = TRUE, discrete = FALSE,
-                          scale_fixed = FALSE) {
+                          image_id = "lowres", show_image = TRUE, discrete = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -157,6 +166,11 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #' @returns plot of cell type fractions
 #'
 #' @export
+#'
+#' @examples
+#' data("spatial_data_3")
+#' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method="estimate")
+#' plot_umi_count(deconv)
 plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
                            show_image = TRUE) {
   if (is.null(spe)) {
@@ -180,9 +194,18 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
 #### utils ####
 ###############
 
+
+#' Render spatial hex plot
+#'
+#' @param spe SpatialExperiment with deconvolution results
+#' @param df containing the annotation to be plotted
+#' @param sampel_id sample of the SpatialExperiment to be plotted
+#' @param image_id image id for background image
+#' @param show_image whether to show the spatial image
+#' @param discrete should the color scale be discrete? Defaut = FALSE
 make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
                           image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE, scale_fixed = FALSE) {
+                          discrete = FALSE) {
   # scale coordinates with scalefactor
   df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
@@ -207,16 +230,6 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
   width <- dim(img)[2]
   height <- dim(img)[1]
 
-  # calculate color ranges
-  tmp <- df[[to_plot]]
-  tmp <- tmp[!is.na(tmp)]
-
-  if (scale_fixed && all(tmp <= 1 && tmp >= 0)) {
-    limits <- c(0, 1) # fixed scale
-  } else {
-    limits <- c(min(tmp), max(tmp))
-  }
-
   # initialize plot
   p <- ggplot()
 
@@ -239,23 +252,30 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
   if (discrete) {
     p <- p + colorspace::scale_fill_discrete_sequential("Rocket")
   } else {
-    p <- p + colorspace::scale_fill_continuous_sequential("Rocket", limits = limits)
+    p <- p + colorspace::scale_fill_continuous_sequential("Rocket")
   }
 
   return(p)
 }
 
-# build_hex coordinates, move to utils
+#' Build Hex Polygon Geometry
+#'
+#' @param x coordinate
+#' @param y coordinate
+#' @param dist distance of hexagons
 get_hex_polygon <- function(x, y, dist) {
   angle <- seq(0, 2 * pi, length.out = 7)[-7] # angles of
   res <- cbind(
-    x = x + sin(angle + 0.5) * dist / 2, # rotated by 30 degrees
-    y = y + cos(angle + 0.5) * dist / 2
+    x = x + sin(angle) * dist / 2,
+    y = y + cos(angle) * dist / 2
   )
   return(rbind(res, res[1, ]))
 }
 
 # get coordinates for all hex polygons, move to utils
+#' Build Full Hexagon Set for provided spots
+#' @param grid Spot coordinates in df format, extracted from SpatialExperiment
+#' @param dist distance between spots
 get_polygon_geometry <- function(grid, dist) {
   res <- list()
   for (i in seq_len(nrow(grid))) {
