@@ -149,7 +149,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
   return(make_baseplot(spe, df,
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    discrete = discrete, offset_roation = offset_rotation
+    discrete = discrete, offset_rotation = offset_rotation
   ))
 
   # TODO
