@@ -126,5 +126,5 @@ names(colData(deconv))
 For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. 
 
 ```{r visualization}
-SpaceDeconv::plot_celltype(deconv, cell_type = "B.cells.Memory", plot_density = FALSE)
+SpaceDeconv::plot_celltype(deconv, cell_type = "scdc_B.cells.Memory", plot_density = FALSE)
 ```

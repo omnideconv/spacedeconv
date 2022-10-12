@@ -21,7 +21,8 @@ deconv <- SpaceDeconv::deconvolute(
   signature = NULL,
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "rctd"
+  method = "rctd", 
+  n_cores = 12
 )
 ```
 
@@ -31,7 +32,7 @@ At the moment SpaceDeconv offers two visualization functions.
 * `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
 
 ```{r, message=FALSE, warning=FALSE}
-SpaceDeconv::plot_celltype(deconv, cell_type = "T.cells")
+SpaceDeconv::plot_celltype(deconv, cell_type = "rctd_Cancer.Epithelial")
 ```
 
 
