@@ -6,12 +6,15 @@ convert_to_sce <- function(obj) {
 
   if (!is.null(obj)) {
     # check object type and convert if necessary
-    if (is(obj, "SingleCellExperiment")) { # class(obj)[[1]] == "SingleCellExperiment"
+    if (is(obj, "SingleCellExperiment")) {
+      # class(obj)[[1]] == "SingleCellExperiment"
       sce <- obj
-    } else if (is(obj, "AnnDataR6")) { # class(obj)[[1]] == "AnnDataR6"
+    } else if (is(obj, "AnnDataR6")) {
+      # class(obj)[[1]] == "AnnDataR6"
       sce <- anndata_to_singlecellexperiment(obj)
       message("Converted Anndata to SCE")
-    } else if (is(obj, "Seurat")) { # (class(obj)[[1]] == "Seurat"
+    } else if (is(obj, "Seurat")) {
+      # (class(obj)[[1]] == "Seurat"
       sce <- Seurat::as.SingleCellExperiment(obj)
       message("Converted Seurat to SCE")
     }

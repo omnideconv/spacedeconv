@@ -21,10 +21,20 @@ plot_cells_per_spot(
 
 \item{threshold}{threshold for presence/absence, single value or vector of length nrow(spatial_obj)}
 
-\item{spot_size}{size of the dots}
+\item{sample_id}{sample of SpatialExperiment to be plotted}
+
+\item{image_id}{image of SpatialExperiment for the background annotation}
 
 \item{show_image}{whether to show the histology image in the background}
 }
+\value{
+A hex plot containing unique cell counts per spot
+}
 \description{
 Plot Cells per Spot
+}
+\examples{
+data("spatial_data_1")
+deconv = SpaceDeconv::deconvolute(spatial_data_1, method="estimate")
+SpaceDeconv::plot_cells_per_spot(deconv)
 }

@@ -29,3 +29,7 @@ a singleCellExperiment with
 \description{
 Subset a SingleCellExperiment to reduce the number of cells
 }
+\examples{
+data("single_cell_data_1")
+sce = subsetSCE(single_cell_data_1, cell_type_col = "celltype_major", scenario = "even", ncells = 1000)
+}

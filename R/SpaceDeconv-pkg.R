@@ -2,7 +2,7 @@
 #'
 #' SpaceDeconv Unified R Interface to spatial transcriptomics deconvolution methods
 #'
-#' @importFrom methods as
+#' @importFrom methods as is
 #' @importFrom SingleCellExperiment counts colData
 #' @importFrom utils askYesNo install.packages
 #' @importFrom remotes install_github

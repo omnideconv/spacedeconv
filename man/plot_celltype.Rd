@@ -9,7 +9,8 @@ plot_celltype(
   cell_type = NULL,
   sample_id = "sample01",
   image_id = "lowres",
-  show_image = TRUE
+  show_image = TRUE,
+  discrete = FALSE
 )
 }
 \arguments{
@@ -22,10 +23,17 @@ plot_celltype(
 \item{image_id}{which image to plot, default: "lowres"}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
+
+\item{discrete}{logical, whether to scale the color discrete, default = FALSE}
 }
 \value{
 plot of cell type fractions
 }
 \description{
 Generate Hex Plot of a SpatialExperiment containing deconvolution results
+}
+\examples{
+data("spatial_data_2")
+deconv = SpaceDeconv::deconvolute(spatial_data_2, method="estimate")
+SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 }

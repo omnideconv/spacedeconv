@@ -255,8 +255,6 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'
 #' @examples
 #' # more examples can be found in the documentation website
-#' library(SpaceDeconv)
-#' library(data.table)
 #' data("single_cell_data_2")
 #' data("spatial_data_2")
 #'
