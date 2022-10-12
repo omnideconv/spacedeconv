@@ -11,7 +11,8 @@ make_baseplot(
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
-  discrete = FALSE
+  discrete = FALSE,
+  offset_rotation = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ make_baseplot(
 \item{show_image}{whether to show the spatial image}
 
 \item{discrete}{should the color scale be discrete? Defaut = FALSE}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \description{
 Render spatial hex plot

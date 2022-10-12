@@ -11,7 +11,8 @@ plot_cells_per_spot(
   spot_size = 1.5,
   sample_id = "sample01",
   image_id = "lowres",
-  show_image = TRUE
+  show_image = TRUE,
+  offset_rotation = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ plot_cells_per_spot(
 \item{image_id}{image of SpatialExperiment for the background annotation}
 
 \item{show_image}{whether to show the histology image in the background}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \value{
 A hex plot containing unique cell counts per spot
@@ -35,6 +38,6 @@ Plot Cells per Spot
 }
 \examples{
 data("spatial_data_1")
-deconv = SpaceDeconv::deconvolute(spatial_data_1, method="estimate")
+deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
 SpaceDeconv::plot_cells_per_spot(deconv)
 }

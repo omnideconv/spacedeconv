@@ -55,3 +55,6 @@ reference:
       - checkRowColumn
       - removeZeroExpression
       - attachToken
+      - get_hex_polygon
+      - get_polygon_geometry
+      - make_baseplot

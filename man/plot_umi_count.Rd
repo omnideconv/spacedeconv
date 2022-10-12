@@ -8,7 +8,8 @@ plot_umi_count(
   spe,
   sample_id = "sample01",
   image_id = "lowres",
-  show_image = TRUE
+  show_image = TRUE,
+  offset_rotation = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ plot_umi_count(
 \item{image_id}{which image to plot, default: "lowres"}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \value{
 plot of cell type fractions
@@ -28,6 +31,6 @@ Generate Hex Plot of a SpatialExperiment containing UMI counts
 }
 \examples{
 data("spatial_data_3")
-deconv <- SpaceDeconv::deconvolute(spatial_data_3, method="estimate")
+deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 plot_umi_count(deconv)
 }

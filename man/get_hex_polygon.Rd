@@ -4,7 +4,7 @@
 \alias{get_hex_polygon}
 \title{Build Hex Polygon Geometry}
 \usage{
-get_hex_polygon(x, y, dist)
+get_hex_polygon(x, y, dist, offset_rotation = FALSE)
 }
 \arguments{
 \item{x}{coordinate}
@@ -12,6 +12,8 @@ get_hex_polygon(x, y, dist)
 \item{y}{coordinate}
 
 \item{dist}{distance of hexagons}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \description{
 Build Hex Polygon Geometry

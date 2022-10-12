@@ -10,7 +10,8 @@ plot_celltype(
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
-  discrete = FALSE
+  discrete = FALSE,
+  offset_rotation = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ plot_celltype(
 \item{show_image}{logical, wether to display the image, default = TRUE}
 
 \item{discrete}{logical, whether to scale the color discrete, default = FALSE}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \value{
 plot of cell type fractions
@@ -34,6 +37,6 @@ Generate Hex Plot of a SpatialExperiment containing deconvolution results
 }
 \examples{
 data("spatial_data_2")
-deconv = SpaceDeconv::deconvolute(spatial_data_2, method="estimate")
+deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 }

@@ -36,6 +36,7 @@
 #' @param sample_id sample of SpatialExperiment to be plotted
 #' @param image_id image of SpatialExperiment for the background annotation
 #' @param show_image whether to show the histology image in the background
+#' @param offset_rotation correct hex orientation for rotated visium image
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -47,7 +48,7 @@
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0, spot_size = 1.5,
                                 sample_id = "sample01", image_id = "lowres",
-                                show_image = TRUE) {
+                                show_image = TRUE, offset_rotation = FALSE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -85,7 +86,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   return(make_baseplot(
     spe = spatial_obj, df = df, to_plot = "value",
     sample_id = sample_id, image_id = image_id,
-    show_image = show_image, discrete = TRUE
+    show_image = show_image, discrete = TRUE, offset_rotation = offset_rotation
   ))
 
   # if (plot_type == "bar") {
@@ -118,6 +119,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
 #' @param discrete logical, whether to scale the color discrete, default = FALSE
+#' @param offset_rotation correct hex orientation for rotated visium image
 #'
 #' @returns plot of cell type fractions
 #'
@@ -127,7 +129,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 #' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
-                          image_id = "lowres", show_image = TRUE, discrete = FALSE) {
+                          image_id = "lowres", show_image = TRUE, discrete = FALSE,
+                          offset_rotation = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -146,7 +149,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
   return(make_baseplot(spe, df,
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    discrete = discrete
+    discrete = discrete, offset_roation = offset_rotation
   ))
 
   # TODO
@@ -164,6 +167,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
 #'
 #' @returns plot of cell type fractions
 #'
@@ -174,7 +178,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
 plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
-                           show_image = TRUE) {
+                           show_image = TRUE, offset_rotation = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -184,11 +188,9 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
   ))
 
   return(make_baseplot(spe,
-    df,
-    to_plot = "nUMI",
-    sample_id = sample_id,
-    image_id = image_id,
-    show_image = show_image
+    df, to_plot = "nUMI", sample_id = sample_id,
+    image_id = image_id, show_image = show_image,
+    offset_rotation = offset_rotation
   ))
 }
 
@@ -206,9 +208,10 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
 #' @param discrete should the color scale be discrete? Defaut = FALSE
+#' @param offset_rotation correct hex orientation for rotated visium image
 make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
                           image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE) {
+                          discrete = FALSE, offset_rotation = FALSE) {
   # scale coordinates with scalefactor
   df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
@@ -266,11 +269,19 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
 #' @param x coordinate
 #' @param y coordinate
 #' @param dist distance of hexagons
-get_hex_polygon <- function(x, y, dist) {
+#' @param offset_rotation correct hex orientation for rotated visium image
+get_hex_polygon <- function(x, y, dist, offset_rotation = FALSE) {
+
+  # offset rotation for visium image
+  offset <- 0
+  if (offset_rotation){
+    offset <- 0.5 # rotate by 30 degrees
+  }
+
   angle <- seq(0, 2 * pi, length.out = 7)[-7] # angles of
   res <- cbind(
-    x = x + sin(angle) * dist / 2,
-    y = y + cos(angle) * dist / 2
+    x = x + sin(angle + offset) * dist / 2,
+    y = y + cos(angle + offset) * dist / 2
   )
   return(rbind(res, res[1, ]))
 }
