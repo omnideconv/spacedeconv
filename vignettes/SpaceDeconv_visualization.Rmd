@@ -4,12 +4,12 @@ author: "Constantin Zackl"
 date: "2022-09-21"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visualization}
+  %\VignetteIndexEntry{SpaceDeconv Visualization}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
-To introduce SpaceDeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `RCTD`. Note that RCTD requires unnormalized data and is building the signature and deconvoluting in one step and therefore only `deconvolute()` is called. 
+To introduce SpaceDeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `RCTD`. Note that RCTD requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
 
 ```{r error=FALSE, message=FALSE, warning=FALSE}
 library(SpaceDeconv)
@@ -31,7 +31,7 @@ At the moment SpaceDeconv offers two visualization functions.
 * `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
 * `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
 
-```{r, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.width=15}
 SpaceDeconv::plot_celltype(deconv, cell_type = "rctd_Cancer.Epithelial")
 ```
 

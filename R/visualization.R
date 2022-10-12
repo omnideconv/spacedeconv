@@ -138,7 +138,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 
   # check that celltypes are present in object
   if (!all(cell_type %in% names(colData(spe)))) {
-    stop("Provides cell types are not presend in SpatialExperiment")
+    stop("Provides cell types are not present in SpatialExperiment")
   }
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
