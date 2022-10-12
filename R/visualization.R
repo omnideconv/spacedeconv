@@ -205,6 +205,9 @@ plot_umi_count <- function(spe, palette = "Rocket", sample_id = "sample01",
 ###############
 
 
+# TODO custom upper limits"
+
+
 #' Render spatial hex plot
 #'
 #' @param spe SpatialExperiment with deconvolution results
