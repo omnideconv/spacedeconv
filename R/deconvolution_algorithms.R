@@ -79,8 +79,6 @@ deconvolution_methods <- c(
 #'
 #' @examples
 #' # more examples can be found in the documentation website
-#' library(SpaceDeconv)
-#' library(data.table)
 #' data("single_cell_data_2")
 #'
 #' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
@@ -90,8 +88,7 @@ deconvolution_methods <- c(
 #'   method = "dwls",
 #'   cell_type_col = "celltype_major",
 #'   assay_sc = "cpm",
-#'   dwls_method = "mast_optimized",
-#'   ncores = 12
+#'   dwls_method = "mast_optimized"
 #' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   if (is.null(single_cell_obj)) {

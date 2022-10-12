@@ -7,6 +7,7 @@
 plot_celltype(
   spe,
   cell_type = NULL,
+  palette = "Rocket",
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
@@ -18,6 +19,8 @@ plot_celltype(
 \item{spe}{deconvolution result in Form of a SpatialExperiment}
 
 \item{cell_type}{one or more celltype to plot}
+
+\item{palette}{colorspace palette (sequential)}
 
 \item{sample_id}{sample id to plot, default: "sample01"}
 

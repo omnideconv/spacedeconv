@@ -8,6 +8,7 @@ make_baseplot(
   spe,
   df,
   to_plot,
+  palette = "Rocket",
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
@@ -21,6 +22,8 @@ make_baseplot(
 \item{df}{containing the annotation to be plotted}
 
 \item{to_plot}{column of df to plot}
+
+\item{palette}{colorspace palette (sequential)}
 
 \item{sample_id}{sample of the SpatialExperiment to be plotted}
 

@@ -6,6 +6,7 @@
 \usage{
 plot_umi_count(
   spe,
+  palette = "Rocket",
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
@@ -14,6 +15,8 @@ plot_umi_count(
 }
 \arguments{
 \item{spe}{deconvolution result in Form of a SpatialExperiment}
+
+\item{palette}{colorspace palette (sequential)}
 
 \item{sample_id}{sample id to plot, default: "sample01"}
 

@@ -4,12 +4,14 @@
 \alias{get_polygon_geometry}
 \title{Build Full Hexagon Set for provided spots}
 \usage{
-get_polygon_geometry(grid, dist)
+get_polygon_geometry(grid, dist, offset_rotation = FALSE)
 }
 \arguments{
 \item{grid}{Spot coordinates in df format, extracted from SpatialExperiment}
 
 \item{dist}{distance between spots}
+
+\item{offset_rotation}{correct hex orientation for rotated visium image}
 }
 \description{
 Build Full Hexagon Set for provided spots

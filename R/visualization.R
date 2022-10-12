@@ -33,6 +33,7 @@
 #' @param spatial_obj SpatialExperiment containing deconvolution results
 #' @param plot_type bar chart or spatial (bar, spatial)
 #' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
+#' @param palette colorspace palette (sequential)
 #' @param sample_id sample of SpatialExperiment to be plotted
 #' @param image_id image of SpatialExperiment for the background annotation
 #' @param show_image whether to show the histology image in the background
@@ -46,7 +47,7 @@
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
 #' SpaceDeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
-                                threshold = 0, spot_size = 1.5,
+                                threshold = 0, palette = "Rocket",
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = TRUE, offset_rotation = FALSE) {
   if (is.null(spatial_obj)) {
@@ -86,7 +87,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   return(make_baseplot(
     spe = spatial_obj, df = df, to_plot = "value",
     sample_id = sample_id, image_id = image_id,
-    show_image = show_image, discrete = TRUE, offset_rotation = offset_rotation
+    show_image = show_image, discrete = TRUE,
+    offset_rotation = offset_rotation, palette = palette
   ))
 
   # if (plot_type == "bar") {
@@ -115,6 +117,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type one or more celltype to plot
+#' @param palette colorspace palette (sequential)
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
@@ -128,8 +131,9 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' data("spatial_data_2")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 #' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
-plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
-                          image_id = "lowres", show_image = TRUE, discrete = FALSE,
+plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket",
+                          sample_id = "sample01", image_id = "lowres",
+                          show_image = TRUE, discrete = FALSE,
                           offset_rotation = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -146,7 +150,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  return(make_baseplot(spe, df,
+  return(make_baseplot(spe, df, palette = palette,
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
     discrete = discrete, offset_rotation = offset_rotation
@@ -164,6 +168,7 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #' Generate Hex Plot of a SpatialExperiment containing UMI counts
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param palette colorspace palette (sequential)
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
@@ -177,8 +182,9 @@ plot_celltype <- function(spe, cell_type = NULL, sample_id = "sample01",
 #' data("spatial_data_3")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
-plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
-                           show_image = TRUE, offset_rotation = FALSE) {
+plot_umi_count <- function(spe, palette = "Rocket", sample_id = "sample01",
+                           image_id = "lowres", show_image = TRUE,
+                           offset_rotation = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -190,7 +196,7 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
   return(make_baseplot(spe,
     df, to_plot = "nUMI", sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    offset_rotation = offset_rotation
+    offset_rotation = offset_rotation, palette = palette
   ))
 }
 
@@ -204,14 +210,33 @@ plot_umi_count <- function(spe, sample_id = "sample01", image_id = "lowres",
 #' @param spe SpatialExperiment with deconvolution results
 #' @param df containing the annotation to be plotted
 #' @param to_plot column of df to plot
+#' @param palette colorspace palette (sequential)
 #' @param sample_id sample of the SpatialExperiment to be plotted
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
 #' @param discrete should the color scale be discrete? Defaut = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
-make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
+make_baseplot <- function(spe, df, to_plot, palette = "Rocket",
+                          sample_id = "sample01",
                           image_id = "lowres", show_image = TRUE,
                           discrete = FALSE, offset_rotation = FALSE) {
+
+  if (is.null(spe)){
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  if (is.null(df)){
+    stop("Parameter 'df' is null or missing, but is required")
+  }
+
+  if (is.null(to_plot)){
+    stop("Parameter 'to_plot' is null or missing, but is required")
+  }
+
+  if (!palette %in% rownames(colorspace::hcl_palettes(type="sequential"))){
+    stop("Please provide a sequential colorspace palette")
+  }
+
   # scale coordinates with scalefactor
   df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
@@ -256,9 +281,9 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
 
   # add color scale
   if (discrete) {
-    p <- p + colorspace::scale_fill_discrete_sequential("Rocket")
+    p <- p + colorspace::scale_fill_discrete_sequential(palette)
   } else {
-    p <- p + colorspace::scale_fill_continuous_sequential("Rocket")
+    p <- p + colorspace::scale_fill_continuous_sequential(palette)
   }
 
   return(p)

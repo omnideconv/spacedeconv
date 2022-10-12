@@ -8,7 +8,7 @@ plot_cells_per_spot(
   spatial_obj,
   plot_type = "spatial",
   threshold = 0,
-  spot_size = 1.5,
+  palette = "Rocket",
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
@@ -21,6 +21,8 @@ plot_cells_per_spot(
 \item{plot_type}{bar chart or spatial (bar, spatial)}
 
 \item{threshold}{threshold for presence/absence, single value or vector of length nrow(spatial_obj)}
+
+\item{palette}{colorspace palette (sequential)}
 
 \item{sample_id}{sample of SpatialExperiment to be plotted}
 

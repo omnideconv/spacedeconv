@@ -45,13 +45,23 @@ SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.01)
 ```
 For the UMI count spot no additional information is necessary. For this plot no deconvolution result is required.
 
-```{r, fig.height=7, fig.width=7}
+```{r plotUMIcount, fig.height=7, fig.width=7}
 SpaceDeconv::plot_umi_count(deconv)
 ```
+
+# Color Palette 
+All Sequential Palettes from the [colorspace](https://colorspace.r-forge.r-project.org/) R Package can be used. 
+```{r availablePalettes, fig.width=7}
+colorspace::hcl_palettes(type="sequential", plot=TRUE)
+```
+
 
 # Image Alignment Offset
 SpaceDeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
+```{r offset_rotation, eval = FALSE}
+plot_cells_per_spot(deconv, offset_rotation = TRUE) # when hexagons appear to be rotated
+```
 
 
 
