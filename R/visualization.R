@@ -226,7 +226,7 @@ make_baseplot <- function(spe, df, to_plot, sample_id = "sample01",
   spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2))
 
   # generate hexagons
-  new_geom <- get_polygon_geometry(df, spot_distance)
+  new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
 
   # no overwrite the points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
@@ -290,14 +290,16 @@ get_hex_polygon <- function(x, y, dist, offset_rotation = FALSE) {
 #' Build Full Hexagon Set for provided spots
 #' @param grid Spot coordinates in df format, extracted from SpatialExperiment
 #' @param dist distance between spots
-get_polygon_geometry <- function(grid, dist) {
+#' @param offset_rotation correct hex orientation for rotated visium image
+get_polygon_geometry <- function(grid, dist, offset_rotation = FALSE) {
   res <- list()
   for (i in seq_len(nrow(grid))) {
     res <- c(
       res,
       list(sf::st_polygon(list(get_hex_polygon(
         grid$pxl_col_in_fullres[i],
-        grid$pxl_row_in_fullres[i], dist
+        grid$pxl_row_in_fullres[i], dist,
+        offset_rotation = offset_rotation
       ))))
     )
   }
