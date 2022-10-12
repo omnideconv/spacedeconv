@@ -41,16 +41,15 @@ To build cell-type specific signatures for second-generation deconvolution Space
 * [AnnData](https://anndata.dynverse.org/)
 * [Seurat](https://satijalab.org/seurat/)
 
-Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`.
+Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`. SpaceDeconvs single-cell sample data is as a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure).
 
-```{r annotationParameters}
+```{r annotationParameters, eval=FALSE}
 signature <- build_model(single_cell_data_1,
   method = "dwls",
   cell_type_col = "celltype_major", 
-  dwls_method="mast_optimized"
 )
 
-# some methods batch_id information as well
+# some methods require batch_id information as well
 sigature <- build_model(single_cell_data_1,
   method = "scdc",
   cell_type_col = "celltype_major",
@@ -81,3 +80,14 @@ spe <- normalize(spe, method = "cpm")
 # make sure to use cpm assay in deconvolution step
 deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
 ```
+
+
+# Image Alignment
+In case the background image is not aligned properly the SpatialExperiment class offers convenient functions for rotation / mirroring: 
+
+* `rotateImg(image, degrees)`
+* `mirrorImg(image, axis) # 'h'/'v'`
+
+More Information is available in the SpatialExperiment [Documentation](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#34_Image_transformations)
+
+

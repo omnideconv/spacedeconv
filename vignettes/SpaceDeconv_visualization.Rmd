@@ -26,17 +26,32 @@ deconv <- SpaceDeconv::deconvolute(
 )
 ```
 
+# Available Visualizations
+
 At the moment SpaceDeconv offers two visualization functions. 
 
 * `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
 * `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
+* `plot_umi_count()` Plots the number of sequenced reads per spot
 
-```{r message=FALSE, warning=FALSE, fig.width=15}
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
 SpaceDeconv::plot_celltype(deconv, cell_type = "rctd_Cancer.Epithelial")
 ```
 
 
-To render the distribution of the number of detected cell types per spot a user-selected treshold is required. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 1%. 
-```{r, warning=FALSE, message=FALSE}
+To render the distribution of the number of detected cell types per spot a user-selected treshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 1%. 
+```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
 SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.01)
 ```
+For the UMI count spot no additional information is necessary. For this plot no deconvolution result is required.
+
+```{r, fig.height=7, fig.width=7}
+SpaceDeconv::plot_umi_count(deconv)
+```
+
+# Image Alignment Offset
+SpaceDeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
+
+
+
+
