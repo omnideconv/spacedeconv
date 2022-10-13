@@ -34,6 +34,8 @@
 #' @param plot_type bar chart or spatial (bar, spatial)
 #' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
 #' @param palette colorspace palette (sequential)
+#' @param transform data transformation to use, "log"
+#' @param reverse_palette reverse color palette
 #' @param sample_id sample of SpatialExperiment to be plotted
 #' @param image_id image of SpatialExperiment for the background annotation
 #' @param show_image whether to show the histology image in the background
@@ -47,7 +49,8 @@
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
 #' SpaceDeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
-                                threshold = 0, palette = "Rocket",
+                                threshold = 0.01, palette = "Rocket", transform = NULL,
+                                reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = TRUE, offset_rotation = FALSE) {
   if (is.null(spatial_obj)) {
@@ -80,15 +83,16 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   res <- res[, !colnames(res) %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
 
   # count cells
-  plot_data <- data.frame(spot = rownames(res), value = as.factor(apply(res, 1, sum)))
+  plot_data <- data.frame(spot = rownames(res), numi = as.factor(apply(res, 1, sum)))
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spatial_obj), plot_data))
 
   return(make_baseplot(
-    spe = spatial_obj, df = df, to_plot = "value",
+    spe = spatial_obj, df = df, to_plot = "numi",
     sample_id = sample_id, image_id = image_id,
     show_image = show_image, discrete = TRUE,
-    offset_rotation = offset_rotation, palette = palette
+    offset_rotation = offset_rotation, palette = palette,
+    transform = transform, reverse_palette = reverse_palette
   ))
 
   # if (plot_type == "bar") {
@@ -118,6 +122,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type one or more celltype to plot
 #' @param palette colorspace palette (sequential)
+#' @param transform data transformation to use, "log"
+#' @param reverse_palette reverse color palette
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
@@ -131,8 +137,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' data("spatial_data_2")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 #' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
-plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket",
-                          sample_id = "sample01", image_id = "lowres",
+plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform = NULL,
+                          sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = TRUE, discrete = FALSE,
                           offset_rotation = FALSE) {
   if (is.null(spe)) {
@@ -150,10 +156,12 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket",
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  return(make_baseplot(spe, df, palette = palette,
+  return(make_baseplot(spe, df,
+    palette = palette,
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    discrete = discrete, offset_rotation = offset_rotation
+    discrete = discrete, offset_rotation = offset_rotation,
+    transform = transform, reverse_palette = reverse_palette
   ))
 
   # TODO
@@ -169,6 +177,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket",
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param palette colorspace palette (sequential)
+#' @param transform data transformation to use, "log"
+#' @param reverse_palette reverse color palette
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
@@ -182,9 +192,10 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket",
 #' data("spatial_data_3")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
-plot_umi_count <- function(spe, palette = "Rocket", sample_id = "sample01",
-                           image_id = "lowres", show_image = TRUE,
-                           offset_rotation = FALSE) {
+plot_umi_count <- function(spe, palette = "Rocket", transform = NULL,
+                           sample_id = "sample01", image_id = "lowres",
+                           reverse_palette = FALSE,
+                           show_image = TRUE, offset_rotation = FALSE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -194,9 +205,11 @@ plot_umi_count <- function(spe, palette = "Rocket", sample_id = "sample01",
   ))
 
   return(make_baseplot(spe,
-    df, to_plot = "nUMI", sample_id = sample_id,
+    df,
+    to_plot = "nUMI", sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    offset_rotation = offset_rotation, palette = palette
+    offset_rotation = offset_rotation, palette = palette,
+    transform = transform, reverse_palette = reverse_palette
   ))
 }
 
@@ -214,29 +227,30 @@ plot_umi_count <- function(spe, palette = "Rocket", sample_id = "sample01",
 #' @param df containing the annotation to be plotted
 #' @param to_plot column of df to plot
 #' @param palette colorspace palette (sequential)
+#' @param transform data transformation to use, "log"
+#' @param reverse_palette reverse color palette
 #' @param sample_id sample of the SpatialExperiment to be plotted
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
 #' @param discrete should the color scale be discrete? Defaut = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
-make_baseplot <- function(spe, df, to_plot, palette = "Rocket",
-                          sample_id = "sample01",
+make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform = NULL,
+                          sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
                           discrete = FALSE, offset_rotation = FALSE) {
-
-  if (is.null(spe)){
+  if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if (is.null(df)){
+  if (is.null(df)) {
     stop("Parameter 'df' is null or missing, but is required")
   }
 
-  if (is.null(to_plot)){
+  if (is.null(to_plot)) {
     stop("Parameter 'to_plot' is null or missing, but is required")
   }
 
-  if (!palette %in% rownames(colorspace::hcl_palettes(type="sequential"))){
+  if (!palette %in% rownames(colorspace::hcl_palettes(type = "sequential"))) {
     stop("Please provide a sequential colorspace palette")
   }
 
@@ -246,6 +260,20 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket",
 
   # due to reasons, flip y axis by hand
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
+
+  # apply potential transformations
+  legend_title <- to_plot
+  if (!is.null(transform)) {
+    if (transform == "ln") {
+      df[[to_plot]] <- log(df[[to_plot]])
+      legend_title <- paste0(legend_title, "_", "ln")
+    } else if (transform == "log10") {
+      df[[to_plot]] <- log10(df[[to_plot]])
+      legend_title <- paste0(legend_title, "_", "log10")
+    } else {
+      print("Unknown transformation, plotting untransformed data")
+    }
+  }
 
   # preparing the dataframe with sf, inserting points
   sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
@@ -280,13 +308,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket",
       axis.text = element_blank(),
       axis.ticks = element_blank(),
       panel.grid = element_blank(),
-    )
+    ) +
+    ggplot2::labs(fill = legend_title)
 
   # add color scale
   if (discrete) {
-    p <- p + colorspace::scale_fill_discrete_sequential(palette)
+    p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette)
   } else {
-    p <- p + colorspace::scale_fill_continuous_sequential(palette)
+    p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette)
   }
 
   return(p)
@@ -302,7 +331,7 @@ get_hex_polygon <- function(x, y, dist, offset_rotation = FALSE) {
 
   # offset rotation for visium image
   offset <- 0
-  if (offset_rotation){
+  if (offset_rotation) {
     offset <- 0.5 # rotate by 30 degrees
   }
 
