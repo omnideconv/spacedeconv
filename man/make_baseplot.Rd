@@ -9,7 +9,9 @@ make_baseplot(
   df,
   to_plot,
   palette = "Rocket",
+  transform_scale = NULL,
   sample_id = "sample01",
+  reverse_palette = FALSE,
   image_id = "lowres",
   show_image = TRUE,
   discrete = FALSE,
@@ -25,7 +27,11 @@ make_baseplot(
 
 \item{palette}{colorspace palette (sequential)}
 
+\item{transform_scale}{data transform_scaleation to use, "log"}
+
 \item{sample_id}{sample of the SpatialExperiment to be plotted}
+
+\item{reverse_palette}{reverse color palette}
 
 \item{image_id}{image id for background image}
 

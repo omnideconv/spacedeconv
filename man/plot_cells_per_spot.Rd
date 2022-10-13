@@ -7,8 +7,10 @@
 plot_cells_per_spot(
   spatial_obj,
   plot_type = "spatial",
-  threshold = 0,
+  threshold = 0.01,
   palette = "Rocket",
+  transform_scale = NULL,
+  reverse_palette = FALSE,
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
@@ -23,6 +25,10 @@ plot_cells_per_spot(
 \item{threshold}{threshold for presence/absence, single value or vector of length nrow(spatial_obj)}
 
 \item{palette}{colorspace palette (sequential)}
+
+\item{transform_scale}{data transform_scaleation to use, "log"}
+
+\item{reverse_palette}{reverse color palette}
 
 \item{sample_id}{sample of SpatialExperiment to be plotted}
 

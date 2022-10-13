@@ -8,8 +8,10 @@ plot_celltype(
   spe,
   cell_type = NULL,
   palette = "Rocket",
+  transform_scale = NULL,
   sample_id = "sample01",
   image_id = "lowres",
+  reverse_palette = FALSE,
   show_image = TRUE,
   discrete = FALSE,
   offset_rotation = FALSE
@@ -22,11 +24,15 @@ plot_celltype(
 
 \item{palette}{colorspace palette (sequential)}
 
+\item{transform_scale}{data transform_scaleation to use, "log"}
+
 \item{sample_id}{sample id to plot, default: "sample01"}
 
 \item{image_id}{which image to plot, default: "lowres"}
 
-\item{show_image}{logical, wether to display the image, default = TRUE}
+\item{reverse_palette}{reverse color palette}
+
+\item{show_image}{logical, whether to display the image, default = TRUE}
 
 \item{discrete}{logical, whether to scale the color discrete, default = FALSE}
 
