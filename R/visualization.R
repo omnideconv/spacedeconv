@@ -40,6 +40,8 @@
 #' @param image_id image of SpatialExperiment for the background annotation
 #' @param show_image whether to show the histology image in the background
 #' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -52,7 +54,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0.01, palette = "Rocket", transform_scale = NULL,
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
-                                show_image = TRUE, offset_rotation = FALSE) {
+                                show_image = TRUE, offset_rotation = FALSE,
+                                spot_size = 1, limits = NULL) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -92,7 +95,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
     sample_id = sample_id, image_id = image_id,
     show_image = show_image, discrete = TRUE,
     offset_rotation = offset_rotation, palette = palette,
-    transform_scale = transform_scale, reverse_palette = reverse_palette
+    transform_scale = transform_scale, reverse_palette = reverse_palette,
+    spot_size = spot_size, limits = limits
   ))
 
   # if (plot_type == "bar") {
@@ -129,6 +133,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param discrete logical, whether to scale the color discrete, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
 #'
 #' @returns plot of cell type fractions
 #'
@@ -140,7 +146,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = TRUE, discrete = FALSE,
-                          offset_rotation = FALSE) {
+                          offset_rotation = FALSE, spot_size = 1, limits = NULL) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -161,7 +167,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
     discrete = discrete, offset_rotation = offset_rotation,
-    transform_scale = transform_scale, reverse_palette = reverse_palette
+    transform_scale = transform_scale, reverse_palette = reverse_palette,
+    spot_size = spot_size, limits = limits
   ))
 
   # TODO
@@ -183,6 +190,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
 #' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
 #'
 #' @returns plot of cell type fractions
 #'
@@ -195,7 +204,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
 plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
-                           show_image = TRUE, offset_rotation = FALSE) {
+                           show_image = TRUE, offset_rotation = FALSE,
+                           spot_size = 1, limits = NULL) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -209,7 +219,8 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
     to_plot = "nUMI", sample_id = sample_id,
     image_id = image_id, show_image = show_image,
     offset_rotation = offset_rotation, palette = palette,
-    transform_scale = transform_scale, reverse_palette = reverse_palette
+    transform_scale = transform_scale, reverse_palette = reverse_palette,
+    spot_size = spot_size, limits = limits
   ))
 }
 
@@ -234,10 +245,13 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
 #' @param show_image whether to show the spatial image
 #' @param discrete should the color scale be discrete? Defaut = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
 make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE, offset_rotation = FALSE) {
+                          discrete = FALSE, offset_rotation = FALSE, spot_size = 1,
+                          limits = NULL) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -265,11 +279,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
   legend_title <- as.character(to_plot)
   if (!is.null(transform_scale)) {
     if (transform_scale == "ln") {
-      df[[to_plot]] <- log(df[[to_plot]])
+      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
       legend_title <- paste0(legend_title, "_", "ln")
     } else if (transform_scale == "log10") {
-      df[[to_plot]] <- log10(df[[to_plot]])
+      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]]))+1)
       legend_title <- paste0(legend_title, "_", "log10")
+    } else if (transform_scale == "log2"){
+      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]]))+1)
+      legend_title <- paste0(legend_title, "_", "log2")
     } else {
       print("Unknown transform_scaleation, plotting untransform_scaleed data")
     }
@@ -279,7 +296,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
   sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
 
   # calculate spot distance
-  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2))
+  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
 
   # generate hexagons
   new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
@@ -308,14 +325,15 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
       axis.text = element_blank(),
       axis.ticks = element_blank(),
       panel.grid = element_blank(),
+      panel.background = element_blank()
     ) #+
     #ggplot2::labs(fill = legend_title)
 
   # add color scale
   if (discrete) {
-    p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette)
+    p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette, limits = limits)
   } else {
-    p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette)
+    p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
   }
 
   p # did not work with return ()

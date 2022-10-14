@@ -14,7 +14,9 @@ plot_cells_per_spot(
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
-  offset_rotation = FALSE
+  offset_rotation = FALSE,
+  spot_size = 1,
+  limits = NULL
 )
 }
 \arguments{
@@ -37,6 +39,10 @@ plot_cells_per_spot(
 \item{show_image}{whether to show the histology image in the background}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
+
+\item{spot_size}{increase (>1) or decrease (<1) the hex size}
+
+\item{limits}{vector of color scale limits}
 }
 \value{
 A hex plot containing unique cell counts per spot

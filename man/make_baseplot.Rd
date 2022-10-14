@@ -15,7 +15,9 @@ make_baseplot(
   image_id = "lowres",
   show_image = TRUE,
   discrete = FALSE,
-  offset_rotation = FALSE
+  offset_rotation = FALSE,
+  spot_size = 1,
+  limits = NULL
 )
 }
 \arguments{
@@ -40,6 +42,10 @@ make_baseplot(
 \item{discrete}{should the color scale be discrete? Defaut = FALSE}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
+
+\item{spot_size}{increase (>1) or decrease (<1) the hex size}
+
+\item{limits}{vector of color scale limits}
 }
 \description{
 Render spatial hex plot

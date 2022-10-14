@@ -14,7 +14,9 @@ plot_celltype(
   reverse_palette = FALSE,
   show_image = TRUE,
   discrete = FALSE,
-  offset_rotation = FALSE
+  offset_rotation = FALSE,
+  spot_size = 1,
+  limits = NULL
 )
 }
 \arguments{
@@ -37,6 +39,10 @@ plot_celltype(
 \item{discrete}{logical, whether to scale the color discrete, default = FALSE}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
+
+\item{spot_size}{increase (>1) or decrease (<1) the hex size}
+
+\item{limits}{vector of color scale limits}
 }
 \value{
 plot of cell type fractions

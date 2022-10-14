@@ -12,7 +12,9 @@ plot_umi_count(
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = TRUE,
-  offset_rotation = FALSE
+  offset_rotation = FALSE,
+  spot_size = 1,
+  limits = NULL
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ plot_umi_count(
 \item{show_image}{logical, wether to display the image, default = TRUE}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
+
+\item{spot_size}{increase (>1) or decrease (<1) the hex size}
+
+\item{limits}{vector of color scale limits}
 }
 \value{
 plot of cell type fractions
