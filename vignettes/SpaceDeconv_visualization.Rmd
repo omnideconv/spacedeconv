@@ -64,5 +64,10 @@ SpaceDeconvs Visualization function is designed to work with data by SpaceRanger
 plot_cells_per_spot(deconv, offset_rotation = TRUE) # rotate hexagons 
 ```
 
+# Additional Parameters 
 
+* `transform_scale` available transformations are "log2", "log10", and "ln"
+* `show_image` logical, show or remove the spatial image
+* `spot_size` integer, increase (>1) or decrease (<1) the hexagon size
+* `limits` vector containing upper and lower limits for the color scale
 

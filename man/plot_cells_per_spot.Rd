@@ -42,7 +42,7 @@ plot_cells_per_spot(
 
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
 
-\item{limits}{vector of color scale limits}
+\item{limits}{vector of color scale limit}
 }
 \value{
 A hex plot containing unique cell counts per spot

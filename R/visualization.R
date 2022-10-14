@@ -41,7 +41,7 @@
 #' @param show_image whether to show the histology image in the background
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
-#' @param limits vector of color scale limits
+#' @param limits vector of color scale limit
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -86,18 +86,19 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   res <- res[, !colnames(res) %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
 
   # count cells
-  plot_data <- data.frame(spot = rownames(res), numi = as.factor(apply(res, 1, sum)))
+  plot_data <- data.frame(spot = rownames(res), nCells = as.factor(apply(res, 1, sum)))
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spatial_obj), plot_data))
 
-  return(make_baseplot(
-    spe = spatial_obj, df = df, to_plot = "numi",
+  result <-  make_baseplot(
+    spe = spatial_obj, df = df, to_plot = "nCells",
     sample_id = sample_id, image_id = image_id,
     show_image = show_image, discrete = TRUE,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits
-  ))
+    spot_size = spot_size, limits = limits)
+
+  return (result)
 
   # if (plot_type == "bar") {
   #   plot <- ggplot2::ggplot(plot_data) +
@@ -329,12 +330,20 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
     ) +
     ggplot2::labs(fill = legend_title)
 
+
+
   # add color scale
   if (discrete) {
-    # p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette, limits = limits)
+    # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
+    # manual fix !!!
+    pal <- function(n){
+      colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+    }
+    p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
   } else {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
   }
+
 
   p # did not work with return ()
 }

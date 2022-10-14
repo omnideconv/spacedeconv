@@ -12,6 +12,9 @@ vignette: >
 
 # FAQ
 
+### My SpatialExperiment contains ENSEMBL IDs. Can i still perform deconvolution? 
+It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment `rowData()` for available annotation to overwrite ENSEMBL IDs. 
+
 ### The SpaceDeconv plots contain a lot of white spots
 When reading raw spatial data the SpatialExperiment contains expression information for all spots, even if they are not located over tissue. Remove those spots with the following code 
 ```{r, eval=FALSE}
@@ -23,6 +26,7 @@ The SpatialExperiment wrapper includes function to rotate/mirror the image. More
 
 ### The hexagons in my plots are rotated and don't give an even appearance
 Your Visium slide might be aligned incorrectly. Try rotating the image or use `offset_rotation=TRUE` as a parameter in the plotting function.
+
 
 
 
