@@ -326,12 +326,12 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
       axis.ticks = element_blank(),
       panel.grid = element_blank(),
       panel.background = element_blank()
-    ) #+
-    #ggplot2::labs(fill = legend_title)
+    ) +
+    ggplot2::labs(fill = legend_title)
 
   # add color scale
   if (discrete) {
-    p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette, limits = limits)
+    # p <- p + colorspace::scale_fill_discrete_sequential(palette, rev = reverse_palette, limits = limits)
   } else {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
   }
