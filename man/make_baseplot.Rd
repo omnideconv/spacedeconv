@@ -19,7 +19,8 @@ make_baseplot(
   spot_size = 1,
   limits = NULL,
   smooth = FALSE,
-  smoothing_factor = 1.5
+  smoothing_factor = 1.5,
+  font_size = 15
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ make_baseplot(
 \item{smooth}{whether to smooth the plot}
 
 \item{smoothing_factor}{kernel size factor (multiples of spot distance)}
+
+\item{font_size}{font size}
 }
 \description{
 Render spatial hex plot

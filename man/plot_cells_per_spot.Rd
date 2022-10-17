@@ -16,7 +16,8 @@ plot_cells_per_spot(
   show_image = TRUE,
   offset_rotation = FALSE,
   spot_size = 1,
-  limits = NULL
+  limits = NULL,
+  font_size = 15
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ plot_cells_per_spot(
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
 
 \item{limits}{vector of color scale limit}
+
+\item{font_size}{font size}
 }
 \value{
 A hex plot containing unique cell counts per spot

@@ -42,6 +42,7 @@
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limit
+#' @param font_size font size
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -55,7 +56,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = TRUE, offset_rotation = FALSE,
-                                spot_size = 1, limits = NULL) {
+                                spot_size = 1, limits = NULL, font_size = 15) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -96,7 +97,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
     show_image = show_image, discrete = TRUE,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits)
+    spot_size = spot_size, limits = limits, font_size = font_size)
 
   return (result)
 
@@ -139,6 +140,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param limits vector of color scale limits
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param font_size font size
 #'
 #' @returns plot of cell type fractions
 #'
@@ -151,7 +153,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = TRUE, discrete = FALSE,
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
-                          smooth = FALSE, smoothing_factor = 1.5) {
+                          smooth = FALSE, smoothing_factor = 1.5,
+                          font_size = 15) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -174,7 +177,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
     discrete = discrete, offset_rotation = offset_rotation,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
-    smooth = smooth, smoothing_factor = smoothing_factor
+    smooth = smooth, smoothing_factor = smoothing_factor,
+    font_size = font_size
   ))
 
   # TODO
@@ -200,6 +204,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
 #' @param limits vector of color scale limits
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param font_size font size
 #'
 #' @returns plot of cell type fractions
 #'
@@ -214,7 +219,8 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
                            reverse_palette = FALSE,
                            show_image = TRUE, offset_rotation = FALSE,
                            spot_size = 1, limits = NULL,
-                           smooth = FALSE, smoothing_factor = 1.5) {
+                           smooth = FALSE, smoothing_factor = 1.5,
+                           font_size = 15) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -230,7 +236,8 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
-    smooth = smooth, smoothing_factor = smoothing_factor
+    smooth = smooth, smoothing_factor = smoothing_factor,
+    font_size = font_size
   ))
 }
 
@@ -259,11 +266,13 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
 #' @param limits vector of color scale limits
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param font_size font size
 make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
                           discrete = FALSE, offset_rotation = FALSE, spot_size = 1,
-                          limits = NULL, smooth = FALSE, smoothing_factor = 1.5) {
+                          limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
+                          font_size = 15) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -349,7 +358,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
       axis.text = element_blank(),
       axis.ticks = element_blank(),
       panel.grid = element_blank(),
-      panel.background = element_blank()
+      panel.background = element_blank(),
+      legend.title = element_text(size = font_size),
+      legend.text = element_text(size = font_size*0.5)
     ) +
     ggplot2::labs(fill = legend_title)
 

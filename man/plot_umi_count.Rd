@@ -16,7 +16,8 @@ plot_umi_count(
   spot_size = 1,
   limits = NULL,
   smooth = FALSE,
-  smoothing_factor = 1.5
+  smoothing_factor = 1.5,
+  font_size = 15
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ plot_umi_count(
 \item{smooth}{whether to smooth the plot}
 
 \item{smoothing_factor}{kernel size factor (multiples of spot distance)}
+
+\item{font_size}{font size}
 }
 \value{
 plot of cell type fractions
