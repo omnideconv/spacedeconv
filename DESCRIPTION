@@ -23,8 +23,6 @@ Imports:
     anndata, 
     edgeR, 
     ggplot2, 
-    ggridges, 
-    gridExtra, 
     magrittr, 
     testit, 
     RColorBrewer, 
