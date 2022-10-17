@@ -9,7 +9,7 @@ normalize(object, method = "cpm")
 \arguments{
 \item{object}{SingleCellExperiment}
 
-\item{method}{normalization method, ("cpm")}
+\item{method}{normalization method, ("cpm", "logcpm")}
 }
 \description{
 Normalize Expression Object

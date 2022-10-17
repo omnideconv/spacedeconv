@@ -288,6 +288,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
     } else if (transform_scale == "log2"){
       df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]]))+1)
       legend_title <- paste0(legend_title, "_", "log2")
+    }  else if (transform_scale == "sqrt"){
+      df[[to_plot]] <- sqrt(df[[to_plot]])
+      legend_title <- paste0(legend_title, "_", "sqrt")
     } else {
       print("Unknown transform_scaleation, plotting untransform_scaleed data")
     }
