@@ -129,13 +129,16 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param palette colorspace palette (sequential)
 #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
-#' @param sample_id sample id to plot, default: "sample01"
+#' @param sample_id sample id to plot, default: "
+#' sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param discrete logical, whether to scale the color discrete, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
 #'
 #' @returns plot of cell type fractions
 #'
@@ -147,7 +150,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = TRUE, discrete = FALSE,
-                          offset_rotation = FALSE, spot_size = 1, limits = NULL) {
+                          offset_rotation = FALSE, spot_size = 1, limits = NULL,
+                          smooth = FALSE, smoothing_factor = 1.5) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -169,7 +173,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
     image_id = image_id, show_image = show_image,
     discrete = discrete, offset_rotation = offset_rotation,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits
+    spot_size = spot_size, limits = limits,
+    smooth = smooth, smoothing_factor = smoothing_factor
   ))
 
   # TODO
@@ -193,6 +198,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
 #'
 #' @returns plot of cell type fractions
 #'
@@ -206,7 +213,8 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
                            show_image = TRUE, offset_rotation = FALSE,
-                           spot_size = 1, limits = NULL) {
+                           spot_size = 1, limits = NULL,
+                           smooth = FALSE, smoothing_factor = 1.5) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -221,7 +229,8 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
     image_id = image_id, show_image = show_image,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits
+    spot_size = spot_size, limits = limits,
+    smooth = smooth, smoothing_factor = smoothing_factor
   ))
 }
 
@@ -248,11 +257,13 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
 make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
                           discrete = FALSE, offset_rotation = FALSE, spot_size = 1,
-                          limits = NULL) {
+                          limits = NULL, smooth = FALSE, smoothing_factor = 1.5) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -276,6 +287,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
   # due to reasons, flip y axis by hand
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
 
+  # calculate spot distance
+  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
+
+  # smooth if requested
+  if (smooth){
+    df[[to_plot]] <- smooth_celltype(df, spot_distance = spot_distance, smoothing_factor = smoothing_factor, cell_type = to_plot)
+  }
+
   # apply potential transform_scaleations
   legend_title <- as.character(to_plot)
   if (!is.null(transform_scale)) {
@@ -296,11 +315,12 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
     }
   }
 
+  if (smooth){
+    legend_title <- paste0(legend_title, "_", "smoothed")
+  }
+
   # preparing the dataframe with sf, inserting points
   sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
-
-  # calculate spot distance
-  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
 
   # generate hexagons
   new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
@@ -391,4 +411,26 @@ get_polygon_geometry <- function(grid, dist, offset_rotation = FALSE) {
     )
   }
   return(sf::st_sfc(res)) # Convert to 'simple feature collection'
+}
+#' Smooth spot annotation
+#'
+#' @param df DataFrame containing spot coordinates and the value to be smoothed
+#' @param spot_distance distance between two spots
+#' @param smoothing_factor multiplied with spot distance to find close spots
+#' @param cell_type value to be smoothed
+smooth_celltype <- function(df, spot_distance, smoothing_factor = 1.5, cell_type = NULL){
+  new_values <- vector()
+
+  # for all spots get the spots in distance and calculate mean value
+  for (spot in rownames(df)){
+    point <- df[spot, ][c("pxl_col_in_fullres", "pxl_row_in_fullres")]
+
+    spots_in_distance <- sqrt((point$pxl_col_in_fullres - df$pxl_col_in_fullres)^2 + (point$pxl_row_in_fullres - df$pxl_row_in_fullres)^2)
+    names(spots_in_distance) <- rownames(df)
+    spots_in_distance <- spots_in_distance[spots_in_distance<= spot_distance*smoothing_factor]
+
+    new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type ], na.rm = TRUE))
+  }
+
+    return (new_values)
 }

@@ -16,7 +16,9 @@ plot_celltype(
   discrete = FALSE,
   offset_rotation = FALSE,
   spot_size = 1,
-  limits = NULL
+  limits = NULL,
+  smooth = FALSE,
+  smoothing_factor = 1.5
 )
 }
 \arguments{
@@ -28,7 +30,8 @@ plot_celltype(
 
 \item{transform_scale}{data transform_scaleation to use, "log"}
 
-\item{sample_id}{sample id to plot, default: "sample01"}
+\item{sample_id}{sample id to plot, default: "
+sample01"}
 
 \item{image_id}{which image to plot, default: "lowres"}
 
@@ -43,6 +46,10 @@ plot_celltype(
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
 
 \item{limits}{vector of color scale limits}
+
+\item{smooth}{whether to smooth the plot}
+
+\item{smoothing_factor}{kernel size factor (multiples of spot distance)}
 }
 \value{
 plot of cell type fractions
