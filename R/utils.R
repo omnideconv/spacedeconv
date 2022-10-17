@@ -277,13 +277,14 @@ attachToken <- function(deconvolution, token = "deconv") {
 #' @param deconv SpatialExperiment
 #'
 #' @export
-available_results <- function(deconv){
-  if (is(deconv, "SpatialExperiment")){
-    res <- names(colData(spe))
+available_results <- function(deconv) {
+  if (is(deconv, "SpatialExperiment")) {
+    res <- names(colData(deconv))
 
     res <- res[!res %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
-    print (res)
   } else {
-    print ("Please provide a SpatialExperiment")
+    print("Please provide a SpatialExperiment")
   }
+
+  return(res)
 }

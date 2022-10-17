@@ -17,7 +17,10 @@ make_baseplot(
   discrete = FALSE,
   offset_rotation = FALSE,
   spot_size = 1,
-  limits = NULL
+  limits = NULL,
+  smooth = FALSE,
+  smoothing_factor = 1.5,
+  font_size = 15
 )
 }
 \arguments{
@@ -46,6 +49,12 @@ make_baseplot(
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
 
 \item{limits}{vector of color scale limits}
+
+\item{smooth}{whether to smooth the plot}
+
+\item{smoothing_factor}{kernel size factor (multiples of spot distance)}
+
+\item{font_size}{font size}
 }
 \description{
 Render spatial hex plot
