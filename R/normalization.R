@@ -19,8 +19,8 @@ normalize <- function(object, method = "cpm") {
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
     if (method == "cpm") {
       SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(object), "dgCMatrix")
-    } else if (method=="logcpm"){
-      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(object)+1), "dgCMatrix") # log(cpm+1)
+    } else if (method == "logcpm") {
+      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(object) + 1), "dgCMatrix") # log(cpm+1)
     }
   } else {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")

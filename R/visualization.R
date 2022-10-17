@@ -91,15 +91,16 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spatial_obj), plot_data))
 
-  result <-  make_baseplot(
+  result <- make_baseplot(
     spe = spatial_obj, df = df, to_plot = "nCells",
     sample_id = sample_id, image_id = image_id,
     show_image = show_image, discrete = TRUE,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits, font_size = font_size)
+    spot_size = spot_size, limits = limits, font_size = font_size
+  )
 
-  return (result)
+  return(result)
 
   # if (plot_type == "bar") {
   #   plot <- ggplot2::ggplot(plot_data) +
@@ -300,7 +301,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
   spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
 
   # smooth if requested
-  if (smooth){
+  if (smooth) {
     df[[to_plot]] <- smooth_celltype(df, spot_distance = spot_distance, smoothing_factor = smoothing_factor, cell_type = to_plot)
   }
 
@@ -311,12 +312,12 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
       df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
       legend_title <- paste0(legend_title, "_", "ln")
     } else if (transform_scale == "log10") {
-      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]]))+1)
+      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
       legend_title <- paste0(legend_title, "_", "log10")
-    } else if (transform_scale == "log2"){
-      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]]))+1)
+    } else if (transform_scale == "log2") {
+      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
       legend_title <- paste0(legend_title, "_", "log2")
-    }  else if (transform_scale == "sqrt"){
+    } else if (transform_scale == "sqrt") {
       df[[to_plot]] <- sqrt(df[[to_plot]])
       legend_title <- paste0(legend_title, "_", "sqrt")
     } else {
@@ -324,7 +325,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
     }
   }
 
-  if (smooth){
+  if (smooth) {
     legend_title <- paste0(legend_title, "_", "smoothed")
   }
 
@@ -360,7 +361,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
       panel.grid = element_blank(),
       panel.background = element_blank(),
       legend.title = element_text(size = font_size),
-      legend.text = element_text(size = font_size*0.5)
+      legend.text = element_text(size = font_size * 0.5)
     ) +
     ggplot2::labs(fill = legend_title)
 
@@ -370,7 +371,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
   if (discrete) {
     # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
     # manual fix !!!
-    pal <- function(n){
+    pal <- function(n) {
       colorspace::sequential_hcl(n, palette, rev = reverse_palette)
     }
     p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
@@ -389,7 +390,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale 
 #' @param dist distance of hexagons
 #' @param offset_rotation correct hex orientation for rotated visium image
 get_hex_polygon <- function(x, y, dist, offset_rotation = FALSE) {
-
   # offset rotation for visium image
   offset <- 0
   if (offset_rotation) {
@@ -429,19 +429,19 @@ get_polygon_geometry <- function(grid, dist, offset_rotation = FALSE) {
 #' @param spot_distance distance between two spots
 #' @param smoothing_factor multiplied with spot distance to find close spots
 #' @param cell_type value to be smoothed
-smooth_celltype <- function(df, spot_distance, smoothing_factor = 1.5, cell_type = NULL){
+smooth_celltype <- function(df, spot_distance, smoothing_factor = 1.5, cell_type = NULL) {
   new_values <- vector()
 
   # for all spots get the spots in distance and calculate mean value
-  for (spot in rownames(df)){
+  for (spot in rownames(df)) {
     point <- df[spot, ][c("pxl_col_in_fullres", "pxl_row_in_fullres")]
 
     spots_in_distance <- sqrt((point$pxl_col_in_fullres - df$pxl_col_in_fullres)^2 + (point$pxl_row_in_fullres - df$pxl_row_in_fullres)^2)
     names(spots_in_distance) <- rownames(df)
-    spots_in_distance <- spots_in_distance[spots_in_distance<= spot_distance*smoothing_factor]
+    spots_in_distance <- spots_in_distance[spots_in_distance <= spot_distance * smoothing_factor]
 
-    new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type ], na.rm = TRUE))
+    new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type], na.rm = TRUE))
   }
 
-    return (new_values)
+  return(new_values)
 }

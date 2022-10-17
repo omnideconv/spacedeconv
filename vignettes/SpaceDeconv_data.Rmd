@@ -46,7 +46,7 @@ Cell type information needs to be available. You can specify the column containi
 ```{r annotationParameters, eval=FALSE}
 signature <- build_model(single_cell_data_1,
   method = "dwls",
-  cell_type_col = "celltype_major", 
+  cell_type_col = "celltype_major",
 )
 
 # some methods require batch_id information as well
@@ -89,5 +89,3 @@ In case the background image is not aligned properly the SpatialExperiment class
 * `mirrorImg(image, axis) # 'h'/'v'`
 
 More Information is available in the SpatialExperiment [Documentation](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#34_Image_transformations)
-
-

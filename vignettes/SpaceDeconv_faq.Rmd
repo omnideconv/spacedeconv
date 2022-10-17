@@ -21,7 +21,7 @@ You can use `available_results(object)` or access `names(colData(object))` to se
 ### The SpaceDeconv plots contain a lot of white spots
 When reading raw spatial data the SpatialExperiment contains expression information for all spots, even if they are not located over tissue. Remove those spots with the following code 
 ```{r, eval=FALSE}
-spe = spe[, colData(spe)$in_tissue == TRUE]
+spe <- spe[, colData(spe)$in_tissue == TRUE]
 ```
 
 ### The Visium Slide and the spatial data are not rotated in the same direction
@@ -79,5 +79,3 @@ For this example each method deconvoluted the sample dataset with ending "_1". T
 | RCTD | 511.137 |
 
 # References
-
-

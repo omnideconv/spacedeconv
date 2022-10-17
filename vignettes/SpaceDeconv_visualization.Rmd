@@ -21,7 +21,7 @@ deconv <- SpaceDeconv::deconvolute(
   signature = NULL,
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "rctd", 
+  method = "rctd",
   n_cores = 12
 )
 ```
@@ -53,7 +53,7 @@ SpaceDeconv::plot_umi_count(deconv)
 # Color Palette 
 All Sequential Palettes from the [colorspace](https://colorspace.r-forge.r-project.org/) R Package can be used. 
 ```{r availablePalettes, fig.width=8}
-colorspace::hcl_palettes(type="sequential", plot=TRUE)
+colorspace::hcl_palettes(type = "sequential", plot = TRUE)
 ```
 
 
@@ -61,7 +61,7 @@ colorspace::hcl_palettes(type="sequential", plot=TRUE)
 SpaceDeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
 ```{r offset_rotation, eval = FALSE}
-plot_cells_per_spot(deconv, offset_rotation = TRUE) # rotate hexagons 
+plot_cells_per_spot(deconv, offset_rotation = TRUE) # rotate hexagons
 ```
 
 # Additional Parameters 
@@ -70,4 +70,3 @@ plot_cells_per_spot(deconv, offset_rotation = TRUE) # rotate hexagons
 * `show_image` logical, show or remove the spatial image
 * `spot_size` integer, increase (>1) or decrease (<1) the hexagon size
 * `limits` vector containing upper and lower limits for the color scale
-
