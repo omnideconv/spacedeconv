@@ -131,8 +131,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param palette colorspace palette (sequential)
 #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
-#' @param sample_id sample id to plot, default: "
-#' sample01"
+#' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param discrete logical, whether to scale the color discrete, default = FALSE
@@ -240,6 +239,69 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
     smooth = smooth, smoothing_factor = smoothing_factor,
     font_size = font_size
   ))
+}
+
+#' Function to plot deconvolution results
+#'
+#' Generate Hex Plot of a SpatialExperiment containing the most abundant cell types
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type one or more celltype to plot, NULL for all
+#' @param palette colorspace palette (sequential)
+# #' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, whether to display the image, default = TRUE
+# #' @param discrete logical, whether to scale the color discrete, default = FALSE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+# #' @param limits vector of color scale limits
+# #' @param smooth whether to smooth the plot
+# #' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param font_size font size
+#'
+#' @returns plot of cell type fractions
+#'
+#' @export
+plot_most_abundant <- function(spe, cell_type = NULL, palette = "Rocket", # transform_scale = NULL,
+                               sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
+                               show_image = TRUE, # discrete = FALSE,
+                               offset_rotation = FALSE, spot_size = 1, # limits = NULL,
+                               # smooth = FALSE, smoothing_factor = 1.5,
+                               font_size = 15){
+
+  # checks
+  if (is.null(spe)) {
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  if(is.null(cell_type)){
+    cell_type <- available_results(spe)
+  }
+
+  # create df
+  df <- as.data.frame(colData(spe))[ , cell_type, drop = FALSE]
+  df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop=FALSE]
+
+  # remove all columns not numeric
+  df <- df[, unlist(lapply(df, is.numeric)), drop=FALSE]
+
+  res <- colnames(df)[max.col(df)]
+
+  # append result to df
+  df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
+
+  df2$pxl_col_in_fullres <- as.numeric(df2$pxl_col_in_fullres)
+  df2$pxl_row_in_fullres <- as.numeric(df2$pxl_row_in_fullres)
+
+
+  return(make_baseplot(spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
+                       sample_id = sample_id, image_id = image_id,
+                       reverse_palette = reverse_palette, show_image = show_image,
+                       offset_rotation = offset_rotation, spot_size = spot_size,
+                       font_size = font_size, discrete = TRUE))
+
 }
 
 ###############
