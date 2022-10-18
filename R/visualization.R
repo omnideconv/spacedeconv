@@ -264,7 +264,7 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, cell_type = NULL, palette = "Rocket", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL,  palette = "Rocket", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = TRUE, # discrete = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
@@ -276,12 +276,27 @@ plot_most_abundant <- function(spe, cell_type = NULL, palette = "Rocket", # tran
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if(is.null(cell_type)){
-    cell_type <- available_results(spe)
+  if (is.null(method)){
+    stop("Parameter 'method' is null or missing, but is required")
+  }
+
+  if (!is.null(method)){
+    available <- available_results(spe)[startsWith(available_results(spe), method)]
+
+  } else {
+    available <- available_results(spe)
+  }
+
+  if(!is.null(cell_type)){
+    available <- cell_type
+  }
+
+  if (!is.null(remove)){
+    available <- available[!available %in% remove]
   }
 
   # create df
-  df <- as.data.frame(colData(spe))[ , cell_type, drop = FALSE]
+  df <- as.data.frame(colData(spe))[ , available, drop = FALSE]
   df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop=FALSE]
 
   # remove all columns not numeric
