@@ -46,15 +46,19 @@ SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05, palette = "Mako", spo
 ```
 
 ### 3. `plot_umi_count()`
-For the UMI count spot no additional information is necessary. Further no deconvolution result is required.
+For the UMI count spot no additional information is necessary. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI counts. `
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-SpaceDeconv::plot_umi_count(deconv, palette = "Mako", spot_size = 1.17, transform_scale = NULL)
+SpaceDeconv::plot_umi_count(deconv, palette = "Mako", spot_size = 1.17, transform_scale = "sqrt")
 ```
 ### 4. `plot_most_abundant()`
+This plots displays the most abundant cell-type for each spot. You can specify which cells to plot by either one of the following: 
 
+* `cell_type` vector of celltypes to plot 
+* `method` plotting all cell types of the provided method
+* `remove` vector of celltypes to be removed from the plot
 ```{r}
-SpaceDeconv::plot_most_abundant(deconv, method="quantiseq", palette = "Mako")
+SpaceDeconv::plot_most_abundant(deconv, method="quantiseq", palette = "Viridis", spot_size = 1.17, remove = "quantiseq_uncharacterized.cell")
 ```
 
 
@@ -70,7 +74,7 @@ colorspace::hcl_palettes(type = "sequential", plot = TRUE)
 SpaceDeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
 ```{r offset_rotation, eval = FALSE}
-plot_cells_per_spot(deconv, offset_rotation = TRUE) # rotate hexagons
+plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
 ```
 ### Transform Scale 
 
@@ -89,7 +93,7 @@ With this parameter the expression values can be smoothed to simplify pattern re
 * `smoothing_factor` choose kernel size (factor of spot distance)
 
 ```{r}
-SpaceDeconv::plot_celltype(deconv, cell_type = "rctd_Cancer.Epithelial", palette = "Mako", spot_size = 1.17, smooth = T, smoothing_factor = 1.5)
+SpaceDeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell", palette = "Mako", spot_size = 1.17, smooth = T, smoothing_factor = 1.5)
 ```
 
 # Additional Parameters 

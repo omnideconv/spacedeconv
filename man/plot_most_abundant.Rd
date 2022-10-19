@@ -6,7 +6,9 @@
 \usage{
 plot_most_abundant(
   spe,
+  method = NULL,
   cell_type = NULL,
+  remove = NULL,
   palette = "Rocket",
   sample_id = "sample01",
   image_id = "lowres",
