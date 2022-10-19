@@ -20,7 +20,7 @@ spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method="cpm")
 
 deconv <- SpaceDeconv::deconvolute(
   spatial_data_1,
-  method = "base", 
+  method = "quantiseq", 
   assay_sp = "cpm"
 )
 ```
