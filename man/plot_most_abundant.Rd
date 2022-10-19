@@ -16,7 +16,9 @@ plot_most_abundant(
   show_image = TRUE,
   offset_rotation = FALSE,
   spot_size = 1.17,
-  font_size = 15
+  title_size = 30,
+  font_size = 20,
+  legend_size = 40
 )
 }
 \arguments{
@@ -38,7 +40,11 @@ plot_most_abundant(
 
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
 
-\item{font_size}{font size}
+\item{title_size}{font size of title}
+
+\item{font_size}{font size of legend}
+
+\item{legend_size}{legend size in points}
 }
 \value{
 plot of cell type fractions

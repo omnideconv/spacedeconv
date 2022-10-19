@@ -17,7 +17,9 @@ plot_cells_per_spot(
   offset_rotation = FALSE,
   spot_size = 1.17,
   limits = NULL,
-  font_size = 15
+  title_size = 30,
+  font_size = 20,
+  legend_size = 40
 )
 }
 \arguments{
@@ -45,7 +47,11 @@ plot_cells_per_spot(
 
 \item{limits}{vector of color scale limit}
 
-\item{font_size}{font size}
+\item{title_size}{font size of title}
+
+\item{font_size}{font size of legend}
+
+\item{legend_size}{size of legend in points}
 }
 \value{
 A hex plot containing unique cell counts per spot

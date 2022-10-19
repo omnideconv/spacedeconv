@@ -19,7 +19,9 @@ plot_celltype(
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,
-  font_size = 15
+  title_size = 30,
+  font_size = 20,
+  legend_size = 40
 )
 }
 \arguments{
@@ -51,7 +53,11 @@ plot_celltype(
 
 \item{smoothing_factor}{kernel size factor (multiples of spot distance)}
 
-\item{font_size}{font size}
+\item{title_size}{font size of title}
+
+\item{font_size}{font size of legend}
+
+\item{legend_size}{legend size in points}
 }
 \value{
 plot of cell type fractions
