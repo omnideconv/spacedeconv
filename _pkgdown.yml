@@ -23,6 +23,7 @@ reference:
       - build_model
       - deconvolute
       - build_and_deconvolute
+      - available_results
   - title: Custom access to methods
     contents:
       - starts_with("build_model_")
@@ -32,6 +33,7 @@ reference:
       - plot_cells_per_spot
       - plot_celltype
       - plot_umi_count
+      - plot_most_abundant
   - title: Sample Data
     contents:
       - starts_with("single_cell_data")
@@ -58,3 +60,4 @@ reference:
       - get_hex_polygon
       - get_polygon_geometry
       - make_baseplot
+      - smooth_celltype

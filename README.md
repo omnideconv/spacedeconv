@@ -10,7 +10,7 @@ SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spati
 There are two ways to install `SpaceDeconv`:
 
 - The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand.
-- The _complete_ installtation installs all dependencies including all deconvolution methods. This may take a considerable time.
+- The _complete_ installation installs all dependencies including all deconvolution methods. This may take a considerable time.
 
 Since not all dependencies are on CRAN or Bioconductor, `SpaceDeconv`is available from GitHub only. We recommend installing trough the pak package manager:
 
@@ -28,42 +28,28 @@ pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
 
 ## Usage
 
+SpaceDeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `SpaceDeconv::deconvolution_algorithms` or in the [FAQ](articles/SpaceDeconv_faq.html). 
+
 ### Data requirements
 
-SpaceDeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets.
+- _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_, will be deconvoluted
+- _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_ containing cell type information
 
-- _SpatialExperiment_, will be deconvoluted
-- _SingleCellExperiment_ containing cell type information, for second-generation tools
+The main functions of SpaceDeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of: 
 
-### Load Spatial Dataset
-
-You can load 10X Visium Data by providing the [spaceranger](https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger) output folder. It is further possible to run SpaceDeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://github.com/drighelli/SpatialExperiment) for further details.
-
-```r
-spe <- SpatialExperiment::read10xVisium("path_to_spaceranger_output")
-```
-
-### Normalization
-
-SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
-
-```r
-spe <- SpaceDeconv::normalize(spe, method="cpm")
-
-```
-
-### Build a Signature Matrix
+### 1. Build a Signature Matrix
+Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
 signature <- SpaceDeconv::build_model(
   single_cell_object,
-  cell_type_col = "cell_ontology_class",
+  cell_type_col = "celltype_major",
   method = "spotlight",
   assay_sc="cpm"
 )
 ```
 
-### Deconvolution
+### 2. Deconvolution
 
 To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `SpaceDeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object to simplify the visualization. You can obtain the results in table form by setting `return_object=FALSE`.
 
@@ -74,28 +60,16 @@ result <- SpaceDeconv::deconvolute(
   signature,
   method = "spotlight"
 )
-
-# return deconvolution results as a table
-result <- SpaceDeconv::deconvolute(
-  spatial_object,
-  signature,
-  method = "spotlight",
-  return_object = FALSE
-)
 ```
 
-### Visualization
+### 3. Visualization
 
 SpaceDeconv includes multiple visualization functions.
 
 ```r
 # sample does refer to the first column of ColData(spe)
 # for cell_type input a celltype present in the deconvolution result
-plot_celltype(spe, cell_type="B.cells")
-
-# threshold changes the minimum cell type fraction
-# for a cell to be considered present in a specific spot
-plot_cells_per_spot(spe, plot_type = "spatial", threshold=0.01)
+plot_celltype(spe, cell_type="spotlight_B.cells")
 ```
 
 ## Additional Requirements
@@ -123,7 +97,7 @@ cite both our package and the method(s) you are using.
 
 # References
 
-| Method                                                         |     reference      |     organism     |                                     licence                                     | citation                                                                                                                                                                                                                                                          |
+| Method                                                         |     signature      |     organism     |                                     licence                                     | citation                                                                                                                                                                                                                                                          |
 | -------------------------------------------------------------- | :----------------: | :--------------: | :-----------------------------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [omnideconv](https://github.com/omnideconv/omnideconv)         | :heavy_check_mark: |      human       |       [GPL-3](https://github.com/omnideconv/omnideconv/blob/main/LICENSE)       | Citation will follow                                                                                                                                                                                                                                              |
 | [immunedeconv](https://github.com/omnideconv/immunedeconv)     |        :x:         | humand and mouse |      [BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE)      | Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. |
