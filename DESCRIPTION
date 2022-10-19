@@ -66,5 +66,7 @@ Remotes:
     shenorrlab/bseqsc,
     omnideconv/MuSiC, 
     omnideconv/BayesPrism, 
+    GfellerLab/EPIC,
+    dviraran/xCell,
     drighelli/SpatialExperiment, 
 Config/testthat/edition: 3

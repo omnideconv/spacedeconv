@@ -4,7 +4,7 @@ author: "Constantin Zackl"
 date: "2022-09-12"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Loading Data}
+  %\VignetteIndexEntry{Data Input}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---

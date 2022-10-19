@@ -13,13 +13,14 @@ To introduce SpaceDeconvs visualization functions we will utilize a deconvolutio
 
 ```{r error=FALSE, message=FALSE, warning=FALSE}
 library(SpaceDeconv)
+#library(EPIC) # quickfix
 data("spatial_data_1")
 
 spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method="cpm")
 
 deconv <- SpaceDeconv::deconvolute(
   spatial_data_1,
-  method = "quantiseq", 
+  method = "base", 
   assay_sp = "cpm"
 )
 ```
@@ -36,26 +37,21 @@ At the moment SpaceDeconv offers two visualization functions.
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-SpaceDeconv::plot_celltype(deconv, 
-                           cell_type = "quantiseq_B.cell", 
-                           palette = "Mako", spot_size = 1.17, 
-                           smooth = F)
+SpaceDeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell")
 ```
 
 ## 2. `plot_cells_per_spot()`
 
 To render the distribution of the number of detected cell types per spot a user-selected threshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 5%. 
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05, 
-                                 palette = "Mako", 
-                                 spot_size = 1.17)
+SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05)
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-SpaceDeconv::plot_umi_count(deconv, palette = "Mako", spot_size = 1.17, transform_scale = "sqrt")
+SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
 ```
 ## 4. `plot_most_abundant()`
 This plots displays the most abundant cell-type for each spot. You can specify which cells to plot by either one of the following: 
@@ -67,7 +63,6 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 SpaceDeconv::plot_most_abundant(deconv, 
                                 method="quantiseq", 
                                 palette = "Viridis", 
-                                spot_size = 1.17, 
                                 remove = "quantiseq_uncharacterized.cell")
 ```
 
@@ -91,10 +86,7 @@ plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
 With the `transform_scale` parameter the colorspace scale can be modified. Available options are: "ln", "log10", "log2" and "sqrt". Scaling the color range differently can aid with interpreting the plot. Please have in mind that the plot does not show valid deconvolution results anymore and should be handled with caution. 
 
 ```{r}
-SpaceDeconv::plot_umi_count(deconv, 
-                            palette = "Mako", 
-                            spot_size = 1.17, 
-                            transform_scale = "sqrt")
+SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
 ```
 
 
@@ -108,8 +100,6 @@ With this parameter the expression values can be smoothed to simplify pattern re
 ```{r}
 SpaceDeconv::plot_celltype(deconv, 
                            cell_type = "quantiseq_B.cell", 
-                           palette = "Mako", 
-                           spot_size = 1.17, 
                            smooth = T, 
                            smoothing_factor = 1.5)
 ```
