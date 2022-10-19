@@ -6,14 +6,14 @@
 \usage{
 plot_umi_count(
   spe,
-  palette = "Rocket",
+  palette = "Mako",
   transform_scale = NULL,
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = TRUE,
   offset_rotation = FALSE,
-  spot_size = 1,
+  spot_size = 1.17,
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,

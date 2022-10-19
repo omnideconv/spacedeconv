@@ -8,14 +8,14 @@ plot_cells_per_spot(
   spatial_obj,
   plot_type = "spatial",
   threshold = 0.01,
-  palette = "Rocket",
+  palette = "Mako",
   transform_scale = NULL,
   reverse_palette = FALSE,
   sample_id = "sample01",
   image_id = "lowres",
   show_image = TRUE,
   offset_rotation = FALSE,
-  spot_size = 1,
+  spot_size = 1.17,
   limits = NULL,
   font_size = 15
 )

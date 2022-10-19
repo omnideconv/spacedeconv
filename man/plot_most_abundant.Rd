@@ -9,13 +9,13 @@ plot_most_abundant(
   method = NULL,
   cell_type = NULL,
   remove = NULL,
-  palette = "Rocket",
+  palette = "Mako",
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = TRUE,
   offset_rotation = FALSE,
-  spot_size = 1,
+  spot_size = 1.17,
   font_size = 15
 )
 }

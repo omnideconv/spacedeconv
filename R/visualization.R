@@ -52,11 +52,11 @@
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
 #' SpaceDeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
-                                threshold = 0.01, palette = "Rocket", transform_scale = NULL,
+                                threshold = 0.01, palette = "Mako", transform_scale = NULL,
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = TRUE, offset_rotation = FALSE,
-                                spot_size = 1, limits = NULL, font_size = 15) {
+                                spot_size = 1.17, limits = NULL, font_size = 15) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -149,10 +149,10 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' data("spatial_data_2")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
 #' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
-plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_scale = NULL,
+plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = TRUE, discrete = FALSE,
-                          offset_rotation = FALSE, spot_size = 1, limits = NULL,
+                          offset_rotation = FALSE, spot_size = 1.17, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
                           font_size = 15) {
   if (is.null(spe)) {
@@ -214,11 +214,11 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Rocket", transform_s
 #' data("spatial_data_3")
 #' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
-plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
+plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
                            show_image = TRUE, offset_rotation = FALSE,
-                           spot_size = 1, limits = NULL,
+                           spot_size = 1.17, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
                            font_size = 15) {
   if (is.null(spe)) {
@@ -264,10 +264,10 @@ plot_umi_count <- function(spe, palette = "Rocket", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL,  palette = "Rocket", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL,  palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = TRUE, # discrete = FALSE,
-                               offset_rotation = FALSE, spot_size = 1, # limits = NULL,
+                               offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                font_size = 15){
 
@@ -345,10 +345,10 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param font_size font size
-make_baseplot <- function(spe, df, to_plot, palette = "Rocket", transform_scale = NULL,
+make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE, offset_rotation = FALSE, spot_size = 1,
+                          discrete = FALSE, offset_rotation = FALSE, spot_size = 1.17,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           font_size = 15) {
   if (is.null(spe)) {

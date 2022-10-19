@@ -7,7 +7,7 @@
 plot_celltype(
   spe,
   cell_type = NULL,
-  palette = "Rocket",
+  palette = "Mako",
   transform_scale = NULL,
   sample_id = "sample01",
   image_id = "lowres",
@@ -15,7 +15,7 @@ plot_celltype(
   show_image = TRUE,
   discrete = FALSE,
   offset_rotation = FALSE,
-  spot_size = 1,
+  spot_size = 1.17,
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,
