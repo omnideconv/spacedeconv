@@ -1,47 +1,47 @@
-# SpaceDeconv
+# spacedeconv
 
-[![R-CMD-check](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/test.yml)
-[![docs](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/SpaceDeconv/actions/workflows/pkgdown.yml)
+[![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
+[![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
-SpaceDeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
 
 ## Installation
 
-There are two ways to install `SpaceDeconv`:
+There are two ways to install `spacedeconv`:
 
 - The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand.
 - The _complete_ installation installs all dependencies including all deconvolution methods. This may take a considerable time.
 
-Since not all dependencies are on CRAN or Bioconductor, `SpaceDeconv`is available from GitHub only. We recommend installing trough the pak package manager:
+Since not all dependencies are on CRAN or Bioconductor, `spacedeconv`is available from GitHub only. We recommend installing trough the pak package manager:
 
 ```r
 # install the pak package manager
 install.packages("pak")
 
 # minimal installation
-pak::pkg_install("omnideconv/SpaceDeconv")
+pak::pkg_install("omnideconv/spacedeconv")
 
 # complete installation, including Python dependencies
-pak::pkg_install("omnideconv/SpaceDeconv", dependencies=TRUE)
-# SpaceDeconv::install_all_python()
+pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
+# spacedeconv::install_all_python()
 ```
 
 ## Usage
 
-SpaceDeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `SpaceDeconv::deconvolution_algorithms` or in the [FAQ](articles/SpaceDeconv_faq.html). 
+spacedeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `spacedeconv::deconvolution_algorithms` or in the [FAQ](articles/spacedeconv_faq.html). 
 
 ### Data requirements
 
 - _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_, will be deconvoluted
 - _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_ containing cell type information
 
-The main functions of SpaceDeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of: 
+The main functions of spacedeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of: 
 
 ### 1. Build a Signature Matrix
 Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
-signature <- SpaceDeconv::build_model(
+signature <- spacedeconv::build_model(
   single_cell_object,
   cell_type_col = "celltype_major",
   method = "spotlight",
@@ -51,11 +51,11 @@ signature <- SpaceDeconv::build_model(
 
 ### 2. Deconvolution
 
-To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `SpaceDeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object to simplify the visualization. You can obtain the results in table form by setting `return_object=FALSE`.
+To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `spacedeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object to simplify the visualization. You can obtain the results in table form by setting `return_object=FALSE`.
 
 ```r
 # save the results to an annotated SpatialExperiment
-result <- SpaceDeconv::deconvolute(
+result <- spacedeconv::deconvolute(
   spatial_object,
   signature,
   method = "spotlight"
@@ -64,7 +64,7 @@ result <- SpaceDeconv::deconvolute(
 
 ### 3. Visualization
 
-SpaceDeconv includes multiple visualization functions.
+spacedeconv includes multiple visualization functions.
 
 ```r
 # sample does refer to the first column of ColData(spe)
@@ -85,7 +85,7 @@ Most methods do not require additional software/tokens, but there are a few exce
 
 ## Available methods, Licenses, Citations
 
-Note that, while _SpaceDeconv_ itself is free ([GPL
+Note that, while _spacedeconv_ itself is free ([GPL
 3.0](https://github.com/omnideconv/omnideconv/blob/main/LICENSE)), you may
 need to obtain a license to use the individual methods. See the table
 below for more information. If you use this package in your work, please

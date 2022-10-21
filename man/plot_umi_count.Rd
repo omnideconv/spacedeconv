@@ -61,6 +61,6 @@ Generate Hex Plot of a SpatialExperiment containing UMI counts
 }
 \examples{
 data("spatial_data_3")
-deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
+deconv <- spacedeconv::deconvolute(spatial_data_3, method = "estimate")
 plot_umi_count(deconv)
 }

@@ -2,7 +2,7 @@ data("single_cell_data_2")
 data("spatial_data_2")
 
 test_that("RCTD Model and deconvolution in one step works", {
-  deconv <- SpaceDeconv::build_and_deconvolute(
+  deconv <- spacedeconv::build_and_deconvolute(
     single_cell_obj = single_cell_data_2,
     spatial_obj = spatial_data_2,
     method = "rctd",
@@ -17,7 +17,7 @@ test_that("RCTD Model and deconvolution in one step works", {
 })
 
 test_that("SPOTlight model and deconvolution in one step works", {
-  deconv <- SpaceDeconv::build_and_deconvolute(
+  deconv <- spacedeconv::build_and_deconvolute(
     single_cell_obj = single_cell_data_2,
     spatial_obj = spatial_data_2,
     method = "spotlight",
@@ -32,7 +32,7 @@ test_that("SPOTlight model and deconvolution in one step works", {
 })
 
 # test_that("CARD model and deconvolution in one step works", {
-#   deconv <- SpaceDeconv::build_and_deconvolute(
+#   deconv <- spacedeconv::build_and_deconvolute(
 #     single_cell_obj = single_cell_data_2,
 #     spatial_obj = spatial_data_2,
 #     method = "card",
@@ -49,7 +49,7 @@ test_that("SPOTlight model and deconvolution in one step works", {
 
 # currently the only omnideconv method
 # test_that("DWLS model and deconvolution in one step works", {
-#   deconv <- SpaceDeconv::build_and_deconvolute(
+#   deconv <- spacedeconv::build_and_deconvolute(
 #     single_cell_obj = single_cell_data_2,
 #     spatial_obj = spatial_data_2,
 #     method = "dwls",
@@ -66,7 +66,7 @@ test_that("SPOTlight model and deconvolution in one step works", {
 
 # currently the only immunedeconv method
 test_that("quanTIseq model and deconvolution in one step works", {
-  deconv <- SpaceDeconv::build_and_deconvolute(
+  deconv <- spacedeconv::build_and_deconvolute(
     single_cell_obj = single_cell_data_2,
     spatial_obj = spatial_data_2,
     method = "quantiseq",

@@ -1,24 +1,24 @@
 ---
-title: "SpaceDeconv Visualization"
+title: "spacedeconv Visualization"
 author: "Constantin Zackl"
 date: "2022-09-21"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SpaceDeconv Visualization}
+  %\VignetteIndexEntry{spacedeconv Visualization}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
-To introduce SpaceDeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `RCTD`. Note that RCTD requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
+To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `RCTD`. Note that RCTD requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
 
 ```{r error=FALSE, message=FALSE, warning=FALSE}
-library(SpaceDeconv)
+library(spacedeconv)
 #library(EPIC) # quickfix
 data("spatial_data_1")
 
-spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method="cpm")
+spatial_data_1 <- spacedeconv::normalize(spatial_data_1, method="cpm")
 
-deconv <- SpaceDeconv::deconvolute(
+deconv <- spacedeconv::deconvolute(
   spatial_data_1,
   method = "quantiseq", 
   assay_sp = "cpm"
@@ -27,7 +27,7 @@ deconv <- SpaceDeconv::deconvolute(
 
 # Available Visualizations
 
-At the moment SpaceDeconv offers two visualization functions. 
+At the moment spacedeconv offers two visualization functions. 
 
 1. `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
 2. `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
@@ -37,21 +37,21 @@ At the moment SpaceDeconv offers two visualization functions.
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-SpaceDeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell")
+spacedeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell")
 ```
 
 ## 2. `plot_cells_per_spot()`
 
 To render the distribution of the number of detected cell types per spot a user-selected threshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 5%. 
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05)
+spacedeconv::plot_cells_per_spot(deconv, threshold = 0.05)
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt")
 ```
 ## 4. `plot_most_abundant()`
 This plots displays the most abundant cell-type for each spot. You can specify which cells to plot by either one of the following: 
@@ -60,7 +60,7 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `method` plotting all cell types of the provided method
 * `remove` vector of celltypes to be removed from the plot
 ```{r}
-SpaceDeconv::plot_most_abundant(deconv, 
+spacedeconv::plot_most_abundant(deconv, 
                                 method="quantiseq", 
                                 palette = "Viridis", 
                                 remove = "quantiseq_uncharacterized.cell")
@@ -76,7 +76,7 @@ colorspace::hcl_palettes(type = "sequential", plot = TRUE)
 # Further plot adjustments
 
 ### Image Alignment Offset
-SpaceDeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
+spacedeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
 ```{r offset_rotation, eval = FALSE}
 plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
@@ -86,7 +86,7 @@ plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
 With the `transform_scale` parameter the colorspace scale can be modified. Available options are: "ln", "log10", "log2" and "sqrt". Scaling the color range differently can aid with interpreting the plot. Please have in mind that the plot does not show valid deconvolution results anymore and should be handled with caution. 
 
 ```{r}
-SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt")
 ```
 
 
@@ -98,7 +98,7 @@ With this parameter the expression values can be smoothed to simplify pattern re
 * `smoothing_factor` choose kernel size (factor of spot distance)
 
 ```{r}
-SpaceDeconv::plot_celltype(deconv, 
+spacedeconv::plot_celltype(deconv, 
                            cell_type = "quantiseq_B.cell", 
                            smooth = T, 
                            smoothing_factor = 1.5)
