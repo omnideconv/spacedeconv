@@ -28,16 +28,17 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
 
 ## Usage
 
-spacedeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `spacedeconv::deconvolution_algorithms` or in the [FAQ](articles/spacedeconv_faq.html). 
+spacedeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `spacedeconv::deconvolution_algorithms` or in the [FAQ](articles/spacedeconv_faq.html).
 
 ### Data requirements
 
 - _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_, will be deconvoluted
 - _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_ containing cell type information
 
-The main functions of spacedeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of: 
+The main functions of spacedeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of:
 
 ### 1. Build a Signature Matrix
+
 Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
