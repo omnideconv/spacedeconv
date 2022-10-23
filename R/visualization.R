@@ -1,33 +1,3 @@
-#   if (plot_density) {
-#     # extract distribution from object
-#     data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id = rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
-#     density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
-#       # ggplot2::geom_density() +
-#       ggridges::geom_density_ridges() + # _gradient()
-#       # ggplot2::scale_fill_viridis_c() +
-#       ggplot2::scale_y_discrete() +
-#       ggplot2::geom_vline(
-#         ggplot2::aes(xintercept = mean(unlist(data["values"]))),
-#         color = "red",
-#         linetype = "dashed",
-#         size = 1
-#       ) +
-#       ggplot2::theme_classic() +
-#       # ggplot2::ylim(c(0, 1000)) +
-#       ggplot2::theme(
-#         legend.position = "none",
-#         axis.text.y = ggplot2::element_blank(),
-#         axis.ticks.y = ggplot2::element_blank(),
-#         axis.line.y = ggplot2::element_blank(),
-#         axis.title = ggplot2::element_blank()
-#       )
-#     # ggplot2::ylim(0, max(data["values"]))
-#
-#     # cowplot::plot_grid(spatial, density)
-#     plot <- gridExtra::grid.arrange(spatial, density, ncol = 2)
-
-
-
 #' Plot Cells per Spot
 #'
 #' @param spatial_obj SpatialExperiment containing deconvolution results
@@ -45,6 +15,7 @@
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size size of legend in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -59,7 +30,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = TRUE, offset_rotation = FALSE,
                                 spot_size = 1.17, limits = NULL, title_size = 30,
-                                font_size = 20, legend_size = 40) {
+                                font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -101,7 +72,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits, title_size = title_size,
-    font_size = font_size, legend_size = legend_size
+    font_size = font_size, legend_size = legend_size, density = density
   )
 
   return(result)
@@ -147,6 +118,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
@@ -160,7 +132,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           show_image = TRUE, discrete = FALSE,
                           offset_rotation = FALSE, spot_size = 1.17, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -184,7 +156,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density
   ))
 
   # TODO
@@ -213,6 +186,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
@@ -229,7 +203,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            spot_size = 1.17, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
                            title_size = 30, font_size = 20,
-                           legend_size = 40) {
+                           legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -246,7 +220,8 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density
   ))
 }
 
@@ -271,6 +246,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
@@ -280,7 +256,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                show_image = TRUE, # discrete = FALSE,
                                offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
-                               title_size = 30, font_size = 20, legend_size = 40){
+                               title_size = 30, font_size = 20, legend_size = 40,
+                               density = TRUE){
 
   # checks
   if (is.null(spe)) {
@@ -327,7 +304,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                        reverse_palette = reverse_palette, show_image = show_image,
                        offset_rotation = offset_rotation, spot_size = spot_size,
                        title_size = title_size, discrete = TRUE,
-                       font_size = font_size, legend_size = legend_size))
+                       font_size = font_size, legend_size = legend_size, density = density))
 
 }
 
@@ -359,12 +336,13 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = TRUE,
                           discrete = FALSE, offset_rotation = FALSE, spot_size = 1.17,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -471,8 +449,40 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
   }
 
+  # create density plot if requested
+  if (density){
+    data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
+    density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
+      # ggplot2::geom_density() +
+      ggridges::geom_density_ridges() + # _gradient()
+      # ggplot2::scale_fill_viridis_c() +
+      ggplot2::scale_y_discrete() +
+      ggplot2::geom_vline(
+        ggplot2::aes(xintercept = mean(unlist(data["values"]))),
+        color = "red",
+        linetype = "dashed",
+        size = 1
+      ) +
+      ggplot2::theme_classic() +
+      # ggplot2::ylim(c(0, 1000)) +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.text.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.line.y = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank()
+      )
+    # ggplot2::ylim(0, max(data["values"]))
 
-  p # did not work with return ()
+    # cowplot::plot_grid(spatial, density)
+    plot <- gridExtra::arrangeGrob(p, density, ncol = 2) # add functions to pkg.R
+    # plot <- grid::grid.draw(plot) # add functions to pkg.R
+  } else {
+    plot <- p
+  }
+
+
+  plot # did not work with return ()
 }
 
 #' Build Hex Polygon Geometry
