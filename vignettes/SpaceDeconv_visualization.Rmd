@@ -13,14 +13,14 @@ To introduce SpaceDeconvs visualization functions we will utilize a deconvolutio
 
 ```{r error=FALSE, message=FALSE, warning=FALSE}
 library(SpaceDeconv)
-#library(EPIC) # quickfix
+# library(EPIC) # quickfix
 data("spatial_data_1")
 
-spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method="cpm")
+spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method = "cpm")
 
 deconv <- SpaceDeconv::deconvolute(
   spatial_data_1,
-  method = "quantiseq", 
+  method = "quantiseq",
   assay_sp = "cpm"
 )
 ```
@@ -60,10 +60,11 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `method` plotting all cell types of the provided method
 * `remove` vector of celltypes to be removed from the plot
 ```{r}
-SpaceDeconv::plot_most_abundant(deconv, 
-                                method="quantiseq", 
-                                palette = "Viridis", 
-                                remove = "quantiseq_uncharacterized.cell")
+SpaceDeconv::plot_most_abundant(deconv,
+  method = "quantiseq",
+  palette = "Viridis",
+  remove = "quantiseq_uncharacterized.cell"
+)
 ```
 
 
@@ -98,10 +99,11 @@ With this parameter the expression values can be smoothed to simplify pattern re
 * `smoothing_factor` choose kernel size (factor of spot distance)
 
 ```{r}
-SpaceDeconv::plot_celltype(deconv, 
-                           cell_type = "quantiseq_B.cell", 
-                           smooth = T, 
-                           smoothing_factor = 1.5)
+SpaceDeconv::plot_celltype(deconv,
+  cell_type = "quantiseq_B.cell",
+  smooth = T,
+  smoothing_factor = 1.5
+)
 ```
 
 # Additional Parameters 
