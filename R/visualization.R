@@ -251,44 +251,42 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL,  palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = TRUE, # discrete = FALSE,
                                offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 20, legend_size = 40,
-                               density = TRUE){
-
+                               density = TRUE) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if (is.null(method)){
+  if (is.null(method)) {
     stop("Parameter 'method' is null or missing, but is required")
   }
 
-  if (!is.null(method)){
+  if (!is.null(method)) {
     available <- available_results(spe)[startsWith(available_results(spe), method)]
-
   } else {
     available <- available_results(spe)
   }
 
-  if(!is.null(cell_type)){
+  if (!is.null(cell_type)) {
     available <- cell_type
   }
 
-  if (!is.null(remove)){
+  if (!is.null(remove)) {
     available <- available[!available %in% remove]
   }
 
   # create df
-  df <- as.data.frame(colData(spe))[ , available, drop = FALSE]
-  df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop=FALSE]
+  df <- as.data.frame(colData(spe))[, available, drop = FALSE]
+  df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop = FALSE]
 
   # remove all columns not numeric
-  df <- df[, unlist(lapply(df, is.numeric)), drop=FALSE]
+  df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
   res <- colnames(df)[max.col(df)]
 
@@ -299,13 +297,14 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df2$pxl_row_in_fullres <- as.numeric(df2$pxl_row_in_fullres)
 
 
-  return(make_baseplot(spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
-                       sample_id = sample_id, image_id = image_id,
-                       reverse_palette = reverse_palette, show_image = show_image,
-                       offset_rotation = offset_rotation, spot_size = spot_size,
-                       title_size = title_size, discrete = TRUE,
-                       font_size = font_size, legend_size = legend_size, density = density))
-
+  return(make_baseplot(
+    spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
+    sample_id = sample_id, image_id = image_id,
+    reverse_palette = reverse_palette, show_image = show_image,
+    offset_rotation = offset_rotation, spot_size = spot_size,
+    title_size = title_size, discrete = TRUE,
+    font_size = font_size, legend_size = legend_size, density = density
+  ))
 }
 
 ###############
@@ -431,7 +430,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       panel.background = element_blank(),
       plot.title = element_text(size = title_size, hjust = 0.5),
       legend.text = element_text(size = font_size),
-      legend.key.size = unit (legend_size, "points")
+      legend.key.size = unit(legend_size, "points")
     ) +
     ggplot2::labs(title = legend_title, fill = element_blank())
 
@@ -450,7 +449,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # create density plot if requested
-  if (density){
+  if (density) {
     data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
     density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
       # ggplot2::geom_density() +
@@ -475,7 +474,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # ggplot2::ylim(0, max(data["values"]))
 
     # cowplot::plot_grid(spatial, density)
-    plot <- gridExtra::arrangeGrob(p, density, ncol = 2) # add functions to pkg.R
+    plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
     # plot <- grid::grid.draw(plot) # add functions to pkg.R
   } else {
     plot <- p
