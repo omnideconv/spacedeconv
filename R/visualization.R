@@ -394,8 +394,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             legend_size = 40, palette_type = "diverging", density = TRUE) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  comparison <- (df[, cell_type_1]+1) / (df[, cell_type_2] + 1)
-  comparison <- comparison -1
+  comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
+  comparison <- comparison - 1
   comparison[is.infinite(comparison)] <- NA # ?
 
   df <- cbind(df, comparison = comparison)
@@ -548,7 +548,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
   } else if (palette_type == "sequential") {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
-  } else if (palette_type == "diverging"){
+  } else if (palette_type == "diverging") {
     p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
   }
 
