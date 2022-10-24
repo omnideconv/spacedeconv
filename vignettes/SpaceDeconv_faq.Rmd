@@ -30,6 +30,11 @@ The SpatialExperiment wrapper includes function to rotate/mirror the image. More
 ### The hexagons in my plots are rotated and don't give an even appearance
 Your Visium slide might be aligned incorrectly. Try rotating the image or use `offset_rotation=TRUE` as a parameter in the plotting function.
 
+### Which deconvolution tools are available?
+This list includes the methods name and the internally used tokens. More detailed descriptions of each method can be found at the end of this vignette. 
+```{r availableMethods}
+SpaceDeconv::deconvolution_methods
+```
 
 
 

@@ -64,7 +64,7 @@ result <- SpaceDeconv::deconvolute(
 
 ### 3. Visualization
 
-SpaceDeconv includes multiple visualization functions.
+SpaceDeconv includes multiple visualization functions. A full explanation of all visualization options can be found in this [vignette](articles/SpaceDeconv_visualization.html).
 
 ```r
 # sample does refer to the first column of ColData(spe)
