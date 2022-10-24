@@ -30,7 +30,8 @@ Imports:
     Matrix, 
     colorspace, 
     sf, 
-    ggpubr
+    ggpubr, 
+    ggridges
 Suggests: 
     spacexr,
     SPOTlight,

@@ -358,6 +358,59 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
   ))
 }
 
+#' Plot celltype fraction comparison
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type_1 celltype to plot
+#' @param cell_type_2 celltype to plot
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
+#' @param discrete logical, whether to scale the color discrete, default = FALSE
+#'
+#' @returns plot of a celltypes presence/absence using a threshold
+#'
+#' @export
+plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
+                            palette = "Mako", transform_scale = NULL,
+                            sample_id = "sample01", image_id = "lowres",
+                            reverse_palette = FALSE,
+                            show_image = TRUE, offset_rotation = FALSE,
+                            spot_size = 1.17, limits = NULL,
+                            smooth = FALSE, smoothing_factor = 1.5,
+                            title_size = 30, font_size = 20,
+                            legend_size = 40, discrete = FALSE, density = TRUE) {
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  comparison <- df[, cell_type_1] / df[, cell_type_2]
+  comparison[is.infinite(comparison)] <- NA
+
+  df <- cbind(df, comparison= comparison)
+
+  return(make_baseplot(
+    spe = spe, df = df, to_plot = "comparison", palette = palette,
+    transform_scale = transform_scale, sample_id = sample_id,
+    image_id = image_id, reverse_palette = reverse_palette,
+    show_image = show_image, offset_rotation = offset_rotation,
+    spot_size = spot_size, limits = limits, smooth = smooth,
+    smoothing_factor = smoothing_factor, title_size = title_size,
+    font_size = font_size, legend_size = legend_size,
+    density = density, discrete = discrete
+  ))
+}
+
 
 ###############
 #### utils ####
