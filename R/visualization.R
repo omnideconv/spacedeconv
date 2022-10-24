@@ -338,8 +338,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
                                    spot_size = 1.17, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, font_size = 20,
-                                   legend_size = 40){
-
+                                   legend_size = 40) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # calculate presence TRUE/FALSE
@@ -347,15 +346,16 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
 
   df <- cbind(df, presence = presence)
 
-  return (make_baseplot(spe = spe, df = df, to_plot = "presence", palette = palette,
-                        transform_scale = transform_scale, sample_id = sample_id,
-                        image_id = image_id, reverse_palette = reverse_palette,
-                        show_image = show_image, offset_rotation = offset_rotation,
-                        spot_size = spot_size, limits = limits, smooth = smooth,
-                        smoothing_factor = smoothing_factor, title_size = title_size,
-                        font_size = font_size, legend_size = legend_size,
-                        density = FALSE, discrete = TRUE))
-
+  return(make_baseplot(
+    spe = spe, df = df, to_plot = "presence", palette = palette,
+    transform_scale = transform_scale, sample_id = sample_id,
+    image_id = image_id, reverse_palette = reverse_palette,
+    show_image = show_image, offset_rotation = offset_rotation,
+    spot_size = spot_size, limits = limits, smooth = smooth,
+    smoothing_factor = smoothing_factor, title_size = title_size,
+    font_size = font_size, legend_size = legend_size,
+    density = FALSE, discrete = TRUE
+  ))
 }
 
 
