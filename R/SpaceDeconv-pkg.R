@@ -12,6 +12,7 @@
 #' @importFrom ggridges geom_density_ridges_gradient
 #' @importFrom magrittr %>%
 #' @importFrom testit assert
+#' @importFrom ggpubr ggarrange
 #' @importFrom utils read.table
 #' @importFrom grDevices colorRampPalette
 #' @importFrom RColorBrewer brewer.pal

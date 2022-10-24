@@ -475,7 +475,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # ggplot2::ylim(0, max(data["values"]))
 
     # cowplot::plot_grid(spatial, density)
-    plot <- gridExtra::arrangeGrob(p, density, ncol = 2) # add functions to pkg.R
+    plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
     # plot <- grid::grid.draw(plot) # add functions to pkg.R
   } else {
     plot <- p

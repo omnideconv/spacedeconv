@@ -22,7 +22,8 @@ make_baseplot(
   smoothing_factor = 1.5,
   title_size = 30,
   font_size = 20,
-  legend_size = 40
+  legend_size = 40,
+  density = TRUE
 )
 }
 \arguments{
@@ -61,6 +62,8 @@ make_baseplot(
 \item{font_size}{font size of legend}
 
 \item{legend_size}{legend size in points}
+
+\item{density}{whether to display a density distribution next to the spatial plot}
 }
 \description{
 Render spatial hex plot

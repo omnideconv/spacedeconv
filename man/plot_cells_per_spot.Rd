@@ -19,7 +19,8 @@ plot_cells_per_spot(
   limits = NULL,
   title_size = 30,
   font_size = 20,
-  legend_size = 40
+  legend_size = 40,
+  density = TRUE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ plot_cells_per_spot(
 \item{font_size}{font size of legend}
 
 \item{legend_size}{size of legend in points}
+
+\item{density}{whether to display a density distribution next to the spatial plot}
 }
 \value{
 A hex plot containing unique cell counts per spot

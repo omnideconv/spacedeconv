@@ -29,7 +29,8 @@ Imports:
     S4Vectors, 
     Matrix, 
     colorspace, 
-    sf
+    sf, 
+    ggpubr
 Suggests: 
     spacexr,
     SPOTlight,

@@ -18,7 +18,8 @@ plot_most_abundant(
   spot_size = 1.17,
   title_size = 30,
   font_size = 20,
-  legend_size = 40
+  legend_size = 40,
+  density = TRUE
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ plot_most_abundant(
 \item{font_size}{font size of legend}
 
 \item{legend_size}{legend size in points}
+
+\item{density}{whether to display a density distribution next to the spatial plot}
 }
 \value{
 plot of cell type fractions
