@@ -398,7 +398,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
   comparison <- comparison -1
   comparison[is.infinite(comparison)] <- NA # ?
 
-  df <- cbind(df, comparison= comparison)
+  df <- cbind(df, comparison = comparison)
 
   return(make_baseplot(
     spe = spe, df = df, to_plot = "comparison", palette = palette,
