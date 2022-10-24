@@ -307,6 +307,58 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   ))
 }
 
+#' Plot celltype presence absence
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type celltype to plot
+#' @param threshold fraction threshold, everything above is counted as "detected"
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#'
+#' @returns plot of a celltypes presence/absence using a threshold
+#'
+#' @export
+plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
+                                   palette = "Mako", transform_scale = NULL,
+                                   sample_id = "sample01", image_id = "lowres",
+                                   reverse_palette = FALSE,
+                                   show_image = TRUE, offset_rotation = FALSE,
+                                   spot_size = 1.17, limits = NULL,
+                                   smooth = FALSE, smoothing_factor = 1.5,
+                                   title_size = 30, font_size = 20,
+                                   legend_size = 40){
+
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  # calculate presence TRUE/FALSE
+  presence <- df[, cell_type] > threshold
+
+  df <- cbind(df, presence = presence)
+
+  return (make_baseplot(spe = spe, df = df, to_plot = "presence", palette = palette,
+                        transform_scale = transform_scale, sample_id = sample_id,
+                        image_id = image_id, reverse_palette = reverse_palette,
+                        show_image = show_image, offset_rotation = offset_rotation,
+                        spot_size = spot_size, limits = limits, smooth = smooth,
+                        smoothing_factor = smoothing_factor, title_size = title_size,
+                        font_size = font_size, legend_size = legend_size,
+                        density = FALSE, discrete = TRUE))
+
+}
+
+
 ###############
 #### utils ####
 ###############
