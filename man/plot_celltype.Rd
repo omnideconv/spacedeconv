@@ -13,7 +13,7 @@ plot_celltype(
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = TRUE,
-  discrete = FALSE,
+  palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1.17,
   limits = NULL,
@@ -42,7 +42,7 @@ plot_celltype(
 
 \item{show_image}{logical, whether to display the image, default = TRUE}
 
-\item{discrete}{logical, whether to scale the color discrete, default = FALSE}
+\item{palette_type}{discrete, sequential or diverging}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
