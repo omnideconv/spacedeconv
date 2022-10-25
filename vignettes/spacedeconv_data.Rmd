@@ -41,7 +41,7 @@ To build cell-type specific signatures for second-generation deconvolution space
 * [AnnData](https://anndata.dynverse.org/)
 * [Seurat](https://satijalab.org/seurat/)
 
-Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`. spacedeconvs single-cell sample data is as a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure).
+Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`.
 
 ```{r annotationParameters, eval=FALSE}
 signature <- build_model(single_cell_data_1,
@@ -72,7 +72,7 @@ spe <- seurat_to_spatialexperiment(seurat_object)
 ```
 
 # Normalization
-spacedeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
+SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`. As normalization method `cpm` and `logcpm` are available. 
 
 ```{r deconvolution, eval = FALSE}
 spe <- normalize(spe, method = "cpm")
