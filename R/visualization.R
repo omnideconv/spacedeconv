@@ -1,33 +1,3 @@
-#   if (plot_density) {
-#     # extract distribution from object
-#     data <- data.frame(values = SingleCellExperiment::colData(spatial_obj)[[cell_type]], id = rep(cell_type, nrow(SingleCellExperiment::colData(spatial_obj))))
-#     density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
-#       # ggplot2::geom_density() +
-#       ggridges::geom_density_ridges() + # _gradient()
-#       # ggplot2::scale_fill_viridis_c() +
-#       ggplot2::scale_y_discrete() +
-#       ggplot2::geom_vline(
-#         ggplot2::aes(xintercept = mean(unlist(data["values"]))),
-#         color = "red",
-#         linetype = "dashed",
-#         size = 1
-#       ) +
-#       ggplot2::theme_classic() +
-#       # ggplot2::ylim(c(0, 1000)) +
-#       ggplot2::theme(
-#         legend.position = "none",
-#         axis.text.y = ggplot2::element_blank(),
-#         axis.ticks.y = ggplot2::element_blank(),
-#         axis.line.y = ggplot2::element_blank(),
-#         axis.title = ggplot2::element_blank()
-#       )
-#     # ggplot2::ylim(0, max(data["values"]))
-#
-#     # cowplot::plot_grid(spatial, density)
-#     plot <- gridExtra::grid.arrange(spatial, density, ncol = 2)
-
-
-
 #' Plot Cells per Spot
 #'
 #' @param spatial_obj SpatialExperiment containing deconvolution results
@@ -45,6 +15,7 @@
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size size of legend in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -57,9 +28,9 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0.01, palette = "Mako", transform_scale = NULL,
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
-                                show_image = TRUE, offset_rotation = FALSE,
+                                show_image = FALSE, offset_rotation = FALSE,
                                 spot_size = 1.17, limits = NULL, title_size = 30,
-                                font_size = 20, legend_size = 40) {
+                                font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -97,11 +68,11 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
   result <- make_baseplot(
     spe = spatial_obj, df = df, to_plot = "nCells",
     sample_id = sample_id, image_id = image_id,
-    show_image = show_image, discrete = TRUE,
+    show_image = show_image, palette_type = "discrete",
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits, title_size = title_size,
-    font_size = font_size, legend_size = legend_size
+    font_size = font_size, legend_size = legend_size, density = density
   )
 
   return(result)
@@ -138,7 +109,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
-#' @param discrete logical, whether to scale the color discrete, default = FALSE
+#' @param palette_type discrete, sequential or diverging
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
@@ -147,6 +118,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
@@ -157,10 +129,10 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                          show_image = TRUE, discrete = FALSE,
+                          show_image = FALSE, palette_type = "sequential",
                           offset_rotation = FALSE, spot_size = 1.17, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -180,11 +152,12 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     palette = palette,
     to_plot = cell_type, sample_id = sample_id,
     image_id = image_id, show_image = show_image,
-    discrete = discrete, offset_rotation = offset_rotation,
+    palette_type = palette_type, offset_rotation = offset_rotation,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density
   ))
 
   # TODO
@@ -213,6 +186,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
@@ -225,11 +199,11 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
-                           show_image = TRUE, offset_rotation = FALSE,
+                           show_image = FALSE, offset_rotation = FALSE,
                            spot_size = 1.17, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
                            title_size = 30, font_size = 20,
-                           legend_size = 40) {
+                           legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -246,7 +220,8 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density
   ))
 }
 
@@ -262,7 +237,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
-# #' @param discrete logical, whether to scale the color discrete, default = FALSE
+# #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 # #' @param limits vector of color scale limits
@@ -271,16 +246,18 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = TRUE, # discrete = FALSE,
+                               show_image = FALSE, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
-                               title_size = 30, font_size = 20, legend_size = 40) {
+                               title_size = 30, font_size = 20, legend_size = 40,
+                               density = TRUE) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -325,10 +302,116 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     sample_id = sample_id, image_id = image_id,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
-    title_size = title_size, discrete = TRUE,
-    font_size = font_size, legend_size = legend_size
+    title_size = title_size, palette_type = "discrete",
+    font_size = font_size, legend_size = legend_size, density = density
   ))
 }
+
+#' Plot celltype presence absence
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type celltype to plot
+#' @param threshold fraction threshold, everything above is counted as "detected"
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#'
+#' @returns plot of a celltypes presence/absence using a threshold
+#'
+#' @export
+plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
+                                   palette = "Mako", transform_scale = NULL,
+                                   sample_id = "sample01", image_id = "lowres",
+                                   reverse_palette = FALSE,
+                                   show_image = FALSE, offset_rotation = FALSE,
+                                   spot_size = 1.17, limits = NULL,
+                                   smooth = FALSE, smoothing_factor = 1.5,
+                                   title_size = 30, font_size = 20,
+                                   legend_size = 40) {
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  # calculate presence TRUE/FALSE
+  presence <- df[, cell_type] > threshold
+
+  df <- cbind(df, presence = presence)
+
+  return(make_baseplot(
+    spe = spe, df = df, to_plot = "presence", palette = palette,
+    transform_scale = transform_scale, sample_id = sample_id,
+    image_id = image_id, reverse_palette = reverse_palette,
+    show_image = show_image, offset_rotation = offset_rotation,
+    spot_size = spot_size, limits = limits, smooth = smooth,
+    smoothing_factor = smoothing_factor, title_size = title_size,
+    font_size = font_size, legend_size = legend_size,
+    density = FALSE, palette_type = "discrete"
+  ))
+}
+
+#' Plot celltype fraction comparison
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param cell_type_1 celltype to plot
+#' @param cell_type_2 celltype to plot
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
+#' @param palette_type "discrete", "sequenatial", "diverging"
+#'
+#' @returns plot of a celltypes presence/absence using a threshold
+#'
+#' @export
+plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
+                            palette = "Mako", transform_scale = NULL,
+                            sample_id = "sample01", image_id = "lowres",
+                            reverse_palette = FALSE,
+                            show_image = FALSE, offset_rotation = FALSE,
+                            spot_size = 1.17, limits = NULL,
+                            smooth = FALSE, smoothing_factor = 1.5,
+                            title_size = 30, font_size = 20,
+                            legend_size = 40, palette_type = "diverging", density = TRUE) {
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
+  comparison <- comparison - 1
+  comparison[is.infinite(comparison)] <- NA # ?
+
+  df <- cbind(df, comparison = comparison)
+
+  return(make_baseplot(
+    spe = spe, df = df, to_plot = "comparison", palette = palette,
+    transform_scale = transform_scale, sample_id = sample_id,
+    image_id = image_id, reverse_palette = reverse_palette,
+    show_image = show_image, offset_rotation = offset_rotation,
+    spot_size = spot_size, limits = limits, smooth = smooth,
+    smoothing_factor = smoothing_factor, title_size = title_size,
+    font_size = font_size, legend_size = legend_size,
+    density = density, palette_type = palette_type
+  ))
+}
+
 
 ###############
 #### utils ####
@@ -349,7 +432,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param sample_id sample of the SpatialExperiment to be plotted
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
-#' @param discrete should the color scale be discrete? Defaut = FALSE
+#' @param palette_type "discrete", "sequential", "diverging"
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
@@ -358,12 +441,13 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
-                          image_id = "lowres", show_image = TRUE,
-                          discrete = FALSE, offset_rotation = FALSE, spot_size = 1.17,
+                          image_id = "lowres", show_image = FALSE,
+                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1.17,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -374,10 +458,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   if (is.null(to_plot)) {
     stop("Parameter 'to_plot' is null or missing, but is required")
-  }
-
-  if (!palette %in% rownames(colorspace::hcl_palettes(type = "sequential"))) {
-    stop("Please provide a sequential colorspace palette")
   }
 
   # scale coordinates with scalefactor
@@ -459,19 +539,53 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
 
   # add color scale
-  if (discrete) {
+  if (palette_type == "discrete") {
     # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
     # manual fix !!!
     pal <- function(n) {
       colorspace::sequential_hcl(n, palette, rev = reverse_palette)
     }
     p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
-  } else {
+  } else if (palette_type == "sequential") {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+  } else if (palette_type == "diverging") {
+    p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+  }
+
+  # create density plot if requested
+  if (density) {
+    data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
+    density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
+      # ggplot2::geom_density() +
+      ggridges::geom_density_ridges() + # _gradient()
+      # ggplot2::scale_fill_viridis_c() +
+      ggplot2::scale_y_discrete() +
+      ggplot2::geom_vline(
+        ggplot2::aes(xintercept = mean(unlist(data["values"]))),
+        color = "red",
+        linetype = "dashed",
+        size = 1
+      ) +
+      ggplot2::theme_classic() +
+      # ggplot2::ylim(c(0, 1000)) +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.text.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.line.y = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank()
+      )
+    # ggplot2::ylim(0, max(data["values"]))
+
+    # cowplot::plot_grid(spatial, density)
+    plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
+    # plot <- grid::grid.draw(plot) # add functions to pkg.R
+  } else {
+    plot <- p
   }
 
 
-  p # did not work with return ()
+  plot # did not work with return ()
 }
 
 #' Build Hex Polygon Geometry
