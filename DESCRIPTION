@@ -29,7 +29,9 @@ Imports:
     S4Vectors, 
     Matrix, 
     colorspace, 
-    sf
+    sf, 
+    ggpubr, 
+    ggridges
 Suggests: 
     spacexr,
     SPOTlight,

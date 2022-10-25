@@ -14,7 +14,7 @@ make_baseplot(
   reverse_palette = FALSE,
   image_id = "lowres",
   show_image = TRUE,
-  discrete = FALSE,
+  palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1.17,
   limits = NULL,
@@ -22,7 +22,8 @@ make_baseplot(
   smoothing_factor = 1.5,
   title_size = 30,
   font_size = 20,
-  legend_size = 40
+  legend_size = 40,
+  density = TRUE
 )
 }
 \arguments{
@@ -44,7 +45,7 @@ make_baseplot(
 
 \item{show_image}{whether to show the spatial image}
 
-\item{discrete}{should the color scale be discrete? Defaut = FALSE}
+\item{palette_type}{"discrete", "sequential", "diverging"}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
@@ -61,6 +62,8 @@ make_baseplot(
 \item{font_size}{font size of legend}
 
 \item{legend_size}{legend size in points}
+
+\item{density}{whether to display a density distribution next to the spatial plot}
 }
 \description{
 Render spatial hex plot
