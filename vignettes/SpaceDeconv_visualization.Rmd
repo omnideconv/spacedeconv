@@ -65,10 +65,10 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 ```{r plotMostAbundant}
 SpaceDeconv::plot_most_abundant(deconv,
   method = "epic",
-  density = F, 
-  title_size = 25, 
-  legend_size = 15, 
-  font_size = 10, 
+  density = F,
+  title_size = 25,
+  legend_size = 15,
+  font_size = 10,
   remove = c("epic_uncharacterized.cell")
 )
 ```
@@ -133,7 +133,7 @@ With this parameter the expression values can be smoothed to simplify pattern re
 SpaceDeconv::plot_celltype(deconv,
   cell_type = "epic_B.cell",
   smooth = T,
-  smoothing_factor = 1.5, 
+  smoothing_factor = 1.5,
   density = FALSE
 )
 ```
@@ -142,13 +142,14 @@ SpaceDeconv::plot_celltype(deconv,
 You can add a density distribution by setting `density = TRUE`.
 
 ```{r}
-SpaceDeconv::plot_celltype(deconv, 
-                           cell_type = "epic_B.cell", 
-                           smooth = TRUE, 
-                           density = TRUE, 
-                           title_size = 20, 
-                           legend_size = 15, 
-                           font_size = 10)
+SpaceDeconv::plot_celltype(deconv,
+  cell_type = "epic_B.cell",
+  smooth = TRUE,
+  density = TRUE,
+  title_size = 20,
+  legend_size = 15,
+  font_size = 10
+)
 ```
 
 
