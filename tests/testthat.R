@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(SpaceDeconv)
+library(spacedeconv)
 
-test_check("SpaceDeconv")
+test_check("spacedeconv")

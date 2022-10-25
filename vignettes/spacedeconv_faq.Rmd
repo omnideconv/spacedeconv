@@ -1,11 +1,11 @@
 ---
-title: "SpaceDeconv FAQ"
+title: "spacedeconv FAQ"
 author: "Constantin Zackl"
 date: "2022-09-21"
 output: rmarkdown::html_vignette
 bibliography: references.bib
 vignette: >
-  %\VignetteIndexEntry{SpaceDeconv FAQ}
+  %\VignetteIndexEntry{spacedeconv FAQ}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,7 +18,7 @@ It is possible to perform second-generation deconvolution algorithms when annota
 ### How can i see which deconvolution results are available in my object?
 You can use `available_results(object)` or access `names(colData(object))` to see which deconvolution results are available. 
 
-### The SpaceDeconv plots contain a lot of white spots
+### The spacedeconv plots contain a lot of white spots
 When reading raw spatial data the SpatialExperiment contains expression information for all spots, even if they are not located over tissue. Remove those spots with the following code 
 ```{r, eval=FALSE}
 spe <- spe[, colData(spe)$in_tissue == TRUE]

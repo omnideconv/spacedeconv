@@ -6,7 +6,7 @@ test_that("SPOTlight deconvolution works", {
   # rest is already tested elsewhere
 
   # test that missing model is catched
-  expect_error(object = SpaceDeconv::deconvolute(
+  expect_error(object = spacedeconv::deconvolute(
     single_cell_obj = single_cell_data_2,
     signature = NULL,
     cell_type_col = "celltype_major",
@@ -15,7 +15,7 @@ test_that("SPOTlight deconvolution works", {
   ), regexp = "Model is missing or null")
 
   # test that missing spatial_obj is catched
-  expect_error(object = SpaceDeconv::deconvolute(
+  expect_error(object = spacedeconv::deconvolute(
     single_cell_obj = single_cell_data_2,
     signature = NULL,
     cell_type_col = "celltype_major",
@@ -25,7 +25,7 @@ test_that("SPOTlight deconvolution works", {
 })
 
 # test_that("CARD deconvolution works", {
-#   deconv <- SpaceDeconv::deconvolute(spatial_obj = spatial_data_2,
+#   deconv <- spacedeconv::deconvolute(spatial_obj = spatial_data_2,
 #                                      single_cell_obj = single_cell_data_2,
 #                                      signature = NULL,
 #                                      method="card",
@@ -40,7 +40,7 @@ test_that("Mouse deconvolution works", {
   # mimic mouse data
   rownames(spatial_data_mouse) <- tools::toTitleCase(tolower(rownames(spatial_data_mouse)))
 
-  deconv <- SpaceDeconv::deconvolute(spatial_data_mouse, method = "mmcp_counter")
+  deconv <- spacedeconv::deconvolute(spatial_data_mouse, method = "mmcp_counter")
 
   expect_true(object = any(grepl(colnames(colData(deconv)), pattern = "mmcp_counter_")))
 })

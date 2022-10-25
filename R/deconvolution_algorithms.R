@@ -81,9 +81,9 @@ deconvolution_methods <- c(
 #' # more examples can be found in the documentation website
 #' data("single_cell_data_2")
 #'
-#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
+#' single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
 #'
-#' signature <- SpaceDeconv::build_model(
+#' signature <- spacedeconv::build_model(
 #'   single_cell_data_2,
 #'   method = "dwls",
 #'   cell_type_col = "celltype_major",
@@ -232,9 +232,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 }
 
 
-#' Deconvolution with SpaceDeconv
+#' Deconvolution with spacedeconv
 #'
-#' Perform cell type deconvolution with SpaceDeconv.
+#' Perform cell type deconvolution with spacedeconv.
 #'
 #' @param spatial_obj A SpatialExperiment
 #' @param signature Gene Expression Signature
@@ -255,10 +255,10 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' data("single_cell_data_2")
 #' data("spatial_data_2")
 #'
-#' single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
-#' spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method = "cpm")
+#' single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
+#' spatial_data_2 <- spacedeconv::normalize(spatial_data_2, method = "cpm")
 #'
-#' signature <- SpaceDeconv::build_model(
+#' signature <- spacedeconv::build_model(
 #'   single_cell_data_2,
 #'   method = "dwls",
 #'   cell_type_col = "celltype_major",
@@ -267,7 +267,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'   ncores = 12
 #' )
 #'
-#' deconvolution <- SpaceDeconv::deconvolute(
+#' deconvolution <- spacedeconv::deconvolute(
 #'   spatial_obj = spatial_data_2,
 #'   signature = signature,
 #'   method = "dwls",

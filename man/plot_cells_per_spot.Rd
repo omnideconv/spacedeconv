@@ -61,6 +61,6 @@ Plot Cells per Spot
 }
 \examples{
 data("spatial_data_1")
-deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
-SpaceDeconv::plot_cells_per_spot(deconv)
+deconv <- spacedeconv::deconvolute(spatial_data_1, method = "estimate")
+spacedeconv::plot_cells_per_spot(deconv)
 }
