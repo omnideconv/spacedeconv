@@ -2,7 +2,7 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{deconvolute}
 \alias{deconvolute}
-\title{Deconvolution with SpaceDeconv}
+\title{Deconvolution with spacedeconv}
 \usage{
 deconvolute(
   spatial_obj,
@@ -45,17 +45,17 @@ deconvolute(
 The deconvolution result as a table
 }
 \description{
-Perform cell type deconvolution with SpaceDeconv.
+Perform cell type deconvolution with spacedeconv.
 }
 \examples{
 # more examples can be found in the documentation website
 data("single_cell_data_2")
 data("spatial_data_2")
 
-single_cell_data_2 <- SpaceDeconv::normalize(single_cell_data_2, method = "cpm")
-spatial_data_2 <- SpaceDeconv::normalize(spatial_data_2, method = "cpm")
+single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
+spatial_data_2 <- spacedeconv::normalize(spatial_data_2, method = "cpm")
 
-signature <- SpaceDeconv::build_model(
+signature <- spacedeconv::build_model(
   single_cell_data_2,
   method = "dwls",
   cell_type_col = "celltype_major",
@@ -64,7 +64,7 @@ signature <- SpaceDeconv::build_model(
   ncores = 12
 )
 
-deconvolution <- SpaceDeconv::deconvolute(
+deconvolution <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_2,
   signature = signature,
   method = "dwls",

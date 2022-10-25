@@ -22,8 +22,8 @@
 #'
 #' @examples
 #' data("spatial_data_1")
-#' deconv <- SpaceDeconv::deconvolute(spatial_data_1, method = "estimate")
-#' SpaceDeconv::plot_cells_per_spot(deconv)
+#' deconv <- spacedeconv::deconvolute(spatial_data_1, method = "estimate")
+#' spacedeconv::plot_cells_per_spot(deconv)
 plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 threshold = 0.01, palette = "Mako", transform_scale = NULL,
                                 reverse_palette = FALSE,
@@ -125,8 +125,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @export
 #' @examples
 #' data("spatial_data_2")
-#' deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
-#' SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
+#' deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
+#' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, palette_type = "sequential",
@@ -194,7 +194,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #'
 #' @examples
 #' data("spatial_data_3")
-#' deconv <- SpaceDeconv::deconvolute(spatial_data_3, method = "estimate")
+#' deconv <- spacedeconv::deconvolute(spatial_data_3, method = "estimate")
 #' plot_umi_count(deconv)
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",

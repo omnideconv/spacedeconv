@@ -139,7 +139,7 @@ deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes =
   return(deconv)
 }
 
-#' Convert Immunedeconv Matrix to match SpaceDeconv Format
+#' Convert Immunedeconv Matrix to match spacedeconv Format
 #' @param deconvResult immunedeconv result matrix
 #' @returns transformed matrix where cell types are columns
 convertImmunedeconvMatrix <- function(deconvResult) {

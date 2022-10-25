@@ -2,34 +2,34 @@ data("single_cell_data_2")
 data("spatial_data_2")
 
 test_that("Immunedeconv models works", {
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "mcp_counter"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "epic"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "quantiseq"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "xcell"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "cibersort"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "cibersort_abs"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "timer"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "consensus_tme"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "abis"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "estimate"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "mmcp_counter"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "seqimmucc"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "dcq"), info = "Signature is null (which it should be)")
-  expect_null(object = SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "base"), info = "Signature is null (which it should be)", )
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "mcp_counter"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "epic"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "quantiseq"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "xcell"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "cibersort"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "cibersort_abs"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "timer"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "consensus_tme"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "abis"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "estimate"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "mmcp_counter"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "seqimmucc"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "dcq"), info = "Signature is null (which it should be)")
+  expect_null(object = spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "base"), info = "Signature is null (which it should be)", )
 })
 
 test_that("AutoGeneS signature creation works", {
-  signature <- SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "autogenes")
+  signature <- spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "autogenes")
   expect_true(file.exists(signature), info = "AutoGenes signature was created successfully")
 })
 
 test_that("BayesPrism signature creation works", {
-  signature <- SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "bayesprism", spatial_obj = spatial_data_2)
+  signature <- spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "bayesprism", spatial_obj = spatial_data_2)
   expect_null(info = "BayesPrism signature is null (which it should be)", object = signature)
 })
 
 test_that("Bisque signature creation works", {
-  signature <- SpaceDeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "bisque")
+  signature <- spacedeconv::build_model(single_cell_obj = single_cell_data_2, cell_type_col = "celltype_major", method = "bisque")
   expect_null(object = signature, info = "Bisque signature is null (which it should be)")
 })
 
@@ -46,7 +46,7 @@ test_that("CDseq signature creation works", {
 })
 
 test_that("CPM signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "cpm",
@@ -60,7 +60,7 @@ test_that("DWLS signature creation works", {
 })
 
 test_that("MOMF signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "momf",
@@ -80,7 +80,7 @@ test_that("MOMF signature creation works", {
 })
 
 # test_that("MuSiC signature creation works", {
-#   signature <- SpaceDeconv::build_model(
+#   signature <- spacedeconv::build_model(
 #     single_cell_obj = single_cell_data_2,
 #     cell_type_col = "celltype_major",
 #     method = "music", batch_id_col = "orig.ident"
@@ -93,7 +93,7 @@ test_that("MOMF signature creation works", {
 # })
 
 test_that("Scaden signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "scaden", spatial_obj = spatial_data_2
@@ -105,7 +105,7 @@ test_that("Scaden signature creation works", {
 })
 
 test_that("SCDC signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "scdc", batch_id_col = "orig.ident"
@@ -118,7 +118,7 @@ test_that("SCDC signature creation works", {
 })
 
 test_that("RCTD signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "rctd"
@@ -127,7 +127,7 @@ test_that("RCTD signature creation works", {
 })
 
 test_that("SPOTlight signature creation works", {
-  model <- SpaceDeconv::build_model(
+  model <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "spotlight",
@@ -147,14 +147,14 @@ test_that("SPOTlight signature creation works", {
   )
 
   # test that SPOTlight catches unavailable assays
-  expect_message(object = SpaceDeconv::build_model(
+  expect_message(object = spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "spotlight",
     spatial_obj = spatial_data_2,
     assay_sc = "abc"
   ), regexp = "not available in expression object")
-  expect_message(object = SpaceDeconv::build_model(
+  expect_message(object = spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "spotlight",
@@ -163,7 +163,7 @@ test_that("SPOTlight signature creation works", {
   ), regexp = "not available in expression object")
 
   # check that spotlight catches missing single_cell_obj
-  expect_error(object = SpaceDeconv::build_model(
+  expect_error(object = spacedeconv::build_model(
     single_cell_obj = NULL,
     cell_type_col = "celltype_major",
     method = "spotlight",
@@ -171,7 +171,7 @@ test_that("SPOTlight signature creation works", {
   ), regexp = "'single_cell_obj' missing or null")
 
   # test that spotlight catches wrong cell type col names
-  expect_error(object = SpaceDeconv::build_model(
+  expect_error(object = spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "abc",
     method = "spotlight",
@@ -181,7 +181,7 @@ test_that("SPOTlight signature creation works", {
 
 
 test_that("CARD signature creation works", {
-  signature <- SpaceDeconv::build_model(
+  signature <- spacedeconv::build_model(
     single_cell_obj = single_cell_data_2,
     cell_type_col = "celltype_major",
     method = "card"
@@ -193,7 +193,7 @@ test_that("CARD signature creation works", {
 })
 
 # test_that("SpatialDWLS signature creation works", {
-#   signature <- SpaceDeconv::build_model(
+#   signature <- spacedeconv::build_model(
 #     single_cell_obj = single_cell_data_2,
 #     cell_type_col = "celltype_major",
 #     method = "spatialdwls"

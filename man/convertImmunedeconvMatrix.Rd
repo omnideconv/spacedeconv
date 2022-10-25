@@ -2,7 +2,7 @@
 % Please edit documentation in R/Immunedeconv.R
 \name{convertImmunedeconvMatrix}
 \alias{convertImmunedeconvMatrix}
-\title{Convert Immunedeconv Matrix to match SpaceDeconv Format}
+\title{Convert Immunedeconv Matrix to match spacedeconv Format}
 \usage{
 convertImmunedeconvMatrix(deconvResult)
 }
@@ -13,5 +13,5 @@ convertImmunedeconvMatrix(deconvResult)
 transformed matrix where cell types are columns
 }
 \description{
-Convert Immunedeconv Matrix to match SpaceDeconv Format
+Convert Immunedeconv Matrix to match spacedeconv Format
 }

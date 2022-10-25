@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 
 SpaceDeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total SpaceDeconv gives access to `r length(SpaceDeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
-SpaceDeconv::deconvolution_methods
+spacedeconv::deconvolution_methods
 ```
 
 # Sample Data
-For this tutorial we will use one of SpaceDeconvs sample dataset and the deconvolution algorithm "SCDC".
+For this tutorial we will use one of spacedeconvs sample dataset and the deconvolution algorithm "SCDC".
 ```{r loadData, message=FALSE}
-library(SpaceDeconv)
+library(spacedeconv)
 library(SpatialExperiment)
 
 data("single_cell_data_3")
@@ -44,8 +44,8 @@ We can see that the single-cell data is in form of a [SingleCellExperiment](http
 As the next step we normalize the data as `cpm` ("Counts Per Million")
 
 ```{r normalization, warning=FALSE}
-single_cell_data_3 <- SpaceDeconv::normalize(single_cell_data_3, method = "cpm")
-spatial_data_3 <- SpaceDeconv::normalize(spatial_data_3, method = "cpm")
+single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 ```
 
 When we access the object again we can see that the normalization has been added to the object in an additional assay called `"cpm"`. 
@@ -77,7 +77,7 @@ There are three different resolutions of cell type annotation available. For thi
 
 Next we can calculate a model using the annotated single-data and the deconvolution tool "SCDC". 
 ```{r build_model, message=FALSE, warning=FALSE, results='hide'}
-signature <- SpaceDeconv::build_model(
+signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
   method = "scdc",
@@ -96,7 +96,7 @@ knitr::kable(round(signature[1:10, ], 4))
 # Deconvolution
 
 ```{r deconvolution, message=FALSE, warning=FALSE}
-deconv <- SpaceDeconv::deconvolute(
+deconv <- spacedeconv::deconvolute(
   spatial_data_3,
   signature = signature,
   method = "scdc",

@@ -70,6 +70,6 @@ Generate Hex Plot of a SpatialExperiment containing deconvolution results
 }
 \examples{
 data("spatial_data_2")
-deconv <- SpaceDeconv::deconvolute(spatial_data_2, method = "estimate")
-SpaceDeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
+deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
+spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 }
