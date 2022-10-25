@@ -75,7 +75,7 @@ SpaceDeconv::plot_most_abundant(deconv,
 
 ## 5. `plot_celltype_presence()`
 
-To access the presence of a single cell-type use the thresholded `plot_celltype_presence()` function. If the deconvolution result is larger than the provided threshold the spot is marked as "detected". 
+To access the presence of a single cell-type use the thresholded `plot_celltype_presence()` function. If the deconvolution result is larger than the provided threshold the spot is marked as detected ("TRUE"). 
 
 ```{r plotCelltype}
 SpaceDeconv::plot_celltype_presence(deconv,
