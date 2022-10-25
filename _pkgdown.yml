@@ -34,6 +34,8 @@ reference:
       - plot_celltype
       - plot_umi_count
       - plot_most_abundant
+      - plot_celltype_presence
+      - plot_comparison
   - title: Sample Data
     contents:
       - starts_with("single_cell_data")

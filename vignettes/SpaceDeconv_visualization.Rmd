@@ -9,18 +9,18 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-To introduce SpaceDeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `RCTD`. Note that RCTD requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
+To introduce SpaceDeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `EPIC`. Note that EPIC requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
 
-```{r error=FALSE, message=FALSE, warning=FALSE}
+```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
 library(SpaceDeconv)
-# library(EPIC) # quickfix
-data("spatial_data_1")
+library(EPIC) # quickfix
+data("spatial_data_3")
 
-spatial_data_1 <- SpaceDeconv::normalize(spatial_data_1, method = "cpm")
+spatial_data_3 <- SpaceDeconv::normalize(spatial_data_3, method = "cpm")
 
 deconv <- SpaceDeconv::deconvolute(
-  spatial_data_1,
-  method = "quantiseq",
+  spatial_data_3,
+  method = "epic",
   assay_sp = "cpm"
 )
 ```
@@ -33,45 +33,76 @@ At the moment SpaceDeconv offers two visualization functions.
 2. `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
 3. `plot_umi_count()` Plots the number of sequenced reads per spot
 4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot
+5. `plot_celltype_presence()` Plot presence (thresholded) of a single cell-type.
+6. `plot_comparison()` Plot comparison of two cell-type fractions
 
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-SpaceDeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell")
+SpaceDeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F)
 ```
 
 ## 2. `plot_cells_per_spot()`
 
 To render the distribution of the number of detected cell types per spot a user-selected threshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 5%. 
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05)
+SpaceDeconv::plot_cells_per_spot(deconv, threshold = 0.05, density = F)
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
+SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F)
 ```
+
 ## 4. `plot_most_abundant()`
 This plots displays the most abundant cell-type for each spot. You can specify which cells to plot by either one of the following: 
 
 * `cell_type` vector of celltypes to plot 
 * `method` plotting all cell types of the provided method
 * `remove` vector of celltypes to be removed from the plot
-```{r}
+```{r plotMostAbundant}
 SpaceDeconv::plot_most_abundant(deconv,
-  method = "quantiseq",
-  palette = "Viridis",
-  remove = "quantiseq_uncharacterized.cell"
+  method = "epic",
+  density = F, 
+  title_size = 25, 
+  legend_size = 15, 
+  font_size = 10, 
+  remove = c("epic_uncharacterized.cell")
+)
+```
+
+## 5. `plot_celltype_presence()`
+
+To access the presence of a single cell-type use the thresholded `plot_celltype_presence()` function. If the deconvolution result is larger than the provided threshold the spot is marked as "detected". 
+
+```{r plotCelltype}
+SpaceDeconv::plot_celltype_presence(deconv,
+  cell_type = "epic_B.cell",
+  threshold = 0.05,
+  palette = "Red-Blue",
+  reverse_palette = T
+)
+```
+
+##  6. `plot_comparison()`
+Use this function to plot the ratio of deconvolution results from two cell-types.
+
+```{r plotComparison}
+SpaceDeconv::plot_comparison(deconv,
+  cell_type_1 = "epic_T.cell.CD4.",
+  cell_type_2 = "epic_T.cell.CD8.",
+  palette = "Blue-Red",
+  density = F
 )
 ```
 
 
 # Color Palette 
 All palettes from the [colorspace](https://colorspace.r-forge.r-project.org/) R Package can be used. 
-```{r availablePalettes, fig.width=8}
-colorspace::hcl_palettes(type = "sequential", plot = TRUE)
+```{r availablePalettes, fig.width=10}
+colorspace::hcl_palettes(plot = TRUE)
 ```
 
 # Further plot adjustments
@@ -87,7 +118,7 @@ plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
 With the `transform_scale` parameter the colorspace scale can be modified. Available options are: "ln", "log10", "log2" and "sqrt". Scaling the color range differently can aid with interpreting the plot. Please have in mind that the plot does not show valid deconvolution results anymore and should be handled with caution. 
 
 ```{r}
-SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt")
+SpaceDeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE)
 ```
 
 
@@ -100,15 +131,34 @@ With this parameter the expression values can be smoothed to simplify pattern re
 
 ```{r}
 SpaceDeconv::plot_celltype(deconv,
-  cell_type = "quantiseq_B.cell",
+  cell_type = "epic_B.cell",
   smooth = T,
-  smoothing_factor = 1.5
+  smoothing_factor = 1.5, 
+  density = FALSE
 )
 ```
+
+### Density Distribution 
+You can add a density distribution by setting `density = TRUE`.
+
+```{r}
+SpaceDeconv::plot_celltype(deconv, 
+                           cell_type = "epic_B.cell", 
+                           smooth = TRUE, 
+                           density = TRUE, 
+                           title_size = 20, 
+                           legend_size = 15, 
+                           font_size = 10)
+```
+
 
 # Additional Parameters 
 
 * `show_image` logical, show or remove the spatial image
 * `spot_size` integer, increase (>1) or decrease (<1) the hexagon size
 * `limits` vector containing upper and lower limits for the color scale
-* `discrete` logical, whether to scale the color with discrete values
+* `palette_type` "discrete", "sequential" or "divergent", how to scale the color´
+* `reverse_palette` reverse color palette
+* `font_size` font size of legend 
+* `title_size` font size of title
+* `legend_size` legend 

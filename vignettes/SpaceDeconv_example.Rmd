@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-SpaceDeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total SpaceDeconv gives access to `length(SpaceDeconv::deconvolution_methods)` deconvolution methods: 
+SpaceDeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total SpaceDeconv gives access to `r length(SpaceDeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
 SpaceDeconv::deconvolution_methods
 ```
@@ -110,21 +110,15 @@ deconv <- SpaceDeconv::deconvolute(
 
 # Visualization 
 
-The deconvolution results are stored in the spatial object to simplify visualizations. SpaceDeconv offers two visualization function and the resulting SpatialExperiment are also compatible with other available visualization frameworks like [spatialLIBD](http://spatial.libd.org/spatialLIBD/).
+The deconvolution results are stored in the spatial object to simplify visualizations. SpaceDeconv offers 6 visualization functions with different scopes, further explained in the visualization [vignette](SpaceDeconv_visualization.html).
 
-We can see the available deconvolution results by accessing the objects `colData`: 
+We can see the available deconvolution results by using `available_results(deconv)` or by accessing the objects `colData`: 
 
 ```{r accessColData}
-colData(deconv)[, 1:4]
+available_results(deconv)
 ```
-For a quick overview over the available results you can use `colData` function too: 
-```{r overviewColData}
-# available annotation
-names(colData(deconv))
-```
-
 For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. 
 
 ```{r visualization}
-SpaceDeconv::plot_celltype(deconv, cell_type = "scdc_B.cells.Memory")
+SpaceDeconv::plot_celltype(deconv, cell_type = "scdc_B.cells.Memory", smooth = TRUE, density = FALSE)
 ```
