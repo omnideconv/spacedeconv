@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::roxygen2
+          extra-packages: any::roxygen2, any::devtools
           needs: roxygen2
 
       - name: Document
