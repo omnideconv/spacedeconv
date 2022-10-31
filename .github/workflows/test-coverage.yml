@@ -26,7 +26,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
       
       - name: install pak
-        run: sudo Rscript -e "install.packages(c('pak', 'pkgdepends'))"
+        run: sudo Rscript -e "install.packages(c('curl', 'pak', 'pkgdepends'))"
         
       - name: install harmony
         run: sudo Rscript -e "pak::pkg_install('PelzKo/harmony')"
