@@ -21,6 +21,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: install pak
+        run: sudo Rscript -e "install.packages('pak')"
         
       - name: install harmony
         run: sudo Rscript -e "pak::pkg_install('PelzKo/harmony')"
