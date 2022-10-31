@@ -13,7 +13,7 @@ plot_cells_per_spot(
   reverse_palette = FALSE,
   sample_id = "sample01",
   image_id = "lowres",
-  show_image = TRUE,
+  show_image = FALSE,
   offset_rotation = FALSE,
   spot_size = 1.17,
   limits = NULL,

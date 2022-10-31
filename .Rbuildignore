@@ -5,3 +5,6 @@
 ^docs$
 ^pkgdown$
 ^codecov\.yml$
+^.github
+^.prettierignore
+^.pre-commit-config.yaml

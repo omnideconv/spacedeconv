@@ -12,7 +12,7 @@ plot_celltype(
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
-  show_image = TRUE,
+  show_image = FALSE,
   palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1.17,

@@ -13,7 +13,7 @@ make_baseplot(
   sample_id = "sample01",
   reverse_palette = FALSE,
   image_id = "lowres",
-  show_image = TRUE,
+  show_image = FALSE,
   palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1.17,
