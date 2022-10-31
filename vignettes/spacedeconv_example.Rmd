@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-SpaceDeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total SpaceDeconv gives access to `r length(SpaceDeconv::deconvolution_methods)` deconvolution methods: 
+spacedeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total spacedeconv gives access to `r length(spacedeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
 spacedeconv::deconvolution_methods
 ```
@@ -110,7 +110,7 @@ deconv <- spacedeconv::deconvolute(
 
 # Visualization 
 
-The deconvolution results are stored in the spatial object to simplify visualizations. SpaceDeconv offers 6 visualization functions with different scopes, further explained in the visualization [vignette](SpaceDeconv_visualization.html).
+The deconvolution results are stored in the spatial object to simplify visualizations. spacedeconv offers 6 visualization functions with different scopes, further explained in the visualization [vignette](spacedeconv_visualization.html).
 
 We can see the available deconvolution results by using `available_results(deconv)` or by accessing the objects `colData`: 
 
@@ -120,7 +120,7 @@ available_results(deconv)
 For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. 
 
 ```{r visualization}
-SpaceDeconv::plot_celltype(deconv,
+spacedeconv::plot_celltype(deconv,
   cell_type = "scdc_B.cells.Memory",
   smooth = TRUE,
   density = FALSE
