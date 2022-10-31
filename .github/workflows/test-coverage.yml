@@ -21,6 +21,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: install harmony
+        run: sudo Rscript -e "remotes::install_github('PelzKo/harmony')"
 
       - name: Update system dependencies
         # due to recent versions of GLIBC missing
@@ -32,7 +35,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr, github::PelzKo/harmony
+          extra-packages: any::covr
           needs: coverage
 
       - name: Test coverage
