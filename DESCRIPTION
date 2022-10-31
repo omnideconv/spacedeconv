@@ -61,6 +61,11 @@ Suggests:
     testthat (>= 3.0.0)
 Remotes:
     amitfrish/scBio,
+    omnideconv/omnideconv, 
+    omnideconv/immunedeconv,
+    dmcable/spacexr,
+    RubD/Giotto,
+    YingMa0107/CARD,
     omnideconv/MOMF,
     omnideconv/SCDC,
     omnideconv/CDSeq,

@@ -49,26 +49,12 @@ Perform cell type deconvolution with spacedeconv.
 }
 \examples{
 # more examples can be found in the documentation website
-data("single_cell_data_2")
 data("spatial_data_2")
 
-single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
 spatial_data_2 <- spacedeconv::normalize(spatial_data_2, method = "cpm")
-
-signature <- spacedeconv::build_model(
-  single_cell_data_2,
-  method = "dwls",
-  cell_type_col = "celltype_major",
-  assay_sc = "cpm",
-  dwls_method = "mast_optimized",
-  ncores = 12
-)
 
 deconvolution <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_2,
-  signature = signature,
-  method = "dwls",
-  single_cell_obj = single_cell_data_2,
-  cell_type_col = "celltype_major"
+  method = "estimate",
 )
 }
