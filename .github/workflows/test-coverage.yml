@@ -22,6 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: system deps
+        run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
+      
       - name: install pak
         run: sudo Rscript -e "install.packages(c('pak', 'pkgdepends'))"
         
