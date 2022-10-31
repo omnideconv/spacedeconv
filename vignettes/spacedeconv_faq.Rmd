@@ -33,7 +33,7 @@ Your Visium slide might be aligned incorrectly. Try rotating the image or use `o
 ### Which deconvolution tools are available?
 This list includes the methods name and the internally used tokens. More detailed descriptions of each method can be found at the end of this vignette. 
 ```{r availableMethods}
-SpaceDeconv::deconvolution_methods
+spacedeconv::deconvolution_methods
 ```
 
 
