@@ -21,7 +21,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+      - name : install remotes
+        run: sudo Rscript -e "install.packages('remotes')"
+        
       - name: install harmony
         run: sudo Rscript -e "remotes::install_github('PelzKo/harmony')"
 
