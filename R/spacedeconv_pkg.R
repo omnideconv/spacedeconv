@@ -1,6 +1,6 @@
-#' SpaceDeconv
+#' spacedeconv
 #'
-#' SpaceDeconv Unified R Interface to spatial transcriptomics deconvolution methods
+#' spacedeconv Unified R Interface to spatial transcriptomics deconvolution methods
 #'
 #' @importFrom methods as is
 #' @importFrom SingleCellExperiment counts colData
@@ -21,6 +21,6 @@
 #' @importFrom Matrix colSums
 #' @importFrom colorspace scale_fill_continuous_sequential sequential_hcl
 #'
-#' @name SpaceDeconv-pkg
+#' @name spacedeconv_pkg
 #' @docType package
 NULL

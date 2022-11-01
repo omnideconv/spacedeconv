@@ -42,7 +42,7 @@ reference:
       - starts_with("spatial_data")
   - title: internal
     contents:
-      - spacedeconv-pkg
+      - spacedeconv_pkg
       - addResultToObject
       - anndata_checkload
       - checkCol
