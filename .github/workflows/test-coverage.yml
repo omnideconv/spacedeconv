@@ -33,6 +33,11 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: remotes
+        run: Rscript -e "install.packages('remotes')"
+      - name: harmony
+        runt: Rscript -e "remotes::install_github('PelzKo/harmony')"
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr
