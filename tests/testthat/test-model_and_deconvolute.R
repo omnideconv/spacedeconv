@@ -7,7 +7,8 @@ test_that("RCTD Model and deconvolution in one step works", {
     spatial_obj = spatial_data_2,
     method = "rctd",
     cell_type_col = "celltype_major",
-    return_object = FALSE
+    return_object = FALSE,
+    n_cores = 8
   )
 
   expect_equal(
