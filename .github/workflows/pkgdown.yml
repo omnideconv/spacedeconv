@@ -65,7 +65,7 @@ jobs:
         if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master'
         with:
           publish-dir: "./docs"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
