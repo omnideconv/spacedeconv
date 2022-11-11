@@ -25,7 +25,11 @@ plot_most_abundant(
 \arguments{
 \item{spe}{deconvolution result in Form of a SpatialExperiment}
 
+\item{method}{select which results should be displayed}
+
 \item{cell_type}{one or more celltype to plot, NULL for all}
+
+\item{remove}{vector of cell types to be removed from the plot}
 
 \item{palette}{colorspace palette (sequential)}
 
