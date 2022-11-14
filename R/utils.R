@@ -310,29 +310,24 @@ presence <- function(m, trheshold){
   # initialize matrix
   m_row <- nrow(m)
   m_col <- ncol(m)
-  m_out <- matrix(FALSE,  # Set all to absent (i.e. 0)
-                  nrow = m_row ,
-                  ncol = m_col)
+  m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
+    nrow = m_row,
+    ncol = m_col
+  )
 
 
   # calculate threshold
   if (length(threshold) == 1) {
-
     m_out[m > threshold] <- TRUE
-
-  }
-
-  else if (length(threshold) == m_row) {
-
+  } else if (length(threshold) == m_row) {
     for (i in 1:m_row) {
-
-      m_out[i, m[i,] > threshold[i]] <- TRUE
-
+      m_out[i, m[i, ] > threshold[i]] <- TRUE
     }
   } else {
-
-    stop("As threshold, you can enter either a number or a vector of length ",
-         m_row, "\n")
+    stop(
+      "As threshold, you can enter either a number or a vector of length ",
+      m_row, "\n"
+    )
   }
 
   rownames(m_out) <- rownames(m)
