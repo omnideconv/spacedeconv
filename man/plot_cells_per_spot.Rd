@@ -15,12 +15,16 @@ plot_cells_per_spot(
   image_id = "lowres",
   show_image = FALSE,
   offset_rotation = FALSE,
-  spot_size = 1.17,
+  spot_size = 1,
   limits = NULL,
   title_size = 30,
   font_size = 20,
   legend_size = 40,
-  density = TRUE
+  density = TRUE,
+  save = FALSE,
+  path = NULL,
+  png_width = 1500,
+  png_height = 750
 )
 }
 \arguments{
@@ -55,6 +59,14 @@ plot_cells_per_spot(
 \item{legend_size}{size of legend in points}
 
 \item{density}{whether to display a density distribution next to the spatial plot}
+
+\item{save}{set TRUE to save plot}
+
+\item{path}{specify directory to save plot, if NULL: saving at ~/spacedeconv}
+
+\item{png_width}{when saving, png width in px}
+
+\item{png_height}{when saving, png height in px}
 }
 \value{
 A hex plot containing unique cell counts per spot

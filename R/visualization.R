@@ -16,6 +16,10 @@
 #' @param font_size font size of legend
 #' @param legend_size size of legend in points
 #' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 #'
 #' @returns A hex plot containing unique cell counts per spot
 #' @export
@@ -29,8 +33,10 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = FALSE, offset_rotation = FALSE,
-                                spot_size = 1.17, limits = NULL, title_size = 30,
-                                font_size = 20, legend_size = 40, density = TRUE) {
+                                spot_size = 1, limits = NULL, title_size = 30,
+                                font_size = 20, legend_size = 40, density = TRUE,
+                                save = FALSE, path = NULL,
+                                png_width = 1500, png_height = 750) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
   }
@@ -72,7 +78,8 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits, title_size = title_size,
-    font_size = font_size, legend_size = legend_size, density = density
+    font_size = font_size, legend_size = legend_size, density = density,
+    save = save, path = path, png_width = png_width, png_height = png_height
   )
 
   return(result)
@@ -119,6 +126,10 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 #'
 #' @returns plot of cell type fractions
 #'
@@ -130,9 +141,10 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, palette_type = "sequential",
-                          offset_rotation = FALSE, spot_size = 1.17, limits = NULL,
+                          offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE,
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -157,7 +169,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height
   ))
 
   # TODO
@@ -187,6 +199,11 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
+#'
 #'
 #' @returns plot of cell type fractions
 #'
@@ -200,10 +217,11 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
                            show_image = FALSE, offset_rotation = FALSE,
-                           spot_size = 1.17, limits = NULL,
+                           spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
                            title_size = 30, font_size = 20,
-                           legend_size = 40, density = TRUE) {
+                           legend_size = 40, density = TRUE,
+                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -221,7 +239,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     spot_size = spot_size, limits = limits,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height
   ))
 }
 
@@ -249,6 +267,10 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 #'
 #' @returns plot of cell type fractions
 #'
@@ -256,10 +278,11 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, # palette_type = FALSE,
-                               offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
+                               offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 20, legend_size = 40,
-                               density = TRUE) {
+                               density = TRUE, save = FALSE, path = NULL,
+                               png_width = 1500, png_height = 750) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -305,7 +328,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
     title_size = title_size, palette_type = "discrete",
-    font_size = font_size, legend_size = legend_size, density = density
+    font_size = font_size, legend_size = legend_size, density = density,
+    save = save, path = path, png_width = png_width, png_height = png_height
   ))
 }
 
@@ -328,6 +352,10 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param title_size font size of title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
@@ -337,10 +365,11 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
                                    sample_id = "sample01", image_id = "lowres",
                                    reverse_palette = FALSE,
                                    show_image = FALSE, offset_rotation = FALSE,
-                                   spot_size = 1.17, limits = NULL,
+                                   spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, font_size = 20,
-                                   legend_size = 40) {
+                                   legend_size = 40, save = FALSE, path = NULL,
+                                   png_width = 1500, png_height = 750) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # calculate presence TRUE/FALSE
@@ -356,7 +385,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
     spot_size = spot_size, limits = limits, smooth = smooth,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size,
-    density = FALSE, palette_type = "discrete"
+    density = FALSE, palette_type = "discrete", save = save, path = path,
+    png_width = png_width, png_height = png_height
   ))
 }
 
@@ -381,19 +411,24 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
 #' @param palette_type "discrete", "sequenatial", "diverging"
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
 #' @export
 plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
-                            palette = "Mako", transform_scale = NULL,
+                            palette = "Blue-Red", transform_scale = NULL,
                             sample_id = "sample01", image_id = "lowres",
                             reverse_palette = FALSE,
                             show_image = FALSE, offset_rotation = FALSE,
-                            spot_size = 1.17, limits = NULL,
+                            spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
                             title_size = 30, font_size = 20,
-                            legend_size = 40, palette_type = "diverging", density = TRUE) {
+                            legend_size = 40, palette_type = "diverging", density = TRUE,
+                            save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
@@ -410,7 +445,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     spot_size = spot_size, limits = limits, smooth = smooth,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size,
-    density = density, palette_type = palette_type
+    density = density, palette_type = palette_type, save = save, path = path,
+    png_width = png_width, png_height = png_height
   ))
 }
 
@@ -444,12 +480,17 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = FALSE,
-                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1.17,
+                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
+                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE,
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -469,8 +510,11 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # due to reasons, flip y axis by hand
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
 
+  # calculate scaling factor
+  scaling_offset <- 1.165 # 1.154701 # 1/cos((30/360)*2*pi)
+
   # calculate spot distance
-  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
+  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size * scaling_offset
 
   # smooth if requested
   if (smooth) {
@@ -525,7 +569,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # add hexagons
   p <- p +
-    geom_sf(aes_string(fill = to_plot), lwd = 0, data = sf_poly) +
+    geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
     coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
     theme(
       axis.text = element_blank(),
@@ -584,6 +628,18 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # plot <- grid::grid.draw(plot) # add functions to pkg.R
   } else {
     plot <- p
+  }
+
+  if (save) {
+    # check if provided path works
+    if (is.null(path) || !file.exists(path)) {
+      # set default
+      if (!file.exists("~/spacedeconvResults")) {
+        dir.create("~/spacedeconvResults")
+      }
+      path <- normalizePath("~/spacedeconvResults")
+    }
+    save_plot(plot, to_plot, path, png_width, png_height)
   }
 
 
@@ -651,4 +707,20 @@ smooth_celltype <- function(df, spot_distance, smoothing_factor = 1.5, cell_type
   }
 
   return(new_values)
+}
+
+
+#' Save Plot to path
+#'
+#' @param plot ggplot
+#' @param to_plot celltype name
+#' @param path where the plot should be stored
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
+#'
+save_plot <- function(plot, to_plot, path, png_width, png_height) {
+  filename <- paste0(path, "/", to_plot, ".png")
+  png(width = png_width, height = png_height, units = "px", filename = filename)
+  grid::grid.draw(plot)
+  dev.off()
 }

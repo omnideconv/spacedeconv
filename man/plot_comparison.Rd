@@ -8,14 +8,14 @@ plot_comparison(
   spe,
   cell_type_1 = NULL,
   cell_type_2 = NULL,
-  palette = "Mako",
+  palette = "Blue-Red",
   transform_scale = NULL,
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = FALSE,
   offset_rotation = FALSE,
-  spot_size = 1.17,
+  spot_size = 1,
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,
@@ -23,7 +23,11 @@ plot_comparison(
   font_size = 20,
   legend_size = 40,
   palette_type = "diverging",
-  density = TRUE
+  density = TRUE,
+  save = FALSE,
+  path = NULL,
+  png_width = 1500,
+  png_height = 750
 )
 }
 \arguments{
@@ -64,6 +68,14 @@ plot_comparison(
 \item{palette_type}{"discrete", "sequenatial", "diverging"}
 
 \item{density}{whether to display a density distribution next to the spatial plot}
+
+\item{save}{set TRUE to save plot}
+
+\item{path}{specify directory to save plot, if NULL: saving at ~/spacedeconv}
+
+\item{png_width}{when saving, png width in px}
+
+\item{png_height}{when saving, png height in px}
 }
 \value{
 plot of a celltypes presence/absence using a threshold
