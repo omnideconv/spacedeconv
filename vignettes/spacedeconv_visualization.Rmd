@@ -30,11 +30,11 @@ deconv <- spacedeconv::deconvolute(
 At the moment spacedeconv offers two visualization functions. 
 
 1. `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
-2. `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
-3. `plot_umi_count()` Plots the number of sequenced reads per spot
-4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot
+2. `plot_gene()` plot spatial gene expression.
+3. `plot_umi_count()` Plots the number of sequenced reads per spot.
+4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot.
 5. `plot_celltype_presence()` Plot presence (thresholded) of a single cell-type.
-6. `plot_comparison()` Plot comparison of two cell-type fractions
+6. `plot_comparison()` Plot comparison of two cell-type fractions.
 
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
@@ -42,11 +42,12 @@ Plot any spot annotation with a continuous or discrete scale. The spot annotatio
 spacedeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F)
 ```
 
-## 2. `plot_cells_per_spot()`
+## 2. `plot_gene()`
 
-To render the distribution of the number of detected cell types per spot a user-selected threshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 5%. 
+Plot gene expression on a spatial level. It may make sense to smooth the plot to simplify the detection of expression patterns. You can further select the assay using the `assay` parameter.
+
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-spacedeconv::plot_cells_per_spot(deconv, threshold = 0.05, density = F)
+spacedeconv::plot_gene(deconv, gene = "AKT1", density = F, smooth = T)
 ```
 
 ## 3. `plot_umi_count()`
