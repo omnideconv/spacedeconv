@@ -144,7 +144,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, font_size = 20, legend_size = 40, density = TRUE,
-                          save = FALSE, path = NULL, png_width= 1500, png_height = 750) {
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -511,7 +511,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
 
   # calculate scaling factor
-  scaling_offset = 1.165 # 1.154701 # 1/cos((30/360)*2*pi)
+  scaling_offset <- 1.165 # 1.154701 # 1/cos((30/360)*2*pi)
 
   # calculate spot distance
   spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size * scaling_offset
@@ -630,11 +630,11 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     plot <- p
   }
 
-  if (save){
+  if (save) {
     # check if provided path works
-    if (is.null(path) || !file.exists(path)){
+    if (is.null(path) || !file.exists(path)) {
       # set default
-      if (!file.exists("~/spacedeconvResults")){
+      if (!file.exists("~/spacedeconvResults")) {
         dir.create("~/spacedeconvResults")
       }
       path <- normalizePath("~/spacedeconvResults")
@@ -718,8 +718,8 @@ smooth_celltype <- function(df, spot_distance, smoothing_factor = 1.5, cell_type
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #'
-save_plot <- function(plot, to_plot, path, png_width, png_height){
-  filename = paste0(path, "/", to_plot, ".png")
+save_plot <- function(plot, to_plot, path, png_width, png_height) {
+  filename <- paste0(path, "/", to_plot, ".png")
   png(width = png_width, height = png_height, units = "px", filename = filename)
   grid::grid.draw(plot)
   dev.off()
