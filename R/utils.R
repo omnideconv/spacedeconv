@@ -306,7 +306,7 @@ checkENSEMBL <- function(names) {
 #'
 #'
 
-presence <- function(m, trheshold){
+presence <- function(m, trheshold) {
   # initialize matrix
   m_row <- nrow(m)
   m_col <- ncol(m)
