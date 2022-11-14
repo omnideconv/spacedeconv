@@ -63,3 +63,4 @@ reference:
       - get_polygon_geometry
       - make_baseplot
       - smooth_celltype
+      - checkENSEMBL

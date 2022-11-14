@@ -288,3 +288,12 @@ available_results <- function(deconv) {
 
   return(res)
 }
+
+#' Check for ENSEBL IDs
+#'
+#' @param names vector of rownames
+#'
+#' @returns TRUE if all are ensembl
+checkENSEMBL <- function(names){
+  return (any(grepl("^ENS", names)))
+}

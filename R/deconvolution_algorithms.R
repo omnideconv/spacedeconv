@@ -57,6 +57,25 @@ deconvolution_methods <- c(
   "BASE" = "base"
 )
 
+first_gen <- c(
+  # immunedeconv
+  "MCPcounter" = "mcp_counter",
+  "EPIC" = "epic",
+  "quanTIseq" = "quantiseq",
+  "xCell" = "xcell",
+  "CIBERSORT" = "cibersort",
+  "CIBERSORT (abs.)" = "cibersort_abs",
+  "TIMER" = "timer",
+  "ConsensusTME" = "consensus_tme",
+  "ABIS" = "abis",
+  "ESTIMATE" = "estimate",
+  # immunedeconv mouse
+  "mMCPcounter" = "mmcp_counter",
+  "seqImmuCC" = "seqimmucc",
+  "DCQ" = "dcq",
+  "BASE" = "base"
+)
+
 
 #' Build a reference signature
 #'
@@ -291,6 +310,10 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 
   if (!is.null(single_cell_obj) && checkRowColumn(single_cell_obj)) {
     stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
+  }
+
+  if (method %in% first_gen && checkENSEMBL(rownames(spe))){
+    stop("You requested a first-generation method and your spatial object contains ENSEBML IDs, please provide HGNC Symbols!")
   }
 
   # ensure library size > 0
