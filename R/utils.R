@@ -305,17 +305,18 @@ checkENSEMBL <- function(names) {
 #' @param threshold if single value is provided the same threshold is use for all celltypes, it is also possible to provide a threshold vector
 #'
 #'
-presence <- fucnction(m, trheshold){
+
+presence <- function(m, trheshold){
   m_row <- nrow(m)
   m_col <- ncol(m)
-  m_out <- matrix(0,  # Set all to absent (i.e. 0)
+  m_out <- matrix(FALSE,  # Set all to absent (i.e. 0)
                   nrow = m_row ,
                   ncol = m_col)
 
 
   if (length(threshold) == 1) {
 
-    m_out[m > threshold] <- 1
+    m_out[m > threshold] <- TRUE
 
   }
 
@@ -323,7 +324,7 @@ presence <- fucnction(m, trheshold){
 
     for (i in 1:m_row) {
 
-      m_out[i, m[i,] > threshold[i]] <- 1
+      m_out[i, m[i,] > threshold[i]] <- TRUE
 
     }
   } else {
