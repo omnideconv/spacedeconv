@@ -495,12 +495,12 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
 #' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
-                          sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                          show_image = FALSE, palette_type = "sequential",
-                          offset_rotation = FALSE, spot_size = 1, limits = NULL,
-                          smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
-                          save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+                      sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
+                      show_image = FALSE, palette_type = "sequential",
+                      offset_rotation = FALSE, spot_size = 1, limits = NULL,
+                      smooth = FALSE, smoothing_factor = 1.5,
+                      title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                      save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -514,23 +514,24 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
     stop("Provides gene is not present in SpatialExperiment")
   }
 
-  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), gene=SummarizedExperiment::assay(spe, assay)[gene,]))
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), gene = SummarizedExperiment::assay(spe, assay)[gene, ]))
 
   # set gene name as title
-  if (is.null(title)){
-    title = gene
+  if (is.null(title)) {
+    title <- gene
   }
 
-  return(make_baseplot(spe, df, title = title,
-                       palette = palette,
-                       to_plot = "gene", sample_id = sample_id,
-                       image_id = image_id, show_image = show_image,
-                       palette_type = palette_type, offset_rotation = offset_rotation,
-                       transform_scale = transform_scale, reverse_palette = reverse_palette,
-                       spot_size = spot_size, limits = limits,
-                       smooth = smooth, smoothing_factor = smoothing_factor,
-                       title_size = title_size, font_size = font_size, legend_size = legend_size,
-                       density = density, save = save, path = path, png_width = png_width, png_height = png_height
+  return(make_baseplot(spe, df,
+    title = title,
+    palette = palette,
+    to_plot = "gene", sample_id = sample_id,
+    image_id = image_id, show_image = show_image,
+    palette_type = palette_type, offset_rotation = offset_rotation,
+    transform_scale = transform_scale, reverse_palette = reverse_palette,
+    spot_size = spot_size, limits = limits,
+    smooth = smooth, smoothing_factor = smoothing_factor,
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height
   ))
 
   # TODO
@@ -613,7 +614,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # apply potential transform_scaleations
   legend_title <- as.character(to_plot)
-  if (is.null(title)){
+  if (is.null(title)) {
     if (!is.null(transform_scale)) {
       if (transform_scale == "ln") {
         df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
@@ -632,7 +633,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       }
     }
   } else {
-    legend_title = title
+    legend_title <- title
   }
 
   if (smooth) {
