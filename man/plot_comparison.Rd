@@ -8,7 +8,7 @@ plot_comparison(
   spe,
   cell_type_1 = NULL,
   cell_type_2 = NULL,
-  palette = "Mako",
+  palette = "Blue-Red",
   transform_scale = NULL,
   sample_id = "sample01",
   image_id = "lowres",
