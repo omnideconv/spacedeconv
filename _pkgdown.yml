@@ -64,3 +64,4 @@ reference:
       - make_baseplot
       - smooth_celltype
       - save_plot
+      - checkENSEMBL
