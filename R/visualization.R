@@ -29,7 +29,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
                                 reverse_palette = FALSE,
                                 sample_id = "sample01", image_id = "lowres",
                                 show_image = FALSE, offset_rotation = FALSE,
-                                spot_size = 1.17, limits = NULL, title_size = 30,
+                                spot_size = 1, limits = NULL, title_size = 30,
                                 font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spatial_obj)) {
     stop("Paramter 'spatial_obj' is missing or null, but is required")
@@ -130,7 +130,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, palette_type = "sequential",
-                          offset_rotation = FALSE, spot_size = 1.17, limits = NULL,
+                          offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
@@ -200,7 +200,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE,
                            show_image = FALSE, offset_rotation = FALSE,
-                           spot_size = 1.17, limits = NULL,
+                           spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
                            title_size = 30, font_size = 20,
                            legend_size = 40, density = TRUE) {
@@ -256,7 +256,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, # palette_type = FALSE,
-                               offset_rotation = FALSE, spot_size = 1.17, # limits = NULL,
+                               offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 20, legend_size = 40,
                                density = TRUE) {
@@ -337,7 +337,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
                                    sample_id = "sample01", image_id = "lowres",
                                    reverse_palette = FALSE,
                                    show_image = FALSE, offset_rotation = FALSE,
-                                   spot_size = 1.17, limits = NULL,
+                                   spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, font_size = 20,
                                    legend_size = 40) {
@@ -390,7 +390,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             sample_id = "sample01", image_id = "lowres",
                             reverse_palette = FALSE,
                             show_image = FALSE, offset_rotation = FALSE,
-                            spot_size = 1.17, limits = NULL,
+                            spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
                             title_size = 30, font_size = 20,
                             legend_size = 40, palette_type = "diverging", density = TRUE) {
@@ -447,7 +447,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = FALSE,
-                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1.17,
+                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, font_size = 20, legend_size = 40, density = TRUE) {
   if (is.null(spe)) {
@@ -469,8 +469,11 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # due to reasons, flip y axis by hand
   df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
 
+  # calculate scaling factor
+  scaling_offset = 1.165 # 1.154701 # 1/cos((30/360)*2*pi)
+
   # calculate spot distance
-  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size
+  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size * scaling_offset
 
   # smooth if requested
   if (smooth) {
