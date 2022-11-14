@@ -297,3 +297,43 @@ available_results <- function(deconv) {
 checkENSEMBL <- function(names) {
   return(any(grepl("^ENS", names)))
 }
+
+
+#' Threshold a matrix
+#'
+#' @param m matrix
+#' @param threshold if single value is provided the same threshold is use for all celltypes, it is also possible to provide a threshold vector
+#'
+#'
+presence <- fucnction(m, trheshold){
+  m_row <- nrow(m)
+  m_col <- ncol(m)
+  m_out <- matrix(0,  # Set all to absent (i.e. 0)
+                  nrow = m_row ,
+                  ncol = m_col)
+
+
+  if (length(threshold) == 1) {
+
+    m_out[m > threshold] <- 1
+
+  }
+
+  else if (length(threshold) == m_row) {
+
+    for (i in 1:m_row) {
+
+      m_out[i, m[i,] > threshold[i]] <- 1
+
+    }
+  } else {
+
+    stop("As threshold, you can enter either a number or a vector of length ",
+         m_row, "\n")
+  }
+
+  rownames(m_out) <- rownames(m)
+  colnames(m_out) <- colnames(m)
+
+  return(m_out)
+}
