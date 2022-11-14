@@ -18,6 +18,7 @@ plot_cells_per_spot(
   spot_size = 1,
   limits = NULL,
   title_size = 30,
+  title = NULL,
   font_size = 20,
   legend_size = 40,
   density = TRUE,
@@ -53,6 +54,8 @@ plot_cells_per_spot(
 \item{limits}{vector of color scale limit}
 
 \item{title_size}{font size of title}
+
+\item{title}{set a custom title}
 
 \item{font_size}{font size of legend}
 

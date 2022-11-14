@@ -20,6 +20,7 @@ plot_celltype_presence(
   smooth = FALSE,
   smoothing_factor = 1.5,
   title_size = 30,
+  title = NULL,
   font_size = 20,
   legend_size = 40,
   save = FALSE,
@@ -58,6 +59,8 @@ plot_celltype_presence(
 \item{smoothing_factor}{kernel size factor (multiples of spot distance)}
 
 \item{title_size}{font size of title}
+
+\item{title}{set a custom title}
 
 \item{font_size}{font size of legend}
 
