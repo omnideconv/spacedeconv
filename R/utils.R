@@ -307,6 +307,7 @@ checkENSEMBL <- function(names) {
 #'
 
 presence <- function(m, trheshold){
+  # initialize matrix
   m_row <- nrow(m)
   m_col <- ncol(m)
   m_out <- matrix(FALSE,  # Set all to absent (i.e. 0)
@@ -314,6 +315,7 @@ presence <- function(m, trheshold){
                   ncol = m_col)
 
 
+  # calculate threshold
   if (length(threshold) == 1) {
 
     m_out[m > threshold] <- TRUE
