@@ -15,14 +15,18 @@ plot_celltype(
   show_image = FALSE,
   palette_type = "sequential",
   offset_rotation = FALSE,
-  spot_size = 1.17,
+  spot_size = 1,
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,
   title_size = 30,
   font_size = 20,
   legend_size = 40,
-  density = TRUE
+  density = TRUE,
+  save = FALSE,
+  path = NULL,
+  png_width = 1500,
+  png_height = 750
 )
 }
 \arguments{
@@ -61,6 +65,14 @@ plot_celltype(
 \item{legend_size}{legend size in points}
 
 \item{density}{whether to display a density distribution next to the spatial plot}
+
+\item{save}{set TRUE to save plot}
+
+\item{path}{specify directory to save plot, if NULL: saving at ~/spacedeconv}
+
+\item{png_width}{when saving, png width in px}
+
+\item{png_height}{when saving, png height in px}
 }
 \value{
 plot of cell type fractions
