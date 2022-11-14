@@ -525,7 +525,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # add hexagons
   p <- p +
-    geom_sf(aes_string(fill = to_plot), lwd = 0, data = sf_poly) +
+    geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
     coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
     theme(
       axis.text = element_blank(),
