@@ -312,7 +312,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
-  if (method %in% first_gen && checkENSEMBL(rownames(spe))){
+  if (method %in% first_gen && checkENSEMBL(rownames(spe))) {
     stop("You requested a first-generation method and your spatial object contains ENSEBML IDs, please provide HGNC Symbols!")
   }
 

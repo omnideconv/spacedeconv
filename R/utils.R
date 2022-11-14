@@ -294,6 +294,6 @@ available_results <- function(deconv) {
 #' @param names vector of rownames
 #'
 #' @returns TRUE if all are ensembl
-checkENSEMBL <- function(names){
-  return (any(grepl("^ENS", names)))
+checkENSEMBL <- function(names) {
+  return(any(grepl("^ENS", names)))
 }
