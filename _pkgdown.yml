@@ -30,7 +30,7 @@ reference:
       - starts_with("deconvolute_")
   - title: Visualization
     contents:
-      - plot_cells_per_spot
+      - plot_gene
       - plot_celltype
       - plot_umi_count
       - plot_most_abundant
