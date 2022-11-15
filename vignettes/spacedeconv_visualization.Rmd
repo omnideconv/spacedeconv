@@ -159,9 +159,9 @@ spacedeconv::plot_celltype(deconv,
   cell_type = "epic_B.cell",
   smooth = TRUE,
   density = TRUE,
-  save = TRUE, 
-  path = "~/project/results", 
-  png_width = 1000, 
+  save = TRUE,
+  path = "~/project/results",
+  png_width = 1000,
   png_height = 750
 )
 ```
