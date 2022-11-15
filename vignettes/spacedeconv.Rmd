@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 # spacedeconv 
-spacedeconv is a unified interface to `r length(spacedeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+spacedeconv is a unified interface to `r length(spacedeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data. These methods don't require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures. 
 
 # Installation 
 
@@ -51,7 +51,7 @@ spe <- SpatialExperiment::read10xVisium("path_to_directory")
 
 # Workflow
 
-The core modules of spacedeconv are used to build a reference signature and deconvolute spatial transcriptomics data. We further provide convenient function for normalization and visualization. A full list of deconvolution algorithms can be accessed by `spacedeconv::deconvolution_methods` or in the [FAQ](spacedeconv_faq.html).
+The core modules of spacedeconv are used to build a reference signature and deconvolute spatial transcriptomics data. We further provide convenient functions for normalization and visualization. A full list of deconvolution algorithms can be accessed by `spacedeconv::deconvolution_methods` or in the [FAQ](spacedeconv_faq.html).
 
 ### 1. Normalization
 spacedeconv offers a function to normalize spatial expression data. The normalization is saved in an additional assay, so make sure to use the correct data during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
@@ -97,7 +97,7 @@ result <- spacedeconv::deconvolute(
 )
 ```
 ### 4. Visualization 
-We offer 4 visualization function aiming different insight of the data. A full example of each visualization option is available in the visualization [Vignette](spacedeconv_visualization.html).
+We offer 6 visualization function aiming different insight of the data. A full example of each visualization option is available in the visualization [Vignette](spacedeconv_visualization.html).
 ```{r visualization, eval=FALSE}
 # sample does refer to the first column of ColData(spe)
 # for cell_type input a celltype present in the deconvolution result

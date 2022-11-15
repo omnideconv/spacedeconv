@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.  These methods don't require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures. 
 
 ## Installation
 
@@ -65,7 +65,7 @@ result <- spacedeconv::deconvolute(
 
 ### 3. Visualization
 
-spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in this [vignette](articles/spacedeconv_visualization.html).
+spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
 # sample does refer to the first column of ColData(spe)
@@ -93,7 +93,7 @@ below for more information. If you use this package in your work, please
 cite both our package and the method(s) you are using.
 
 | First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (omnideconv + spatial Methods)                                                                                                                                                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ----------------------------------- | ----------------- | ---------------------------------------------------------- |
 | <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>AutoGeneS</li><li>BayesPrism</li><li>Bisque</li><li>Bisque</li><li>Bseq-sc</li><li>CIBERSORTx</li><li>CDseq</li><li>CPM</li><li>DWLS</li><li>MOMF</li><li>MuSiC</li><li>Scaden</li><li>SCDC</li></ul> |
 
 # References
