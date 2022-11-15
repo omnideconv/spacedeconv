@@ -1,7 +1,5 @@
 ---
 title: "spacedeconv FAQ"
-author: "Constantin Zackl"
-date: "2022-09-21"
 output: rmarkdown::html_vignette
 bibliography: references.bib
 vignette: >

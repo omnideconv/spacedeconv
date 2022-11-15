@@ -1,7 +1,5 @@
 ---
 title: "Example"
-author: "Constantin Zackl"
-date: "2022-09-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Example}
