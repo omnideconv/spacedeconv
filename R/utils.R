@@ -295,7 +295,7 @@ available_results <- function(deconv) {
 #'
 #' @returns TRUE if all are ensembl
 checkENSEMBL <- function(names) {
-  if (sum(grepl("^ENS", names)) / length(names) >= 0.95){
+  if (sum(grepl("^ENS", names)) / length(names) >= 0.05){ # more than 5% are ENSEMBL
     return (TRUE)
   } else {
     return (FALSE)
