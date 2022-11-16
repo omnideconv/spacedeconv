@@ -307,29 +307,28 @@ checkENSEMBL <- function(names) {
 #'
 
 presence <- function(m, method, threshold) {
-
   # create matrix with scores for each spot and celltype
   available <- available_results(m)[startsWith(available_results(m), method)]
   m <- as.matrix(colData(m)[, available])
 
   # calculate log(scores) +1
-  m <- log(m +1)
+  m <- log(m + 1)
 
   # initialize matrix
   m_row <- nrow(m)
   m_col <- ncol(m)
   m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
-                  nrow = m_row,
-                  ncol = m_col
+    nrow = m_row,
+    ncol = m_col
   )
 
 
   # calculate threshold
   if (length(threshold) == 1) {
     m_out[m > threshold] <- TRUE
-  } else if (length(threshold) == m_col){
-    for(i in 1:m_row){
-      m_out[i,] <- m[i,] > threshold
+  } else if (length(threshold) == m_col) {
+    for (i in 1:m_row) {
+      m_out[i, ] <- m[i, ] > threshold
     }
   } else {
     stop(
@@ -349,8 +348,7 @@ presence <- function(m, method, threshold) {
 #' @return A vector with celltype specific cutoff values
 
 
-antimode_cutoff <- function(m, method){
-
+antimode_cutoff <- function(m, method) {
   # create matrix with scores for each spot and celltype
   available <- available_results(m)[startsWith(available_results(m), method)]
   m <- colData(m)[, available]
@@ -359,34 +357,32 @@ antimode_cutoff <- function(m, method){
   # vector with all celltype names
   celltypes <- colnames(m)
 
-  for(celltype in celltypes){
-
-    score <- m[,celltype]
+  for (celltype in celltypes) {
+    score <- m[, celltype]
 
     # Compute log-score
 
-    logscore <- log(score+1)
+    logscore <- log(score + 1)
 
     # Exclude 1% most extreme values
 
     interval <- quantile(logscore,
-                         p = c(0.005, 0.995), na.rm = T)
-    logscore <- logscore[logscore>interval[1] & logscore<interval[2]]
+      p = c(0.005, 0.995), na.rm = T
+    )
+    logscore <- logscore[logscore > interval[1] & logscore < interval[2]]
 
     # Estimate antimode
 
     res <- locmodes(logscore,
-                    mod0 = 2,
-                    display = F) # You can put this to FALSE
+      mod0 = 2,
+      display = F
+    ) # You can put this to FALSE
 
     cutoff <- res$locations[2]
 
     # Add cutoff to threshold vector
 
     cutoffs <- append(cutoffs, cutoff)
-
   }
   return(cutoffs)
 }
-
-
