@@ -301,32 +301,40 @@ checkENSEMBL <- function(names) {
 
 #' Threshold a matrix
 #'
-#' @param m matrix
-#' @param threshold if single value is provided the same threshold is use for all celltypes, it is also possible to provide a threshold vector
+#' @param m A matrix containing deconvolution scores for each spot and celltype
+#' @param threshold if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector
 #'
 #'
 
-presence <- function(m, trheshold) {
+presence <- function(m, method, threshold) {
+
+  # create matrix with scores for each spot and celltype
+  available <- available_results(m)[startsWith(available_results(m), method)]
+  m <- as.matrix(colData(m)[, available])
+
+  # calculate log(scores) +1
+  m <- log(m +1)
+
   # initialize matrix
   m_row <- nrow(m)
   m_col <- ncol(m)
   m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
-    nrow = m_row,
-    ncol = m_col
+                  nrow = m_row,
+                  ncol = m_col
   )
 
 
   # calculate threshold
   if (length(threshold) == 1) {
     m_out[m > threshold] <- TRUE
-  } else if (length(threshold) == m_row) {
-    for (i in 1:m_row) {
-      m_out[i, m[i, ] > threshold[i]] <- TRUE
+  } else if (length(threshold) == m_col){
+    for(i in 1:m_row){
+      m_out[i,] <- m[i,] > threshold
     }
   } else {
     stop(
       "As threshold, you can enter either a number or a vector of length ",
-      m_row, "\n"
+      m_col, "\n"
     )
   }
 
@@ -335,3 +343,50 @@ presence <- function(m, trheshold) {
 
   return(m_out)
 }
+
+#' Determine threshold for celltype presence based on antimode of celltype density
+#' @param m A SpatialExperiment Object
+#' @return A vector with celltype specific cutoff values
+
+
+antimode_cutoff <- function(m, method){
+
+  # create matrix with scores for each spot and celltype
+  available <- available_results(m)[startsWith(available_results(m), method)]
+  m <- colData(m)[, available]
+  # threshold vector
+  cutoffs <- c()
+  # vector with all celltype names
+  celltypes <- colnames(m)
+
+  for(celltype in celltypes){
+
+    score <- m[,celltype]
+
+    # Compute log-score
+
+    logscore <- log(score+1)
+
+    # Exclude 1% most extreme values
+
+    interval <- quantile(logscore,
+                         p = c(0.005, 0.995), na.rm = T)
+    logscore <- logscore[logscore>interval[1] & logscore<interval[2]]
+
+    # Estimate antimode
+
+    res <- locmodes(logscore,
+                    mod0 = 2,
+                    display = F) # You can put this to FALSE
+
+    cutoff <- res$locations[2]
+
+    # Add cutoff to threshold vector
+
+    cutoffs <- append(cutoffs, cutoff)
+
+  }
+  return(cutoffs)
+}
+
+
