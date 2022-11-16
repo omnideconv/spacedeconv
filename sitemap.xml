@@ -79,6 +79,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/checkCol.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/checkENSEMBL.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/checkRowColumn.html</loc>
   </url>
   <url>
@@ -151,9 +154,6 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/normalize.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_cells_per_spot.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_celltype.html</loc>
   </url>
   <url>
@@ -161,6 +161,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_comparison.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_gene.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_most_abundant.html</loc>
@@ -176,6 +179,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/required_packages.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/save_plot.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/set_cibersort_binary.html</loc>

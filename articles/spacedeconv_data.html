@@ -46,7 +46,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">spacedeconv FAQ</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
     <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -68,10 +68,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Data Input</h1>
-                        <h4 data-toc-skip class="author">Constantin
-Zackl</h4>
             
-            <h4 data-toc-skip class="date">2022-09-12</h4>
       
       
       <div class="d-none name"><code>spacedeconv_data.Rmd</code></div>
@@ -145,9 +142,9 @@ SCDC, BSeq-sc, CDSeq and CARD with the parameter
 </h2>
 <p>Spatially resolved data needs to be available in the
 SpatialExperiment format. For 10XVisium slides the data can be loaded
-easily by providing the path to the data folder. More information about
-data loading and manual object construction can be found in the
-SpatialExperiment <a href="https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html" class="external-link">Vignette</a>.</p>
+easily by providing the path to the directory create by <a href="https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger" class="external-link">SpaceRanger</a>.
+More information about data loading and manual object construction can
+be found in the SpatialExperiment <a href="https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html" class="external-link">Vignette</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">SpatialExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/read10xVisium.html" class="external-link">read10xVisium</a></span><span class="op">(</span><span class="va">path_to_directory</span><span class="op">)</span></span></code></pre></div>
 <p>Spatial data available as a Seurat Object can be converted into a

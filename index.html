@@ -46,7 +46,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="articles/spacedeconv_example.html">Example</a>
-    <a class="dropdown-item" href="articles/spacedeconv_faq.html">spacedeconv FAQ</a>
+    <a class="dropdown-item" href="articles/spacedeconv_faq.html">FAQ</a>
     <a class="dropdown-item" href="articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -66,7 +66,7 @@
 <div class="page-header"><h1 id="spacedeconv">spacedeconv<a class="anchor" aria-label="anchor" href="#spacedeconv"></a>
 </h1></div>
 
-<p>spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.</p>
+<p>spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data. These methods don’t require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -129,7 +129,7 @@
 <div class="section level3">
 <h3 id="id_3-visualization">3. Visualization<a class="anchor" aria-label="anchor" href="#id_3-visualization"></a>
 </h3>
-<p>spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in this <a href="articles/spacedeconv_visualization.html">vignette</a>.</p>
+<p>spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in the visualization <a href="articles/spacedeconv_visualization.html">vignette</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># sample does refer to the first column of ColData(spe)</span></span>
 <span><span class="co"># for cell_type input a celltype present in the deconvolution result</span></span>

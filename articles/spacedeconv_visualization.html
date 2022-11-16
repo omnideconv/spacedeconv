@@ -46,7 +46,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">spacedeconv FAQ</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
     <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -68,10 +68,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>spacedeconv Visualization</h1>
-                        <h4 data-toc-skip class="author">Constantin
-Zackl</h4>
             
-            <h4 data-toc-skip class="date">2022-09-21</h4>
       
       
       <div class="d-none name"><code>spacedeconv_visualization.Rmd</code></div>
@@ -105,21 +102,19 @@ step. Therefore only <code><a href="../reference/deconvolute.html">deconvolute()
 <code><a href="../reference/plot_celltype.html">plot_celltype()</a></code> visualizes the spatial image with color
 coded cell type fractions for one cell type.</li>
 <li>
-<code><a href="../reference/plot_cells_per_spot.html">plot_cells_per_spot()</a></code> shows a color coded distribution
-of the number of detected cell types for each spot. This plot can
-additionally rendered as a bar chart.</li>
+<code><a href="../reference/plot_gene.html">plot_gene()</a></code> plot spatial gene expression.</li>
 <li>
 <code><a href="../reference/plot_umi_count.html">plot_umi_count()</a></code> Plots the number of sequenced reads
-per spot</li>
+per spot.</li>
 <li>
 <code><a href="../reference/plot_most_abundant.html">plot_most_abundant()</a></code> Render a plot containing the most
-abundant cell-type for each spot</li>
+abundant cell-type for each spot.</li>
 <li>
 <code><a href="../reference/plot_celltype_presence.html">plot_celltype_presence()</a></code> Plot presence (thresholded) of
 a single cell-type.</li>
 <li>
 <code><a href="../reference/plot_comparison.html">plot_comparison()</a></code> Plot comparison of two cell-type
-fractions</li>
+fractions.</li>
 </ol>
 <div class="section level3">
 <h3 id="plot_celltype">1. <code>plot_celltype()</code><a class="anchor" aria-label="anchor" href="#plot_celltype"></a>
@@ -133,14 +128,13 @@ visualization.</p>
 <p><img src="spacedeconv_visualization_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
 </div>
 <div class="section level3">
-<h3 id="plot_cells_per_spot">2. <code>plot_cells_per_spot()</code><a class="anchor" aria-label="anchor" href="#plot_cells_per_spot"></a>
+<h3 id="plot_gene">2. <code>plot_gene()</code><a class="anchor" aria-label="anchor" href="#plot_gene"></a>
 </h3>
-<p>To render the distribution of the number of detected cell types per
-spot a user-selected threshold is required as well as a deconvolution
-result. A cell fraction above this threshold will be marked as
-“detected”. In this example we set the treshold to 5%.</p>
+<p>Plot gene expression on a spatial level. It may make sense to smooth
+the plot to simplify the detection of expression patterns. You can
+further select the assay using the <code>assay</code> parameter.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_cells_per_spot.html">plot_cells_per_spot</a></span><span class="op">(</span><span class="va">deconv</span>, threshold <span class="op">=</span> <span class="fl">0.05</span>, density <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_gene.html">plot_gene</a></span><span class="op">(</span><span class="va">deconv</span>, gene <span class="op">=</span> <span class="st">"AKT1"</span>, density <span class="op">=</span> <span class="cn">F</span>, smooth <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spacedeconv_visualization_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -255,8 +249,11 @@ deconvolution results anymore and should be handled with caution.</p>
 </h4>
 <p>With this parameter the expression values can be smoothed to simplify
 pattern recognition. The smoother utilizes a linear kernel which size is
-calculated by multiplying the spot distance with the smoothing
-factor.</p>
+calculated by multiplying the spot distance with the smoothing factor.
+It has to be mentioned that this operation changes the deconvolution
+result in the final plots by appling the kernel, so they should be
+interpreted as a helpful visualization option and not a deconvolution
+result.</p>
 <ul>
 <li>
 <code>smooth=T</code> enable smoothing</li>
@@ -277,7 +274,8 @@ distance)</li>
 <h4 id="density-distribution">Density Distribution<a class="anchor" aria-label="anchor" href="#density-distribution"></a>
 </h4>
 <p>You can add a density distribution by setting
-<code>density = TRUE</code>.</p>
+<code>density = TRUE</code>. The red line corresponds to the mean of the
+distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
 <span>  cell_type <span class="op">=</span> <span class="st">"epic_B.cell"</span>,</span>
@@ -289,6 +287,26 @@ distance)</li>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Picking joint bandwidth of 0.00218</span></span></code></pre>
 <p><img src="spacedeconv_visualization_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="save-plots">Save Plots<a class="anchor" aria-label="anchor" href="#save-plots"></a>
+</h4>
+<p>You can save a plot by setting <code>save=TRUE</code>. Specify a file
+path with the <code>path</code> parameter. If no path is provided your
+plots will be stored at <code>~/spacedeconvResults/</code>. To change
+the size of the rendered plot use <code>png_width</code> and
+<code>png_height</code> to set the plot size in pixels. Plots are saved
+as a png.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
+<span>  cell_type <span class="op">=</span> <span class="st">"epic_B.cell"</span>,</span>
+<span>  smooth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  density <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  save <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"~/project/results"</span>,</span>
+<span>  png_width <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  png_height <span class="op">=</span> <span class="fl">750</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -315,6 +333,8 @@ how to scale the color´</li>
 <code>title_size</code> font size of title</li>
 <li>
 <code>legend_size</code> legend</li>
+<li>
+<code>title</code> set a custom title</li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

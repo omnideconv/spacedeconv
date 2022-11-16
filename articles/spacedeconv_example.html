@@ -46,7 +46,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">spacedeconv FAQ</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
     <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -68,10 +68,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Example</h1>
-                        <h4 data-toc-skip class="author">Constantin
-Zackl</h4>
             
-            <h4 data-toc-skip class="date">2022-09-12</h4>
       
       
       <div class="d-none name"><code>spacedeconv_example.Rmd</code></div>
@@ -129,7 +126,7 @@ the terminal:</p>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
-<p>We can see that the single-cell data is in form of a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a>.
+<p>We can see that the single-cell data is available as a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a>.
 In total this dataset includes expression values from 29733 genes and
 7986 cells. It can further be seen that cell type information is
 available in <code>colData</code> where cell related annotation is
@@ -138,10 +135,12 @@ stored.</p>
 Per Million”)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Normalized object using cpm. Note that the normalization is saved in an additional assay.</span></span>
+<span><span class="co">#&gt; Normalized object using cpm. </span></span>
+<span><span class="co">#&gt; Note that the normalization is saved in an additional assay.</span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; removing 5 spots with zero expression</span></span>
-<span><span class="co">#&gt; Normalized object using cpm. Note that the normalization is saved in an additional assay.</span></span></code></pre></div>
+<span><span class="co">#&gt; Normalized object using cpm. </span></span>
+<span><span class="co">#&gt; Note that the normalization is saved in an additional assay.</span></span></code></pre></div>
 <p>When we access the object again we can see that the normalization has
 been added to the object in an additional assay called
 <code>"cpm"</code>.</p>
@@ -226,8 +225,8 @@ signature calculation.</p>
 <p>There are three different resolutions of cell type annotation
 available. For this tutorial we will choose
 <code>"celltype_major"</code> as cell type annotation.</p>
-<p>Next we can calculate a model using the annotated single-data and the
-deconvolution tool “SCDC”.</p>
+<p>Next we can calculate a signature using the annotated single-data and
+the deconvolution tool “SCDC”.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
@@ -238,6 +237,9 @@ deconvolution tool “SCDC”.</p>
 <span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span>,</span>
 <span>  batch_id_col <span class="op">=</span> <span class="st">"orig.ident"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>The signature contains expression values for all celltypes and a
+subset of distinctly expressed genes. The following example shows the
+first 10 rows of the signature calculated in the previous step.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">signature</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -392,6 +394,11 @@ deconvolution tool “SCDC”.</p>
 <div class="section level2">
 <h2 id="deconvolution">Deconvolution<a class="anchor" aria-label="anchor" href="#deconvolution"></a>
 </h2>
+<p>To deconvolute the Visium slide we use the signature we just
+calculated. Depending on the selected deconvolution tool further
+parameters need to be passed, in this case <code>cell_type_col</code>
+and <code>batch_id_col</code> as well as the scRNA-seq reference
+dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
 <span>  <span class="va">spatial_data_3</span>,</span>

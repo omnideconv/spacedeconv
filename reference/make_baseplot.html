@@ -29,7 +29,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">spacedeconv FAQ</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
     <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -66,14 +66,19 @@
 <span>  show_image <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  palette_type <span class="op">=</span> <span class="st">"sequential"</span>,</span>
 <span>  offset_rotation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  spot_size <span class="op">=</span> <span class="fl">1.17</span>,</span>
+<span>  spot_size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  smoothing_factor <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>  title_size <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  font_size <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  legend_size <span class="op">=</span> <span class="fl">40</span>,</span>
-<span>  density <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  density <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  save <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  png_width <span class="op">=</span> <span class="fl">1500</span>,</span>
+<span>  png_height <span class="op">=</span> <span class="fl">750</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -143,6 +148,10 @@
 <dd><p>font size of title</p></dd>
 
 
+<dt>title</dt>
+<dd><p>set a custom title</p></dd>
+
+
 <dt>font_size</dt>
 <dd><p>font size of legend</p></dd>
 
@@ -153,6 +162,22 @@
 
 <dt>density</dt>
 <dd><p>whether to display a density distribution next to the spatial plot</p></dd>
+
+
+<dt>save</dt>
+<dd><p>set TRUE to save plot</p></dd>
+
+
+<dt>path</dt>
+<dd><p>specify directory to save plot, if NULL: saving at ~/spacedeconv</p></dd>
+
+
+<dt>png_width</dt>
+<dd><p>when saving, png width in px</p></dd>
+
+
+<dt>png_height</dt>
+<dd><p>when saving, png height in px</p></dd>
 
 </dl></div>
 
