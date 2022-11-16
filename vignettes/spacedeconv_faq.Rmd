@@ -1,11 +1,9 @@
 ---
-title: "spacedeconv FAQ"
-author: "Constantin Zackl"
-date: "2022-09-21"
+title: "FAQ"
 output: rmarkdown::html_vignette
 bibliography: references.bib
 vignette: >
-  %\VignetteIndexEntry{spacedeconv FAQ}
+  %\VignetteIndexEntry{FAQ}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +11,12 @@ vignette: >
 # FAQ
 
 ### My SpatialExperiment contains ENSEMBL IDs. Can i still perform deconvolution? 
-It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment `rowData()` for available annotation to overwrite ENSEMBL IDs. 
+It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment `rowData()` for available annotation to overwrite ENSEMBL IDs. In most cases this can be solved by using the following code: 
+
+```{r, eval = FALSE}
+rownames(spe) <- rowData(spe)$symbol
+```
+
 
 ### How can i see which deconvolution results are available in my object?
 You can use `available_results(object)` or access `names(colData(object))` to see which deconvolution results are available. 
@@ -38,8 +41,7 @@ spacedeconv::deconvolution_methods
 
 
 
-# Method recommendations and running times 
-
+# Method recommendations
 
 ## AutoGeneS
 AutoGeneS [@Aliee2020] selects marker genes based on a multi-objective optimization which simultaneously minimizes the correlation and maximizes the distance between cell-type signatures. Compared to approaches selecting genes only on differential expression it performs favorably with respect to closely related cell-types. The resulting signature matrix can be combined with different regression models out-of-the-box, including 𝜈-support vector regression (SVR).
@@ -75,10 +77,10 @@ Scaden [@Mendeneaba2619] leverages a deep neural network (DNN) for estimating ce
 ## SCDC
 SCDC [@Dong2020] is an extension to the MuSiC framework(Wang et al., 2019). It adds an additional scaling step to down-weight the impact of aberrant genes on the prediction and a filtering strategy for misclassified cells and doublets. Most importantly, it adds an Ensemble layer allowing for a combined prediction on multiple, independent scRNA-seq datasets. The latter implicitly addresses batch effects between datasets and has been shown to improve robustness and overall performance.
 
-## Running Times
-For this example each method deconvoluted the sample dataset with ending "_1". The running times can be used to select suitable deconvolution methods. 
+## Computation Time Estimates
+For this example each method deconvoluted the sample dataset with ending "_1". The computation times can be used to select suitable deconvolution methods. 
 
-| method | Running time in sec |
+| Method | Computation time in sec |
 | --- | --- |
 | Estimate | 9.894 |
 | RCTD | 511.137 |

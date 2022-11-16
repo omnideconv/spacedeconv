@@ -1,7 +1,5 @@
 ---
 title: "Data Input"
-author: "Constantin Zackl"
-date: "2022-09-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Data Input}
@@ -59,7 +57,7 @@ sigature <- build_model(single_cell_data_1,
 
 
 # Spatial Data
-Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the data folder. More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
+Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the directory create by [SpaceRanger](https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger). More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
 
 ```{r loadSpatialExperiment, eval=FALSE}
 spe <- SpatialExperiment::read10xVisium(path_to_directory)

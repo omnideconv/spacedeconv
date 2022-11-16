@@ -26,7 +26,7 @@ normalize <- function(object, method = "cpm") {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")
   }
 
-  message("Normalized object using ", method, ". Note that the normalization is saved in an additional assay.")
+  message("Normalized object using ", method, ". ", "\n", "Note that the normalization is saved in an additional assay.")
 
   return(object)
 }

@@ -179,7 +179,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 20, legend_size = 40,
                                density = TRUE, save = FALSE, path = NULL,
-                               png_width = 1500, png_height = 750) {
+                               png_width = 1500, png_height = 750, title = NULL) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")

@@ -23,7 +23,8 @@ plot_most_abundant(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  title = NULL
 )
 }
 \arguments{
