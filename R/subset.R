@@ -35,7 +35,7 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
 
-  if (!is.numeric(seed)){
+  if (!is.numeric(seed)) {
     stop("seed has to be numeric!")
   }
   set.seed(seed)
