@@ -8,7 +8,8 @@ aggregate(
   spatial_obj = NULL,
   cell_type_1 = NULL,
   cell_type_2 = NULL,
-  name = NULL
+  name = NULL,
+  remove = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ aggregate(
 \item{cell_type_2}{cell type to aggregate, including the method "method_celltype"}
 
 \item{name}{new name for aggregation}
+
+\item{remove}{logical, remove provided cell types and just keep the aggregation}
 }
 \value{
 SpatialObject containing aggregation of provided cell types

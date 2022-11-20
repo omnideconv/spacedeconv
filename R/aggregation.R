@@ -6,9 +6,11 @@
 #' @param cell_type_1 cell type to aggregate, including the method "method_celltype"
 #' @param cell_type_2 cell type to aggregate, including the method "method_celltype"
 #' @param name new name for aggregation
+#' @param remove logical, remove provided cell types and just keep the aggregation
 #'
 #' @returns SpatialObject containing aggregation of provided cell types
-aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL, name = NULL) {
+aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
+                      name = NULL, remove = FALSE) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
@@ -38,6 +40,13 @@ aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL
 
   # aggregate and set colnames
   aggregation <- colData(spatial_obj)[, cell_type_1] + colData(spatial_obj)[, cell_type_2]
+
+  # remove old cell types if requested
+  if (remove){
+    colData(spatial_obj) <- colData(spatial_obj)[, !names(colData(spatial_obj)) %in% c(cell_type_1, cell_type_2)]
+  }
+
+  # merge data
   tmp <- cbind(colData(spatial_obj), aggregation)
   colnames(tmp) <- c(names(colData(spatial_obj)), name)
   colData(spatial_obj) <- tmp
