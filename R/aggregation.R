@@ -42,7 +42,7 @@ aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL
   aggregation <- colData(spatial_obj)[, cell_type_1] + colData(spatial_obj)[, cell_type_2]
 
   # remove old cell types if requested
-  if (remove){
+  if (remove) {
     colData(spatial_obj) <- colData(spatial_obj)[, !names(colData(spatial_obj)) %in% c(cell_type_1, cell_type_2)]
   }
 
