@@ -40,6 +40,8 @@ reference:
     contents:
       - starts_with("single_cell_data")
       - starts_with("spatial_data")
+  - title: Utils
+      - aggregate
   - title: internal
     contents:
       - spacedeconv_pkg
