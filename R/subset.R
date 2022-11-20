@@ -7,6 +7,7 @@
 #' @param scenario which fraction of each celltype should be present in the subsampled dataset?
 #' @param ncells number of cells in total, defaults to 1000
 #' @param notEnough what to do if not enough cells are available c("remove", "asis")
+#' @param seed set a seed, enables reproducibility of subsetting step
 #'
 #' @returns a singleCellExperiment with
 #'
@@ -19,7 +20,7 @@
 #'   scenario = "even",
 #'   ncells = 100
 #' )
-subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis") {
+subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis", seed = 12345) {
   if (is.null(sce)) {
     stop("SingleCellExperiment missing but required")
   }
@@ -33,6 +34,12 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
   if (!checkCol(sce, cell_type_col)) {
     stop(paste0("Column \"", cell_type_col, "\" can't be found in single cell object"))
   }
+
+  if (!is.numeric(seed)){
+    stop("seed has to be numeric!")
+  }
+  set.seed(seed)
+  message("Set seed to ", seed)
 
   message("extracting up to ", ncells, " cells")
 
