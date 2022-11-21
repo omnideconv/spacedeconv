@@ -1,3 +1,4 @@
+
 #' List of supported deconvolution methods
 #'
 #' @details Spatial Algorithms \cr
@@ -153,6 +154,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     },
     spatialdwls = {
       build_model_spatial_dwls(single_cell_obj, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)
+    },
+    cell2location = {
+      build_model_cell2location(single_cell_obj, assay_sc = assay_sc, ...)
     },
 
     ##############

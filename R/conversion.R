@@ -102,3 +102,23 @@ seurat_to_spatialexperiment <- function(seurat) {
 anndata_to_spatialexperiment <- function() {
 
 }
+
+
+
+spe_to_ad <- function(spe, assay = "counts"){
+  if (is.null(spe)){
+    stop("Parameter 'spe' is missing or null, but is required")
+  }
+
+  if (!assay %in% names(SummarizedExperiment::assays(spe))){
+    stop("Requested assay not available in object")
+  }
+
+  ad <- anndata::AnnData(
+    X = Matrix::t(SummarizedExperiment::assay(spe, assay)),
+    var = as.data.frame(SingleCellExperiment::rowData(spe)),
+    obs = as.data.frame(SingleCellExperiment::colData(spe))
+  )
+
+  return (ad)
+}
