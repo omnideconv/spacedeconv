@@ -38,8 +38,8 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30
   # source python script
   reticulate::source_python("~/SpaceDeconv/inst/python/cell2location.py")
 
-  deconv <- py_deconvolute_cell2location(sp_obj,
-                                         signature = signature,
+  deconv <- py_deconvolute_cell2location(sp_obj = ad,
+                                         signature = signature, # must be pandas
                                          epochs= as.integer(epochs),
                                          n_cell=as.integer(n_cell), alpha=as.integer(alpha), gpu = gpu)
   return(deconv)

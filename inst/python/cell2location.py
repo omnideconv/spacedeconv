@@ -128,7 +128,7 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   signature = signature.loc[intersect, :].copy()
   
   # prepare anndata for cell2location model
-  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key="sample") ############ PARAMETER
+  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key="sample_id") ############ PARAMETER
   
   # create and train the model
   mod = cell2location.models.Cell2location(
@@ -142,7 +142,7 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   )
   
   # train model 
-  mod.train(max_epochs=1000,
+  mod.train(max_epochs=100,
             # train using full data (batch_size=None)
             batch_size=None,
             # use all data points in training because

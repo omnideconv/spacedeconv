@@ -340,6 +340,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     spatialdwls = {
       deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = assay_sp, ...)
     },
+    cell2location = {
+      deconvolute_cell2location(spatial_obj, signature, ...)
+    },
 
     ##############
     # omnideconv #
