@@ -166,6 +166,14 @@ spacedeconv::plot_celltype(deconv,
 )
 ```
 
+### Aggregate cell types
+Aggregate cell types using the `aggregate` function. Internall the deconvolution results are summed up and get a new name. The aggregation can be visualized with all available plotting functions.
+
+```{r aggregation, eval=FALSE}
+spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
+```
+
+
 
 # Additional Parameters 
 
