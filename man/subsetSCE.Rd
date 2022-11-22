@@ -9,7 +9,8 @@ subsetSCE(
   cell_type_col = "celltype_major",
   scenario = "even",
   ncells = 1000,
-  notEnough = "asis"
+  notEnough = "asis",
+  seed = 12345
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ subsetSCE(
 \item{ncells}{number of cells in total, defaults to 1000}
 
 \item{notEnough}{what to do if not enough cells are available c("remove", "asis")}
+
+\item{seed}{set a seed, enables reproducibility of subsetting step}
 }
 \value{
 a singleCellExperiment with
