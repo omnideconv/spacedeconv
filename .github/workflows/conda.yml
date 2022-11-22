@@ -12,7 +12,7 @@ on:
 
 jobs:
   tests:
-    runs-on: self-hosted # ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     name: conda ${{ matrix.os }}
     strategy:
       fail-fast: false
