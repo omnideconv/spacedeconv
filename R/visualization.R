@@ -272,18 +272,18 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # extract method from celltype
-  method = unlist(strsplit(cell_type, "_"))[1]
+  method <- unlist(strsplit(cell_type, "_"))[1]
 
-  if (is.null(threshold)){
+  if (is.null(threshold)) {
     threshold <- antimode_cutoff(spe, method)[cell_type]
     message("Calculated threshold for ", cell_type, ": ", threshold)
   }
 
   # calculate presence
-  presence <- presence (spe, method, threshold)[, cell_type]
+  presence <- presence(spe, method, threshold)[, cell_type]
   df <- cbind(df, presence = presence)
 
-  if (is.null(title)){
+  if (is.null(title)) {
     title <- paste0("presence_", cell_type)
   }
 
