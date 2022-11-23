@@ -424,7 +424,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1
 
   ########## cell type test
 
-  presence = presence(spe, method, antimode_cutoff(spe, method))
+  presence <- presence(spe, method, antimode_cutoff(spe, method))
   presence[is.na(presence)] <- FALSE
 
   if (distance == 0) {
