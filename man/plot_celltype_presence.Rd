@@ -7,8 +7,7 @@
 plot_celltype_presence(
   spe,
   cell_type = NULL,
-  method = NULL,
-  threshold = 0.01,
+  threshold = NULL,
   palette = "Mako",
   transform_scale = NULL,
   sample_id = "sample01",
@@ -35,9 +34,7 @@ plot_celltype_presence(
 
 \item{cell_type}{celltype to plot}
 
-\item{method}{deconvolution method}
-
-\item{threshold}{fraction threshold, everything above is counted as "detected"}
+\item{threshold}{fraction threshold, if NULL: calculated internally}
 
 \item{palette}{colorspace palette (sequential)}
 

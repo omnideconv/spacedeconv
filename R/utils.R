@@ -398,5 +398,8 @@ antimode_cutoff <- function(m, method) {
 
     cutoffs <- append(cutoffs, cutoff)
   }
+
+  names(cutoffs) <- celltypes
+
   return(cutoffs)
 }
