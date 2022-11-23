@@ -417,9 +417,8 @@ antimode_cutoff <- function(m, method) {
 #' @param cell_type_2
 #' @param density logical
 #' @param niter
-cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_1 = NULL, cell_type_2 = NULL, density = FALSE, niter = 100){
-
-  if (is.null(cell_type_1) || is.null(cell_type_2)){
+cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1 = NULL, cell_type_2 = NULL, density = FALSE, niter = 100) {
+  if (is.null(cell_type_1) || is.null(cell_type_2)) {
     stop("cell type 1 or 2 missing or null")
   }
 
@@ -428,13 +427,12 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
   presence = presence(spe, method, antimode_cutoff(spe, method))
   presence[is.na(presence)] <- FALSE
 
-  if (distance ==0){
+  if (distance == 0) {
     # create presence/absence vector for both celltypes
 
     A <- presence[, cell_type_1]
     B <- presence[, cell_type_2]
-
-  } else if (distance  == 1){
+  } else if (distance == 1) {
     df <- as.data.frame(SpatialExperiment::spatialCoords(spe))
 
     # calculate scaling factor
@@ -445,8 +443,8 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
 
 
 
-    #for all spots get the spots in distance and calculate mean value
-    iniche = vector(mode = "list", length = niter)
+    # for all spots get the spots in distance and calculate mean value
+    iniche <- vector(mode = "list", length = niter)
     for (spot in rownames(df)) {
       point <- df[spot, ][c("pxl_col_in_fullres", "pxl_row_in_fullres")]
 
@@ -454,7 +452,7 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
       names(spots_in_distance) <- rownames(df)
       spots_in_distance <- spots_in_distance[spots_in_distance <= spot_distance * smoothing_factor]
 
-      #new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type], na.rm = TRUE))
+      # new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type], na.rm = TRUE))
       iniche[spot] <- list(names(spots_in_distance))
     }
 
@@ -462,28 +460,22 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
     niche_pres_A <- rep(FALSE, length(iniche))
     niche_pres_B <- rep(FALSE, length(iniche))
 
-    for (i in 1:length(iniche)){
+    for (i in 1:length(iniche)) {
       bar <- iniche[[i]]
 
       uni <- presence[bar, cell_type_1]
       dui <- presence[bar, cell_type_2]
 
-      if (sum(uni)>=1){
+      if (sum(uni) >= 1) {
         niche_pres_A[i] <- TRUE
       }
 
-      if (sum(dui)>=1){
+      if (sum(dui) >= 1) {
         niche_pres_B[i] <- TRUE
       }
-
-      # niche_A_B <- rbind(niche_pres_A, niche_pres_B)
-      # rownames(niche_A_B) <- c(cell_type_1, cell_type_2)
-      #
-      # A <- niche_A_B[cell_type_1, ]
-      # B <- niche_A_B[cell_type_2, ]
-
     }
 
+    # combine
     niche_A_B <- rbind(niche_pres_A, niche_pres_B)
     rownames(niche_A_B) <- c(cell_type_1, cell_type_2)
 
@@ -498,25 +490,25 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
 
   # compute colocalization and avoidance of randomized presence matrix
   A_B_coloc_rand <- vector(length = niter)
-  for (i in 1:niter){
+  for (i in 1:niter) {
     A_shuffle <- sample(A)
     loc_shuffle <- coloc_avoid(A_shuffle, B)
     A_B_coloc_rand[i] <- loc_shuffle["coloc"]
   }
 
   A_B_avoid_rand <- vector(length = niter)
-  for (i in 1:niter){
+  for (i in 1:niter) {
     A_shuffle <- sample(A)
     loc_shuffle <- coloc_avoid(A_shuffle, B)
     A_B_avoid_rand[i] <- loc_shuffle["avoid"]
   }
 
-  if (density){
+  if (density) {
     dens <- density(A_B_coloc_rand)
     p <- plot(dens, main = paste0("Colocalization ", cell_type_1, "_", cell_type_2), xlim = range(coloc, A_B_coloc_rand))
     abline(v = coloc, col = "red")
-    plot(density(A_B_avoid_rand), main=paste0("Avoidance ", cell_type_1, "_", cell_type_2), xlim = range(avoid, A_B_avoid_rand))
-    abline(v =avoid, col ="red")
+    plot(density(A_B_avoid_rand), main = paste0("Avoidance ", cell_type_1, "_", cell_type_2), xlim = range(avoid, A_B_avoid_rand))
+    abline(v = avoid, col = "red")
   }
 
   # p value
@@ -528,8 +520,8 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
   avoid_rand_mean <- mean(A_B_avoid_rand)
 
   # ratio
-  coloc_ratio <- coloc/ coloc_rand_mean
-  avoid_ratio <- avoid/ avoid_rand_mean
+  coloc_ratio <- coloc / coloc_rand_mean
+  avoid_ratio <- avoid / avoid_rand_mean
 
   res <- c(
     A_B_coloc = coloc,
@@ -542,33 +534,17 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
     A_B_avoid_ratio = avoid_ratio
   )
 
-  return (res)
-
+  return(res)
 }
 
 #' Colocalization of two celltypes
 #'
 #' @param A presence of cell type
 #' @param B presence of cell type
-coloc_avoid <- function(A, B){
+coloc_avoid <- function(A, B) {
   A[is.na(A)] <- FALSE # does this make sense?????
   B[is.na(B)] <- FALSE
-  coloc <- sum(A&B) / length(A)
-  avoidance <- sum(!A&B)/length(A)
-  return (c(coloc = coloc, avoid = avoidance))
+  coloc <- sum(A & B) / length(A)
+  avoidance <- sum(!A & B) / length(A)
+  return(c(coloc = coloc, avoid = avoidance))
 }
-
-#' #' @param obj SpatialExperiment
-#' #' @param r rowname
-#' #' @param c colname
-#'
-#' iniche <- function(obj, r, c){
-#'
-#'   if (r%%2 == 0 && c%%2 == 1){stop("Row and column have to be both even or odd")}
-#'   if (c%%2 == 0 && r%%2 == 1){stop("Row and column have to be both even or odd")}
-#'
-#'   coord <- SpatialExperiment::spatialCoords(obj)
-#'   index <- coord[coord[, "pxl_col_in_fullres"]== c, ]
-#'   index <- index[index[, "pxl_row_in_fullres"] == r, ]
-#' }
-#'
