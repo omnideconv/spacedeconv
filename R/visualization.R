@@ -273,11 +273,11 @@ plot_celltype_presence <- function(spe, cell_type = NULL, method = NULL, thresho
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # calculate presence TRUE/FALSE
-  #presence <- df[, cell_type] > threshold #### the column with celltype
+  # presence <- df[, cell_type] > threshold #### the column with celltype
   ### external treshold function in utils.R
   ### plotting function: call external threshold function
 
-  presence <- presence (spe, method, threshold)[, celltype]
+  presence <- presence(spe, method, threshold)[, celltype]
 
   df <- cbind(df, presence = presence)
 
