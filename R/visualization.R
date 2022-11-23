@@ -1,109 +1,3 @@
-#' Plot Cells per Spot
-#'
-#' @param spatial_obj SpatialExperiment containing deconvolution results
-#' @param plot_type bar chart or spatial (bar, spatial)
-#' @param threshold threshold for presence/absence, single value or vector of length nrow(spatial_obj)
-#' @param palette colorspace palette (sequential)
-#' @param transform_scale data transform_scaleation to use, "log"
-#' @param reverse_palette reverse color palette
-#' @param sample_id sample of SpatialExperiment to be plotted
-#' @param image_id image of SpatialExperiment for the background annotation
-#' @param show_image whether to show the histology image in the background
-#' @param offset_rotation correct hex orientation for rotated visium image
-#' @param spot_size increase (>1) or decrease (<1) the hex size
-#' @param limits vector of color scale limit
-#' @param title_size font size of title
-#' @param font_size font size of legend
-#' @param legend_size size of legend in points
-#' @param density whether to display a density distribution next to the spatial plot
-#' @param save set TRUE to save plot
-#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
-#' @param png_width when saving, png width in px
-#' @param png_height when saving, png height in px
-#'
-#' @returns A hex plot containing unique cell counts per spot
-#' @export
-#'
-#' @examples
-#' data("spatial_data_1")
-#' deconv <- spacedeconv::deconvolute(spatial_data_1, method = "estimate")
-#' spacedeconv::plot_cells_per_spot(deconv)
-plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
-                                threshold = 0.01, palette = "Mako", transform_scale = NULL,
-                                reverse_palette = FALSE,
-                                sample_id = "sample01", image_id = "lowres",
-                                show_image = FALSE, offset_rotation = FALSE,
-                                spot_size = 1, limits = NULL, title_size = 30,
-                                font_size = 20, legend_size = 40, density = TRUE,
-                                save = FALSE, path = NULL,
-                                png_width = 1500, png_height = 750) {
-  if (is.null(spatial_obj)) {
-    stop("Paramter 'spatial_obj' is missing or null, but is required")
-  }
-
-  if (!plot_type %in% c("spatial", "bar")) {
-    stop("Plot_type not supported")
-  }
-
-  mat <- get_results_from_object(spatial_obj)
-
-  # initialize result matrix with zeros
-  res <- matrix(0, nrow = nrow(mat), ncol = ncol(mat))
-
-  # single threshold or vector
-  if (length(threshold) == 1) {
-    res[mat > threshold] <- 1
-  } else if (length(threshold) == nrow(mat)) {
-    # vector matches matrix
-    for (i in 1:nrow(mat)) {
-      res[i, mat[i, ] > threshold[i]] <- 1
-    }
-  }
-
-  rownames(res) <- rownames(mat)
-  colnames(res) <- colnames(mat)
-
-  # remove unwanted columns
-  res <- res[, !colnames(res) %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
-
-  # count cells
-  plot_data <- data.frame(spot = rownames(res), nCells = as.factor(apply(res, 1, sum)))
-
-  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spatial_obj), plot_data))
-
-  result <- make_baseplot(
-    spe = spatial_obj, df = df, to_plot = "nCells",
-    sample_id = sample_id, image_id = image_id,
-    show_image = show_image, palette_type = "discrete",
-    offset_rotation = offset_rotation, palette = palette,
-    transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits, title_size = title_size,
-    font_size = font_size, legend_size = legend_size, density = density,
-    save = save, path = path, png_width = png_width, png_height = png_height
-  )
-
-  return(result)
-
-  # if (plot_type == "bar") {
-  #   plot <- ggplot2::ggplot(plot_data) +
-  #     ggplot2::geom_bar(aes_string(x = "value"), stat = "count", fill = "black") +
-  #     ggplot2::geom_vline(
-  #       ggplot2::aes(xintercept = mean(unlist(plot_data["value"]))),
-  #       color = "red",
-  #       linetype = "dashed",
-  #       size = 1
-  #     ) +
-  #     ggplot2::geom_hline(yintercept = 0, size = 1.2) +
-  #     ggplot2::theme_classic() +
-  #     ggplot2::theme(
-  #       axis.title.x = ggplot2::element_blank(),
-  #       axis.title.y = ggplot2::element_blank(),
-  #       axis.line.y = ggplot2::element_blank(),
-  #       axis.line.x = ggplot2::element_blank(),
-  #     )
-  # }
-}
-
 #' Function to plot deconvolution results
 #'
 #' Generate Hex Plot of a SpatialExperiment containing deconvolution results
@@ -123,6 +17,7 @@ plot_cells_per_spot <- function(spatial_obj, plot_type = "spatial",
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
@@ -143,7 +38,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           show_image = FALSE, palette_type = "sequential",
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -166,7 +61,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     image_id = image_id, show_image = show_image,
     palette_type = palette_type, offset_rotation = offset_rotation,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits,
+    spot_size = spot_size, limits = limits, title = title,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
     density = density, save = save, path = path, png_width = png_width, png_height = png_height
@@ -196,6 +91,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
@@ -219,7 +115,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            show_image = FALSE, offset_rotation = FALSE,
                            spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
-                           title_size = 30, font_size = 20,
+                           title_size = 30, title = NULL, font_size = 20,
                            legend_size = 40, density = TRUE,
                            save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
@@ -236,7 +132,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     image_id = image_id, show_image = show_image,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits,
+    spot_size = spot_size, limits = limits, title = title,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
     density = density, save = save, path = path, png_width = png_width, png_height = png_height
@@ -264,6 +160,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 # #' @param smooth whether to smooth the plot
 # #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
@@ -282,7 +179,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 20, legend_size = 40,
                                density = TRUE, save = FALSE, path = NULL,
-                               png_width = 1500, png_height = 750) {
+                               png_width = 1500, png_height = 750, title = NULL) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -329,7 +226,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     offset_rotation = offset_rotation, spot_size = spot_size,
     title_size = title_size, palette_type = "discrete",
     font_size = font_size, legend_size = legend_size, density = density,
-    save = save, path = path, png_width = png_width, png_height = png_height
+    save = save, path = path, png_width = png_width, png_height = png_height,
+    title = title
   ))
 }
 
@@ -351,6 +249,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param save set TRUE to save plot
@@ -368,7 +267,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, method = NULL, thresho
                                    show_image = FALSE, offset_rotation = FALSE,
                                    spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
-                                   title_size = 30, font_size = 20,
+                                   title_size = 30, title = NULL, font_size = 20,
                                    legend_size = 40, save = FALSE, path = NULL,
                                    png_width = 1500, png_height = 750) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -391,7 +290,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, method = NULL, thresho
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size,
     density = FALSE, palette_type = "discrete", save = save, path = path,
-    png_width = png_width, png_height = png_height
+    png_width = png_width, png_height = png_height, title = title
   ))
 }
 
@@ -412,6 +311,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, method = NULL, thresho
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
@@ -431,7 +331,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             show_image = FALSE, offset_rotation = FALSE,
                             spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
-                            title_size = 30, font_size = 20,
+                            title_size = 30, title = NULL, font_size = 20,
                             legend_size = 40, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -453,6 +353,89 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     density = density, palette_type = palette_type, save = save, path = path,
     png_width = png_width, png_height = png_height
   ))
+}
+
+
+#' Function to plot gene expression
+#'
+#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param gene gene to plot
+#' @param assay assay to extract gene expression, default = "counts"
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, whether to display the image, default = TRUE
+#' @param palette_type discrete, sequential or diverging
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param title set a custom title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
+#'
+#' @returns plot of cell type fractions
+#'
+#' @export
+#' @examples
+#' data("spatial_data_2")
+#' deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
+#' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
+plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
+                      sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
+                      show_image = FALSE, palette_type = "sequential",
+                      offset_rotation = FALSE, spot_size = 1, limits = NULL,
+                      smooth = FALSE, smoothing_factor = 1.5,
+                      title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                      save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+  if (is.null(spe)) {
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  if (is.null(gene)) {
+    stop("Parameter 'gene' is null or missing, but is required")
+  }
+
+  # check that celltypes are present in object
+  if (!gene %in% rownames(spe)) {
+    stop("Provides gene is not present in SpatialExperiment")
+  }
+
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), gene = SummarizedExperiment::assay(spe, assay)[gene, ]))
+
+  # set gene name as title
+  if (is.null(title)) {
+    title <- gene
+  }
+
+  return(make_baseplot(spe, df,
+    title = title,
+    palette = palette,
+    to_plot = "gene", sample_id = sample_id,
+    image_id = image_id, show_image = show_image,
+    palette_type = palette_type, offset_rotation = offset_rotation,
+    transform_scale = transform_scale, reverse_palette = reverse_palette,
+    spot_size = spot_size, limits = limits,
+    smooth = smooth, smoothing_factor = smoothing_factor,
+    title_size = title_size, font_size = font_size, legend_size = legend_size,
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height
+  ))
+
+  # TODO
+  # add facet wrap
+  # add color selection
+  # confirm the requested image is available in object
 }
 
 
@@ -482,6 +465,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
+#' @param title set a custom title
 #' @param font_size font size of legend
 #' @param legend_size legend size in points
 #' @param density whether to display a density distribution next to the spatial plot
@@ -494,7 +478,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           image_id = "lowres", show_image = FALSE,
                           palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -528,22 +512,26 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # apply potential transform_scaleations
   legend_title <- as.character(to_plot)
-  if (!is.null(transform_scale)) {
-    if (transform_scale == "ln") {
-      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
-      legend_title <- paste0(legend_title, "_", "ln")
-    } else if (transform_scale == "log10") {
-      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
-      legend_title <- paste0(legend_title, "_", "log10")
-    } else if (transform_scale == "log2") {
-      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
-      legend_title <- paste0(legend_title, "_", "log2")
-    } else if (transform_scale == "sqrt") {
-      df[[to_plot]] <- sqrt(df[[to_plot]])
-      legend_title <- paste0(legend_title, "_", "sqrt")
-    } else {
-      print("Unknown transform_scaleation, plotting untransform_scaleed data")
+  if (is.null(title)) {
+    if (!is.null(transform_scale)) {
+      if (transform_scale == "ln") {
+        df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
+        legend_title <- paste0(legend_title, "_", "ln")
+      } else if (transform_scale == "log10") {
+        df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
+        legend_title <- paste0(legend_title, "_", "log10")
+      } else if (transform_scale == "log2") {
+        df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
+        legend_title <- paste0(legend_title, "_", "log2")
+      } else if (transform_scale == "sqrt") {
+        df[[to_plot]] <- sqrt(df[[to_plot]])
+        legend_title <- paste0(legend_title, "_", "sqrt")
+      } else {
+        print("Unknown transform_scaleation, plotting untransform_scaleed data")
+      }
     }
+  } else {
+    legend_title <- title
   }
 
   if (smooth) {

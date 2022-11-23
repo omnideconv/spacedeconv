@@ -30,7 +30,7 @@ reference:
       - starts_with("deconvolute_")
   - title: Visualization
     contents:
-      - plot_cells_per_spot
+      - plot_gene
       - plot_celltype
       - plot_umi_count
       - plot_most_abundant
@@ -40,6 +40,9 @@ reference:
     contents:
       - starts_with("single_cell_data")
       - starts_with("spatial_data")
+  - title: Utils
+    contents:
+      - aggregate
   - title: internal
     contents:
       - spacedeconv_pkg

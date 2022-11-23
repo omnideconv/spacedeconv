@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data.
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data. These methods don't require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures.
 
 ## Installation
 
@@ -65,7 +65,7 @@ result <- spacedeconv::deconvolute(
 
 ### 3. Visualization
 
-spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in this [vignette](articles/spacedeconv_visualization.html).
+spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
 # sample does refer to the first column of ColData(spe)

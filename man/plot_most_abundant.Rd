@@ -23,7 +23,8 @@ plot_most_abundant(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  title = NULL
 )
 }
 \arguments{
@@ -64,6 +65,8 @@ plot_most_abundant(
 \item{png_width}{when saving, png width in px}
 
 \item{png_height}{when saving, png height in px}
+
+\item{title}{set a custom title}
 }
 \value{
 plot of cell type fractions

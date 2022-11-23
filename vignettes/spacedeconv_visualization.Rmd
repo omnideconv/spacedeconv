@@ -1,7 +1,5 @@
 ---
 title: "spacedeconv Visualization"
-author: "Constantin Zackl"
-date: "2022-09-21"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{spacedeconv Visualization}
@@ -30,11 +28,11 @@ deconv <- spacedeconv::deconvolute(
 At the moment spacedeconv offers two visualization functions. 
 
 1. `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
-2. `plot_cells_per_spot()` shows a color coded distribution of the number of detected cell types for each spot. This plot can additionally rendered as a bar chart. 
-3. `plot_umi_count()` Plots the number of sequenced reads per spot
-4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot
+2. `plot_gene()` plot spatial gene expression.
+3. `plot_umi_count()` Plots the number of sequenced reads per spot.
+4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot.
 5. `plot_celltype_presence()` Plot presence (thresholded) of a single cell-type.
-6. `plot_comparison()` Plot comparison of two cell-type fractions
+6. `plot_comparison()` Plot comparison of two cell-type fractions.
 
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
@@ -42,11 +40,12 @@ Plot any spot annotation with a continuous or discrete scale. The spot annotatio
 spacedeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F)
 ```
 
-## 2. `plot_cells_per_spot()`
+## 2. `plot_gene()`
 
-To render the distribution of the number of detected cell types per spot a user-selected threshold is required as well as a deconvolution result. A cell fraction above this threshold will be marked as "detected". In this example we set the treshold to 5%. 
+Plot gene expression on a spatial level. It may make sense to smooth the plot to simplify the detection of expression patterns. You can further select the assay using the `assay` parameter.
+
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-spacedeconv::plot_cells_per_spot(deconv, threshold = 0.05, density = F)
+spacedeconv::plot_gene(deconv, gene = "AKT1", density = F, smooth = T)
 ```
 
 ## 3. `plot_umi_count()`
@@ -124,7 +123,7 @@ spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE)
 
 ### Smooth
 
-With this parameter the expression values can be smoothed to simplify pattern recognition. The smoother utilizes a linear kernel which size is calculated by multiplying the spot distance with the smoothing factor.
+With this parameter the expression values can be smoothed to simplify pattern recognition. The smoother utilizes a linear kernel which size is calculated by multiplying the spot distance with the smoothing factor. It has to be mentioned that this operation changes the deconvolution result in the final plots by appling the kernel, so they should be interpreted as a helpful visualization option and not a deconvolution result.  
 
 * `smooth=T` enable smoothing 
 * `smoothing_factor` choose kernel size (factor of spot distance)
@@ -139,7 +138,7 @@ spacedeconv::plot_celltype(deconv,
 ```
 
 ### Density Distribution 
-You can add a density distribution by setting `density = TRUE`.
+You can add a density distribution by setting `density = TRUE`. The red line corresponds to the mean of the distribution. 
 
 ```{r}
 spacedeconv::plot_celltype(deconv,
@@ -152,6 +151,29 @@ spacedeconv::plot_celltype(deconv,
 )
 ```
 
+### Save Plots
+You can save a plot by setting `save=TRUE`. Specify a file path with the `path` parameter. If no path is provided your plots will be stored at `~/spacedeconvResults/`. To change the size of the rendered plot use `png_width` and `png_height` to set the plot size in pixels. Plots are saved as a png. 
+
+```{r, eval= FALSE}
+spacedeconv::plot_celltype(deconv,
+  cell_type = "epic_B.cell",
+  smooth = TRUE,
+  density = TRUE,
+  save = TRUE,
+  path = "~/project/results",
+  png_width = 1000,
+  png_height = 750
+)
+```
+
+### Aggregate cell types
+Aggregate cell types using the `aggregate` function. Internall the deconvolution results are summed up and get a new name. The aggregation can be visualized with all available plotting functions.
+
+```{r aggregation, eval=FALSE}
+spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
+```
+
+
 
 # Additional Parameters 
 
@@ -163,3 +185,4 @@ spacedeconv::plot_celltype(deconv,
 * `font_size` font size of legend 
 * `title_size` font size of title
 * `legend_size` legend 
+* `title` set a custom title
