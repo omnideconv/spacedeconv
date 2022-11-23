@@ -321,6 +321,7 @@ presence <- function(spe, method, threshold) {
   m <- as.matrix(colData(spe)[, available])
 
   # remove NAN????
+  m[is.nan(m)] <- 0
 
   # calculate log(scores) +1
   m <- log(m + 1)
@@ -425,6 +426,7 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
   ########## cell type test
 
   presence = presence(spe, method, antimode_cutoff(spe, method))
+  presence[is.na(presence)] <- FALSE
 
   if (distance ==0){
     # create presence/absence vector for both celltypes
@@ -457,8 +459,8 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
     }
 
     # determine presence/absence of celltypes in the iniches
-    niche_pres_A <- rep(FALSE, niter)
-    niche_pres_B <- rep(FALSE, niter)
+    niche_pres_A <- rep(FALSE, length(iniche))
+    niche_pres_B <- rep(FALSE, length(iniche))
 
     for (i in 1:length(iniche)){
       bar <- iniche[[i]]
@@ -474,11 +476,11 @@ cell_pair_localization <- function(spe, method  = NULL, distance = 0, cell_type_
         niche_pres_B[i] <- TRUE
       }
 
-      niche_A_B <- rbind(niche_pres_A, niche_pres_B)
-      rownames(niche_A_B) <- c(cell_type_1, cell_type_2)
-
-      A <- niche_A_B[cell_type_1, ]
-      B <- niche_A_B[cell_type_2, ]
+      # niche_A_B <- rbind(niche_pres_A, niche_pres_B)
+      # rownames(niche_A_B) <- c(cell_type_1, cell_type_2)
+      #
+      # A <- niche_A_B[cell_type_1, ]
+      # B <- niche_A_B[cell_type_2, ]
 
     }
 
