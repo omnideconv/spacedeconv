@@ -10,12 +10,12 @@ import matplotlib as mpl
 #rcParams["pdf.fonttype"] = 42
 
 
-#sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
-#sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
-
-#sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
-#sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
-
+sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
+# 
+sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
+sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
+# 
 # adata_ref = sc.read(
 #     f'./data/sc.h5ad',
 #    backup_url='https://cell2location.cog.sanger.ac.uk/paper/integrated_lymphoid_organ_scrna/RegressionNBV4Torch_57covariates_73260cells_10237genes/sc.h5ad'
@@ -30,7 +30,7 @@ import matplotlib as mpl
 
 def py_build_model_cell2location(adata_ref, 
                                   epochs = 20, 
-                                  sample = "Sample", 
+                                  sample = "sample_id", 
                                   cell_type_column = "celltype_major", 
                                   cell_count_cutoff=5, 
                                   cell_percentage_cutoff=0.03, 
@@ -54,14 +54,10 @@ def py_build_model_cell2location(adata_ref,
   nonz_mean_cutoff: float
     cell2location parameter
   """
-  
-  print ("THis is the type", type(adata_ref))
-  
-  # a filtering step, outsource parameters
-  from cell2location.utils.filtering import filter_genes
-  # filter genes#
-  mpl.pyplot.ioff()
-  selected = filter_genes(adata_ref, 
+
+  # filter genes
+  # ## mpl.pyplot.ioff()
+  selected = cell2location.utils.filtering.filter_genes(adata_ref, 
     cell_count_cutoff = cell_count_cutoff, 
     cell_percentage_cutoff2 = cell_percentage_cutoff, 
     nonz_mean_cutoff = nonz_mean_cutoff)
@@ -74,25 +70,25 @@ def py_build_model_cell2location(adata_ref,
                           labels_key=cell_type_column
                          )
                         
-  from cell2location.models import RegressionModel
-  mod = RegressionModel(adata_ref)
+  # setup model
+  mod = cell2location.models.RegressionModel(adata_ref)
   print ("Training Model")
   mod.train(max_epochs = epochs)
   
   # export model to anndata object
   print ("finished training, extracting results")
   adata_ref = mod.export_posterior(
-    adata_ref, sample_kwargs={'num_samples': 1000, 'batch_size': 2500, 'use_gpu': False}
+    adata_ref, sample_kwargs={'num_samples': 1000, 'batch_size': 2500, 'use_gpu': gpu}
   )
-
+  
   # export estimated expression in each cluster
   if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
-      signature = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
-                                      for i in adata_ref.uns['mod']['factor_names']]].copy()
+    signature = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
+                                    for i in adata_ref.uns['mod']['factor_names']]].copy()
   else:
-      signature = adata_ref.var[[f'means_per_cluster_mu_fg_{i}'
-                                      for i in adata_ref.uns['mod']['factor_names']]].copy()
-                                      
+    signature = adata_ref.var[[f'means_per_cluster_mu_fg_{i}'
+                                    for i in adata_ref.uns['mod']['factor_names']]].copy()
+                                    
   # rename celltypes
   signature.columns = adata_ref.uns['mod']['factor_names']
 
@@ -101,7 +97,14 @@ def py_build_model_cell2location(adata_ref,
 #################
 # DECONVOLUTION #
 #################
-def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, alpha=20, gpu = True):
+def py_deconvolute_cell2location(sp_obj, 
+                                 signature, 
+                                 epochs= 30000, 
+                                 sample = "sample_id", 
+                                 n_cell=10, 
+                                 alpha=20, 
+                                 gpu = True, 
+                                 returnValue = "q05"):
   """
   Deconvolute using cell2location 
   
@@ -128,7 +131,7 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   signature = signature.loc[intersect, :].copy()
   
   # prepare anndata for cell2location model
-  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key="sample_id") ############ PARAMETER
+  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key=sample)
   
   # create and train the model
   mod = cell2location.models.Cell2location(
@@ -142,7 +145,7 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   )
   
   # train model 
-  mod.train(max_epochs=100,
+  mod.train(max_epochs=epochs,
             # train using full data (batch_size=None)
             batch_size=None,
             # use all data points in training because
@@ -154,8 +157,8 @@ def py_deconvolute_cell2location(sp_obj, signature, epochs= 30000, n_cell=10, al
   sp_obj = mod.export_posterior(
     sp_obj, sample_kwargs = {'num_samples': 1000, 'batch_size': mod.adata.n_obs, 'use_gpu': gpu}
   )
+  # means_cell_abundance_w_sf, stds_cell_abundance_w_sf, q05_cell_abundance_w_sf, q95_cell_abundance_w_sf
   
-  # rename
   sp_obj.obs[sp_obj.uns['mod']['factor_names']] = sp_obj.obsm['q05_cell_abundance_w_sf']
   
   return sp_obj.obs[sp_obj.uns["mod"]["factor_names"]]
