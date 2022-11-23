@@ -8,6 +8,8 @@ antimode_cutoff(m, method)
 }
 \arguments{
 \item{m}{A SpatialExperiment Object}
+
+\item{method}{deconvolution method}
 }
 \value{
 A vector with celltype specific cutoff values

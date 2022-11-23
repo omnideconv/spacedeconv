@@ -4,10 +4,12 @@
 \alias{presence}
 \title{Threshold a matrix}
 \usage{
-presence(m, method, threshold)
+presence(spe, method, threshold)
 }
 \arguments{
-\item{m}{A matrix containing deconvolution scores for each spot and celltype}
+\item{spe}{A SpatialExperiment containing deconvolution scores for each spot and celltype}
+
+\item{method}{deconvolution method}
 
 \item{threshold}{if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector}
 }

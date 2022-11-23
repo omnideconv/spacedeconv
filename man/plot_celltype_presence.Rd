@@ -7,6 +7,7 @@
 plot_celltype_presence(
   spe,
   cell_type = NULL,
+  method = NULL,
   threshold = 0.01,
   palette = "Mako",
   transform_scale = NULL,
@@ -32,6 +33,8 @@ plot_celltype_presence(
 \item{spe}{deconvolution result in Form of a SpatialExperiment}
 
 \item{cell_type}{celltype to plot}
+
+\item{method}{deconvolution method}
 
 \item{threshold}{fraction threshold, everything above is counted as "detected"}
 

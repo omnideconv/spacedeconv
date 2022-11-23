@@ -337,6 +337,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type celltype to plot
+#' @param method deconvolution method
 #' @param threshold fraction threshold, everything above is counted as "detected"
 #' @param palette colorspace palette (sequential)
 #' @param transform_scale data transform_scaleation to use, "log"
@@ -360,7 +361,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
 #' @export
-plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
+plot_celltype_presence <- function(spe, cell_type = NULL, method = NULL, threshold = 0.01,
                                    palette = "Mako", transform_scale = NULL,
                                    sample_id = "sample01", image_id = "lowres",
                                    reverse_palette = FALSE,
@@ -373,9 +374,11 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = 0.01,
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # calculate presence TRUE/FALSE
-  presence <- df[, cell_type] > threshold #### the column with celltype
+  #presence <- df[, cell_type] > threshold #### the column with celltype
   ### external treshold function in utils.R
   ### plotting function: call external threshold function
+
+  presence <- presence (spe, method, threshold)[, celltype]
 
   df <- cbind(df, presence = presence)
 

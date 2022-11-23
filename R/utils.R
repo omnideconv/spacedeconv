@@ -301,15 +301,19 @@ checkENSEMBL <- function(names) {
 
 #' Threshold a matrix
 #'
-#' @param m A matrix containing deconvolution scores for each spot and celltype
+#' @param spe A SpatialExperiment containing deconvolution scores for each spot and celltype
+#' @param method deconvolution method
 #' @param threshold if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector
 #'
 #'
+presence <- function(spe, method, threshold) {
+  if (!method %in% deconvolution_methods) {
+    stop("method not supported")
+  }
 
-presence <- function(m, method, threshold) {
   # create matrix with scores for each spot and celltype
-  available <- available_results(m)[startsWith(available_results(m), method)]
-  m <- as.matrix(colData(m)[, available])
+  available <- available_results(spe)[startsWith(available_results(spe), method)]
+  m <- as.matrix(colData(spe)[, available])
 
   # calculate log(scores) +1
   m <- log(m + 1)
@@ -345,10 +349,15 @@ presence <- function(m, method, threshold) {
 
 #' Determine threshold for celltype presence based on antimode of celltype density
 #' @param m A SpatialExperiment Object
+#' @param method deconvolution method
 #' @return A vector with celltype specific cutoff values
 
 
 antimode_cutoff <- function(m, method) {
+  if (!method %in% deconvolution_methods) {
+    stop("method not supported")
+  }
+
   # create matrix with scores for each spot and celltype
   available <- available_results(m)[startsWith(available_results(m), method)]
   m <- colData(m)[, available]
