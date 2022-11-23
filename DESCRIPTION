@@ -32,7 +32,8 @@ Imports:
     colorspace, 
     sf, 
     ggpubr, 
-    ggridges
+    ggridges, 
+    multimode
 Suggests: 
     spacexr,
     SPOTlight,
