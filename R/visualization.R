@@ -281,7 +281,6 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
 
   # calculate presence
   presence <- presence (spe, method, threshold)[, cell_type]
-
   df <- cbind(df, presence = presence)
 
   if (is.null(title)){
