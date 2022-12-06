@@ -2,26 +2,52 @@
 #'
 #' @param single_cell_obj SingleCellExperiment containing reference expression
 #' @param epochs number of epochs to train the network
+#' @param assay_sc assay to extract
+#' @param sample sample column
+#' @param cell_type_column column of single_cell_obj containing cell type labels
 #' @param cell_count_cutoff cell2location parameter
 #' @param cell_percentage_cutoff cell2location parameter
 #' @param nonz_mean_cutoff cell2location parameter
-build_model_cell2location <- function(single_cell_obj, epochs = 20, cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12) {
+#' @param gpu whether to train on GPU
+build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "counts", sample = "Sample", cell_type_column = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = FALSE) {
   # build anndata, gene names as rownames
 
+  ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
 
   # source python script
   reticulate::source_python("~/SpaceDeconv/inst/python/cell2location.py")
 
-  model <- py_build_model_cell2location(adat_ref,
-    epochs = epochs,
-    cell_count_cutoff = cell_count_cutoff,
+  model <- py_build_model_cell2location(ad,
+    epochs = as.integer(epochs), # int!
+    sample = sample,
+    cell_type_column = cell_type_column,
+    cell_count_cutoff = as.integer(cell_count_cutoff), # int!
     cell_percentage_cutoff = cell_percentage_cutoff,
-    nonz_mean_cutoff = nonz_mean_cutoff
+    nonz_mean_cutoff = nonz_mean_cutoff,
+    gpu = gpu
   )
 }
 
 #' Deconvolute Cell2location
+#'
+#' @param spatial_obj SpatialExperiment
+#' @param signature signature
+#' @param epochs training epochs for model
+#' @param n_cell cell2location hyperparameter
+#' @param alpha cell2location hyperparameter
+#' @param gpu whether to use nvidia gpu for training
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 1000, n_cell = 10, alpha = 20, gpu = FALSE) {
+  # TURN INTO ANNDATA
+  ad <- spe_to_ad(spatial_obj)
 
-deconvolute_cell2location <- function() {
+  # source python script
+  reticulate::source_python("~/SpaceDeconv/inst/python/cell2location.py")
 
+  deconv <- py_deconvolute_cell2location(
+    sp_obj = ad,
+    signature = signature, # must be pandas
+    epochs = as.integer(epochs),
+    n_cell = as.integer(n_cell), alpha = as.integer(alpha), gpu = gpu
+  )
+  return(deconv)
 }
