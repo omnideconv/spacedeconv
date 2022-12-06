@@ -10,11 +10,11 @@ import matplotlib as mpl
 #rcParams["pdf.fonttype"] = 42
 
 
-sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
-sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
-# 
-sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
-sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
+# sp_obj = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+# sp_obj.obs['sample'] = list(sp_obj.uns['spatial'].keys())[0] # add sample information
+# # 
+# sp_obj.var['SYMBOL'] = sp_obj.var_names # add rownames as column, in this case
+# sp_obj.var.set_index('gene_ids', drop=True, inplace=True) # ensembl as rownames???
 # 
 # adata_ref = sc.read(
 #     f'./data/sc.h5ad',

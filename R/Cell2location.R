@@ -27,11 +27,14 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
 }
 
 #' Deconvolute Cell2location
-
+#'
+#' @param spatial_obj SpatialExperiment
+#' @param signature signature
+#' @param epochs training epochs for model
+#' @param n_cell cell2location hyperparameter
+#' @param alpha cell2location hyperparameter
+#' @param gpu whether to use nvidia gpu for training
 deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = FALSE) {
-
-
-
   # TURN INTO ANNDATA
   ad = spe_to_ad(spatial_obj)
 

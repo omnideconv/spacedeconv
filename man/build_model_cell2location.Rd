@@ -7,6 +7,9 @@
 build_model_cell2location(
   single_cell_obj,
   epochs = 20,
+  assay_sc = "counts",
+  sample = "Sample",
+  cell_type_column = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
   nonz_mean_cutoff = 1.12
@@ -16,6 +19,12 @@ build_model_cell2location(
 \item{single_cell_obj}{SingleCellExperiment containing reference expression}
 
 \item{epochs}{number of epochs to train the network}
+
+\item{assay_sc}{assay to extract}
+
+\item{sample}{sample column}
+
+\item{cell_type_column}{column of single_cell_obj containing cell type labels}
 
 \item{cell_count_cutoff}{cell2location parameter}
 
