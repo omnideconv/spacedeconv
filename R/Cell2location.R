@@ -36,14 +36,16 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
 #' @param gpu whether to use nvidia gpu for training
 deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = FALSE) {
   # TURN INTO ANNDATA
-  ad = spe_to_ad(spatial_obj)
+  ad <- spe_to_ad(spatial_obj)
 
   # source python script
   reticulate::source_python("~/SpaceDeconv/inst/python/cell2location.py")
 
-  deconv <- py_deconvolute_cell2location(sp_obj = ad,
-                                         signature = signature, # must be pandas
-                                         epochs= as.integer(epochs),
-                                         n_cell=as.integer(n_cell), alpha=as.integer(alpha), gpu = gpu)
+  deconv <- py_deconvolute_cell2location(
+    sp_obj = ad,
+    signature = signature, # must be pandas
+    epochs = as.integer(epochs),
+    n_cell = as.integer(n_cell), alpha = as.integer(alpha), gpu = gpu
+  )
   return(deconv)
 }

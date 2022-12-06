@@ -105,12 +105,12 @@ anndata_to_spatialexperiment <- function() {
 
 
 
-spe_to_ad <- function(spe, assay = "counts"){
-  if (is.null(spe)){
+spe_to_ad <- function(spe, assay = "counts") {
+  if (is.null(spe)) {
     stop("Parameter 'spe' is missing or null, but is required")
   }
 
-  if (!assay %in% names(SummarizedExperiment::assays(spe))){
+  if (!assay %in% names(SummarizedExperiment::assays(spe))) {
     stop("Requested assay not available in object")
   }
 
@@ -120,5 +120,5 @@ spe_to_ad <- function(spe, assay = "counts"){
     obs = as.data.frame(SingleCellExperiment::colData(spe))
   )
 
-  return (ad)
+  return(ad)
 }
