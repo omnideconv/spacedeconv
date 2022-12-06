@@ -7,7 +7,7 @@
 deconvolute_cell2location(
   spatial_obj,
   signature = NULL,
-  epochs = 30000,
+  epochs = 1000,
   n_cell = 10,
   alpha = 20,
   gpu = FALSE

@@ -8,7 +8,8 @@
 #' @param cell_count_cutoff cell2location parameter
 #' @param cell_percentage_cutoff cell2location parameter
 #' @param nonz_mean_cutoff cell2location parameter
-build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "counts", sample = "Sample", cell_type_column = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12) {
+#' @param gpu whether to train on GPU
+build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "counts", sample = "Sample", cell_type_column = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = FALSE) {
   # build anndata, gene names as rownames
 
   ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
@@ -22,7 +23,8 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
     cell_type_column = cell_type_column,
     cell_count_cutoff = as.integer(cell_count_cutoff), # int!
     cell_percentage_cutoff = cell_percentage_cutoff,
-    nonz_mean_cutoff = nonz_mean_cutoff
+    nonz_mean_cutoff = nonz_mean_cutoff,
+    gpu = gpu
   )
 }
 
@@ -34,7 +36,7 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
 #' @param n_cell cell2location hyperparameter
 #' @param alpha cell2location hyperparameter
 #' @param gpu whether to use nvidia gpu for training
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = FALSE) {
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 1000, n_cell = 10, alpha = 20, gpu = FALSE) {
   # TURN INTO ANNDATA
   ad = spe_to_ad(spatial_obj)
 
