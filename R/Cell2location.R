@@ -36,7 +36,8 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
 #' @param n_cell cell2location hyperparameter
 #' @param alpha cell2location hyperparameter
 #' @param gpu whether to use nvidia gpu for training
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 1000, n_cell = 10, alpha = 20, gpu = FALSE) {
+#' @param result_name token to identify deconvolution results in object, default = "card"
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 1000, n_cell = 10, alpha = 20, gpu = FALSE, result_name = "c2l") {
   # TURN INTO ANNDATA
   ad <- spe_to_ad(spatial_obj)
 
@@ -49,5 +50,7 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 10
     epochs = as.integer(epochs),
     n_cell = as.integer(n_cell), alpha = as.integer(alpha), gpu = gpu
   )
+
+  deconv <- attachToken(deconv, result_name)
   return(deconv)
 }
