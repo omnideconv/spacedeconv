@@ -10,7 +10,8 @@ deconvolute_cell2location(
   epochs = 1000,
   n_cell = 10,
   alpha = 20,
-  gpu = FALSE
+  gpu = FALSE,
+  result_name = "c2l"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ deconvolute_cell2location(
 \item{alpha}{cell2location hyperparameter}
 
 \item{gpu}{whether to use nvidia gpu for training}
+
+\item{result_name}{token to identify deconvolution results in object, default = "card"}
 }
 \description{
 Deconvolute Cell2location
