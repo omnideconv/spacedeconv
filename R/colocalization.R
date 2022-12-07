@@ -24,8 +24,8 @@ presence <- function(spe, method, threshold) {
   m_row <- nrow(m)
   m_col <- ncol(m)
   m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
-                  nrow = m_row,
-                  ncol = m_col
+    nrow = m_row,
+    ncol = m_col
   )
 
 
@@ -78,7 +78,7 @@ antimode_cutoff <- function(m, method) {
     # Exclude 1% most extreme values
 
     interval <- quantile(logscore,
-                         p = c(0.005, 0.995), na.rm = T
+      p = c(0.005, 0.995), na.rm = T
     )
 
     ###### PARAMETER ohne PROZENT, default hardcoded 1%
@@ -88,8 +88,8 @@ antimode_cutoff <- function(m, method) {
     # Estimate antimode
 
     res <- locmodes(logscore,
-                    mod0 = 2,
-                    display = F
+      mod0 = 2,
+      display = F
     ) # You can put this to FALSE
 
     cutoff <- res$locations[2]
@@ -129,7 +129,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1
 
     A <- presence[, cell_type_1]
     B <- presence[, cell_type_2]
-  } else if (distance > 0 ) {
+  } else if (distance > 0) {
     df <- as.data.frame(SpatialExperiment::spatialCoords(spe))
 
     # calculate scaling factor
@@ -247,11 +247,11 @@ coloc_avoid <- function(A, B) {
 }
 
 
-ripleys_key <- function(spe){
+ripleys_key <- function(spe) {
   coords <- spatialCoords(spe)
 
-  for (celltype in available_results(spe)){
-    a = antimode_cutoff(m = spe, method = method )
+  for (celltype in available_results(spe)) {
+    a <- antimode_cutoff(m = spe, method = method)
     p <- presence(spe = spe, threshold = a, method = method)
 
     pp <- spatstat.geom::ppp(
@@ -261,6 +261,6 @@ ripleys_key <- function(spe){
       yrange = range(coords[, 1]),
       mark = celltype
     )
-    plot(spatstat.core::Kcross(pp, i = "1", correction = "Ripley"), main =celltype)
+    plot(spatstat.core::Kcross(pp, i = "1", correction = "Ripley"), main = celltype)
   }
 }
