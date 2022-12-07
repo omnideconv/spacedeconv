@@ -87,6 +87,8 @@ print(suspect_gene_modules)
 
 blue_list = [151, 139, 131, 129, 128, 117, 100]
 
+blue_list = suspected_gene_modules
+
 forbidden_genes_mask = suspect_genes_mask
 for gene_module in blue_list:
     module_genes_mask = module_of_genes == gene_module
