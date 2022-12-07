@@ -247,6 +247,13 @@ coloc_avoid <- function(A, B) {
 }
 
 
+
+#' Ripley´s K celltype distribution
+#'
+#' @param spe SpatialExperiment
+#' @param cell_type celltype of interest
+#' @param method deconvolution method
+
 ripleys_key <- function(spe, cell_type, method) {
   coords <- spatialCoords(spe)
 
