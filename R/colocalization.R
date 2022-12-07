@@ -270,3 +270,12 @@ ripleys_key <- function(spe, cell_type, method) {
   )
   plot(spatstat.core::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
 }
+
+
+
+
+
+coloc_distance <- function(spe, method = NULL, cell_type_1, cell_type_2, distance_range = c(1, 3)){
+  a <- antimode_cutoff(m = spe, method = method)
+  p <- presence(spe = spe, threshold = a, method = method)
+}
