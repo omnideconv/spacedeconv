@@ -257,17 +257,16 @@ coloc_avoid <- function(A, B) {
 ripleys_key <- function(spe, cell_type, method) {
   coords <- spatialCoords(spe)
 
-    a <- antimode_cutoff(m = spe, method = method)
-    p <- presence(spe = spe, threshold = a, method = method)
-    type <- as.factor(p[, cell_type])
+  a <- antimode_cutoff(m = spe, method = method)
+  p <- presence(spe = spe, threshold = a, method = method)
+  type <- as.factor(p[, cell_type])
 
-    pp <- spatstat.geom::ppp(
-      x = coords[, 2],
-      y = coords[, 1],
-      xrange = range(coords[, 2]),
-      yrange = range(coords[, 1]),
-      marks = type
-    )
-    plot(spatstat.core::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
-  }
-
+  pp <- spatstat.geom::ppp(
+    x = coords[, 2],
+    y = coords[, 1],
+    xrange = range(coords[, 2]),
+    yrange = range(coords[, 1]),
+    marks = type
+  )
+  plot(spatstat.core::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
+}
