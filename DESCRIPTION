@@ -33,7 +33,9 @@ Imports:
     sf, 
     ggpubr, 
     ggridges, 
-    multimode
+    multimode,
+    spatstat.core, 
+    spatstat.geom
 Suggests: 
     spacexr,
     SPOTlight,
