@@ -4,13 +4,14 @@
 #'
 #' @param spe SpatialExperiment
 #' @param method clustering method, (kmeans)
+#' @param cluster what to cluster, c("expression", "deconvolution")
 #' @param assay assay to use for clustering
 #' @param nclusters number of clusters, for kmeans
 #' @param ... further arguments passed to the clustering functions
 #'
 #' @returns SpatialExperiment containing cluster information
 #'
-cluster <- function(spe, method="kmeans", assay = "counts", nclusters = 3, ...){
+cluster <- function(spe, method="kmeans", cluster = "expression", assay = "counts", nclusters = 3, ...){
   if (is.null(spe)){
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -19,11 +20,20 @@ cluster <- function(spe, method="kmeans", assay = "counts", nclusters = 3, ...){
     stop("Requested assay not available in provided SpatialExperiment")
   }
 
-  # assay
-  tmp <- SummarizedExperiment::assay(spe, assay)
-  tmp <- t(as.matrix(tmp)) # cluster spots and not genes
+  if (!cluster %in% c("expression", "deconvolution")){
+    stop("can only cluster expression or deconvolution")
+  }
 
-  ########### remove as.matrix!!!!!
+  if (cluster == "expression"){
+    # assay
+    tmp <- SummarizedExperiment::assay(spe, assay)
+    tmp <- t(as.matrix(tmp)) # cluster spots and not genes
+
+    ##### remove as.matrix!!!!!
+
+  } else if (cluster == "deconvolution"){
+    tmp <- SummarizedExperiment::colData(spe)[available_results(spe)]
+  }
 
   # cluster
   cluster <- switch (method,
@@ -32,7 +42,7 @@ cluster <- function(spe, method="kmeans", assay = "counts", nclusters = 3, ...){
 
   # add clustering
   cluster <- as.factor(cluster)
-  colData(spe) <- cbind(colData(spe), cluster)
+  SummarizedExperiment::colData(spe) <- cbind(SummarizedExperiment::colData(spe), cluster)
 
   return (spe)
 }
