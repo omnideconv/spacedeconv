@@ -11,6 +11,8 @@
 #'
 #' @returns SpatialExperiment containing cluster information
 #'
+#' @export
+#'
 cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "counts", nclusters = 3, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
