@@ -1,33 +1,3 @@
-# library(reticulate)
-# library(SingleCellExperiment)
-#
-# mc = reticulate::import("metacells")
-# ad = reticulate::import("anndata")
-#
-# seurat = readRDS("~/subsetData/breast_cancer_seurat_object.rds")
-#
-# sce = Seurat::as.SingleCellExperiment(seurat)
-#
-#
-# # observeration = cell
-# # variables = gene
-# #anndata = ad$AnnData(X = t(SingleCellExperiment::counts(sce)),
-#   #                   var = as.data.frame(rowData(sce)), obs = as.data.frame(colData(sce)))
-#
-#
-#
-# # variables
-# excluded_gene_names = list('IGHMBP2', 'IGLL1', 'IGLL5', 'IGLON5', 'NEAT1', 'TMSB10', 'TMSB4X')
-# excluded_gene_patterns = list('MT-.*')
-#
-#
-#
-# mc$pl$analyze_clean_genes(anndata, excluded_gene_names = excluded_gene_names,
-#                           excluded_gene_patterns = excluded_gene_patterns,
-#                           random_seed = 123456)
-#
-# anndata
-
 #' Clean Genes and Cells with Metacell2
 #'
 #' @param anndata anndata object containing Single Cell Expression Data
@@ -49,8 +19,8 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
   res <- clean_genes_and_cells(anndata,
     properly_sampled_min_cell_total = as.integer(properly_sampled_min_cell_total),
     properly_sampled_max_cell_total = as.integer(properly_sampled_max_cell_total),
-    properly_sampled_max_excluded_genes_fraction = as.numeric(properly_sampled_max_excluded_genes_fraction),
-    exclude_genes = exclude_genes, exclude_gene_patterns = exclude_gene_patterns,
+    properly_sampled_max_excluded_genes_fraction = properly_sampled_max_excluded_genes_fraction,
+    exclude_genes = exclude_genes, exclude_gene_patterns = as.character(exclude_gene_patterns),
     seed = as.integer(seed)
   )
   return(res)
@@ -67,6 +37,14 @@ compute_forbidden_genes <- function(clean,
                                     suspect_gene_names = "",
                                     suspect_gene_patterns = "",
                                     seed = 123456) {
+  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
+
+  res <- compute_forbidden_genes(clean=clean,
+                                 suspect_gene_names = suspect_gene_names,
+                                 suspect_gene_patterns = suspect_gene_patterns,
+                                 seed = as.integer(seed))
+
+  return (res)
 
 }
 
@@ -77,12 +55,20 @@ compute_forbidden_genes <- function(clean,
 #'
 #' @export
 extract_forbidden_from_modules <- function(clean, forbidden_modules) {
+  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
+  res <- extract_forbidden_from_modules(clean=clean, forbidden_modules = forbidden_modules)
+
+  return (res)
 }
 
 #' Compute Metacells
 #' @param clean anndata object
 #' @param forbidden_gene_names test
+#' @export
 compute_metacells <- function(clean, forbidden_gene_names) {
+  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
+  res <- compute_metacells(clean=clean, forbidden_gene_names = forbidden_gene_names)
+  return (res)
 }

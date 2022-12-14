@@ -33,8 +33,6 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
   # combine metrics                        
   mc.pl.pick_clean_genes(anndata)
   
-  print ("test1")
-
   # cleaning cells
   mc.pl.analyze_clean_cells(
       anndata,
@@ -44,12 +42,8 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
   
   mc.pl.pick_clean_cells(anndata)
   
-  print ("test")
-
   # extract cleaned data, remove unclean genes and cells
   clean = mc.pl.extract_clean_data(anndata)
-  
-  
   
   return (clean)
 
@@ -74,6 +68,8 @@ def compute_forbidden_genes(clean, suspect_gene_names="", suspect_gene_patterns=
   print(suspect_gene_modules)
   
   print (suspect_gene_names)
+  
+  return (suspect_gene_names)
   
   
   # similarity_of_genes = mc.ut.get_vv_frame(clean, 'related_genes_similarity')
@@ -103,13 +99,15 @@ def extract_forbidden_from_modules(clean, forbidden_modules):
   print(len(forbidden_gene_names))
   print(' '.join(forbidden_gene_names))
   
+  return (clean)
+  
 def compute_metacells(clean, forbidden_gene_names):
   
   mc.pl.set_max_parallel_piles(mc.pl.guess_max_parallel_piles(clean))
   
-  print ("test")
-  
   name = "test"
+  
+  print ("computing metacells...")
   
   #with mc.ut.progress_bar():
   mc.pl.divide_and_conquer_pipeline(clean,
@@ -117,6 +115,8 @@ def compute_metacells(clean, forbidden_gene_names):
                                     #target_metacell_size=...,
                                     random_seed=123456)
                                       
+  print ("finished divide and conquer")
+                                      
   metacells = mc.pl.collect_metacells(clean, name = name + ".metacells")
 
-  return clean
+  return [clean, metacells]
