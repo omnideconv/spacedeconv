@@ -32,6 +32,8 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
                             random_seed=seed)
   # combine metrics                        
   mc.pl.pick_clean_genes(anndata)
+  
+  print ("test1")
 
   # cleaning cells
   mc.pl.analyze_clean_cells(
@@ -41,10 +43,14 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
       properly_sampled_max_excluded_genes_fraction=properly_sampled_max_excluded_genes_fraction)
   
   mc.pl.pick_clean_cells(anndata)
+  
+  print ("test")
 
   # extract cleaned data, remove unclean genes and cells
   clean = mc.pl.extract_clean_data(anndata)
-
+  
+  
+  
   return (clean)
 
 def compute_forbidden_genes(clean, suspect_gene_names="", suspect_gene_patterns="", seed = 123456):

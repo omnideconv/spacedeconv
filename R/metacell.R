@@ -42,8 +42,18 @@
 clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800,
                                   properly_sampled_max_cell_total = 8000,
                                   properly_sampled_max_excluded_genes_fraction = 0.1,
-                                  exclude_genes = "", exclude_gene_patterns = "", seed = 123456){
+                                  exclude_genes = "", exclude_gene_patterns = "", seed = 123456) {
+  # reticulate::source_python("./inst/python/metacells.py")
+  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
+  res <- clean_genes_and_cells(anndata,
+    properly_sampled_min_cell_total = as.integer(properly_sampled_min_cell_total),
+    properly_sampled_max_cell_total = as.integer(properly_sampled_max_cell_total),
+    properly_sampled_max_excluded_genes_fraction = as.numeric(properly_sampled_max_excluded_genes_fraction),
+    exclude_genes = exclude_genes, exclude_gene_patterns = exclude_gene_patterns,
+    seed = as.integer(seed)
+  )
+  return(res)
 }
 
 #' Compute forbidden genes
@@ -53,7 +63,10 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
 #' @param seed seed
 #'
 #' @export
-compute_forbidden_genes <- function (clean, suspect_gene_names="", suspect_gene_patterns="", seed = 123456){
+compute_forbidden_genes <- function(clean,
+                                    suspect_gene_names = "",
+                                    suspect_gene_patterns = "",
+                                    seed = 123456) {
 
 }
 
@@ -63,13 +76,13 @@ compute_forbidden_genes <- function (clean, suspect_gene_names="", suspect_gene_
 #' @param forbidden_modules test
 #'
 #' @export
-extract_forbidden_from_modules <- function (clean, forbidden_modules){
+extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 
 }
 
 #' Compute Metacells
 #' @param clean anndata object
 #' @param forbidden_gene_names test
-compute_metacells <- function (clean, forbidden_gene_names){
+compute_metacells <- function(clean, forbidden_gene_names) {
 
 }
