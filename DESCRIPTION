@@ -32,7 +32,10 @@ Imports:
     colorspace, 
     sf, 
     ggpubr, 
-    ggridges
+    ggridges, 
+    multimode,
+    spatstat.core, 
+    spatstat.geom
 Suggests: 
     spacexr,
     SPOTlight,

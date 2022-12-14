@@ -302,3 +302,31 @@ checkENSEMBL <- function(names) {
     return(FALSE)
   }
 }
+
+
+
+#' Annotate spots
+#' @param spe SpatialExperiment
+#' @param spots list of spots to annotate
+#' @param value_pos positive value
+#' @param value_neg negative value
+#' @param name name of the annotation
+#'
+#' @returns SpatialExperiment containing annotation
+#' @export
+annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "annotation") {
+  df <- data.frame(row.names = colnames(spe))
+  df[, name] <- value_neg
+  df[spots, ] <- value_pos
+  colData(spe) <- cbind(colData(spe), df)
+
+  return(spe)
+}
+
+#' Get coordinates of spot id
+#' @param df colData dataframe
+#' @param spotid spotid
+get_spot_coordinates <- function(df, spotid) {
+  df <- as.data.frame(df)
+  return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
+}
