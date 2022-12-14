@@ -5,7 +5,7 @@
 #' @param threshold if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector
 #'
 #'
-presence <- function(spe, method, threshold) {
+presence <- function(spe, method, threshold = NULL) {
   if (!method %in% deconvolution_methods) {
     stop("method not supported")
   }
@@ -29,6 +29,12 @@ presence <- function(spe, method, threshold) {
   )
 
 
+  if (is.null(threshold)){
+    print("Calculating Antimode cutoffs")
+    threshold <- antimode_cutoff(spe, method)
+  }
+
+
   # calculate threshold
   if (length(threshold) == 1) {
     m_out[m > threshold] <- TRUE
@@ -50,26 +56,26 @@ presence <- function(spe, method, threshold) {
 }
 
 #' Determine threshold for celltype presence based on antimode of celltype density
-#' @param m A SpatialExperiment Object
+#' @param spe A SpatialExperiment Object
 #' @param method deconvolution method
 #' @return A vector with celltype specific cutoff values
 
 
-antimode_cutoff <- function(m, method) {
+antimode_cutoff <- function(spe, method) {
   if (!method %in% deconvolution_methods) {
     stop("method not supported")
   }
 
   # create matrix with scores for each spot and celltype
-  available <- available_results(m)[startsWith(available_results(m), method)]
-  m <- colData(m)[, available]
+  available <- available_results(spe)[startsWith(available_results(spe), method)]
+  spe <- colData(spe)[, available]
   # threshold vector
   cutoffs <- c()
   # vector with all celltype names
-  celltypes <- colnames(m)
+  celltypes <- colnames(spe)
 
   for (celltype in celltypes) {
-    score <- m[, celltype]
+    score <- spe[, celltype]
 
     # Compute log-score
 
@@ -113,15 +119,19 @@ antimode_cutoff <- function(m, method) {
 #' @param cell_type_1 celltype 1
 #' @param cell_type_2 celltype 2
 #' @param density logical
-#' @param niter niter
-cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1 = NULL, cell_type_2 = NULL, density = FALSE, niter = 100) {
+#' @param niter permutations
+#' @returns statistics and graph
+#' @export
+cell_pair_localization <- function(spe, method = NULL, distance = 0,
+                                   cell_type_1 = NULL, cell_type_2 = NULL,
+                                   density = FALSE, niter = 100) {
   if (is.null(cell_type_1) || is.null(cell_type_2)) {
     stop("cell type 1 or 2 missing or null")
   }
 
   ########## cell type test
 
-  presence <- presence(spe, method, antimode_cutoff(spe, method))
+  presence <- presence(spe, method) # with antimode cutoff
   presence[is.na(presence)] <- FALSE
 
   if (distance == 0) {
@@ -130,27 +140,12 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1
     A <- presence[, cell_type_1]
     B <- presence[, cell_type_2]
   } else if (distance > 0) {
-    df <- as.data.frame(SpatialExperiment::spatialCoords(spe))
+    df <- as.data.frame(colData(spe))
 
-    # calculate scaling factor
-    scaling_offset <- 1.165 # 1.154701 # 1/cos((30/360)*2*pi) #######!!!!!!!!!!!
-    smoothing_factor <- distance
-    # calculate spot distance
-    spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * scaling_offset
-
-
-
-    # for all spots get the spots in distance and calculate mean value
+    # # for all spots get the spots in distance and calculate mean value
     iniche <- vector(mode = "list", length = niter)
     for (spot in rownames(df)) {
-      point <- df[spot, ][c("pxl_col_in_fullres", "pxl_row_in_fullres")]
-
-      spots_in_distance <- sqrt((point$pxl_col_in_fullres - df$pxl_col_in_fullres)^2 + (point$pxl_row_in_fullres - df$pxl_row_in_fullres)^2)
-      names(spots_in_distance) <- rownames(df)
-      spots_in_distance <- spots_in_distance[spots_in_distance <= spot_distance * smoothing_factor]
-
-      # new_values <- c(new_values, mean(df[names(spots_in_distance), cell_type], na.rm = TRUE))
-      iniche[spot] <- list(names(spots_in_distance))
+      iniche[spot] <- list(get_iniche(df, get_spot_coordinates(df, spot), distance = distance))
     }
 
     # determine presence/absence of celltypes in the iniches
@@ -202,9 +197,21 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, cell_type_1
 
   if (density) {
     dens <- density(A_B_coloc_rand)
-    p <- plot(dens, main = paste0("Colocalization ", cell_type_1, "_", cell_type_2), xlim = range(coloc, A_B_coloc_rand))
+    p <- plot(dens,
+      main = paste0(
+        "Colocalization ",
+        cell_type_1, "_", cell_type_2
+      ),
+      xlim = range(coloc, A_B_coloc_rand)
+    )
     abline(v = coloc, col = "red")
-    plot(density(A_B_avoid_rand), main = paste0("Avoidance ", cell_type_1, "_", cell_type_2), xlim = range(avoid, A_B_avoid_rand))
+    plot(density(A_B_avoid_rand),
+      main = paste0(
+        "Avoidance ",
+        cell_type_1, "_", cell_type_2
+      ),
+      xlim = range(avoid, A_B_avoid_rand)
+    )
     abline(v = avoid, col = "red")
   }
 
@@ -253,12 +260,13 @@ coloc_avoid <- function(A, B) {
 #' @param spe SpatialExperiment
 #' @param cell_type celltype of interest
 #' @param method deconvolution method
-
+#' @returns plot
+#' @export
 ripleys_key <- function(spe, cell_type, method) {
   coords <- spatialCoords(spe)
 
-  a <- antimode_cutoff(m = spe, method = method)
-  p <- presence(spe = spe, threshold = a, method = method)
+  #a <- antimode_cutoff(spe = spe, method = method, )
+  p <- presence(spe = spe, method = method)
   type <- as.factor(p[, cell_type])
 
   pp <- spatstat.geom::ppp(
@@ -275,8 +283,10 @@ ripleys_key <- function(spe, cell_type, method) {
 
 
 
-coloc_distance <- function(spe, method = NULL, cell_type_1, cell_type_2, distance_range = c(1, 3)) {
-  a <- antimode_cutoff(m = spe, method = method)
+coloc_distance <- function(spe, method = NULL,
+                           cell_type_1, cell_type_2,
+                           distance_range = c(1, 3)) {
+  a <- antimode_cutoff(spe = spe, method = method)
   p <- presence(spe = spe, threshold = a, method = method)
 }
 
@@ -288,53 +298,55 @@ coloc_distance <- function(spe, method = NULL, cell_type_1, cell_type_2, distanc
 #' @param distance spot distance
 #'
 #' @returns list of spot ids of iniche
-get_iniche <- function(df, coordinates, distance){
+get_iniche <- function(df, coordinates, distance) {
 
   # typecheck df, coordinates and distance
 
   row <- coordinates[1]
   column <- coordinates[2]
 
-  if((row%%2) == 0 & (column%%2) == 1) {
+  if ((row %% 2) == 0 & (column %% 2) == 1) {
     print("row and col have to be both even or odd to access spots")
-    stop()}
-  else{
-    if((row%%2) == 1 & (column%%2) == 0){
+    stop()
+  } else {
+    if ((row %% 2) == 1 & (column %% 2) == 0) {
       print("row and col have to be both even or odd to access spots")
-      stop()}}
+      stop()
+    }
+  }
 
-  center <- rownames(df[df$array_row ==row & df$array_col==column, ])
+  center <- rownames(df[df$array_row == row & df$array_col == column, ])
 
 
   # if distance == 0 then return spot
-  if (distance==0){
-    return (center)
+  if (distance == 0) {
+    return(center)
   } else { # else: get all surounding spots and call get_iniche for them
 
     # circle around the center
-    s1 <- rownames(df[df$array_row ==row & df$array_col==column-2, ]) # spot below
-    s2 <- rownames(df[df$array_row ==row & df$array_col==column+2, ]) # spot above
-    s3 <- rownames(df[df$array_row ==row-1 & df$array_col==column+1, ]) # spot upper right
-    s4 <- rownames(df[df$array_row ==row+1 & df$array_col==column+1, ]) # spot down right
-    s5 <- rownames(df[df$array_row ==row-1 & df$array_col==column-1, ]) # spot upper left
-    s6 <- rownames(df[df$array_row ==row+1 & df$array_col==column-1, ]) # spot upper left
+    s1 <- rownames(df[df$array_row == row & df$array_col == column - 2, ]) # spot below
+    s2 <- rownames(df[df$array_row == row & df$array_col == column + 2, ]) # spot above
+    s3 <- rownames(df[df$array_row == row - 1 & df$array_col == column + 1, ]) # spot upper right
+    s4 <- rownames(df[df$array_row == row + 1 & df$array_col == column + 1, ]) # spot down right
+    s5 <- rownames(df[df$array_row == row - 1 & df$array_col == column - 1, ]) # spot upper left
+    s6 <- rownames(df[df$array_row == row + 1 & df$array_col == column - 1, ]) # spot upper left
 
     iniche <- c(s1, s2, s3, s4, s5, s6, center)
 
     tmp <- c(center)
 
-    for (spot in iniche){
-      #get coordinates
+    for (spot in iniche) {
+      # get coordinates
 
       row <- df[spot, "array_row"]
       column <- df[spot, "array_col"]
 
-      tmp <- c(tmp, get_iniche(df, c(row, column), distance-1))
+      tmp <- c(tmp, get_iniche(df, c(row, column), distance - 1))
     }
 
     tmp <- unique(tmp)
 
-    return (tmp)
+    return(tmp)
   }
 }
 
@@ -348,12 +360,19 @@ get_iniche <- function(df, coordinates, distance){
 #'
 #' @returns SpatialExperiment containing annotation
 #' @export
-annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name="annotation"){
-
+annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "annotation") {
   df <- data.frame(row.names = colnames(spe))
   df[, name] <- value_neg
   df[spots, ] <- value_pos
   colData(spe) <- cbind(colData(spe), df)
 
-  return (spe)
+  return(spe)
+}
+
+#' Get coordinates of spot id
+#' @param df colData dataframe
+#' @param spotid spotid
+get_spot_coordinates <- function(df, spotid) {
+  df <- as.data.frame(df)
+  return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
 }

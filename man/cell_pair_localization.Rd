@@ -27,7 +27,10 @@ cell_pair_localization(
 
 \item{density}{logical}
 
-\item{niter}{niter}
+\item{niter}{permutations}
+}
+\value{
+statistics and graph
 }
 \description{
 Calculate Colocalization

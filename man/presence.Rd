@@ -4,7 +4,7 @@
 \alias{presence}
 \title{Threshold a matrix}
 \usage{
-presence(spe, method, threshold)
+presence(spe, method, threshold = NULL)
 }
 \arguments{
 \item{spe}{A SpatialExperiment containing deconvolution scores for each spot and celltype}

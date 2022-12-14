@@ -4,10 +4,10 @@
 \alias{antimode_cutoff}
 \title{Determine threshold for celltype presence based on antimode of celltype density}
 \usage{
-antimode_cutoff(m, method)
+antimode_cutoff(spe, method)
 }
 \arguments{
-\item{m}{A SpatialExperiment Object}
+\item{spe}{A SpatialExperiment Object}
 
 \item{method}{deconvolution method}
 }

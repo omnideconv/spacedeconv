@@ -13,6 +13,9 @@ ripleys_key(spe, cell_type, method)
 
 \item{method}{deconvolution method}
 }
+\value{
+plot
+}
 \description{
 Ripley´s K celltype distribution
 }
