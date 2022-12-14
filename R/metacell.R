@@ -39,13 +39,14 @@ compute_forbidden_genes <- function(clean,
                                     seed = 123456) {
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
-  res <- compute_forbidden_genes(clean=clean,
-                                 suspect_gene_names = suspect_gene_names,
-                                 suspect_gene_patterns = suspect_gene_patterns,
-                                 seed = as.integer(seed))
+  res <- compute_forbidden_genes(
+    clean = clean,
+    suspect_gene_names = suspect_gene_names,
+    suspect_gene_patterns = suspect_gene_patterns,
+    seed = as.integer(seed)
+  )
 
-  return (res)
-
+  return(res)
 }
 
 #' extract forbidden genes from gene modules
@@ -57,9 +58,9 @@ compute_forbidden_genes <- function(clean,
 extract_forbidden_from_modules <- function(clean, forbidden_modules) {
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
-  res <- extract_forbidden_from_modules(clean=clean, forbidden_modules = forbidden_modules)
+  res <- extract_forbidden_from_modules(clean = clean, forbidden_modules = forbidden_modules)
 
-  return (res)
+  return(res)
 }
 
 #' Compute Metacells
@@ -69,6 +70,6 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 compute_metacells <- function(clean, forbidden_gene_names) {
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
-  res <- compute_metacells(clean=clean, forbidden_gene_names = forbidden_gene_names)
-  return (res)
+  res <- compute_metacells(clean = clean, forbidden_gene_names = forbidden_gene_names)
+  return(res)
 }
