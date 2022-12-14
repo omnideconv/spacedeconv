@@ -279,3 +279,81 @@ coloc_distance <- function(spe, method = NULL, cell_type_1, cell_type_2, distanc
   a <- antimode_cutoff(m = spe, method = method)
   p <- presence(spe = spe, threshold = a, method = method)
 }
+
+
+
+#' Calculate Iniche recursivley
+#' @param df dataframe with array_row and array_col
+#' @param coordinates vector of (row, columns)
+#' @param distance spot distance
+#'
+#' @returns list of spot ids of iniche
+get_iniche <- function(df, coordinates, distance){
+
+  # typecheck df, coordinates and distance
+
+  row <- coordinates[1]
+  column <- coordinates[2]
+
+  if((row%%2) == 0 & (column%%2) == 1) {
+    print("row and col have to be both even or odd to access spots")
+    stop()}
+  else{
+    if((row%%2) == 1 & (column%%2) == 0){
+      print("row and col have to be both even or odd to access spots")
+      stop()}}
+
+  center <- rownames(df[df$array_row ==row & df$array_col==column, ])
+
+
+  # if distance == 0 then return spot
+  if (distance==0){
+    return (center)
+  } else { # else: get all surounding spots and call get_iniche for them
+
+    # circle around the center
+    s1 <- rownames(df[df$array_row ==row & df$array_col==column-2, ]) # spot below
+    s2 <- rownames(df[df$array_row ==row & df$array_col==column+2, ]) # spot above
+    s3 <- rownames(df[df$array_row ==row-1 & df$array_col==column+1, ]) # spot upper right
+    s4 <- rownames(df[df$array_row ==row+1 & df$array_col==column+1, ]) # spot down right
+    s5 <- rownames(df[df$array_row ==row-1 & df$array_col==column-1, ]) # spot upper left
+    s6 <- rownames(df[df$array_row ==row+1 & df$array_col==column-1, ]) # spot upper left
+
+    iniche <- c(s1, s2, s3, s4, s5, s6, center)
+
+    tmp <- c(center)
+
+    for (spot in iniche){
+      #get coordinates
+
+      row <- df[spot, "array_row"]
+      column <- df[spot, "array_col"]
+
+      tmp <- c(tmp, get_iniche(df, c(row, column), distance-1))
+    }
+
+    tmp <- unique(tmp)
+
+    return (tmp)
+  }
+}
+
+
+#' Annotate spots
+#' @param spe SpatialExperiment
+#' @param spots list of spots to annotate
+#' @param value_pos positive value
+#' @param value_neg negative value
+#' @param name name of the annotation
+#'
+#' @returns SpatialExperiment containing annotation
+#' @export
+annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name="annotation"){
+
+  df <- data.frame(row.names = colnames(spe))
+  df[, name] <- value_neg
+  df[spots, ] <- value_pos
+  colData(spe) <- cbind(colData(spe), df)
+
+  return (spe)
+}
