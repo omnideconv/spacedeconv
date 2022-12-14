@@ -29,7 +29,7 @@ convert_to_sce <- function(obj) {
 #'
 #' @return SingleCellObject
 #' Thanks to Omnideconv
-#'
+#' @export
 anndata_to_singlecellexperiment <- function(ad) {
   anndata_checkload()
   ad <- ad$transpose()
