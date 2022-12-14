@@ -262,7 +262,7 @@ coloc_avoid <- function(A, B) {
 #' @param method deconvolution method
 #' @returns plot
 #' @export
-ripleys_key <- function(spe, cell_type, method) {
+ripleys_k <- function(spe, cell_type, method) {
   coords <- spatialCoords(spe)
 
   # a <- antimode_cutoff(spe = spe, method = method, )
