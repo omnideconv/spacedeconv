@@ -29,7 +29,7 @@ presence <- function(spe, method, threshold = NULL) {
   )
 
 
-  if (is.null(threshold)){
+  if (is.null(threshold)) {
     print("Calculating Antimode cutoffs")
     threshold <- antimode_cutoff(spe, method)
   }
@@ -265,7 +265,7 @@ coloc_avoid <- function(A, B) {
 ripleys_key <- function(spe, cell_type, method) {
   coords <- spatialCoords(spe)
 
-  #a <- antimode_cutoff(spe = spe, method = method, )
+  # a <- antimode_cutoff(spe = spe, method = method, )
   p <- presence(spe = spe, method = method)
   type <- as.factor(p[, cell_type])
 
@@ -320,7 +320,8 @@ get_iniche <- function(df, coordinates, distance) {
   # if distance == 0 then return spot
   if (distance == 0) {
     return(center)
-  } else { # else: get all surounding spots and call get_iniche for them
+  } else {
+    # else: get all surounding spots and call get_iniche for them
 
     # circle around the center
     s1 <- rownames(df[df$array_row == row & df$array_col == column - 2, ]) # spot below
