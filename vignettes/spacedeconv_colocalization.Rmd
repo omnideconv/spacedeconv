@@ -1,0 +1,14 @@
+---
+title: "Colocalization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Colocalization}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
