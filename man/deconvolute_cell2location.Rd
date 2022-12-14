@@ -4,7 +4,30 @@
 \alias{deconvolute_cell2location}
 \title{Deconvolute Cell2location}
 \usage{
-deconvolute_cell2location()
+deconvolute_cell2location(
+  spatial_obj,
+  signature = NULL,
+  epochs = 1000,
+  n_cell = 10,
+  alpha = 20,
+  gpu = FALSE,
+  result_name = "c2l"
+)
+}
+\arguments{
+\item{spatial_obj}{SpatialExperiment}
+
+\item{signature}{signature}
+
+\item{epochs}{training epochs for model}
+
+\item{n_cell}{cell2location hyperparameter}
+
+\item{alpha}{cell2location hyperparameter}
+
+\item{gpu}{whether to use nvidia gpu for training}
+
+\item{result_name}{token to identify deconvolution results in object, default = "card"}
 }
 \description{
 Deconvolute Cell2location
