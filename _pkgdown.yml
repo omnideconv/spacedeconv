@@ -43,6 +43,8 @@ reference:
   - title: Utils
     contents:
       - aggregate
+      - antimode_cutoff
+      - presence
   - title: internal
     contents:
       - spacedeconv_pkg

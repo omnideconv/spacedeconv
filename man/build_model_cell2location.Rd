@@ -7,9 +7,13 @@
 build_model_cell2location(
   single_cell_obj,
   epochs = 20,
+  assay_sc = "counts",
+  sample = "Sample",
+  cell_type_column = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
-  nonz_mean_cutoff = 1.12
+  nonz_mean_cutoff = 1.12,
+  gpu = FALSE
 )
 }
 \arguments{
@@ -17,11 +21,19 @@ build_model_cell2location(
 
 \item{epochs}{number of epochs to train the network}
 
+\item{assay_sc}{assay to extract}
+
+\item{sample}{sample column}
+
+\item{cell_type_column}{column of single_cell_obj containing cell type labels}
+
 \item{cell_count_cutoff}{cell2location parameter}
 
 \item{cell_percentage_cutoff}{cell2location parameter}
 
 \item{nonz_mean_cutoff}{cell2location parameter}
+
+\item{gpu}{whether to train on GPU}
 }
 \description{
 Build Model Cell2location
