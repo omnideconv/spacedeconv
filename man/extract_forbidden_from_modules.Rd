@@ -9,7 +9,7 @@ extract_forbidden_from_modules(clean, forbidden_modules)
 \arguments{
 \item{clean}{anndata object}
 
-\item{forbidden_modules}{test}
+\item{forbidden_modules}{gene modules to remove}
 }
 \description{
 extract forbidden genes from gene modules

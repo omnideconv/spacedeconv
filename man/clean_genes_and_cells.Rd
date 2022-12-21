@@ -17,17 +17,17 @@ clean_genes_and_cells(
 \arguments{
 \item{anndata}{anndata object containing Single Cell Expression Data}
 
-\item{properly_sampled_min_cell_total}{testtesttest}
+\item{properly_sampled_min_cell_total}{exclude all cells with UMI count below this threshold}
 
-\item{properly_sampled_max_cell_total}{testtesttest}
+\item{properly_sampled_max_cell_total}{exclude all cells with UMI count above this threshold}
 
-\item{properly_sampled_max_excluded_genes_fraction}{testtesttest}
+\item{properly_sampled_max_excluded_genes_fraction}{exclude all cells whose sum of excluded data divided by the toal is more then the threshold}
 
-\item{exclude_genes}{test}
+\item{exclude_genes}{gene names to exlude}
 
-\item{exclude_gene_patterns}{test}
+\item{exclude_gene_patterns}{gene patterns to exclude}
 
-\item{seed}{seed}
+\item{seed}{seed for reproducibilty}
 }
 \description{
 Clean Genes and Cells with Metacell2

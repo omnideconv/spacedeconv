@@ -9,7 +9,7 @@ compute_metacells(clean, forbidden_gene_names)
 \arguments{
 \item{clean}{anndata object}
 
-\item{forbidden_gene_names}{test}
+\item{forbidden_gene_names}{list of genes names that are not used as metacell base}
 }
 \description{
 Compute Metacells

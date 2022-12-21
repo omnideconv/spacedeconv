@@ -14,9 +14,9 @@ compute_forbidden_genes(
 \arguments{
 \item{clean}{anndata object}
 
-\item{suspect_gene_names}{test}
+\item{suspect_gene_names}{gene names that might not be of value}
 
-\item{suspect_gene_patterns}{test}
+\item{suspect_gene_patterns}{gene patterns that might not be of value}
 
 \item{seed}{seed}
 }
