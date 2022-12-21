@@ -69,18 +69,18 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 #' @param cell_type_col cell type column of cleaned anndata, used for reannotation
 #' @param abundance_score metacell celltype purity score
 #' @export
-compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abundance_score=0.9) {
+compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abundance_score = 0.9) {
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   res <- compute_metacells(clean = clean, forbidden_gene_names = forbidden_gene_names)
 
   # reannotation
-  internal = res[[1]]
-  metacell = res[[2]]
+  internal <- res[[1]]
+  metacell <- res[[2]]
 
   message("reannotating metacell types ...")
 
-  celllist = data.frame(matrix(ncol=3, nrow = 0))
+  celllist <- data.frame(matrix(ncol = 3, nrow = 0))
   colnames(celllist) <- c("metacell", "mostAbundant", "percentage")
 
   pb <- progress::progress_bar$new(total = length(colnames(metacell)))
@@ -88,19 +88,18 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
 
   intDF <- internal$obs
 
-  for (cell in rownames(metacell)){
+  for (cell in rownames(metacell)) {
     # get the single cells added to this metacell
-    tmp <- intDF[intDF$metacell==cell, ][, cell_type_col]
-    #tmpcell <- list(list(tmp[cell_type_col]))
+    tmp <- intDF[intDF$metacell == cell, ][, cell_type_col]
+    # tmpcell <- list(list(tmp[cell_type_col]))
     tmpcell <- sort(table(unlist(tmp)), decreasing = T)[1]
-    mostAbundant = names(tmpcell)
-    nMostAbundant = unname(tmpcell)
+    mostAbundant <- names(tmpcell)
+    nMostAbundant <- unname(tmpcell)
     numberOfCells <- length(unlist(tmp))
-    percent = nMostAbundant / numberOfCells
+    percent <- nMostAbundant / numberOfCells
 
     celllist[nrow(celllist) + 1, ] <- c(cell, mostAbundant, percent)
     pb$tick()
-
   }
 
   metacell <- anndata_to_singlecellexperiment(metacell)
@@ -108,7 +107,7 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   colData(metacell)$celltype <- celllist$mostAbundant # reannotation
 
   # filter for abundance score
-  above90 = celllist[celllist$percent>=abundance_score, ]$metacell
+  above90 <- celllist[celllist$percent >= abundance_score, ]$metacell
   message("Removing ", nrow(celllist) - length(above90), " metacell with abundance score under ", abundance_score)
   metacell <- metacell[, colnames(metacell) %in% above90]
 
