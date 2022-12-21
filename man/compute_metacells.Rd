@@ -4,7 +4,12 @@
 \alias{compute_metacells}
 \title{Compute Metacells}
 \usage{
-compute_metacells(clean, forbidden_gene_names, cell_type_col, abundance_score)
+compute_metacells(
+  clean,
+  forbidden_gene_names,
+  cell_type_col,
+  abundance_score = 0.9
+)
 }
 \arguments{
 \item{clean}{anndata object}
