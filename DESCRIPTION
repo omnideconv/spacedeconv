@@ -35,7 +35,8 @@ Imports:
     ggridges, 
     multimode,
     spatstat.core, 
-    spatstat.geom
+    spatstat.geom, 
+    progress
 Suggests: 
     spacexr,
     SPOTlight,

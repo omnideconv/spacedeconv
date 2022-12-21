@@ -29,7 +29,7 @@ convert_to_sce <- function(obj) {
 #'
 #' @return SingleCellObject
 #' Thanks to Omnideconv
-#'
+#' @export
 anndata_to_singlecellexperiment <- function(ad) {
   anndata_checkload()
   ad <- ad$transpose()
@@ -104,7 +104,10 @@ anndata_to_spatialexperiment <- function() {
 }
 
 
-
+#' Convert Spatial Experiment to AnnData
+#' @param spe Spatial experiment
+#' @param assay assay to use
+#' @export
 spe_to_ad <- function(spe, assay = "counts") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is missing or null, but is required")
