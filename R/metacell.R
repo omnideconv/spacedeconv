@@ -83,7 +83,7 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   celllist <- data.frame(matrix(ncol = 3, nrow = 0))
   colnames(celllist) <- c("metacell", "mostAbundant", "percentage")
 
-  pb <- progress::progress_bar$new(total = length(colnames(metacell)))
+  pb <- progress::progress_bar$new(total = length(rownames(metacell)))
   pb$tick(0)
 
   intDF <- internal$obs
@@ -110,8 +110,6 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   above90 <- celllist[celllist$percent >= abundance_score, ]$metacell
   message("Removing ", nrow(celllist) - length(above90), " metacell with abundance score under ", abundance_score)
   metacell <- metacell[, colnames(metacell) %in% above90]
-
-  View(celllist)
 
   return(metacell)
 }
