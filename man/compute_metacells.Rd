@@ -4,12 +4,16 @@
 \alias{compute_metacells}
 \title{Compute Metacells}
 \usage{
-compute_metacells(clean, forbidden_gene_names)
+compute_metacells(clean, forbidden_gene_names, cell_type_col, abundance_score)
 }
 \arguments{
 \item{clean}{anndata object}
 
 \item{forbidden_gene_names}{list of genes names that are not used as metacell base}
+
+\item{cell_type_col}{cell type column of cleaned anndata, used for reannotation}
+
+\item{abundance_score}{metacell celltype purity score}
 }
 \description{
 Compute Metacells
