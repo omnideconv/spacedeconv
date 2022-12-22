@@ -17,13 +17,13 @@ preprocess <- function(object, min_umi = 500, assay="counts") {
 
 
   # Filtering
+  # min UMI Count per Observation
+  message("Removing ", sum(colSums(assay(object, assay))< min_umi), " observations with umi count below threshold")
+  object <- object[, colSums(assay(object, assay))>= min_umi]
 
   # remove all zero genes
   message("Removing ", sum(rowSums(assay(object, assay))==0), " variables with all zero expression")
   object <- object[rowSums(assay(object, assay))> 0, ]
 
-  # min UMI Count per Observation
-  message("Removing ", sum(colSums(assay(object, assay))< min_umi), " observations with umi count below threshold")
-  object <- object[, colSums(assay(object, assay))>= min_umi]
-
+  return(object)
 }
