@@ -1,6 +1,7 @@
 #' Convert Input Files to SingleCellExperiment
 #'
 #' @param obj object provided by the user, will be converted to sce
+#'
 convert_to_sce <- function(obj) {
   sce <- NULL
 
