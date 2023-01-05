@@ -12,3 +12,38 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+To introduce spacedeconvs celltype colocalization and distribution analysis functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `EPIC`. Note that EPIC requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
+
+```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
+library(spacedeconv)
+library(EPIC) # quickfix
+data("spatial_data_3")
+
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+
+deconv <- spacedeconv::deconvolute(
+  spatial_data_3,
+  method = "epic",
+  assay_sp = "cpm"
+)
+```
+
+# Available colocalization functions
+
+1. 'cell_pair_localization()' calculates colocalization and avoidance of two celltypes based on a random distribution.
+2. 'ripleys_k()' calculates Ripley´s K statistic and outputs corresponding graph 
+
+## 1. 'cell_pair_localization()' 
+Calculates colocalization and avoidance statistics of two celltypes of interest based on a random distribution. Internally, the presence or absence of the celltypes is determined based on the antimode of the celltype density distribution. Spotwise comparisons or groupwise comparisons with increasing distances are possible. Thereby, distance = 0 corresponds to a spotwise approach, distance = 1 considers hexagonal rings of spots around each spot and distance = 2 refers to two rings of spots around each spot. 
+
+```{r}
+spacedeconv::cell_pair_localization(deconv, method = "epic", cell_type_1 = "epic_NK.cell", cell_type_2 = "epic_B.cell", density = TRUE, distance = 0)
+```
+
+## 2. 'riples_k()' 
+Determines the spatial distribution of a celltype based on Ripley´s K function. A matrix with presence or absence values for each celltype, determined using the antimode of the celltype density distribution, is internally taken as input.
+
+```{r}
+spacedeconv::ripleys_k(deconv, method = "epic", cell_type = "epic_B.cell")
+```
