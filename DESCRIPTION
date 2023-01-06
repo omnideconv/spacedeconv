@@ -63,7 +63,8 @@ Suggests:
     xCell,
     Giotto,
     knitr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0), 
+    emo
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
@@ -82,4 +83,5 @@ Remotes:
     GfellerLab/EPIC,
     dviraran/xCell,
     drighelli/SpatialExperiment, 
+    hadley/emo
 Config/testthat/edition: 3
