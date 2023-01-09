@@ -21,6 +21,7 @@
 #' @importFrom grDevices as.raster
 #' @importFrom Matrix colSums
 #' @importFrom colorspace scale_fill_continuous_sequential sequential_hcl
+#' @importFrom DelayedArray rowSums colSums
 #'
 #' @name spacedeconv_pkg
 #' @docType package
