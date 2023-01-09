@@ -3,16 +3,16 @@
 print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   # check for correct class
 
-  if (!is.null(sce) & !is(sce, "SingleCellExperiment")){
+  if (!is.null(sce) & !is(sce, "SingleCellExperiment")) {
     stop("Your single Cell object is not a valid datatype")
   }
 
-  if (!is.null(spe) & !is(spe, "SpatialExperiment")){
+  if (!is.null(spe) & !is(spe, "SpatialExperiment")) {
     stop("The spatial object is not a SpatialExperiment")
   }
 
   # general info
-  cli::cli_rule(center ="spacedeconv")
+  cli::cli_rule(center = "spacedeconv")
 
 
 
@@ -63,19 +63,19 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
 
     cli::cli_text("Spots: {.val {ncol(spe)}}")
 
-    if ("in_tissue" %in% names(colData(spe))){
+    if ("in_tissue" %in% names(colData(spe))) {
       spotsInTissue <- length(colData(spe)$in_tissue)
       cli::cli_text("Spots under tissue: {.val {spotsInTissue}} ({round(spotsInTissue/ncol(spe)*100, 2)}%)")
     } else {
       cli::cli_alert_warning("Spatial Object does not contain tissue presence annotation")
     }
-    medianGenesPerSpot <- median(DelayedArray::colSums(counts(spe)>=1))
+    medianGenesPerSpot <- median(DelayedArray::colSums(counts(spe) >= 1))
     cli::cli_text("Median Genes Per Spot: {.val {medianGenesPerSpot}}")
 
 
     umi <- colSums(counts(spe))
-    umiBelow500 <- umi[umi<500]
-    umiBelow500Percent <- round(length(umiBelow500) / nrow(spe)*100, 2)
+    umiBelow500 <- umi[umi < 500]
+    umiBelow500Percent <- round(length(umiBelow500) / nrow(spe) * 100, 2)
     cells0 <- sum(umi == 0)
     percentCells0 <- round(cells0 / ncol(spe) * 100, 2)
     cli::cli_alert("without expression: {.val {cells0}} ({percentCells0}%)")
@@ -96,16 +96,16 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
     }
   }
 
-  if (!is.null(signature)){
+  if (!is.null(signature)) {
     cli::cli_h2("Signature")
 
     cli::cli_text("Number of Genes: {.val {nrow(signature)}}")
     cli::cli_text("Number of Cell Types: {.val {ncol(signature)}}")
     cli::cli_alert("{.val {colnames(signature)}}")
 
-    if (!is.null(spe)){
+    if (!is.null(spe)) {
       overlapGenes <- sum(rownames(signature) %in% rownames(spe))
-      overlapGenesPercent <- round(overlapGenes/length(rownames(spe))*100, 2)
+      overlapGenesPercent <- round(overlapGenes / length(rownames(spe)) * 100, 2)
       cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
     }
   }
