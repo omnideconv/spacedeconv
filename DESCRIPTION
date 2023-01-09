@@ -64,7 +64,8 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0), 
-    emo
+    emo, 
+    cli
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
