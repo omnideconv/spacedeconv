@@ -65,7 +65,8 @@ Suggests:
     knitr,
     testthat (>= 3.0.0), 
     emo, 
-    cli
+    cli, 
+    DelayedArray
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
