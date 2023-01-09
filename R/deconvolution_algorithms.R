@@ -142,6 +142,8 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     spatial_obj <- removeZeroExpression(spatial_obj)
   }
 
+  print_info(sce = single_cell_obj, spe = spatial_obj)
+
   signature <- switch(method,
     rctd = {
       build_model_rctd()
@@ -325,6 +327,8 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
   if (!is.null(single_cell_obj)) {
     single_cell_obj <- removeZeroExpression(single_cell_obj)
   }
+
+  print_info(sce = single_cell_obj, spe = spatial_obj, signature = signature)
 
 
   deconv <- switch(method,
