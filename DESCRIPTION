@@ -34,8 +34,8 @@ Imports:
     ggpubr, 
     ggridges, 
     multimode,
-    spatstat.core, 
-    spatstat.geom, 
+    spatstat.model, 
+    spatstat.explore, 
     progress
 Suggests: 
     spacexr,
