@@ -16,9 +16,11 @@ reference:
       - anndata_to_spatialexperiment
       - seurat_to_spatialexperiment
       - subsetSCE
+      - spe_to_ad
   - title: Main Workflow
     contents:
       - deconvolution_methods
+      - preprocess
       - normalize
       - build_model
       - deconvolute
@@ -43,8 +45,22 @@ reference:
   - title: Utils
     contents:
       - aggregate
-      - antimode_cutoff
+      - annotate_spots
+      - cluster
+  - title: Metacell
+    contents:
+      - clean_genes_and_cells
+      - compute_forbidden_genes
+      - extract_forbidden_from_modules
+      - compute_metacells
+  - title: Colocalization
+    contents:
       - presence
+      - antimode_cutoff
+      - cell_pair_localization
+      - coloc_avoid
+      - get_iniche
+      - ripleys_k
   - title: internal
     contents:
       - spacedeconv_pkg
@@ -70,3 +86,4 @@ reference:
       - smooth_celltype
       - save_plot
       - checkENSEMBL
+      - get_spot_coordinates
