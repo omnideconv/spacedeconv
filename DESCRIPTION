@@ -34,7 +34,7 @@ Imports:
     ggpubr, 
     ggridges, 
     multimode,
-    spatstat.model, 
+    spatstat.geom, 
     spatstat.explore, 
     progress
 Suggests: 

@@ -276,7 +276,7 @@ ripleys_k <- function(spe, cell_type, method) {
     yrange = range(coords[, 1]),
     marks = type
   )
-  plot(spatstat.core::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
+  plot(spatstat.explore::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
 }
 
 
