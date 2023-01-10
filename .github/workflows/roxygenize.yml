@@ -33,7 +33,7 @@ jobs:
       - name: remotes
         run: Rscript -e "install.packages('remotes')"
       - name: harmony
-        run: Rscript -e "remotes::install_github('PelzKo/harmony')"
+        run: Rscript -e "remotes::install_github('omnideconv/harmony')"
 
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
