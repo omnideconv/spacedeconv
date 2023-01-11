@@ -13,7 +13,7 @@ spatially resolved atlas of human breast cancers. Nat Genet 2021 Sep;53(9):1334-
 PMID: 34493872
 }
 \usage{
-single_cell_data_3
+data("single_cell_data_3")
 }
 \description{
 A single cell expression subset of 7986 cells from sample CID44971. Cell type annotation is
