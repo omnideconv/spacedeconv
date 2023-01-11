@@ -42,7 +42,7 @@ jobs:
           needs: roxygen2
 
       - name: Install Python
-        run: Rscript -e "spacedeconv::install_all_python()"
+        run: Rscript -e "install_all_python()"
 
       - name: Document
         run: roxygen2::roxygenise()
