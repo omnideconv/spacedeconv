@@ -42,6 +42,9 @@ We can see that the single-cell data is available as a [SingleCellExperiment](ht
 As the next step we normalize the data as `cpm` ("Counts Per Million")
 
 ```{r normalization, warning=FALSE}
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
 single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 ```
@@ -74,11 +77,11 @@ unique(colData(single_cell_data_3)$celltype_major)
 There are three different resolutions of cell type annotation available. For this tutorial we will choose `"celltype_major"` as cell type  annotation. 
 
 Next we can calculate a signature using the annotated single-data and the deconvolution tool "SCDC". 
-```{r build_model, message=FALSE, warning=FALSE, results='hide'}
+```{r build_model, message=FALSE, warning=FALSE}
 signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "scdc",
+  method = "estimate",
   spatial_obj = spatial_data_3,
   assay_sc = "cpm",
   assay_sp = "cpm",
@@ -88,7 +91,7 @@ signature <- spacedeconv::build_model(
 
 The signature contains expression values for all celltypes and a subset of distinctly expressed genes. The following example shows the first 10 rows of the signature calculated in the previous step. 
 ```{r}
-knitr::kable(round(signature[1:10, ], 4))
+#knitr::kable(round(signature[1:10, ], 4))
 ```
 
 
@@ -98,7 +101,7 @@ To deconvolute the Visium slide we use the signature we just calculated. Dependi
 deconv <- spacedeconv::deconvolute(
   spatial_data_3,
   signature = signature,
-  method = "scdc",
+  method = "estimate",
   assay_sp = "cpm",
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_minor",
@@ -120,8 +123,7 @@ For each Spot the estimated cell fraction is available as object annotation and 
 
 ```{r visualization}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "scdc_B.cells.Memory",
-  smooth = TRUE,
+  cell_type = "estimate_immune.score",
   density = FALSE
 )
 ```
