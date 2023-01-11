@@ -66,7 +66,8 @@ Suggests:
     testthat (>= 3.0.0), 
     emo, 
     cli, 
-    DelayedArray
+    DelayedArray, 
+    scuttle
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 

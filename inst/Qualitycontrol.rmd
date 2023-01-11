@@ -17,7 +17,7 @@ library(scuttle)
 ```{r, echo=FALSE}
 # Add QC metrics
 library(scuttle)
-spe <- addPerCellQC(spe)
+spe <- scuttle::addPerCellQC(spe)
 ```
 
 ```{r, echo = FALSE, results='asis'}
