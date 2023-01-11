@@ -13,6 +13,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_colocalization.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_data.html</loc>
   </url>
   <url>
@@ -20,6 +23,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_faq.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_metacell.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_visualization.html</loc>
@@ -34,6 +40,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/addResultToObject.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/aggregate.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/anndata_checkload.html</loc>
   </url>
   <url>
@@ -41,6 +50,12 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/anndata_to_spatialexperiment.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/annotate_spots.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/antimode_cutoff.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/attachToken.html</loc>
@@ -76,6 +91,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/build_model_spotlight.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/cell_pair_localization.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/checkCol.html</loc>
   </url>
   <url>
@@ -86,6 +104,21 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/check_and_install.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/clean_genes_and_cells.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/cluster.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/coloc_avoid.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_forbidden_genes.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_metacells.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/convertImmunedeconvMatrix.html</loc>
@@ -127,6 +160,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/doGiottoWorkflow.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/extract_forbidden_from_modules.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/getMarkersSPOTlight.html</loc>
   </url>
   <url>
@@ -136,10 +172,16 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_hex_polygon.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_iniche.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_polygon_geometry.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_results_from_object.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_spot_coordinates.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/index.html</loc>
@@ -148,7 +190,13 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/init_python.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/install_all_python.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/make_baseplot.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/metacells_checkload.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/normalize.html</loc>
@@ -172,6 +220,12 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_umi_count.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/preprocess.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/presence.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/python_available.html</loc>
   </url>
   <url>
@@ -179,6 +233,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/required_packages.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/ripleys_k.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/save_plot.html</loc>
@@ -221,6 +278,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/spatial_data_4.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/spe_to_ad.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/subsetSCE.html</loc>

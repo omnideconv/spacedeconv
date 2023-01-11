@@ -8,10 +8,10 @@
 <meta name="description" content="spacedeconv">
 <title>Example • spacedeconv</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Example">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Example">
 <meta property="og:description" content="spacedeconv">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -44,9 +44,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_metacell.html">Metacell</a>
     <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
   </div>
 </li>
@@ -134,11 +136,17 @@ stored.</p>
 <p>As the next step we normalize the data as <code>cpm</code> (“Counts
 Per Million”)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Removing 8 observations with umi count below threshold</span></span>
+<span><span class="co">#&gt; Removing 5862 variables with all zero expression</span></span>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Removing 137 observations with umi count below threshold</span></span>
+<span><span class="co">#&gt; Removing 13049 variables with all zero expression</span></span>
+<span></span>
+<span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Normalized object using cpm. </span></span>
 <span><span class="co">#&gt; Note that the normalization is saved in an additional assay.</span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; removing 5 spots with zero expression</span></span>
 <span><span class="co">#&gt; Normalized object using cpm. </span></span>
 <span><span class="co">#&gt; Note that the normalization is saved in an additional assay.</span></span></code></pre></div>
 <p>When we access the object again we can see that the normalization has
@@ -147,12 +155,12 @@ been added to the object in an additional assay called
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span><span class="co">#&gt; dim: 29733 7986 </span></span>
+<span><span class="co">#&gt; dim: 23871 7978 </span></span>
 <span><span class="co">#&gt; metadata(1): Samples</span></span>
 <span><span class="co">#&gt; assays(2): counts cpm</span></span>
-<span><span class="co">#&gt; rownames(29733): RP11-34P13.7 FO538757.3 ... KRTAP9-2 IGLVIV-66-1</span></span>
+<span><span class="co">#&gt; rownames(23871): RP11-34P13.7 FO538757.3 ... LINC01425 AP000477.2</span></span>
 <span><span class="co">#&gt; rowData names(1): ID</span></span>
-<span><span class="co">#&gt; colnames(7986): CID44971_AAGCCGCCACGCATCG CID44971_AAGGAGCTCAACACAC ...</span></span>
+<span><span class="co">#&gt; colnames(7978): CID44971_AAGCCGCCACGCATCG CID44971_AAGGAGCTCAACACAC ...</span></span>
 <span><span class="co">#&gt;   CID44971_TTTCCTCCAAGCCATT CID44971_TTTGGTTGTATCACCA</span></span>
 <span><span class="co">#&gt; colData names(10): Sample Barcode ... celltype_minor celltype_major</span></span>
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
@@ -231,7 +239,7 @@ the deconvolution tool “SCDC”.</p>
 <code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"scdc"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"estimate"</span>,</span>
 <span>  spatial_obj <span class="op">=</span> <span class="va">spatial_data_3</span>,</span>
 <span>  assay_sc <span class="op">=</span> <span class="st">"cpm"</span>,</span>
 <span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span>,</span>
@@ -241,155 +249,7 @@ the deconvolution tool “SCDC”.</p>
 subset of distinctly expressed genes. The following example shows the
 first 10 rows of the signature calculated in the previous step.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">signature</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="12%">
-<col width="10%">
-<col width="7%">
-<col width="6%">
-<col width="7%">
-<col width="11%">
-<col width="7%">
-<col width="7%">
-<col width="15%">
-<col width="15%">
-</colgroup>
-<thead><tr class="header">
-<th align="left"></th>
-<th align="right">Endothelial</th>
-<th align="right">CAFs</th>
-<th align="right">PVL</th>
-<th align="right">B-cells</th>
-<th align="right">Plasmablasts</th>
-<th align="right">T-cells</th>
-<th align="right">Myeloid</th>
-<th align="right">Cancer Epithelial</th>
-<th align="right">Normal Epithelial</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">RP11-34P13.7</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0712</td>
-<td align="right">0.1738</td>
-<td align="right">0.2959</td>
-<td align="right">0.0630</td>
-</tr>
-<tr class="even">
-<td align="left">FO538757.3</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">1.3104</td>
-<td align="right">0.0000</td>
-<td align="right">0.1286</td>
-<td align="right">0.0000</td>
-<td align="right">0.0963</td>
-<td align="right">0.1903</td>
-</tr>
-<tr class="odd">
-<td align="left">FO538757.2</td>
-<td align="right">19.7206</td>
-<td align="right">16.7823</td>
-<td align="right">5.5649</td>
-<td align="right">15.6824</td>
-<td align="right">20.7431</td>
-<td align="right">16.9437</td>
-<td align="right">29.2636</td>
-<td align="right">21.2889</td>
-<td align="right">18.2703</td>
-</tr>
-<tr class="even">
-<td align="left">AP006222.2</td>
-<td align="right">1.3045</td>
-<td align="right">3.4369</td>
-<td align="right">3.0843</td>
-<td align="right">1.5586</td>
-<td align="right">1.1667</td>
-<td align="right">2.0807</td>
-<td align="right">2.3019</td>
-<td align="right">1.7060</td>
-<td align="right">1.9594</td>
-</tr>
-<tr class="odd">
-<td align="left">RP4-669L17.10</td>
-<td align="right">0.0000</td>
-<td align="right">0.4900</td>
-<td align="right">0.8319</td>
-<td align="right">1.1325</td>
-<td align="right">0.0000</td>
-<td align="right">0.1071</td>
-<td align="right">0.0000</td>
-<td align="right">0.2542</td>
-<td align="right">1.0082</td>
-</tr>
-<tr class="even">
-<td align="left">RP5-857K21.4</td>
-<td align="right">0.0000</td>
-<td align="right">0.0746</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.1560</td>
-<td align="right">0.0691</td>
-<td align="right">1.4474</td>
-<td align="right">0.1135</td>
-</tr>
-<tr class="odd">
-<td align="left">RP11-206L10.9</td>
-<td align="right">1.8959</td>
-<td align="right">2.3052</td>
-<td align="right">1.4172</td>
-<td align="right">1.8561</td>
-<td align="right">1.1284</td>
-<td align="right">2.3052</td>
-<td align="right">2.1185</td>
-<td align="right">7.3179</td>
-<td align="right">3.3113</td>
-</tr>
-<tr class="even">
-<td align="left">LINC00115</td>
-<td align="right">4.6912</td>
-<td align="right">2.6638</td>
-<td align="right">3.8899</td>
-<td align="right">1.1405</td>
-<td align="right">0.0000</td>
-<td align="right">3.3090</td>
-<td align="right">3.3241</td>
-<td align="right">1.9744</td>
-<td align="right">1.9429</td>
-</tr>
-<tr class="odd">
-<td align="left">FAM41C</td>
-<td align="right">0.0000</td>
-<td align="right">0.1789</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.6664</td>
-<td align="right">0.5582</td>
-<td align="right">0.4822</td>
-<td align="right">1.3940</td>
-</tr>
-<tr class="even">
-<td align="left">RP11-54O7.3</td>
-<td align="right">1.6085</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0307</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000</td>
-</tr>
-</tbody>
-</table>
+<code class="sourceCode R"><span><span class="co"># knitr::kable(round(signature[1:10, ], 4))</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="deconvolution">Deconvolution<a class="anchor" aria-label="anchor" href="#deconvolution"></a>
@@ -403,12 +263,15 @@ dataset.</p>
 <code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
 <span>  <span class="va">spatial_data_3</span>,</span>
 <span>  signature <span class="op">=</span> <span class="va">signature</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"scdc"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"estimate"</span>,</span>
 <span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span>,</span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_minor"</span>,</span>
 <span>  batch_id_col <span class="op">=</span> <span class="st">"orig.ident"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Merged dataset includes 9352 genes (1060 mismatched)."</span></span>
+<span><span class="co">#&gt; [1] "1 gene set: StromalSignature  overlap= 135"</span></span>
+<span><span class="co">#&gt; [1] "2 gene set: ImmuneSignature  overlap= 139"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
@@ -421,32 +284,15 @@ with different scopes, further explained in the visualization <a href="spacedeco
 <code>colData</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/available_results.html">available_results</a></span><span class="op">(</span><span class="va">deconv</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "scdc_B.cells.Memory"              "scdc_B.cells.Naive"              </span></span>
-<span><span class="co">#&gt;  [3] "scdc_CAFs.MSC.iCAF.like"          "scdc_CAFs.myCAF.like"            </span></span>
-<span><span class="co">#&gt;  [5] "scdc_Cancer.Basal.SC"             "scdc_Cancer.Cycling"             </span></span>
-<span><span class="co">#&gt;  [7] "scdc_Cancer.Her2.SC"              "scdc_Cancer.LumB.SC"             </span></span>
-<span><span class="co">#&gt;  [9] "scdc_Cycling.T.cells"             "scdc_Cycling_Myeloid"            </span></span>
-<span><span class="co">#&gt; [11] "scdc_DCs"                         "scdc_Endothelial.ACKR1"          </span></span>
-<span><span class="co">#&gt; [13] "scdc_Endothelial.CXCL12"          "scdc_Endothelial.Lymphatic.LYVE1"</span></span>
-<span><span class="co">#&gt; [15] "scdc_Endothelial.RGS5"            "scdc_Luminal.Progenitors"        </span></span>
-<span><span class="co">#&gt; [17] "scdc_Macrophage"                  "scdc_Mature.Luminal"             </span></span>
-<span><span class="co">#&gt; [19] "scdc_Monocyte"                    "scdc_Myoepithelial"              </span></span>
-<span><span class="co">#&gt; [21] "scdc_NK.cells"                    "scdc_NKT.cells"                  </span></span>
-<span><span class="co">#&gt; [23] "scdc_Plasmablasts"                "scdc_PVL.Differentiated"         </span></span>
-<span><span class="co">#&gt; [25] "scdc_PVL.Immature"                "scdc_T.cells.CD4."               </span></span>
-<span><span class="co">#&gt; [27] "scdc_T.cells.CD8."</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "estimate_stroma.score"   "estimate_immune.score"  </span></span>
+<span><span class="co">#&gt; [3] "estimate_estimate.score" "estimate_tumor.purity"</span></span></code></pre></div>
 <p>For each Spot the estimated cell fraction is available as object
 annotation and can be used for visualizations.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
-<span>  cell_type <span class="op">=</span> <span class="st">"scdc_B.cells.Memory"</span>,</span>
-<span>  smooth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cell_type <span class="op">=</span> <span class="st">"estimate_immune.score"</span>,</span>
 <span>  density <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Registered S3 methods overwritten by 'proxy':</span></span>
-<span><span class="co">#&gt;   method               from    </span></span>
-<span><span class="co">#&gt;   print.registry_field registry</span></span>
-<span><span class="co">#&gt;   print.registry_entry registry</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="spacedeconv_example_files/figure-html/visualization-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -462,7 +308,7 @@ annotation and can be used for visualizations.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>

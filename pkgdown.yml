@@ -1,13 +1,15 @@
 pandoc: 2.19.2
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   spacedeconv: spacedeconv.html
+  spacedeconv_colocalization: spacedeconv_colocalization.html
   spacedeconv_data: spacedeconv_data.html
   spacedeconv_example: spacedeconv_example.html
   spacedeconv_faq: spacedeconv_faq.html
+  spacedeconv_metacell: spacedeconv_metacell.html
   spacedeconv_visualization: spacedeconv_visualization.html
-last_built: 2022-11-16T21:14Z
+last_built: 2023-01-11T16:37Z
 urls:
   reference: https://omnideconv.github.io/spacedeconv/reference
   article: https://omnideconv.github.io/spacedeconv/articles
