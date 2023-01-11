@@ -87,3 +87,5 @@ reference:
       - save_plot
       - checkENSEMBL
       - get_spot_coordinates
+      - install_all_python
+      - metacells_checkload
