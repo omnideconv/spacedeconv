@@ -41,6 +41,9 @@ jobs:
           extra-packages: any::roxygen2
           needs: roxygen2
 
+      - name: Install Python
+        run: Rscript -e "spacedeconv::install_all_python()"
+
       - name: Document
         run: roxygen2::roxygenise()
         shell: Rscript {0}
