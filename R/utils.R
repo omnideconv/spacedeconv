@@ -330,7 +330,3 @@ get_spot_coordinates <- function(df, spotid) {
   df <- as.data.frame(df)
   return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
 }
-
-
-
-

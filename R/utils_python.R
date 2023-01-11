@@ -58,7 +58,7 @@ anndata_checkload <- function() {
 }
 
 #' Checks if metacells in installed
-metacells_checkload <- function(){
+metacells_checkload <- function() {
   if (!python_available()) {
     base::message("Setting up python environment..")
     init_python()
@@ -70,7 +70,7 @@ metacells_checkload <- function(){
     }
   }
   if (!reticulate::py_module_available("metacells")) {
-    reticulate::py_install("metacells", pip=TRUE)
+    reticulate::py_install("metacells", pip = TRUE)
   }
 }
 
@@ -80,7 +80,7 @@ metacells_checkload <- function(){
 #' This makes sure a valid python installation exists and all needed packages are pulled and installed
 #'
 #' @export
-install_all_python <- function(){
+install_all_python <- function() {
   init_python()
   metacells_checkload()
 }
