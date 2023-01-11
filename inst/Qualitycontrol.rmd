@@ -1,0 +1,62 @@
+---
+title: "Quality control"
+output: html_document
+---
+
+<style type="text/css">
+</style>
+
+```{r, echo=FALSE}
+# Pepare packages
+library(SpatialExperiment)
+library(spacedeconv)
+library(scuttle)
+```
+
+
+```{r, echo=FALSE}
+# Add QC metrics
+library(scuttle)
+spe <- addPerCellQC(spe)
+```
+
+```{r, echo = FALSE, results='asis'}
+
+
+# number of total spots
+ntotal_spots <- ncol(counts(spe))
+
+# total number of genes
+ntotal_genes <- dim(spe)[1]
+
+# Range of total UMIs per spot
+range_umiperspot <- range(colData(spe)$sum)
+
+# % UMIs >= 500
+UMI_above500 <- sum(colData(spe)$sum >= 500)/dim(spe)[1]
+
+# % UMIs < 500
+UMI_below500 <- sum(colData(spe)$sum < 500)/dim(spe)[1]
+
+# Range of detected genes per spot
+range_genesperspot <- range(colSums(counts(spe)>0))
+
+# Make a dataframe
+res <- rbind(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = range_umiperspot, UMI_above500 = UMI_above500, UMI_below500 = UMI_below500, range_genesperspot = range_genesperspot)
+res[c("ntotal_genes", "ntotal_spots", "UMI_above500", "UMI_below500"), 2] <- NA
+
+library(knitr)
+kable(res, caption = "qc metrics", col.names = c(1, 2))
+```
+
+# Plot UMI and genes 
+```{r, echo=FALSE, fig.align='left'}
+# Plot UMI 
+plot_umi_count(spe, offset_rotation = T)
+
+# Plot number of detected genes
+plot_ndetected_genes(spe, offset_rotation = T)
+```
+
+
+
