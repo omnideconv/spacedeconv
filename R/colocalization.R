@@ -120,18 +120,21 @@ antimode_cutoff <- function(spe, method) {
 #' @param cell_type_2 celltype 2
 #' @param density logical
 #' @param niter permutations
+#' @param presence presence matrix if available
 #' @returns statistics and graph
 #' @export
 cell_pair_localization <- function(spe, method = NULL, distance = 0,
                                    cell_type_1 = NULL, cell_type_2 = NULL,
-                                   density = FALSE, niter = 100) {
+                                   density = FALSE, niter = 100, presence=NULL) {
   if (is.null(cell_type_1) || is.null(cell_type_2)) {
     stop("cell type 1 or 2 missing or null")
   }
 
   ########## cell type test
+  if (is.null(presence)){
+    presence = presence(spe, method) # with antimode cutoff
+  }
 
-  presence <- presence(spe, method) # with antimode cutoff
   presence[is.na(presence)] <- FALSE
 
   if (distance == 0) {

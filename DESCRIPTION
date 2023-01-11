@@ -67,7 +67,10 @@ Suggests:
     emo, 
     cli, 
     DelayedArray, 
-    scuttle
+    scuttle, 
+    circlize, 
+    ComplexHeatmap, 
+    grid
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
