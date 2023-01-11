@@ -10,7 +10,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 LazyData: FALSE
-LazyDataCompression: xz
 Depends: 
     R (>= 4.1.0)
 Imports: 
@@ -36,7 +35,8 @@ Imports:
     multimode,
     spatstat.geom, 
     spatstat.explore, 
-    progress
+    progress, 
+    DelayedArray
 Suggests: 
     spacexr,
     SPOTlight,
@@ -64,9 +64,7 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0), 
-    emo, 
-    cli, 
-    DelayedArray
+    cli
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
