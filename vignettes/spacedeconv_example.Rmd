@@ -91,7 +91,7 @@ signature <- spacedeconv::build_model(
 
 The signature contains expression values for all celltypes and a subset of distinctly expressed genes. The following example shows the first 10 rows of the signature calculated in the previous step. 
 ```{r}
-#knitr::kable(round(signature[1:10, ], 4))
+# knitr::kable(round(signature[1:10, ], 4))
 ```
 
 
