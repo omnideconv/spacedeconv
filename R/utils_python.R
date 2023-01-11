@@ -74,7 +74,6 @@ metacells_checkload <- function() {
   }
 }
 
-
 #' Install all python packages
 #'
 #' This makes sure a valid python installation exists and all needed packages are pulled and installed
