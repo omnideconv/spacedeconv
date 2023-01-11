@@ -13,11 +13,12 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: self-hosted # ubuntu-22.04
+    runs-on: ubuntu-22.04
     env:
       GITHUB_PAT: ${{ secrets.TOKEN }}
       CIBERSORTX_EMAIL: ${{ secrets.CIBERSORTX_EMAIL }}
       CIBERSORTX_TOKEN: ${{ secrets.CIBERSORTX_TOKEN }}
+      CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
     steps:
       - uses: actions/checkout@v2
