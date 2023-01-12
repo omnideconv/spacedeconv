@@ -59,7 +59,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck, any::markdown, local::.
+          extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
           needs: check
 
       - name: Install Python
