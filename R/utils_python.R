@@ -82,4 +82,11 @@ metacells_checkload <- function() {
 install_all_python <- function() {
   init_python()
   metacells_checkload()
+
+  if (requireNamespace("Giotto", quietly = T)) {
+    Giotto::installGiottoEnvironment()
+  } else {
+    message("Giotto environment could not be installed")
+  }
+
 }
