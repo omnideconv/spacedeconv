@@ -29,5 +29,6 @@ qualitycontrol <- function(spe) {
   plot_ndetected_genes(spe, offset_rotation = T)
 
   # Render html output
-  rmarkdown::render(system.file("Qualitycontrol.rmd", package = "spacedeconv"), params = list(output_file = report.html))
+  rmarkdown::render('./Qualitycontrol.rmd', params = list(output_file = report.html))
+  #rmarkdown::render(system.file("Qualitycontrol.rmd", package = "spacedeconv"), params = list(output_file = report.html))
 }

@@ -4,6 +4,9 @@ output: html_document
 ---
 
 <style type="text/css">
+   .main-container {max-width: 100%;}
+   .row {display: flex;}
+   .column {flex: 50%;}
 </style>
 
 ```{r, echo=FALSE}
@@ -11,6 +14,8 @@ output: html_document
 library(SpatialExperiment)
 library(spacedeconv)
 library(scuttle)
+library(ggplot2)
+
 ```
 
 
@@ -21,7 +26,6 @@ spe <- scuttle::addPerCellQC(spe)
 ```
 
 ```{r, echo = FALSE, results='asis'}
-
 
 # number of total spots
 ntotal_spots <- ncol(counts(spe))
@@ -41,22 +45,33 @@ UMI_below500 <- sum(colData(spe)$sum < 500)/dim(spe)[1]
 # Range of detected genes per spot
 range_genesperspot <- range(colSums(counts(spe)>0))
 
+```
+
+
+<div class = "row">
+<div class = "column">
+# Plot UMI and number of detected genes - log transformed
+```{r, echo=FALSE, fig.align='left'}
+# Plot UMI 
+plot_umi_count(spe, offset_rotation = T, transform_scale = "log")
+
+# Plot number of detected genes
+plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
+```
+</div>
+
+<div class = "column">
+# QC metrics
+```{r, echo = FALSE}
 # Make a dataframe
 res <- rbind(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = range_umiperspot, UMI_above500 = UMI_above500, UMI_below500 = UMI_below500, range_genesperspot = range_genesperspot)
 res[c("ntotal_genes", "ntotal_spots", "UMI_above500", "UMI_below500"), 2] <- NA
 
 library(knitr)
-kable(res, caption = "qc metrics", col.names = c(1, 2))
-```
-
-# Plot UMI and genes 
-```{r, echo=FALSE, fig.align='left'}
-# Plot UMI 
-plot_umi_count(spe, offset_rotation = T)
-
-# Plot number of detected genes
-plot_ndetected_genes(spe, offset_rotation = T)
+kable(res, col.names = c(1, 2))
 ```
 
 
+</div>
+</div>
 
