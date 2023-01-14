@@ -8,7 +8,7 @@
 #' @param correlation correlation heatmap based on scores
 #' @param localization colocalization and avoidance heatmap
 
-localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE) {
+localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE) {
   # create matrix with scores for each spot and celltype
   available <- available_results(spe)[startsWith(available_results(spe), method)]
   m <- as.matrix(colData(spe)[, available])
@@ -59,6 +59,12 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
       }
     }
     draw(ht1 + ht2)
+    if(matrix == TRUE){
+      print("mat_coloc")
+      print(mat_coloc)
+      print("mat_avoid")
+      print(mat_avoid)
+    }
   }
   if (correlation == TRUE) {
     correlation <- cor(m, use = "complete.obs")
@@ -72,5 +78,9 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     )
     par(mar = c(5.1, 8.1, 8.1, 15.1), xpd = TRUE)
     plot(ht3)
+    if(matrix == TRUE){
+      print("correlation")
+      print(correlation)
+    }
   }
 }

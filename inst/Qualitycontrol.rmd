@@ -52,7 +52,7 @@ range_genesperspot <- range(colSums(counts(spe)>0))
 <div class = "column">
 # Plot UMI and number of detected genes - log transformed
 ```{r, echo=FALSE, fig.align='left'}
-# Plot UMI 
+# Plot UMI
 plot_umi_count(spe, offset_rotation = T, transform_scale = "log")
 
 # Plot number of detected genes
