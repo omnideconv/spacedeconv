@@ -11,7 +11,8 @@ cell_pair_localization(
   cell_type_1 = NULL,
   cell_type_2 = NULL,
   density = FALSE,
-  niter = 100
+  niter = 100,
+  presence = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ cell_pair_localization(
 \item{density}{logical}
 
 \item{niter}{permutations}
+
+\item{presence}{presence matrix if available}
 }
 \value{
 statistics and graph

@@ -22,6 +22,9 @@
 #' @importFrom Matrix colSums
 #' @importFrom colorspace scale_fill_continuous_sequential sequential_hcl
 #' @importFrom DelayedArray rowSums colSums
+#' @importFrom circlize colorRamp2
+#' @importFrom ComplexHeatmap Heatmap draw
+#' @importFrom grid gpar
 #' @importFrom stats median quantile
 #' @importFrom graphics abline
 #' @importFrom grDevices dev.off png

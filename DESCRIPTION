@@ -63,8 +63,14 @@ Suggests:
     xCell,
     Giotto,
     knitr,
-    testthat (>= 3.0.0), 
-    cli
+    testthat (>= 3.0.0),
+    emo, 
+    cli, 
+    DelayedArray, 
+    scuttle, 
+    circlize, 
+    ComplexHeatmap, 
+    grid
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 

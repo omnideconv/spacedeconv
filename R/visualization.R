@@ -532,6 +532,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       } else if (transform_scale == "sqrt") {
         df[[to_plot]] <- sqrt(df[[to_plot]])
         legend_title <- paste0(legend_title, "_", "sqrt")
+      } else if (transform_scale == "log") {
+        df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1)
+        legend_title <- paste0(legend_title, "_", "log")
       } else {
         print("Unknown transform_scaleation, plotting untransform_scaleed data")
       }
