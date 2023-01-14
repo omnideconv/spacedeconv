@@ -15,7 +15,6 @@ library(SpatialExperiment)
 library(spacedeconv)
 library(scuttle)
 library(ggplot2)
-
 ```
 
 
@@ -37,14 +36,13 @@ ntotal_genes <- dim(spe)[1]
 range_umiperspot <- range(colData(spe)$sum)
 
 # % UMIs >= 500
-UMI_above500 <- sum(colData(spe)$sum >= 500)/dim(spe)[1]
+UMI_above500 <- sum(colData(spe)$sum >= 500) / dim(spe)[1]
 
 # % UMIs < 500
-UMI_below500 <- sum(colData(spe)$sum < 500)/dim(spe)[1]
+UMI_below500 <- sum(colData(spe)$sum < 500) / dim(spe)[1]
 
 # Range of detected genes per spot
-range_genesperspot <- range(colSums(counts(spe)>0))
-
+range_genesperspot <- range(colSums(counts(spe) > 0))
 ```
 
 
@@ -74,4 +72,3 @@ kable(res, col.names = c(1, 2))
 
 </div>
 </div>
-

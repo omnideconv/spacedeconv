@@ -22,7 +22,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     rownames(mat_avoid) <- colnames(m)
     colnames(mat_avoid) <- colnames(m)
 
-    presence = presence(spe, method)
+    presence <- presence(spe, method)
 
     # Calculate pairwise p-values
     for (i in 1:length(rownames(mat_coloc))) {
@@ -59,7 +59,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
       }
     }
     draw(ht1 + ht2)
-    if(matrix == TRUE){
+    if (matrix == TRUE) {
       print("mat_coloc")
       print(mat_coloc)
       print("mat_avoid")
@@ -78,7 +78,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     )
     par(mar = c(5.1, 8.1, 8.1, 15.1), xpd = TRUE)
     plot(ht3)
-    if(matrix == TRUE){
+    if (matrix == TRUE) {
       print("correlation")
       print(correlation)
     }
