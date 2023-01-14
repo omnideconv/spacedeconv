@@ -1,5 +1,9 @@
-
-
+#' Print info about dataset
+#'
+#' @param sce singleCellExperiment
+#' @param spe SpatialExperiment
+#' @param signature signature matrix
+#' @export
 print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   # check for correct class
 
@@ -10,11 +14,6 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   if (!is.null(spe) & !is(spe, "SpatialExperiment")) {
     stop("The spatial object is not a SpatialExperiment")
   }
-
-  # general info
-  cli::cli_rule(center = "spacedeconv")
-
-
 
   # exclamation, rocket, check, cross mark, ok, hourglass, entry
   # sce
@@ -96,6 +95,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
     }
   }
 
+  # signature
   if (!is.null(signature)) {
     cli::cli_h2("Signature")
 
@@ -104,7 +104,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
     cli::cli_alert("{.val {colnames(signature)}}")
 
     if (!is.null(spe)) {
-      overlapGenes <- sum(rownames(signature) %in% rownames(spe))
+      overlapGenes <- sum(rownames(spe) %in% rownames(signature))
       overlapGenesPercent <- round(overlapGenes / length(rownames(spe)) * 100, 2)
       cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
     }

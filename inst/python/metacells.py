@@ -5,13 +5,6 @@ import pandas as pd
 import seaborn as sb # viz
 import matplotlib.pyplot as plt # viz
 
-# anndata = ad.read_h5ad("/home/czackl/subsetData/anndata.h5ad")
-# test = anndata.var
-# test = test.drop(["properly_sampled_gene", "excluded_gene"], axis = 1)
-# anndata.var = test
-# anndata = ad.AnnData.transpose(anndata)
-
-
 #  based on the vignette!!!
 
 def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800, 
@@ -22,6 +15,7 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
   
   mc.ut.set_name(anndata, name)
   
+  # recommendations from the metacell paper
   excluded_gene_names = list(set(list(exclude_genes) + ['IGHMBP2', 'IGLL1', 'IGLL5', 'IGLON5', 'NEAT1', 'TMSB10', 'TMSB4X']))
   excluded_gene_patterns = list(set(list(exclude_gene_patterns) + ['MT-.*']))
   
@@ -101,19 +95,19 @@ def extract_forbidden_from_modules(clean, forbidden_modules):
   
   return (clean)
   
-def compute_metacells(clean, forbidden_gene_names):
+def compute_metacells(clean, forbidden_gene_names, seed=123456):
   
   mc.pl.set_max_parallel_piles(mc.pl.guess_max_parallel_piles(clean))
   
-  name = "test"
+  name = "AnnData"
   
   print ("computing metacells...")
   
-  #with mc.ut.progress_bar():
+  # with mc.ut.progress_bar(): # does not work somehow
   mc.pl.divide_and_conquer_pipeline(clean,
                                     forbidden_gene_names=forbidden_gene_names,
                                     #target_metacell_size=...,
-                                    random_seed=123456)
+                                    random_seed=seed)
                                       
   print ("finished divide and conquer")
                                       

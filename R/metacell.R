@@ -13,7 +13,6 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
                                   properly_sampled_max_cell_total = 8000,
                                   properly_sampled_max_excluded_genes_fraction = 0.1,
                                   exclude_genes = "", exclude_gene_patterns = "", seed = 123456) {
-  # reticulate::source_python("./inst/python/metacells.py")
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   res <- clean_genes_and_cells(anndata,
@@ -72,6 +71,10 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abundance_score = 0.9) {
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
+  if (is.null(cell_type_col)) {
+    stop("Please provide a cell type column name")
+  }
+
   res <- compute_metacells(clean = clean, forbidden_gene_names = forbidden_gene_names)
 
   # reannotation
@@ -85,7 +88,6 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
 
   pb <- progress::progress_bar$new(total = length(rownames(metacell)))
   pb$tick(0)
-
   intDF <- internal$obs
 
   for (cell in rownames(metacell)) {
@@ -102,14 +104,17 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
     pb$tick()
   }
 
+  # print (metacell)
+
   metacell <- anndata_to_singlecellexperiment(metacell)
-  assayNames(metacell) <- "counts" # renaming assay
-  colData(metacell)$celltype <- celllist$mostAbundant # reannotation
+  SummarizedExperiment::assayNames(metacell) <- "counts" # renaming assay
+  SummarizedExperiment::colData(metacell)$celltype <- celllist$mostAbundant # reannotation
+  SummarizedExperiment::colData(metacell)$percentage <- as.numeric(celllist$percentage) # optional
 
   # filter for abundance score
   above90 <- celllist[celllist$percent >= abundance_score, ]$metacell
   message("Removing ", nrow(celllist) - length(above90), " metacell with abundance score under ", abundance_score)
   metacell <- metacell[, colnames(metacell) %in% above90]
 
-  return(metacell)
+  return(list(internal, metacell))
 }
