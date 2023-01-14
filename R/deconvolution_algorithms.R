@@ -285,6 +285,13 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'   method = "estimate",
 #' )
 deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
+  cli::cli_rule(left = "spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
+
+
+
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required.")
   }
@@ -322,14 +329,11 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     stop("You requested a first-generation method and your spatial object contains ENSEBML IDs, please provide HGNC Symbols!")
   }
 
-  # ensure library size > 0
-  spatial_obj <- removeZeroExpression(spatial_obj)
-  if (!is.null(single_cell_obj)) {
-    single_cell_obj <- removeZeroExpression(single_cell_obj)
-  }
+  cli::cli_progress_done()
 
   print_info(sce = single_cell_obj, spe = spatial_obj, signature = signature)
 
+  cli::cli_progress_step("deconvoluting", msg_done = "finished")
 
   deconv <- switch(method,
     rctd = {
@@ -439,7 +443,6 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
     }
   )
 
-  message("finished deconvolution")
 
   # save to object or return table
   if (return_object) {
@@ -447,6 +450,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
   } else {
     return(deconv)
   }
+  cli::cli_progress_done()
 }
 
 #' Build Model and Deconvolute in one step

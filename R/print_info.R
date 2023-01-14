@@ -15,11 +15,6 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
     stop("The spatial object is not a SpatialExperiment")
   }
 
-  # general info
-  cli::cli_rule(center = "spacedeconv")
-
-
-
   # exclamation, rocket, check, cross mark, ok, hourglass, entry
   # sce
   if (!is.null(sce)) {
