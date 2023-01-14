@@ -88,5 +88,4 @@ install_all_python <- function() {
   } else {
     message("Giotto environment could not be installed")
   }
-
 }
