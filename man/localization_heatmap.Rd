@@ -10,7 +10,8 @@ localization_heatmap(
   method,
   distance = 0,
   correlation = TRUE,
-  localization = TRUE
+  localization = TRUE,
+  matrix = FALSE
 )
 }
 \arguments{

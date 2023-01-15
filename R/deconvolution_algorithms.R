@@ -110,6 +110,10 @@ first_gen <- c(
 #'   assay_sc = "cpm"
 #' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
+  cli::cli_rule(left = "spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' missing or null, but is required")
   }
@@ -136,13 +140,11 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
-  # ensure library size > 0
-  single_cell_obj <- removeZeroExpression(single_cell_obj)
-  if (!is.null(spatial_obj)) {
-    spatial_obj <- removeZeroExpression(spatial_obj)
-  }
+  cli::cli_progress_done()
 
   print_info(sce = single_cell_obj, spe = spatial_obj)
+
+  cli::cli_progress_step("building signature", msg_done = "finished")
 
   signature <- switch(method,
     rctd = {
@@ -252,6 +254,8 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     }
   )
 
+  cli::cli_progress_done()
+
   return(signature)
 }
 
@@ -284,7 +288,11 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #'   spatial_obj = spatial_data_2,
 #'   method = "estimate",
 #' )
-deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, cell_type_col = "cell_ontology_class", method = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
+deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
+                        cell_type_col = "cell_ontology_class", method = NULL,
+                        batch_id_col = NULL, assay_sc = "counts",
+                        assay_sp = "counts", return_object = TRUE,
+                        verbose = FALSE, ...) {
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
@@ -466,19 +474,24 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL, c
 #' @param verbose output more information
 #' @param ... further parameters passed to the selected function
 #' @export
-build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, cell_type_col = "cell_ontology_class", batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", return_object = TRUE, verbose = FALSE, ...) {
+build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL,
+                                  cell_type_col = "cell_ontology_class",
+                                  batch_id_col = NULL, assay_sc = "counts",
+                                  assay_sp = "counts", return_object = TRUE,
+                                  verbose = FALSE, ...) {
   # TODO useful checks
+
+  cli::cli_rule(left = "spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
   # check if rownames and colnames are set
   if (checkRowColumn(single_cell_obj) || checkRowColumn(spatial_obj)) {
     stop("Rownames or colnames not set for single_cell_obj or spatial_obj but need to be available!")
   }
 
-  # ensure library size > 0
-  spatial_obj <- removeZeroExpression(spatial_obj)
-  if (!is.null(spatial_obj)) {
-    single_cell_obj <- removeZeroExpression(single_cell_obj)
-  }
+
+  cli::cli_progress_step("building signature", msg_done = "finished")
 
   signature <- build_model(
     single_cell_obj,
@@ -491,6 +504,9 @@ build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, c
     verbose = verbose,
     ...
   )
+
+
+  cli::cli_progress_step("deconvoluting", msg_done = "finished")
 
   deconv <- deconvolute(
     spatial_obj = spatial_obj,
@@ -505,5 +521,8 @@ build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL, c
     return_object = return_object,
     ...
   )
+
+  cli::cli_progress_done()
+
   return(deconv)
 }
