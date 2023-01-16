@@ -13,7 +13,7 @@ spatially resolved atlas of human breast cancers. Nat Genet 2021 Sep;53(9):1334-
 PMID: 34493872
 }
 \usage{
-spatial_data_3
+data("spatial_data_3")
 }
 \description{
 A SpatialExperiment containing a total of 1322 spots from sample CID44971

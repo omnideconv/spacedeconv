@@ -56,3 +56,36 @@ anndata_checkload <- function() {
     anndata::install_anndata()
   }
 }
+
+#' Checks if metacells in installed
+metacells_checkload <- function() {
+  if (!python_available()) {
+    base::message("Setting up python environment..")
+    init_python()
+    if (!python_available()) {
+      base::stop(
+        "Could not initiate miniconda python environment. Please set up manually with ",
+        "init_python(python=your/python/version)"
+      )
+    }
+  }
+  if (!reticulate::py_module_available("metacells")) {
+    reticulate::py_install("metacells", pip = TRUE)
+  }
+}
+
+#' Install all python packages
+#'
+#' This makes sure a valid python installation exists and all needed packages are pulled and installed
+#'
+#' @export
+install_all_python <- function() {
+  init_python()
+  metacells_checkload()
+
+  if (requireNamespace("Giotto", quietly = T)) {
+    Giotto::installGiottoEnvironment()
+  } else {
+    message("Giotto environment could not be installed")
+  }
+}

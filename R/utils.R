@@ -64,8 +64,6 @@ addResultToObject <- function(spatial_obj, result) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
 
-  message("saving results to object")
-
   # make cell type names unique
   colnames(result) <- make.names(colnames(result))
 
@@ -255,7 +253,6 @@ checkRowColumn <- function(object) {
 #'
 #' @returns deconvolution result with renamed celltypes
 attachToken <- function(deconvolution, token = "deconv") {
-  message("attaching token")
   if (is.null(deconvolution)) {
     stop("Deconvolution result is missing but is required")
   }

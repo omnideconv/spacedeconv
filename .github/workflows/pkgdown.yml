@@ -16,7 +16,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: self-hosted # ubuntu-22.04
+    runs-on: ubuntu-22.04
     # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
@@ -41,12 +41,15 @@ jobs:
       - name: remotes
         run: Rscript -e "install.packages('remotes')"
       - name: harmony
-        run: Rscript -e "remotes::install_github('PelzKo/harmony')"
+        run: Rscript -e "remotes::install_github('omnideconv/harmony')"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
+
+      - name: Install Python
+        run: Rscript -e "spacedeconv::install_all_python()"
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
