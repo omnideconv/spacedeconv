@@ -7,6 +7,7 @@
 #' @param distance size area of interest
 #' @param correlation correlation heatmap based on scores
 #' @param localization colocalization and avoidance heatmap
+#' @param matrix prints localization p-values and/or correlation values
 
 localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE) {
   # create matrix with scores for each spot and celltype
