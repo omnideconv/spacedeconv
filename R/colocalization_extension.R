@@ -7,6 +7,10 @@
 #' @param distance size area of interest
 #' @param correlation correlation heatmap based on scores
 #' @param localization colocalization and avoidance heatmap
+#'
+#' @returns cell pair localization heatmap and correlation heatmap
+#'
+#' @export
 
 localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE) {
   # create matrix with scores for each spot and celltype

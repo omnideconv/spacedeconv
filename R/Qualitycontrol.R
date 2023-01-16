@@ -1,4 +1,10 @@
 ## Quality control function
+#'
+#' @param spe SpatialExperiment object
+#'
+#' @returns html file with quality control metrics
+#'
+#' @export
 
 qualitycontrol <- function(spe) {
   # Add QC metrics

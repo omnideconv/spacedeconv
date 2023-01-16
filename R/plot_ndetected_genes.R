@@ -1,3 +1,32 @@
+## Plot number of detected genes
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, wether to display the image, default = TRUE
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param title_size font size of title
+#' @param title set a custom title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
+#'
+#' @returns plot number of detected genes
+#'
+#' @export
+
+
 plot_ndetected_genes <- function(spe, palette = "Mako", transform_scale = NULL,
                                  sample_id = "sample01", image_id = "lowres",
                                  reverse_palette = FALSE,
