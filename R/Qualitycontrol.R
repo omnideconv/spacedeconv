@@ -1,4 +1,6 @@
-## Quality control function
+#' Quality control function
+#'
+#' Generates a html report containing quality metrics of the SpatialExperiment
 #'
 #' @param spe SpatialExperiment object
 #'

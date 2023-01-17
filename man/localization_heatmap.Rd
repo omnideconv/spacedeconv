@@ -25,6 +25,9 @@ localization_heatmap(
 
 \item{localization}{colocalization and avoidance heatmap}
 }
+\value{
+cell pair localization heatmap and correlation heatmap
+}
 \description{
 Heatmaps cell pair localization and correlation of scores
 library "circlize" and "ComplexHeatmap"

@@ -1,7 +1,7 @@
-
-
 #' Heatmaps cell pair localization and correlation of scores
-#' library "circlize" and "ComplexHeatmap"
+#'
+#' Generates a heatmap of cell pair localization p-values and a correlation heatmap of scores between all celltypes found after deconvolution
+#'
 #' @param spe SpatialExperiment object
 #' @param method deconvolution method
 #' @param distance size area of interest

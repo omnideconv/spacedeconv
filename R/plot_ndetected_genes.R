@@ -1,4 +1,6 @@
-## Plot number of detected genes
+#' Plot number of detected genes
+#'
+#' Generating a spatial plot of the number of detected genes of the SpatialExperiment
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param palette colorspace palette (sequential)
