@@ -2,8 +2,7 @@
 % Please edit documentation in R/colocalization_extension.R
 \name{localization_heatmap}
 \alias{localization_heatmap}
-\title{Heatmaps cell pair localization and correlation of scores
-library "circlize" and "ComplexHeatmap"}
+\title{Heatmaps cell pair localization and correlation of scores}
 \usage{
 localization_heatmap(
   spe,
@@ -29,6 +28,5 @@ localization_heatmap(
 cell pair localization heatmap and correlation heatmap
 }
 \description{
-Heatmaps cell pair localization and correlation of scores
-library "circlize" and "ComplexHeatmap"
+Generates a heatmap of cell pair localization p-values and a correlation heatmap of scores between all celltypes found after deconvolution
 }

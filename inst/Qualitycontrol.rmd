@@ -17,7 +17,6 @@ library(scuttle)
 library(ggplot2)
 ```
 
-
 ```{r, echo=FALSE}
 # Add QC metrics
 library(scuttle)
@@ -48,7 +47,7 @@ range_genesperspot <- range(colSums(counts(spe) > 0))
 
 <div class = "row">
 <div class = "column">
-# Plot UMI and number of detected genes - log transformed
+# Plot UMI and number of detected genes
 ```{r, echo=FALSE, fig.align='left'}
 # Plot UMI
 plot_umi_count(spe, offset_rotation = T, transform_scale = "log")
@@ -59,7 +58,7 @@ plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
 </div>
 
 <div class = "column">
-# QC metrics
+
 ```{r, echo = FALSE}
 # Make a table
 res <- c(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = paste0(range_umiperspot[1], "-",range_umiperspot[2]), UMI_above500 = UMI_above500, UMI_below500 = UMI_below500, range_genesperspot = paste0(range_genesperspot[1], "-", range_genesperspot[2]))
