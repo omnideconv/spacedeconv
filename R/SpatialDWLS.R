@@ -13,6 +13,9 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     stop("cell_type_col not available")
   }
 
+  # TODO, implement instructions
+  instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+
   # check if requested assay exists
   if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
@@ -33,7 +36,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   if (marker_method %in% c("scran", "gini", "mast")) {
     message("Calculating markers by using the method: ", marker_method)
     # turn into giotto for markers!!
-    obj <- Giotto::createGiottoObject(scExpression)
+    obj <- Giotto::createGiottoObject(scExpression, instructions = instructions)
 
     obj <- doGiottoWorkflow(obj, dim_method = dim_method, cluster_method = cluster_method)
 
@@ -82,7 +85,11 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
-  obj <- Giotto::createGiottoObject(raw_exprs = spExpression, spatial_locs = spCoords)
+  ##########
+  instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+
+
+  obj <- Giotto::createGiottoObject(raw_exprs = spExpression, spatial_locs = spCoords, instructions = instructions)
 
   obj <- doGiottoWorkflow(obj, ...)
 
