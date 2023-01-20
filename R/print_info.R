@@ -18,7 +18,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   # exclamation, rocket, check, cross mark, ok, hourglass, entry
   # sce
   if (!is.null(sce)) {
-    cli::cli_h2("Single Cell")
+    cli::cli_h3("Single Cell")
     cli::cli_text("Assays: {.val {assayNames(sce)}}")
     cli::cli_text("Genes: {.val {nrow(sce)}}")
 
@@ -52,7 +52,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
 
   if (!is.null(spe)) {
     message()
-    cli::cli_h2("Spatial")
+    cli::cli_h3("Spatial")
     cli::cli_text("Assays: {.val {assayNames(spe)}}")
     cli::cli_text("Genes: {.val {nrow(spe)}}")
 
@@ -97,7 +97,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
 
   # signature
   if (!is.null(signature)) {
-    cli::cli_h2("Signature")
+    cli::cli_h3("Signature")
 
     cli::cli_text("Number of Genes: {.val {nrow(signature)}}")
     cli::cli_text("Number of Cell Types: {.val {ncol(signature)}}")
