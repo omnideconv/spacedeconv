@@ -14,7 +14,9 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   }
 
   # TODO, implement instructions
-  instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  if (is.null(instructions)){
+    instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  }
 
   # check if requested assay exists
   if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
@@ -86,7 +88,9 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   ##########
-  instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  if (is.null(instructions)){
+    instructions = Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  }
 
 
   obj <- Giotto::createGiottoObject(raw_exprs = spExpression, spatial_locs = spCoords, instructions = instructions)
