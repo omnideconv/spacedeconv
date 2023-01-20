@@ -14,7 +14,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   }
 
   # TODO, implement instructions
-  if (is.null(instructions)) {
+  if (!exists("instructions")) {
     instructions <- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
   }
 
@@ -88,7 +88,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   ##########
-  if (is.null(instructions)) {
+  if (!exists("instructions")) {
     instructions <- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
   }
 
