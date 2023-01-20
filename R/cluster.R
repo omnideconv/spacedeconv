@@ -14,6 +14,10 @@
 #' @export
 #'
 cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "counts", nclusters = 3, ...) {
+  cli::cli_rule(left="spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -26,6 +30,8 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
     stop("can only cluster expression or deconvolution")
   }
 
+  cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
+
   if (cluster == "expression") {
     # assay
     tmp <- SummarizedExperiment::assay(spe, assay)
@@ -35,6 +41,8 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
   } else if (cluster == "deconvolution") {
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe)]
   }
+
+  cli::cli_progress_step("Clustering", msg_done = "Finished clusering")
 
   # cluster
   cluster <- switch(method,
@@ -46,6 +54,8 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
   # add clustering
   cluster <- as.factor(cluster)
   SummarizedExperiment::colData(spe) <- cbind(SummarizedExperiment::colData(spe), cluster)
+
+  cli::cli_progress_done()
 
   return(spe)
 }
