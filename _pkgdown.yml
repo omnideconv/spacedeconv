@@ -68,6 +68,10 @@ reference:
       - ripleys_k
       - localization_heatmap
       - qualitycontrol
+  - title: DecoupleR
+    contents:
+      - get_decoupleR_reference
+      - compute_decoupleR_activities
   - title: internal
     contents:
       - spacedeconv_pkg
