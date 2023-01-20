@@ -116,5 +116,5 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   message("Removing ", nrow(celllist) - length(above90), " metacell with abundance score under ", abundance_score)
   metacell <- metacell[, colnames(metacell) %in% above90]
 
-  return(list(internal, metacell))
+  return(metacell)
 }
