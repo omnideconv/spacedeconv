@@ -55,7 +55,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
         ht2 <- Heatmap(mat_avoid,
           rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance", col = mycols,
           cell_fun = function(j, i, x, y, w, h, fill) {
-            if (i >= j) {
+            if (i <= j) {
               grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
             }
           }
