@@ -14,6 +14,7 @@ make_baseplot(
   reverse_palette = FALSE,
   image_id = "lowres",
   show_image = FALSE,
+  background = NULL,
   palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1,
@@ -49,6 +50,8 @@ make_baseplot(
 \item{image_id}{image id for background image}
 
 \item{show_image}{whether to show the spatial image}
+
+\item{background}{custom background color}
 
 \item{palette_type}{"discrete", "sequential", "diverging"}
 
