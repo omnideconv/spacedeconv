@@ -35,9 +35,11 @@ reference:
       - plot_gene
       - plot_celltype
       - plot_umi_count
+      - plot_ndetected_genes
       - plot_most_abundant
       - plot_celltype_presence
       - plot_comparison
+      - plot_scatter
   - title: Sample Data
     contents:
       - starts_with("single_cell_data")
@@ -47,12 +49,15 @@ reference:
       - aggregate
       - annotate_spots
       - cluster
+      - print_info
   - title: Metacell
     contents:
       - clean_genes_and_cells
       - compute_forbidden_genes
       - extract_forbidden_from_modules
       - compute_metacells
+      - plot_metacell_nCells
+      - plot_metacell_abundance
   - title: Colocalization
     contents:
       - presence
@@ -61,6 +66,12 @@ reference:
       - coloc_avoid
       - get_iniche
       - ripleys_k
+      - localization_heatmap
+      - qualitycontrol
+  - title: DecoupleR
+    contents:
+      - get_decoupleR_reference
+      - compute_decoupleR_activities
   - title: internal
     contents:
       - spacedeconv_pkg

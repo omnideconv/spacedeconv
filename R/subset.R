@@ -21,6 +21,10 @@
 #'   ncells = 100
 #' )
 subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis", seed = 12345) {
+  cli::cli_rule(left = "spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
   if (is.null(sce)) {
     stop("SingleCellExperiment missing but required")
   }
@@ -39,9 +43,9 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
     stop("seed has to be numeric!")
   }
   set.seed(seed)
-  message("Set seed to ", seed)
+  cli::cli_alert_info(paste0("Set seed to ", seed))
 
-  message("extracting up to ", ncells, " cells")
+  cli::cli_progress_step(msg = paste0("extracting up to ", ncells, " cells"), msg_done = paste0("Extracted ", ncells, " cells"))
 
   # full selection vector
   x <- rep(FALSE, ncol(sce))
@@ -66,22 +70,23 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
       } else {
         if (notEnough == "asis") {
           # just use all
-          message("Not enough cells for ", celltype, ". Using all avialable cells")
+          cli::cli_alert_info(paste0("Not enough cells for ", celltype, ". Using all avialable cells"))
 
           # use all cells
           x[locations] <- TRUE
         } else if (notEnough == "remove") {
-          message("Not enough cells for ", celltype, ". Removing Celltype")
+          cli::cli_alert_warning(paste0("Not enough cells for ", celltype, ". Removing Celltype"))
           x[locations] <- FALSE
         }
       }
     }
   }
 
-  message("Using ", sum(x), " cells")
 
   # actually subset and return the sce
   sce <- sce[, x]
+
+  cli::cli_progress_done()
 
   return(sce)
 }

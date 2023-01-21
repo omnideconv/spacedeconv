@@ -70,7 +70,8 @@ Suggests:
     scuttle, 
     circlize, 
     ComplexHeatmap, 
-    grid
+    grid, 
+    decoupleR
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 

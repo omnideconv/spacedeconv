@@ -11,6 +11,10 @@
 #' @returns SpatialObject containing aggregation of provided cell types
 aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
                       name = NULL, remove = FALSE) {
+  cli::cli_rule(left = "spacedeconv")
+
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
   }
@@ -38,6 +42,8 @@ aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL
     name <- paste0(cell_type_1, cell_type_2)
   }
 
+  cli::cli_progress_step("Aggregating cell types", msg_done = "Aggregated cell types")
+
   # aggregate and set colnames
   aggregation <- colData(spatial_obj)[, cell_type_1] + colData(spatial_obj)[, cell_type_2]
 
@@ -51,7 +57,7 @@ aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL
   colnames(tmp) <- c(names(colData(spatial_obj)), name)
   colData(spatial_obj) <- tmp
 
-  message("Aggregated celltypes")
+  cli::cli_process_done()
 
   return(spatial_obj)
 }

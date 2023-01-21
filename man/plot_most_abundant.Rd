@@ -14,6 +14,7 @@ plot_most_abundant(
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = FALSE,
+  background = NULL,
   offset_rotation = FALSE,
   spot_size = 1,
   title_size = 30,
@@ -45,6 +46,8 @@ plot_most_abundant(
 \item{reverse_palette}{reverse color palette}
 
 \item{show_image}{logical, whether to display the image, default = TRUE}
+
+\item{background}{custom background color}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 

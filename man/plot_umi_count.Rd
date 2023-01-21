@@ -12,6 +12,7 @@ plot_umi_count(
   image_id = "lowres",
   reverse_palette = FALSE,
   show_image = FALSE,
+  background = NULL,
   offset_rotation = FALSE,
   spot_size = 1,
   limits = NULL,
@@ -42,6 +43,8 @@ plot_umi_count(
 \item{reverse_palette}{reverse color palette}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
+
+\item{background}{custom background color}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 

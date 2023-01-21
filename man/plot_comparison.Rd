@@ -13,6 +13,7 @@ plot_comparison(
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
+  background = NULL,
   show_image = FALSE,
   offset_rotation = FALSE,
   spot_size = 1,
@@ -47,6 +48,8 @@ plot_comparison(
 \item{image_id}{which image to plot, default: "lowres"}
 
 \item{reverse_palette}{reverse color palette}
+
+\item{background}{custom background color}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
 

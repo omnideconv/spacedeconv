@@ -6,6 +6,9 @@
 #'
 #' @export
 preprocess <- function(object, min_umi = 500, assay = "counts") {
+  cli::cli_rule(left = "spacedeconv")
+  cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
+
   if (is.null(object)) {
     stop("Please provide an object")
   }
@@ -15,15 +18,26 @@ preprocess <- function(object, min_umi = 500, assay = "counts") {
     object <- convert_to_sce(object)
   }
 
-
   # Filtering
   # min UMI Count per Observation
-  message("Removing ", sum(colSums(SummarizedExperiment::assay(object, assay)) < min_umi), " observations with umi count below threshold")
+  nObservation <- sum(colSums(SummarizedExperiment::assay(object, assay)) < min_umi)
+  cli::cli_progress_step(
+    msg = paste0("Removing ", nObservation, " observations with umi count below threshold"),
+    msg_done = paste0("Removed ", nObservation, " observations with umi count below threshold")
+  )
+
   object <- object[, colSums(SummarizedExperiment::assay(object, assay)) >= min_umi]
 
   # remove all zero genes
-  message("Removing ", sum(rowSums(SummarizedExperiment::assay(object, assay)) == 0), " variables with all zero expression")
+  nVariable <- sum(rowSums(SummarizedExperiment::assay(object, assay)) == 0)
+  cli::cli_progress_step(
+    msg = paste0("Removing ", nVariable, " variables with all zero expression"),
+    msg_done = paste0("Removed ", nVariable, " variables with all zero expression")
+  )
+
   object <- object[rowSums(SummarizedExperiment::assay(object, assay)) > 0, ]
+
+  cli::cli_process_done()
 
   return(object)
 }

@@ -9,7 +9,6 @@
 #' @export
 
 qualitycontrol <- function(spe) {
-
   # Add QC metrics
   spe <- addPerCellQC(spe)
 
