@@ -539,12 +539,12 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
         print("Unknown transform_scaleation, plotting untransform_scaleed data")
       }
     }
+    # additionally check if plot is smoothed
+    if (smooth) {
+      legend_title <- paste0(legend_title, "_", "smoothed")
+    }
   } else {
-    legend_title <- title
-  }
-
-  if (smooth) {
-    legend_title <- paste0(legend_title, "_", "smoothed")
+    legend_title <- title # custom title overwrites everything
   }
 
   # preparing the dataframe with sf, inserting points
