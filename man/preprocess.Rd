@@ -4,12 +4,14 @@
 \alias{preprocess}
 \title{Preprocess SingleCellExperiments and Spatial Experiments}
 \usage{
-preprocess(object, min_umi = 500, assay = "counts")
+preprocess(object, min_umi = 500, max_umi = 10000, assay = "counts")
 }
 \arguments{
 \item{object}{SingleCellExperiment or SpatialExperiment, if AnnData or Seurat it will be converted}
 
 \item{min_umi}{minimum umi count for spots/cells}
+
+\item{max_umi}{maximimum umi}
 
 \item{assay}{assay to use for calculation, you can use any assay but counts is recommended}
 }
