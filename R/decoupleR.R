@@ -2,6 +2,7 @@
 #' @param method method to use, progeny or dorothea
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
+#' @export
 get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes=500){
   if (method=="progeny"){
     reference <- decoupleR::get_progeny(organism=organism, top=n_genes)
@@ -20,6 +21,7 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
 #' @param reference decoupleR reference
 #' @param method calculation method to use
 #' @param assay which assay to use
+#' @export
 compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts"){
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
