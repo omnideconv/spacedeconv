@@ -614,36 +614,38 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # create density plot if requested
-  if (density) {
-    data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
-    density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
-      # ggplot2::geom_density() +
-      ggridges::geom_density_ridges() + # _gradient()
-      # ggplot2::scale_fill_viridis_c() +
-      ggplot2::scale_y_discrete() +
-      ggplot2::geom_vline(
-        ggplot2::aes(xintercept = mean(unlist(data["values"]))),
-        color = "red",
-        linetype = "dashed",
-        size = 1
-      ) +
-      ggplot2::theme_classic() +
-      # ggplot2::ylim(c(0, 1000)) +
-      ggplot2::theme(
-        legend.position = "none",
-        axis.text.y = ggplot2::element_blank(),
-        axis.ticks.y = ggplot2::element_blank(),
-        axis.line.y = ggplot2::element_blank(),
-        axis.title = ggplot2::element_blank()
-      )
-    # ggplot2::ylim(0, max(data["values"]))
+  suppressMessages(
+    if (density) {
+      data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
+      density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
+        # ggplot2::geom_density() +
+        ggridges::geom_density_ridges() + # _gradient()
+        # ggplot2::scale_fill_viridis_c() +
+        ggplot2::scale_y_discrete() +
+        ggplot2::geom_vline(
+          ggplot2::aes(xintercept = mean(unlist(data["values"]))),
+          color = "red",
+          linetype = "dashed",
+          size = 1
+        ) +
+        ggplot2::theme_classic() +
+        # ggplot2::ylim(c(0, 1000)) +
+        ggplot2::theme(
+          legend.position = "none",
+          axis.text.y = ggplot2::element_blank(),
+          axis.ticks.y = ggplot2::element_blank(),
+          axis.line.y = ggplot2::element_blank(),
+          axis.title = ggplot2::element_blank()
+        )
+      # ggplot2::ylim(0, max(data["values"]))
 
-    # cowplot::plot_grid(spatial, density)
-    plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
-    # plot <- grid::grid.draw(plot) # add functions to pkg.R
-  } else {
-    plot <- p
-  }
+      # cowplot::plot_grid(spatial, density)
+      plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
+      # plot <- grid::grid.draw(plot) # add functions to pkg.R
+    } else {
+      plot <- p
+    }
+  )
 
   if (save) {
     # check if provided path works
