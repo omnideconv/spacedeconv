@@ -1,6 +1,11 @@
 import scanpy as sc
 import anndata
 import pandas as pd
+import os
+
+os.environ["THEANO_FLAGS"] = 'device=cuda0,floatX=float32,force_device=True'
+
+
 import cell2location
 import numpy as np
 import matplotlib.pyplot as plt
