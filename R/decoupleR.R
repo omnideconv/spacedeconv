@@ -2,8 +2,9 @@
 #' @param method method to use, progeny or dorothea
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
+#' @param confidence condfidence level for transcription factor reference, vector of levels to include
 #' @export
-get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes=500){
+get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes=500, confidence = NULL){
   if (method=="progeny"){
     reference <- decoupleR::get_progeny(organism=organism, top=n_genes)
   } else if (method=="dorothea"){
@@ -11,6 +12,10 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
   } else {
     reference <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
+  }
+
+  if  (!is.null(confidence)){
+    reference <- reference[reference$confidence %in% confidence, ]
   }
 
   return (reference)
@@ -31,11 +36,22 @@ compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="co
   # extract expression matrix
   mat <- assay(spe, assay)
 
+  # dorothea: mor
+  # progeny: weight
+
+  if ("mor" %in% colnames(reference)){
+    values <- "mor"
+  } else if ("weight" %in% colnames(reference)){
+    values <- "weight"
+  } else {
+    cli::cli_alert_danger("Reference not applicable")
+    stop()
+  }
 
   cli::cli_progress_step(msg="Running decoupleR", msg_done = "Finished")
 
   if (method=="wsum"){
-    res <- run_wsum(mat = mat, network = reference, .source = "source", .target = "target", .mor = "weight", times=100, minsize = 5)
+    res <- run_wsum(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, times=100, minsize = 5)
   } else {
     res <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
