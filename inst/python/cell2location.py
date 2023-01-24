@@ -34,7 +34,7 @@ def py_build_model_cell2location(adata_ref,
                                   cell_type_column = "celltype_major", 
                                   cell_count_cutoff=5, 
                                   cell_percentage_cutoff=0.03, 
-                                  nonz_mean_cutoff=1.12, gpu = False):
+                                  nonz_mean_cutoff=1.12, gpu = True):
                                   
   """
   Build a model using cell2location
