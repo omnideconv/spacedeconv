@@ -59,3 +59,32 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
 
   return(spe)
 }
+
+#' Get Most Abundant cell types per cluster
+#'
+#' @param spe SpatialExperiment with deconvolution results
+#' @param method how to calculate (sum, mean)
+#' @param k return top k most abundant cell types
+#' @export
+get_mostAbundantInCluster <- function(spe, method="mean", k=3){
+  df <- colData(spe)[, available_results(spe)]
+  clusters <- df$cluster
+  # df$cluster <- NULL
+
+  if (!method %in% c("mean", "median")){
+    stop("Method not supported")
+  }
+
+  result <- list()
+
+  for (cluster in unique(clusters)){
+    tmp <- df[df$cluster==cluster, ]
+    tmp$cluster <- NULL
+
+    res <- sort(apply(tmp, 2, method), decreasing = T)
+    res <- res[1:k]
+    result[[cluster]] <- res
+  }
+
+  return (result)
+}
