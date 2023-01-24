@@ -4,7 +4,7 @@
 \alias{preprocess}
 \title{Preprocess SingleCellExperiments and Spatial Experiments}
 \usage{
-preprocess(object, min_umi = 500, max_umi = 10000, assay = "counts")
+preprocess(object, min_umi = 500, max_umi = NULL, assay = "counts")
 }
 \arguments{
 \item{object}{SingleCellExperiment or SpatialExperiment, if AnnData or Seurat it will be converted}

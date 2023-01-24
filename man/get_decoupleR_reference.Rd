@@ -4,7 +4,12 @@
 \alias{get_decoupleR_reference}
 \title{Obtain a decoupleR reference}
 \usage{
-get_decoupleR_reference(method = "progeny", organism = "human", n_genes = 500)
+get_decoupleR_reference(
+  method = "progeny",
+  organism = "human",
+  n_genes = 500,
+  confidence = NULL
+)
 }
 \arguments{
 \item{method}{method to use, progeny or dorothea}
@@ -12,6 +17,8 @@ get_decoupleR_reference(method = "progeny", organism = "human", n_genes = 500)
 \item{organism}{which organism}
 
 \item{n_genes}{number genes to return, for progeny}
+
+\item{confidence}{condfidence level for transcription factor reference, vector of levels to include}
 }
 \description{
 Obtain a decoupleR reference
