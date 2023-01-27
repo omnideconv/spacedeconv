@@ -44,25 +44,26 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
         )
         # Create heatmap
         ht1 <- Heatmap(mat_coloc,
-          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Colocalization significance", col = mycols,
+          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Colocalization significance (left)", col = mycols,
           cell_fun = function(j, i, x, y, w, h, fill) {
-            if (i >= j) {
+            if (i > j) {
               grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
             }
           }
         )
 
+        colnames(mat_avoid) <- NULL
         ht2 <- Heatmap(mat_avoid,
-          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance", col = mycols,
+          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance (right)", col = mycols,
           cell_fun = function(j, i, x, y, w, h, fill) {
-            if (i <= j) {
+            if (i < j) {
               grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
             }
           }
         )
       }
     }
-    draw(ht1 + ht2)
+    draw(ht1 + ht2, ht_gap = unit(-75, "mm"))
     if (matrix == TRUE) {
       print("mat_coloc")
       print(mat_coloc)
@@ -71,20 +72,34 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     }
   }
   if (correlation == TRUE) {
-    correlation <- cor(m, use = "complete.obs")
-    ht3 <- Heatmap(correlation,
-      rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation of scores",
-      cell_fun = function(j, i, x, y, w, h, fill) {
-        if (i >= j) {
-          grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-        }
-      }
-    )
-    par(mar = c(5.1, 8.1, 8.1, 15.1), xpd = TRUE)
-    plot(ht3)
+    correlation <- corr.test(m, adjust = "none")$r
+    cor_prob <- corr.test(m, adjust = "none")$p
+    colnames(cor_prob) <- NULL
+
+    ht3 <-Heatmap(correlation,
+                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation (right)",
+                  cell_fun = function(j, i, x, y, w, h, fill) {
+                    if (i > j) {
+                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+                    }
+                  }
+                )
+    ht4 <-Heatmap(cor_prob,
+                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability (left)",
+                  cell_fun = function(j, i, x, y, w, h, fill) {
+                    if (i < j) {
+                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+                    }
+                  }
+                 )
+
+    draw(ht3 + ht4, ht_gap = unit(-75, "mm"))
+
     if (matrix == TRUE) {
       print("correlation")
       print(correlation)
+      print("Correlation probability")
+      print(cor_probability)
     }
   }
 }
