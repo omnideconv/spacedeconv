@@ -12,7 +12,7 @@
 #'
 #' @export
 
-localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE) {
+localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE, alpha = 0.05) {
   # create matrix with scores for each spot and celltype
   available <- available_results(spe)[startsWith(available_results(spe), method)]
   m <- as.matrix(colData(spe)[, available])
@@ -39,7 +39,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
 
         # Select colours
         mycols <- circlize::colorRamp2(
-          breaks = c(0, 0.05, 1),
+          breaks = c(0, alpha, 1),
           colors = c("red", "white", "black")
         )
         # Create heatmap
