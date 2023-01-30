@@ -44,6 +44,10 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
         )
         # Create heatmap
         ht1 <- Heatmap(mat_coloc,
+          heatmap_legend_param = list(
+          title = "Colocalization (left)", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
+          break_dist = 1,
+          labels = c("***", "**", "*", alpha, "ns")),
           rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Colocalization significance (left)", col = mycols,
           cell_fun = function(j, i, x, y, w, h, fill) {
             if (i > j) {
@@ -54,6 +58,10 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
 
         colnames(mat_avoid) <- NULL
         ht2 <- Heatmap(mat_avoid,
+                       heatmap_legend_param = list(
+                         title = "Avoidance (right)", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
+                         break_dist = 1,
+                         labels = c("***", "**", "*", alpha, "ns")),
           rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance (right)", col = mycols,
           cell_fun = function(j, i, x, y, w, h, fill) {
             if (i < j) {
@@ -77,7 +85,7 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     colnames(cor_prob) <- NULL
 
     ht3 <-Heatmap(correlation,
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation (right)",
+                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation (left)",
                   cell_fun = function(j, i, x, y, w, h, fill) {
                     if (i > j) {
                       grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
@@ -85,7 +93,11 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
                   }
                 )
     ht4 <-Heatmap(cor_prob,
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability (left)",
+                  heatmap_legend_param = list(
+                    title = "Correlation probability (right)", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
+                    break_dist = 1,
+                    labels = c("***", "**", "*", alpha, "ns")),
+                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability (right)",
                   cell_fun = function(j, i, x, y, w, h, fill) {
                     if (i < j) {
                       grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))

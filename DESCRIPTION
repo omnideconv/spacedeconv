@@ -71,7 +71,8 @@ Suggests:
     circlize, 
     ComplexHeatmap, 
     grid, 
-    decoupleR
+    decoupleR,
+    psych
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
