@@ -67,7 +67,6 @@ Suggests:
     emo, 
     cli, 
     DelayedArray, 
-    scuttle, 
     circlize, 
     ComplexHeatmap, 
     grid, 
