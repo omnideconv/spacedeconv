@@ -7,6 +7,8 @@
 #' @param distance size area of interest
 #' @param correlation correlation heatmap based on scores
 #' @param localization colocalization and avoidance heatmap
+#' @param matrix return colocalization, avoidance, correlation matrices separately
+#' @param alpha significance niveau
 #'
 #' @returns cell pair localization heatmap and correlation heatmap
 #'
