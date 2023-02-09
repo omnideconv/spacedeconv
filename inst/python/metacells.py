@@ -13,6 +13,7 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
   exclude_genes = "", exclude_gene_patterns = "", seed = 123456): 
   name = "AnnData"
   
+  anndata.X = anndata.X.astype('float32') # metacells needs the count values to be float32
   mc.ut.set_name(anndata, name)
   
   # recommendations from the metacell paper
