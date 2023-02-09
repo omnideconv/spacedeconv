@@ -105,7 +105,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
 
     if (!is.null(spe)) {
       overlapGenes <- sum(rownames(spe) %in% rownames(signature))
-      overlapGenesPercent <- round(overlapGenes / length(rownames(spe)) * 100, 2)
+      overlapGenesPercent <- round(overlapGenes / length(rownames(signature)) * 100, 2)
       cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
     }
   }

@@ -89,7 +89,9 @@ compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="co
       tmp <- statistic
     }
     cli::cli_alert(paste("Calculated multiple results, using", tmp[[1]]))
-    res <- res[res$statistic==tmp[[1]], ]
+    df <- res[res$statistic==tmp[[1]], ]
+  } else {
+    df <- res
   }
 
   df$source <- make.names(df$source) ######## okay?
