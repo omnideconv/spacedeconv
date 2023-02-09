@@ -26,8 +26,9 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
 #' @param reference decoupleR reference
 #' @param method calculation method to use
 #' @param assay which assay to use
+#' @param ... further arguments passed to the methods
 #' @export
-compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts"){
+compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts", ...){
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -52,6 +53,26 @@ compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="co
 
   if (method=="wsum"){
     res <- run_wsum(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, times=100, minsize = 5)
+  } else if (method=="aucell") {
+    res <- run_aucell(mat = as.matrix(mat), network = reference, .source = "source", .target = "target", nproc = 4, seed=42, minsize = 5) # missing params
+  } else if (method=="fgsea"){
+    res <- run_fgsea(mat=mat, network = reference, .source = "source", .target = "target", times=100, nproc = 4, seed=42, minsize = 5)
+  } else if (method=="gsva"){
+    res <- run_gsva(mat = mat, network = reference, .source = "source", .target = "target", minsize = 5) # missing parameters
+  } else if (method=="mdt"){
+    res <- run_mdt(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, minsize = 5) # missing parameters
+  } else if (method=="mlm"){
+    res <- run_mlm(mat = mat, network = reference, .source = "source", .target = "target", .mor = values,  minsize = 5) # missing parameters
+  } else if (method=="ora"){
+    res <- run_ora(mat = mat, network = reference, .source = "source", .target = "target", minsize = 5) # missing parameters
+  } else if (method=="udt"){
+    res <- run_udt(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, minsize = 5) # missing parameters
+  } else if (method=="ulm"){
+    res <- run_ulm(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, minsize = 5) # missing parameters
+  } else if (method=="viper"){
+    res <- run_viper(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, minsize = 5) # missing parameters
+  } else if (method=="wmean"){
+    res <- run_wmean(mat = mat, network = reference, .source = "source", .target = "target", .mor = values, minsize = 5) # missing parameters
   } else {
     res <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
