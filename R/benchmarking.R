@@ -42,7 +42,34 @@ plot_scatter <- function(spe1, value1, spe2, value2) {
     geom_point() +
     geom_abline(slope = 1) +
     xlab(value1) +
-    ylab(value2)
+    ylab(value2) +
+    coord_fixed()
 
+  return(plot)
+}
+
+#' Compare Signatures
+#'
+#' @param signature1 signature
+#' @param signature2 signature
+#' @export
+compare_signatures <- function(signature1, signature2){
+
+  df1 <- data.frame(signature1)
+  df1$gene <- rownames(signature1)
+  df1 <- tidyr::pivot_longer(df1, !gene, values_to = "signature1")
+
+  df2 <- data.frame(signature2)
+  df2$gene <- rownames(signature2)
+  df2 <- tidyr::pivot_longer(df2, !gene, values_to = "signature2")
+
+  df <- merge(df1, df2)
+
+  plot <- ggplot(df, aes(x = signature1, y = signature2)) +
+    geom_point() +
+    geom_abline(slope = 1) +
+    xlab("signature 1") +
+    ylab("signature 2") +
+    coord_fixed()
   return(plot)
 }
