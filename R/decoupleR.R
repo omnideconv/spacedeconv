@@ -26,9 +26,10 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
 #' @param reference decoupleR reference
 #' @param method calculation method to use
 #' @param assay which assay to use
+#' @param statistic select a sub results in case methods produce mutliple ones
 #' @param ... further arguments passed to the methods
 #' @export
-compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts", ...){
+compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts", statistic = NULL, ...){
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -80,7 +81,16 @@ compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="co
 
   # add results to spe
 
-  df <- res[res$statistic=="corr_wsum", ] #############add parameter
+  # df <- res[res$statistic=="corr_wsum", ] #############add parameter
+
+  tmp <- unique(res$statistic)
+  if (length(tmp)>1){
+    if (!is.null(statistic)){
+      tmp <- statistic
+    }
+    cli::cli_alert(paste("Calculated multiple results, using", tmp[[1]]))
+    res <- res[res$statistic==tmp[[1]], ]
+  }
 
   df$source <- make.names(df$source) ######## okay?
 
