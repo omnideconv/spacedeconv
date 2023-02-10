@@ -30,7 +30,7 @@ deconvolute_card <- function(single_cell_obj,
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
 
-  if (is.null(batch_id_col) || !batch_id_col %in% names(colData(spatial_obj))) {
+  if (is.null(batch_id_col) || !batch_id_col %in% names(colData(single_cell_obj))) {
     stop("Paramter 'batch_id_col' is missing, null or not available in single cell object")
   }
 
