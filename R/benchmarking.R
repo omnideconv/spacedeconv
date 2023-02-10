@@ -69,7 +69,7 @@ compare_signatures <- function(signature1, signature2){
     geom_point() +
     geom_abline(slope = 1) +
     xlab("signature 1") +
-    ylab("signature 2") +
-    coord_fixed()
+    ylab("signature 2")
+
   return(plot)
 }
