@@ -174,7 +174,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, background = NULL, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
@@ -213,6 +213,11 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
   res <- colnames(df)[max.col(df)]
+
+  # ensure min_spot parameter
+  df <- df[, names(table(res)[table(res)>=min_spot])]
+  res <- colnames(df)[max.col(df)]
+
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
