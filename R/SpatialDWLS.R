@@ -17,7 +17,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
 
   # TODO, implement instructions
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::py_config()$python)
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name=="spacedeconv")])
   }
 
   # check if requested assay exists
@@ -89,9 +89,11 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
+  init_python()
+
   ##########
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::py_config()$python)
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name=="spacedeconv")])
   }
 
 

@@ -1,7 +1,3 @@
-packages_giotto <- c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6",
-                     "leidenalg==0.8.7", "python-louvain==0.15", "python.app", "scikit-learn==0.24.2")
-
-
 #' Initiates python environment
 #'
 #' @param python (optional) If own python should be used please indicate it's binaries
@@ -34,7 +30,7 @@ init_python <- function(python = NULL) {
 
 check_env <- function(){
   if (! "spacedeconv" %in% reticulate::conda_list()$name){
-    reticulate::conda_create(envname = "spacedeconv")
+    reticulate::conda_create(envname = "spacedeconv", packages = c("pip", "numpy"))
     cli::cli_alert_info("created conda environment 'spacedeconv'")
   }
 }
@@ -98,7 +94,8 @@ install_giotto_python <- function(){
       )
     }
   }
-  reticulate::py_install(packages_giotto, envname = "spacedeconv", pip=TRUE)
+  reticulate::py_install(c("python-igraph", "leidenalg", "python-louvain", "scikit-learn"))
+  reticulate::py_install("python.app", pip = TRUE)
 }
 
 #' Install all python packages
