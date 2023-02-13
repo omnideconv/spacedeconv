@@ -1,3 +1,7 @@
+packages_giotto <- c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6",
+                     "leidenalg==0.8.7", "python-louvain==0.15", "python.app", "scikit-learn==0.24.2")
+
+
 #' Initiates python environment
 #'
 #' @param python (optional) If own python should be used please indicate it's binaries
@@ -11,7 +15,8 @@ init_python <- function(python = NULL) {
         message("Setting up miniconda environment..")
         suppressMessages(reticulate::install_miniconda())
       }
-      reticulate::use_miniconda(condaenv = "r-reticulate", required = TRUE)
+      check_env()
+      reticulate::use_miniconda(condaenv = "spacedeconv", required = TRUE)
       config <- reticulate::py_config()
       if (!python_available()) {
         message("Python not available")
@@ -24,6 +29,13 @@ init_python <- function(python = NULL) {
       reticulate::use_python(python = python)
       reticulate::py_config()
     }
+  }
+}
+
+check_env <- function(){
+  if (! "spacedeconv" %in% reticulate::conda_list()$name){
+    reticulate::conda_create(envname = "spacedeconv")
+    cli::cli_alert_info("created conda environment 'spacedeconv'")
   }
 }
 
@@ -74,6 +86,21 @@ metacells_checkload <- function() {
   }
 }
 
+
+install_giotto_python <- function(){
+  if (!python_available()) {
+    base::message("Setting up python environment..")
+    init_python()
+    if (!python_available()) {
+      base::stop(
+        "Could not initiate miniconda python environment. Please set up manually with ",
+        "init_python(python=your/python/version)"
+      )
+    }
+  }
+  reticulate::py_install(packages_giotto, envname = "spacedeconv", pip=TRUE)
+}
+
 #' Install all python packages
 #'
 #' This makes sure a valid python installation exists and all needed packages are pulled and installed
@@ -81,11 +108,7 @@ metacells_checkload <- function() {
 #' @export
 install_all_python <- function() {
   init_python()
+  anndata_checkload()
   metacells_checkload()
-
-  if (requireNamespace("Giotto", quietly = T)) {
-    Giotto::installGiottoEnvironment()
-  } else {
-    message("Giotto environment could not be installed")
-  }
+  install_giotto_python()
 }

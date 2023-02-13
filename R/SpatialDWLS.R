@@ -13,9 +13,11 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     stop("cell_type_col not available")
   }
 
+  init_python()
+
   # TODO, implement instructions
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::py_config()$python)
   }
 
   # check if requested assay exists
@@ -89,7 +91,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
 
   ##########
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::py_config()$python)
   }
 
 
