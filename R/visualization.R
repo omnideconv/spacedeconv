@@ -567,6 +567,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # no overwrite the points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
+  # in discrete case remove the hexagons which should not be plotted
+  if (palette_type=="discrete"){
+    tmp <- as.data.frame(sf_poly)
+    if (is.logical(tmp[, to_plot])){
+      sf_poly <- sf_poly[tmp[, to_plot], ]
+    }
+  }
+
   # extract image and dimensions
   img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
   width <- dim(img)[2]
