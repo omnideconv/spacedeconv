@@ -107,7 +107,7 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   # print (metacell)
 
   metacell <- anndata_to_singlecellexperiment(metacell)
-  SummarizedExperiment::assayNames(metacell) <- "counts" # renaming assay
+  SummarizedExperiment::assayNames(metacell) <- "metacell_counts" # renaming assay
   SummarizedExperiment::colData(metacell)$celltype <- celllist$mostAbundant # reannotation
   SummarizedExperiment::colData(metacell)$percentage <- as.numeric(celllist$percentage) # optional
 
@@ -115,6 +115,15 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
   above90 <- celllist[celllist$percent >= abundance_score, ]$metacell
   message("Removing ", nrow(celllist) - length(above90), " metacell with abundance score under ", abundance_score)
   metacell <- metacell[, colnames(metacell) %in% above90]
+
+  # scale
+  tmp <- assay(metacell, "metacell_counts")
+  for (i in 1:ncol(metacell)){
+    tmp[, i] <- tmp[, i]/metacell$grouped[i]
+  }
+
+  assay(metacell, "metacell_scaled") <- tmp
+  assay(metacell, "metacell_round") <- round(tmp)
 
   return(metacell)
 }

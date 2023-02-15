@@ -9,6 +9,7 @@ plot_most_abundant(
   method = NULL,
   cell_type = NULL,
   remove = NULL,
+  min_spot = 20,
   palette = "Mako",
   sample_id = "sample01",
   image_id = "lowres",
