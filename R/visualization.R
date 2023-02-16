@@ -53,6 +53,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   return(make_baseplot(spe, df,
@@ -122,6 +124,8 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
+
+  spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe),
     nUMI = colSums(counts(spe))
@@ -205,6 +209,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     available <- available[!available %in% remove]
   }
 
+  spe <- filter_sample_id(spe, sample_id)
+
   # create df
   df <- as.data.frame(colData(spe))[, available, drop = FALSE]
   df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop = FALSE]
@@ -277,6 +283,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    title_size = 30, title = NULL, font_size = 20,
                                    legend_size = 40, save = FALSE, path = NULL,
                                    png_width = 1500, png_height = 750) {
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # extract method from celltype
@@ -349,6 +357,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             title_size = 30, title = NULL, font_size = 20,
                             legend_size = 40, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
@@ -427,6 +437,8 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
   if (!gene %in% rownames(spe)) {
     stop("Provides gene is not present in SpatialExperiment")
   }
+
+  spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), gene = SummarizedExperiment::assay(spe, assay)[gene, ]))
 
@@ -754,3 +766,30 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
   grid::grid.draw(plot)
   dev.off()
 }
+
+#' Filter SPE to contain only one sample ID
+#' @param spe SpatialExperiment
+#' @param sample_id sample_id
+filter_sample_id <- function(spe, sample_id){
+  if (is.null(spe)){
+    cli::cli_alert_danger("Spatial Object not provided")
+    stop()
+  }
+
+  # check if sample id is provided, if no and only one available use this one
+  if (is.null(sample_id)){
+    if (length(unique(spe$sample_id))==1){
+      cli::cli_alert_info("No sample ID provided, using the only one available")
+      sample_id <- unique(spe$sample_id)
+    } else {
+      cli::cli_alert_danger("Multiple Sample Ids in Objet, please select one")
+      stop()
+    }
+  }
+
+  # remove columns not in this sample
+  spe <- spe[, spe$sample_id==sample_id]
+
+  return (spe)
+}
+
