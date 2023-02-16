@@ -9,6 +9,8 @@
 #' @param remove logical, remove provided cell types and just keep the aggregation
 #'
 #' @returns SpatialObject containing aggregation of provided cell types
+#'
+#' @export
 aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
                       name = NULL, remove = FALSE) {
   cli::cli_rule(left = "spacedeconv")
