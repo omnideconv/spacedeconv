@@ -407,12 +407,14 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_immunedeconv(spatial_obj, method = "mcp_counter", assay_sp = assay_sp, ...)
     },
     epic = {
+      require("EPIC") # quick fix, did not work with requireNamespace()
       deconvolute_immunedeconv(spatial_obj, method = "epic", assay_sp = assay_sp, ...)
     },
     quantiseq = {
       deconvolute_immunedeconv(spatial_obj, method = "quantiseq", assay_sp = assay_sp, ...)
     },
     xcell = {
+      requireNamespace("xCell") # quick fix
       deconvolute_immunedeconv(spatial_obj, method = "xcell", assay_sp = assay_sp, ...)
     },
     cibersort = {
@@ -422,9 +424,15 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_immunedeconv(spatial_obj, method = "cibersort_abs", assay_sp = assay_sp, ...)
     },
     timer = {
+      if (!hasArg(indications)){
+        cli::cli_alert_warning("Timer requires a cancer type indications vector")
+      }
       deconvolute_immunedeconv(spatial_obj, method = "timer", assay_sp = assay_sp, ...)
     },
     consensus_tme = {
+      if (!hasArg(indications)){
+        cli::cli_alert_warning("ConsensusTME requires a cancer type indications vector")
+      }
       deconvolute_immunedeconv(spatial_obj, method = "consensus_tme", assay_sp = assay_sp, ...)
     },
     abis = {
