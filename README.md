@@ -1,11 +1,11 @@
-# spacedeconv <img src="inst/logo/logo.png" align="right" alt="" />
+# :rocket: spacedeconv <img src="inst/logo/logo.png" align="right" alt="" />
 
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
 spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available. 
 
-## :rocket: Installation
+## :arrow_down: Installation
 
 `spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager:
 
@@ -75,7 +75,7 @@ spacedeconv includes highly-flexible visualization functions. A full explanation
 plot_celltype(spe, cell_type="spotlight_B.cells")
 ```
 
-## Additional Requirements
+## :bulb: Additional Requirements
 
 Most methods do not require additional software/tokens, but there are a few exceptions:
 
