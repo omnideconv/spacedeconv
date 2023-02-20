@@ -108,4 +108,5 @@ install_all_python <- function() {
   anndata_checkload()
   metacells_checkload()
   install_giotto_python()
+  omnideconv::install_all_python()
 }
