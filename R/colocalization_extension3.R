@@ -43,67 +43,58 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
         mat_avoid[i, j] <- p_value_avoid
       }
 
+
         # creat coloc and avoid matrix
-        mat_loc[upper.tri(mat_loc)] <- mat_avoid[upper.tri(mat_avoid)]
+        mat_loc[upper.tri(mat_loc, diag = T)] <- mat_avoid[upper.tri(mat_avoid, diag = T)]
         mat_loc[lower.tri(mat_loc)] <- mat_coloc[lower.tri(mat_coloc)]
+
 
         # Select colours
         mycols <- circlize::colorRamp2(
-          breaks = c(0, alpha, 1),
-          colors = c("red", "white", "black"))
+          breaks = c(0, 0.05, 1),
+          colors = c("red","white", "green"))
 
-        # Create Heatmap
+
+         # Create Heatmap
+
+
+        cell_fun = function(j, i, x, y, w, h, fill){
+        if(as.numeric(x) <= 1 - as.numeric(y) + 1e-6) {
+        grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+        }
+        if (mat_loc[i, j]  < 0.01 & as.numeric(x) <= 1 - as.numeric(y) + 1e-6){
+        grid.text(paste0(sprintf("%.2f", mat_loc[i, j]),"**"), x, y, gp = gpar(fontsize = 10))
+        } else if (mat_loc[i, j]  <= 0.05 & as.numeric(x) <= 1 - as.numeric(y) + 1e-6){
+grid.text(paste0(sprintf("%.2f", mat_loc[i, j]),"*"), x, y, gp = gpar(fontsize = 10))
+        }
+          grid.text(paste0(sprintf("%.2f", mat_loc[i, j]),"*"), x, y, gp = gpar(fontsize = 10))
+        }
+      }
+
        ht1 <-  Heatmap(mat_loc,
+
                 heatmap_legend_param = list(
-                  title = "Colocalization", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
+                  title = "Colocalization/Avoidance", at = c(0.001, 0.01, 0.05, 1),
                   break_dist = 1,
-                  labels = c("***", "**", "*", alpha, "ns")),
-                  cluster_rows = F, cluster_columns = F, col = mycols
+                  labels = c("0.001", "0.01", "0.05", "ns")),
+                  cluster_rows = F, cluster_columns = F, col = mycols,
+                  column_title = "Avoidance", row_title = "Colocalization",
+                  cell_fun = cell_fun,
+
         )
        draw(ht1)
     }
   }
 
-## use corrplot and p-value representation
   if (correlation == TRUE) {
     correlation <- corr.test(m, adjust = "none")$r
     cor_prob <- corr.test(m, adjust = "none")$p
+    corrplot(correlation, p.mat = cor_prob, method = 'color', diag = FALSE, type = 'lower',
+             sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
+             insig = 'label_sig', pch.col = 'black', tl.col = "black",
+            title = "Correlation with significance",
+            mar=c(0,0,2,0))
+    cat(paste0("\t", c("Significance:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
 
-    ht3 <-Heatmap(correlation,
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation",
-                  cell_fun = function(j, i, x, y, w, h, fill) {
-                    if (i > j) {
-                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-                    }
-                    else if(i<j){
-                      grid.text(round(correlation[i,j], digits = 3), x ,y, gp = gpar(fontsize = 10))
-                    }
-                  }
-                 )
-    ht4 <-Heatmap(cor_prob,
-                  heatmap_legend_param = list(
-                    title = "Correlation probability", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
-                    break_dist = 1,
-                    labels = c("***", "**", "*", alpha, "ns")),
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability",
-                  cell_fun = function(j, i, x, y, w, h, fill) {
-                    if (i >j) {
-                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-                    }
-                    else if(i<j){
-                      grid.text(round(cor_prob[i,j], digits = 3), x ,y, gp = gpar(fontsize = 10))
-                    }
-                  }
-    )
-
-    draw(ht3, ht_gap = unit(-75, "mm"))
-    draw(ht4, ht_gap = unit(-75, "mm"))
-
-    if (matrix == TRUE) {
-      print("correlation")
-      print(correlation)
-      print("Correlation probability")
-      print(cor_prob)
-    }
   }
 }
