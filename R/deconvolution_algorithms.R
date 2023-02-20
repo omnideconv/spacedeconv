@@ -414,7 +414,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_immunedeconv(spatial_obj, method = "quantiseq", assay_sp = assay_sp, ...)
     },
     xcell = {
-      requireNamespace("xCell") # quick fix
+      require("xCell") # quick fix
       deconvolute_immunedeconv(spatial_obj, method = "xcell", assay_sp = assay_sp, ...)
     },
     cibersort = {
