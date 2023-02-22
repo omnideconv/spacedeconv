@@ -82,6 +82,23 @@ metacells_checkload <- function() {
   }
 }
 
+#' Checks if cell2location in installed
+cell2location_checkload <- function() {
+  if (!python_available()) {
+    base::message("Setting up python environment..")
+    init_python()
+    if (!python_available()) {
+      base::stop(
+        "Could not initiate miniconda python environment. Please set up manually with ",
+        "init_python(python=your/python/version)"
+      )
+    }
+  }
+  if (!reticulate::py_module_available("cell2location")) {
+    reticulate::py_install("cell2location", pip = TRUE)
+  }
+}
+
 
 install_giotto_python <- function(){
   if (!python_available()) {
@@ -108,5 +125,6 @@ install_all_python <- function() {
   anndata_checkload()
   metacells_checkload()
   install_giotto_python()
+  cell2location_checkload()
   omnideconv::install_all_python()
 }
