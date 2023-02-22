@@ -1,41 +1,46 @@
-# spacedeconv <img src="inst/logo/logo.png" align="right" alt="" />
+# :rocket: spacedeconv <img src="inst/logo/logo.png" align="right" alt="" />
 
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focusing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data. These methods don't require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures.
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available. 
 
-## Installation
+## :arrow_down: Installation
 
-There are two ways to install `spacedeconv`:
-
-- The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand.
-- The _complete_ installation installs all dependencies including all deconvolution methods. This may take a considerable time.
-
-Since not all dependencies are on CRAN or Bioconductor, `spacedeconv`is available from GitHub only. We recommend installing trough the pak package manager:
+`spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager:
 
 ```r
 # install the pak package manager
 install.packages("pak")
 
-# minimal installation
-pak::pkg_install("omnideconv/spacedeconv")
-
-# complete installation, including Python dependencies
 pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
-# spacedeconv::install_all_python()
+
+# install python dependencies in a conda environment
+spacedeconv::install_all_python()
 ```
 
-## Usage
+## :sparkles: Features
+- access to 31 deconvolution tools and X
+ - direct deconvolution of immune cells 
+ - compute custom reference signatures to deconvolute any celltype
+ - flexible visualization functions
+ - resource optimization with metacell
+ - ...
+ - easy integration into spatial transcriptomics workflows
 
-spacedeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference. A full list of deconvolution tools can be accessed by `spacedeconv::deconvolution_algorithms` or in the [FAQ](articles/spacedeconv_faq.html).
+## :floppy_disk: Data requirements
 
-### Data requirements
+Spatial transcriptomics data: _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_
 
-- _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_, will be deconvoluted
-- _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_ containing cell type information
+Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_
 
-The main functions of spacedeconv are used to build a signature matrix from annotated single-cell transcriptomics data and deconvolute spatially resolved transcriptomics datasets. The basic workflow consists of:
+## :technologist: Usage
+
+The main workflow consists of:
+1. Reference signature computation using annotated single-cell data
+2. Deconvolution 
+3. Visualization
+
 
 ### 1. Build a Signature Matrix
 
@@ -52,10 +57,9 @@ signature <- spacedeconv::build_model(
 
 ### 2. Deconvolution
 
-To perform a deconvolution a SpatialExperiment object is required. Some methods additionally require a cell-type specific reference signature which can be calculated by `spacedeconv::build_model()`. By default the deconvolution results are added to the SpatialExperiment object to simplify the visualization. You can obtain the results in table form by setting `return_object=FALSE`.
+While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature computed in step 1). 
 
 ```r
-# save the results to an annotated SpatialExperiment
 result <- spacedeconv::deconvolute(
   spatial_object,
   signature,
@@ -65,15 +69,13 @@ result <- spacedeconv::deconvolute(
 
 ### 3. Visualization
 
-spacedeconv includes multiple visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
+spacedeconv includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
-# sample does refer to the first column of ColData(spe)
-# for cell_type input a celltype present in the deconvolution result
 plot_celltype(spe, cell_type="spotlight_B.cells")
 ```
 
-## Additional Requirements
+## :bulb: Additional Requirements
 
 Most methods do not require additional software/tokens, but there are a few exceptions:
 
