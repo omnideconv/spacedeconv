@@ -6,14 +6,14 @@
 \usage{
 build_model_cell2location(
   single_cell_obj,
-  epochs = 20,
+  epochs = 250,
   assay_sc = "counts",
   sample = "Sample",
   cell_type_column = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
   nonz_mean_cutoff = 1.12,
-  gpu = FALSE
+  gpu = TRUE
 )
 }
 \arguments{

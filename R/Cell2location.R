@@ -9,7 +9,7 @@
 #' @param cell_percentage_cutoff cell2location parameter
 #' @param nonz_mean_cutoff cell2location parameter
 #' @param gpu whether to train on GPU
-build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "counts", sample = "Sample", cell_type_column = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = FALSE) {
+build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = "counts", sample = "Sample", cell_type_column = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = TRUE) {
   # build anndata, gene names as rownames
 
   init_python()
@@ -39,7 +39,8 @@ build_model_cell2location <- function(single_cell_obj, epochs = 20, assay_sc = "
 #' @param alpha cell2location hyperparameter
 #' @param gpu whether to use nvidia gpu for training
 #' @param result_name token to identify deconvolution results in object, default = "card"
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 1000, n_cell = 10, alpha = 20, gpu = FALSE, result_name = "c2l") {
+#' @param values relative or absolute, default: relative
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "c2l", values = "relative") {
 
   init_python()
 
@@ -57,5 +58,16 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 10
   )
 
   deconv <- attachToken(deconv, result_name)
+
+  if (values=="relative"){
+    abundance_per_spot = rowSums(data.frame(colData(deconv)[, available_results(deconv, method="c2l")]))
+
+    cli::cli_progress_step("Rescaling Cell2location results to relative fractions", msg_done = "Rescaled Cell2location results to relative fractions")
+    for (result in available_results(deconv, method = "c2l")){
+      colData(deconv)[, result] <- colData(deconv)[, result]/abundance_per_spot
+    }
+    cli::cli_progress_done()
+  }
+
   return(deconv)
 }
