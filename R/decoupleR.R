@@ -5,6 +5,10 @@
 #' @param confidence condfidence level for transcription factor reference, vector of levels to include
 #' @export
 get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes=500, confidence = NULL){
+  cli::cli_rule(left="spacedeconv")
+
+  cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
+
   if (method=="progeny"){
     reference <- decoupleR::get_progeny(organism=organism, top=n_genes)
   } else if (method=="dorothea"){
@@ -13,6 +17,8 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
     reference <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
   }
+
+  cli::cli_progress_done()
 
   if  (!is.null(confidence)){
     reference <- reference[reference$confidence %in% confidence, ]
@@ -30,6 +36,8 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
 #' @param ... further arguments passed to the methods
 #' @export
 compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts", statistic = NULL, ...){
+  cli::cli_rule(left="spacedeconv")
+
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -88,7 +96,7 @@ compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="co
     if (!is.null(statistic)){
       tmp <- statistic
     }
-    cli::cli_alert(paste("Calculated multiple results, using", tmp[[1]]))
+    cli::cli_alert(paste("Calculated multiple results, using", tmp[[1]], " , other available results: ", tmp[-1]))
     df <- res[res$statistic==tmp[[1]], ]
   } else {
     df <- res
