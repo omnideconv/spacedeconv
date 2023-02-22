@@ -42,7 +42,7 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe)]
   }
 
-  cli::cli_progress_step("Clustering", msg_done = "Finished clusering")
+  cli::cli_progress_step("Clustering", msg_done = "Finished clustering")
 
   # cluster
   cluster <- switch(method,

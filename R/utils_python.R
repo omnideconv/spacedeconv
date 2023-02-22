@@ -95,6 +95,7 @@ cell2location_checkload <- function() {
     }
   }
   if (!reticulate::py_module_available("cell2location")) {
+    reticulate::py_install("scanpy", pip = TRUE)
     reticulate::py_install("cell2location", pip = TRUE)
   }
 }
