@@ -38,7 +38,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           show_image = FALSE, background = NULL, palette_type = "sequential",
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -118,8 +118,8 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            show_image = FALSE, background = NULL, offset_rotation = FALSE,
                            spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
-                           title_size = 30, title = NULL, font_size = 20,
-                           legend_size = 40, density = TRUE,
+                           title_size = 30, title = NULL, font_size = 15,
+                           legend_size = 20, density = TRUE,
                            save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -183,7 +183,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                show_image = FALSE, background = NULL, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
-                               title_size = 30, font_size = 20, legend_size = 40,
+                               title_size = 30, font_size = 15, legend_size = 20,
                                density = TRUE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL) {
   # checks
@@ -280,8 +280,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    show_image = FALSE, offset_rotation = FALSE,
                                    spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
-                                   title_size = 30, title = NULL, font_size = 20,
-                                   legend_size = 40, save = FALSE, path = NULL,
+                                   title_size = 30, title = NULL, font_size = 15,
+                                   legend_size = 20, save = FALSE, path = NULL,
                                    png_width = 1500, png_height = 750) {
   spe <- filter_sample_id(spe, sample_id)
 
@@ -354,8 +354,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             show_image = FALSE, offset_rotation = FALSE,
                             spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
-                            title_size = 30, title = NULL, font_size = 20,
-                            legend_size = 40, palette_type = "diverging", density = TRUE,
+                            title_size = 30, title = NULL, font_size = 15,
+                            legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   spe <- filter_sample_id(spe, sample_id)
 
@@ -423,7 +423,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
                       show_image = FALSE, background = NULL, palette_type = "sequential",
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5,
-                      title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                      title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                       save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -507,7 +507,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           image_id = "lowres", show_image = FALSE, background = NULL,
                           palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -665,7 +665,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       # ggplot2::ylim(0, max(data["values"]))
 
       # cowplot::plot_grid(spatial, density)
-      plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
+      plot <- ggpubr::ggarrange(p, density, ncol = 2, widths = c(2, 1)) # add functions to pkg.R
       # plot <- grid::grid.draw(plot) # add functions to pkg.R
     } else {
       plot <- p

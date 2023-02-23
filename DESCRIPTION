@@ -64,7 +64,6 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    emo, 
     cli, 
     DelayedArray, 
     scuttle, 
@@ -77,7 +76,7 @@ Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
-    RubD/Giotto,
+    drieslab/Giotto,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
     omnideconv/MOMF,
@@ -89,6 +88,5 @@ Remotes:
     omnideconv/BayesPrism, 
     GfellerLab/EPIC,
     dviraran/xCell,
-    drighelli/SpatialExperiment, 
-    hadley/emo
+    drighelli/SpatialExperiment
 Config/testthat/edition: 3
