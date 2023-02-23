@@ -36,7 +36,10 @@ Imports:
     spatstat.geom, 
     spatstat.explore, 
     progress, 
-    DelayedArray
+    DelayedArray, 
+    ComplexHeatmap, 
+    circlize, 
+    cli
 Suggests: 
     spacexr,
     SPOTlight,
@@ -57,18 +60,13 @@ Suggests:
     scBio,
     SCDC,
     uuid,
-    scuttle,
     scran,
     CARD,
     xCell,
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    cli, 
-    DelayedArray, 
     scuttle, 
-    circlize, 
-    ComplexHeatmap, 
     grid, 
     decoupleR
 Remotes:
