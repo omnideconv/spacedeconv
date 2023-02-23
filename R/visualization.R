@@ -770,6 +770,7 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
 #' Filter SPE to contain only one sample ID
 #' @param spe SpatialExperiment
 #' @param sample_id sample_id
+#' @export
 filter_sample_id <- function(spe, sample_id){
   if (is.null(spe)){
     cli::cli_alert_danger("Spatial Object not provided")
