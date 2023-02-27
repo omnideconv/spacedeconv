@@ -39,7 +39,8 @@ Imports:
     DelayedArray, 
     ComplexHeatmap, 
     circlize, 
-    cli
+    cli, 
+    patchwork
 Suggests: 
     spacexr,
     SPOTlight,

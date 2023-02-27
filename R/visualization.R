@@ -49,7 +49,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe)))) {
+  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods) {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
@@ -57,17 +57,50 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  return(make_baseplot(spe, df,
-    palette = palette,
-    to_plot = cell_type, sample_id = sample_id,
-    image_id = image_id, show_image = show_image, background = background,
-    palette_type = palette_type, offset_rotation = offset_rotation,
-    transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits, title = title,
-    smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density, save = save, path = path, png_width = png_width, png_height = png_height
-  ))
+
+  # if a method is passed then make grid, otherwise, only one
+  if (cell_type %in% deconvolution_methods) {
+    plot <- make_baseplot(spe, df,
+      palette = palette,
+      to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
+      image_id = image_id, show_image = show_image, background = background,
+      palette_type = palette_type, offset_rotation = offset_rotation,
+      transform_scale = transform_scale, reverse_palette = reverse_palette,
+      spot_size = spot_size, limits = limits, title = title,
+      smooth = smooth, smoothing_factor = smoothing_factor,
+      title_size = title_size, font_size = font_size, legend_size = legend_size,
+      density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    )
+
+    for (result in available_results(spe, method = cell_type)[-1]) {
+      plot <- plot + make_baseplot(spe, df,
+        palette = palette,
+        to_plot = result, sample_id = sample_id,
+        image_id = image_id, show_image = show_image, background = background,
+        palette_type = palette_type, offset_rotation = offset_rotation,
+        transform_scale = transform_scale, reverse_palette = reverse_palette,
+        spot_size = spot_size, limits = limits, title = title,
+        smooth = smooth, smoothing_factor = smoothing_factor,
+        title_size = title_size, font_size = font_size, legend_size = legend_size,
+        density = density, save = save, path = path, png_width = png_width, png_height = png_height
+      )
+    }
+
+    return(plot)
+  } else {
+    return(make_baseplot(spe, df,
+      palette = palette,
+      to_plot = cell_type, sample_id = sample_id,
+      image_id = image_id, show_image = show_image, background = background,
+      palette_type = palette_type, offset_rotation = offset_rotation,
+      transform_scale = transform_scale, reverse_palette = reverse_palette,
+      spot_size = spot_size, limits = limits, title = title,
+      smooth = smooth, smoothing_factor = smoothing_factor,
+      title_size = title_size, font_size = font_size, legend_size = legend_size,
+      density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    ))
+  }
+
 
   # TODO
   # add facet wrap
@@ -221,7 +254,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   res <- colnames(df)[max.col(df)]
 
   # ensure min_spot parameter
-  df <- df[, names(table(res)[table(res)>=min_spot])]
+  df <- df[, names(table(res)[table(res) >= min_spot])]
   res <- colnames(df)[max.col(df)]
 
 
@@ -579,10 +612,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # no overwrite the points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
-  # in discrete case remove the hexagons which should not be plotted
-  if (palette_type=="discrete"){
+  # check discrete and, if yes, remove the hexagons which should not be plotted
+  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])){
+    palette_type <- "discrete"
+  }
+
+  if (palette_type == "discrete") {
     tmp <- as.data.frame(sf_poly)
-    if (is.logical(tmp[, to_plot])){
+    if (is.logical(tmp[, to_plot])) {
       sf_poly <- sf_poly[tmp[, to_plot], ]
     }
   }
@@ -598,12 +635,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # add spatial image
   if (show_image) {
     p <- p + annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
+    # p <- p + annotation_raster(img, xmin = min(df$pxl_col_in_fullres), xmax = max(df$pxl_col_in_fullres), ymin = max(df$pxl_row_in_fullres), ymax = min(df$pxl_row_in_fullres))
   }
 
   # add hexagons
   p <- p +
     geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
-    coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
+    # coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
+    coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres))) +
     theme(
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -771,15 +810,15 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
 #' @param spe SpatialExperiment
 #' @param sample_id sample_id
 #' @export
-filter_sample_id <- function(spe, sample_id){
-  if (is.null(spe)){
+filter_sample_id <- function(spe, sample_id) {
+  if (is.null(spe)) {
     cli::cli_alert_danger("Spatial Object not provided")
     stop()
   }
 
   # check if sample id is provided, if no and only one available use this one
-  if (is.null(sample_id)){
-    if (length(unique(spe$sample_id))==1){
+  if (is.null(sample_id)) {
+    if (length(unique(spe$sample_id)) == 1) {
       cli::cli_alert_info("No sample ID provided, using the only one available")
       sample_id <- unique(spe$sample_id)
     } else {
@@ -789,8 +828,7 @@ filter_sample_id <- function(spe, sample_id){
   }
 
   # remove columns not in this sample
-  spe <- spe[, spe$sample_id==sample_id]
+  spe <- spe[, spe$sample_id == sample_id]
 
-  return (spe)
+  return(spe)
 }
-
