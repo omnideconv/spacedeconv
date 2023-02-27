@@ -91,6 +91,7 @@ first_gen <- c(
 #' @param batch_id_col column of singleCellExperiment containing batch ids
 #' @param assay_sc assay of single cell object to use
 #' @param assay_sp assay of spatial object to use
+#' @param sample column containing the sample_id, for cell2location
 #' @param ... additional parameters passed to the functions
 #'
 #' @returns cell-type specific expression signature
@@ -109,7 +110,7 @@ first_gen <- c(
 #'   cell_type_col = "celltype_major",
 #'   assay_sc = "cpm"
 #' )
-build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
+build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", sample = "sample_id", ...) {
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
@@ -160,7 +161,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
       build_model_spatial_dwls(single_cell_obj, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)
     },
     cell2location = {
-      build_model_cell2location(single_cell_obj, assay_sc = assay_sc, ...)
+      build_model_cell2location(single_cell_obj, assay_sc = assay_sc, cell_type_col = cell_type_col, sample = sample, ...)
     },
 
     ##############
