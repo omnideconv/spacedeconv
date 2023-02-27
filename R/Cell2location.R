@@ -60,12 +60,18 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30
   deconv <- attachToken(deconv, result_name)
 
   if (values=="relative"){
-    abundance_per_spot = rowSums(data.frame(colData(deconv)[, available_results(deconv, method="c2l")]))
+    # abundance_per_spot = rowSums(data.frame(colData(deconv)[, available_results(deconv, method="c2l")]))
+    abundance_per_spot = rowSums(deconv)
 
     cli::cli_progress_step("Rescaling Cell2location results to relative fractions", msg_done = "Rescaled Cell2location results to relative fractions")
-    for (result in available_results(deconv, method = "c2l")){
-      colData(deconv)[, result] <- colData(deconv)[, result]/abundance_per_spot
+    # for (result in available_results(deconv, method = "c2l")){
+    #   colData(deconv)[, result] <- colData(deconv)[, result]/abundance_per_spot
+    # }
+
+    for (i in 1:ncol(deconv)){
+      deconv[, i] <- deconv[, i]/abundance_per_spot
     }
+
     cli::cli_progress_done()
   }
 
