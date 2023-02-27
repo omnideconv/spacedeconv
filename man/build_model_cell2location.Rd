@@ -8,7 +8,7 @@ build_model_cell2location(
   single_cell_obj,
   epochs = 250,
   assay_sc = "counts",
-  sample = "Sample",
+  sample = "sample_id",
   cell_type_column = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
