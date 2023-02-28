@@ -3,17 +3,18 @@
 #' Generates a html report containing quality metrics of the SpatialExperiment
 #'
 #' @param spe SpatialExperiment object
+#' @param assay assay
 #'
 #' @returns html file with quality control metrics
 #'
 #' @export
 
-qualitycontrol <- function(spe) {
+qualitycontrol <- function(spe, assay="counts") {
   # Add QC metrics
   spe <- addPerCellQC(spe)
 
   # number of total spots
-  ncol(counts(spe))
+  ncol(assay(spe, assay))
 
   # total number of genes
   dim(spe)[1]
@@ -28,7 +29,7 @@ qualitycontrol <- function(spe) {
   sum(colData(spe)$sum < 500) / dim(spe)[1]
 
   # Range of detected genes per spot
-  range(colSums(counts(spe) > 0))
+  range(colSums(assay(spe, assay) > 0))
 
   # Plot UMI
   plot_umi_count(spe, offset_rotation = T)
