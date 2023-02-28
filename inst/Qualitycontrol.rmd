@@ -61,7 +61,7 @@ plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
 
 ```{r, echo = FALSE}
 # Make a table
-res <- c(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = paste0(range_umiperspot[1], "-", range_umiperspot[2]), UMI_above500 = UMI_above500, UMI_below500 = UMI_below500, range_genesperspot = paste0(range_genesperspot[1], "-", range_genesperspot[2]))
+res <- c(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = paste0(range_umiperspot[1], "-", range_umiperspot[2]), UMI_above500 = paste0(UMI_above500, "%"), UMI_below500 = paste0(UMI_below500, "%"), range_genesperspot = paste0(range_genesperspot[1], "-", range_genesperspot[2]))
 
 library(knitr)
 kable(res)
