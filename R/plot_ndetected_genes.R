@@ -38,7 +38,8 @@ plot_ndetected_genes <- function(spe, palette = "Mako", transform_scale = NULL,
                                  smooth = FALSE, smoothing_factor = 1.5,
                                  title_size = 30, title = NULL, font_size = 20,
                                  legend_size = 40, density = TRUE,
-                                 save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+                                 save = FALSE, path = NULL, png_width = 1500, png_height = 750,
+                                 assay = "counts") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
