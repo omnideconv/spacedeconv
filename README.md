@@ -1,4 +1,4 @@
-# :rocket: spacedeconv <a href="https://omnideconv.github.io/spacedeconv"><img src="man/figures/logo.png" align="right" height="120" /></a>
+# :rocket: spacedeconv <a href="https://omnideconv.github.io/spacedeconv"><img src="man/figures/logo.png" align="right" height="200" /></a>
 
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
