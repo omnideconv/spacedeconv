@@ -49,7 +49,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type=="c2l") {
+  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type=="c2l" && !cell_type == "decoupleR") {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
@@ -59,7 +59,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 
 
   # if a method is passed then make grid, otherwise, only one
-  if (cell_type %in% deconvolution_methods || cell_type == "c2l") {
+  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type=="decoupleR") {
     plot <- make_baseplot(spe, df,
       palette = palette,
       to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
