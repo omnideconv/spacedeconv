@@ -103,6 +103,8 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
 
   deconvolution <- Giotto::runDWLSDeconv(obj, sign_matrix = signature, n_cell = 10, return_gobject = FALSE)
 
+  deconvolution$cell_ID <- NULL
+
   # attach method token
   deconvolution <- attachToken(deconvolution, result_name)
 

@@ -5,6 +5,7 @@
 #' @param confidence condfidence level for transcription factor reference, vector of levels to include
 #' @export
 get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes=500, confidence = NULL){
+  requireNamespace("decoupleR")
   cli::cli_rule(left="spacedeconv")
 
   cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
@@ -36,6 +37,7 @@ get_decoupleR_reference <- function(method="progeny", organism ="human", n_genes
 #' @param ... further arguments passed to the methods
 #' @export
 compute_decoupleR_activites <- function(spe, reference, method="wsum", assay="counts", statistic = NULL, ...){
+  requireNamespace("decoupleR")
   cli::cli_rule(left="spacedeconv")
 
 
