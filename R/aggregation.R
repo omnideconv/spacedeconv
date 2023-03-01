@@ -11,7 +11,7 @@
 #' @returns SpatialObject containing aggregation of provided cell types
 #'
 #' @export
-aggregate <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
+aggregate_results <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
                       name = NULL, remove = FALSE) {
   cli::cli_rule(left = "spacedeconv")
 

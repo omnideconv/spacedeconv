@@ -4,10 +4,12 @@
 \alias{qualitycontrol}
 \title{Quality control function}
 \usage{
-qualitycontrol(spe)
+qualitycontrol(spe, assay = "counts")
 }
 \arguments{
 \item{spe}{SpatialExperiment object}
+
+\item{assay}{assay}
 }
 \value{
 html file with quality control metrics

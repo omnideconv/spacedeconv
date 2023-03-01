@@ -46,7 +46,7 @@ reference:
       - starts_with("spatial_data")
   - title: Utils
     contents:
-      - aggregate
+      - aggregate_results
       - annotate_spots
       - cluster
       - get_mostAbundantInCluster

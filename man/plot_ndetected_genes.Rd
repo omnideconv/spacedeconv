@@ -25,7 +25,8 @@ plot_ndetected_genes(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  assay = "counts"
 )
 }
 \arguments{
@@ -70,6 +71,8 @@ plot_ndetected_genes(
 \item{png_width}{when saving, png width in px}
 
 \item{png_height}{when saving, png height in px}
+
+\item{assay}{assay}
 }
 \value{
 plot number of detected genes
