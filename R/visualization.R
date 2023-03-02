@@ -49,7 +49,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type=="c2l" && !cell_type == "decoupleR") {
+  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type=="c2l" && !cell_type == "decoupleR" && !cell_type=="cluster") {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
@@ -59,7 +59,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 
 
   # if a method is passed then make grid, otherwise, only one
-  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type=="decoupleR") {
+  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type=="decoupleR" || cell_type=="cluster") {
     plot <- make_baseplot(spe, df,
       palette = palette,
       to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
@@ -679,7 +679,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # create density plot if requested
   suppressMessages(
-    if (density) {
+    if (density && palette_type!="discrete") {
       data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
       density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
         # ggplot2::geom_density() +

@@ -14,7 +14,7 @@
 #' @export
 #'
 cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "counts", nclusters = 3, ...) {
-  cli::cli_rule(left="spacedeconv")
+  cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -42,18 +42,41 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe)]
   }
 
-  cli::cli_progress_step("Clustering", msg_done = "Finished clustering")
-
   # cluster
-  cluster <- switch(method,
-    kmeans = {
-      stats::kmeans(tmp, centers = nclusters, ...)$cluster
+  if (length(nclusters) == 1) {
+    cli::cli_progress_step("Clustering", msg_done = "Finished clustering")
+    cluster <- switch(method,
+      kmeans = {
+        stats::kmeans(tmp, centers = nclusters, ...)$cluster
+      }
+    )
+    # colnames(cluster) <- paste0("cluster_", nclusters)
+    cluster <- as.factor(cluster)
+    spe[[paste0("cluster_", nclusters)]] <- cluster
+  } else {
+    cluster <- data.frame(matrix(nrow = ncol(spe), ncol = 0))
+    cli::cli_progress_bar("Clustering", total = length(nclusters))
+    for (i in nclusters) {
+      result <- switch(method,
+        kmeans = {
+          stats::kmeans(tmp, centers = i, ...)$cluster
+        }
+      )
+      cluster <- cbind(cluster, result)
+      cli::cli_progress_update()
     }
-  )
+
+    #cluster <- cbind(cluster, result)
+    colnames(cluster) <- paste0("cluster_", nclusters)
+
+    cluster <- apply(cluster, 2, as.factor)
+
+    SummarizedExperiment::colData(spe) <- cbind(SummarizedExperiment::colData(spe), cluster)
+  }
 
   # add clustering
-  cluster <- as.factor(cluster)
-  SummarizedExperiment::colData(spe) <- cbind(SummarizedExperiment::colData(spe), cluster)
+  # cluster <- as.factor(cluster)
+  # SummarizedExperiment::colData(spe) <- cbind(SummarizedExperiment::colData(spe), cluster)
 
   cli::cli_progress_done()
 
@@ -66,19 +89,19 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
 #' @param method how to calculate (sum, mean)
 #' @param k return top k most abundant cell types
 #' @export
-get_mostAbundantInCluster <- function(spe, method="mean", k=3){
+get_mostAbundantInCluster <- function(spe, method = "mean", k = 3) {
   df <- colData(spe)[, available_results(spe)]
   clusters <- df$cluster
   # df$cluster <- NULL
 
-  if (!method %in% c("mean", "median")){
+  if (!method %in% c("mean", "median")) {
     stop("Method not supported")
   }
 
   result <- list()
 
-  for (cluster in unique(clusters)){
-    tmp <- df[df$cluster==cluster, ]
+  for (cluster in unique(clusters)) {
+    tmp <- df[df$cluster == cluster, ]
     tmp$cluster <- NULL
 
     res <- sort(apply(tmp, 2, method), decreasing = T)
@@ -86,5 +109,5 @@ get_mostAbundantInCluster <- function(spe, method="mean", k=3){
     result[[cluster]] <- res
   }
 
-  return (result)
+  return(result)
 }
