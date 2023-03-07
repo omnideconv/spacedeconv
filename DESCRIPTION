@@ -69,7 +69,8 @@ Suggests:
     testthat (>= 3.0.0),
     scuttle, 
     grid, 
-    decoupleR
+    decoupleR,
+    tidyr
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
