@@ -50,10 +50,10 @@ range_genesperspot <- range(colSums(assay(spe, assay) > 0))
 # Plot UMI and number of detected genes
 ```{r, echo=FALSE, fig.align='left'}
 # Plot UMI
-plot_umi_count(spe, offset_rotation = T, transform_scale = "log", title = "UMI_log")
+plot_umi_count(spe, offset_rotation = T, transform_scale = "log")
 
 # Plot number of detected genes
-plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log", title = "genes_log")
+plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
 ```
 </div>
 
