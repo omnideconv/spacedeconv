@@ -23,10 +23,10 @@ qualitycontrol <- function(spe, assay = "counts") {
   range(colData(spe)$sum)
 
   # % UMIs >= 500
-  sum(colData(spe)$sum >= 500) / dim(spe)[1]
+  sum(colData(spe)$sum >= 500) / dim(spe)[2] * 100
 
   # % UMIs < 500
-  sum(colData(spe)$sum < 500) / dim(spe)[1]
+  sum(colData(spe)$sum < 500) / dim(spe)[2] * 100
 
   # Range of detected genes per spot
   range(colSums(assay(spe, assay) > 0))

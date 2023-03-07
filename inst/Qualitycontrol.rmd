@@ -35,10 +35,10 @@ ntotal_genes <- dim(spe)[1]
 range_umiperspot <- range(colData(spe)$sum)
 
 # % UMIs >= 500
-UMI_above500 <- sum(colData(spe)$sum >= 500) / dim(spe)[1]
+UMI_above500 <- sum(colData(spe)$sum >= 500) / dim(spe)[2] * 100
 
 # % UMIs < 500
-UMI_below500 <- sum(colData(spe)$sum < 500) / dim(spe)[1]
+UMI_below500 <- sum(colData(spe)$sum < 500) / dim(spe)[2] * 100
 
 # Range of detected genes per spot
 range_genesperspot <- range(colSums(assay(spe, assay) > 0))
