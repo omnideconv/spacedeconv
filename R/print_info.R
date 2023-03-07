@@ -5,7 +5,7 @@
 #' @param signature signature matrix
 #' @param assay assay to use for computation
 #' @export
-print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay="counts") {
+print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay = "counts") {
   # check for correct class
 
   if (!is.null(sce) & !is(sce, "SingleCellExperiment")) {
@@ -19,8 +19,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay="counts")
   # exclamation, rocket, check, cross mark, ok, hourglass, entry
   # sce
   if (!is.null(sce)) {
-
-    if ("counts" %in% assayNames(sce)){
+    if ("counts" %in% assayNames(sce)) {
       assaysce <- "counts"
     } else {
       assaysce <- assayNames(sce)[1]
@@ -60,8 +59,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay="counts")
   # spe
 
   if (!is.null(spe)) {
-
-    if ("counts" %in% assayNames(spe)){
+    if ("counts" %in% assayNames(spe)) {
       assayspe <- "counts"
     } else {
       assayspe <- assayNames(spe)[1]

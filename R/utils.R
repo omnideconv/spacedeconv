@@ -275,13 +275,13 @@ attachToken <- function(deconvolution, token = "deconv") {
 #' @param method deconvolution method (optional)
 #'
 #' @export
-available_results <- function(deconv, method=NULL) {
+available_results <- function(deconv, method = NULL) {
   if (is(deconv, "SpatialExperiment")) {
     res <- names(colData(deconv))
 
     res <- res[!res %in% c("in_tissue", "sample_id", "array_col", "array_row", "pxl_col_in_fullres", "pxl_row_in_fullres")]
 
-    if (!is.null(method)){
+    if (!is.null(method)) {
       res <- res[startsWith(res, method)]
     }
   } else {

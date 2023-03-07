@@ -41,14 +41,13 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
 #' @param result_name token to identify deconvolution results in object, default = "card"
 #' @param values relative or absolute, default: relative
 deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "c2l", values = "relative") {
-
   init_python()
 
   # TURN INTO ANNDATA
   ad <- spe_to_ad(spatial_obj)
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv"))# ("~/spacedeconv/inst/python/cell2location.py")
+  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
 
   deconv <- py_deconvolute_cell2location(
     sp_obj = ad,
@@ -59,17 +58,17 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30
 
   deconv <- attachToken(deconv, result_name)
 
-  if (values=="relative"){
+  if (values == "relative") {
     # abundance_per_spot = rowSums(data.frame(colData(deconv)[, available_results(deconv, method="c2l")]))
-    abundance_per_spot = rowSums(deconv)
+    abundance_per_spot <- rowSums(deconv)
 
     cli::cli_progress_step("Rescaling Cell2location results to relative fractions", msg_done = "Rescaled Cell2location results to relative fractions")
     # for (result in available_results(deconv, method = "c2l")){
     #   colData(deconv)[, result] <- colData(deconv)[, result]/abundance_per_spot
     # }
 
-    for (i in 1:ncol(deconv)){
-      deconv[, i] <- deconv[, i]/abundance_per_spot
+    for (i in 1:ncol(deconv)) {
+      deconv[, i] <- deconv[, i] / abundance_per_spot
     }
 
     cli::cli_progress_done()

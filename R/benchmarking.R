@@ -53,8 +53,7 @@ plot_scatter <- function(spe1, value1, spe2, value2) {
 #' @param signature1 signature
 #' @param signature2 signature
 #' @export
-compare_signatures <- function(signature1, signature2){
-
+compare_signatures <- function(signature1, signature2) {
   df1 <- data.frame(signature1)
   df1$gene <- rownames(signature1)
   df1 <- tidyr::pivot_longer(df1, !gene, values_to = "signature1")

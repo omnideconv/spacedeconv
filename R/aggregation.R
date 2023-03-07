@@ -12,7 +12,7 @@
 #'
 #' @export
 aggregate_results <- function(spatial_obj = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
-                      name = NULL, remove = FALSE) {
+                              name = NULL, remove = FALSE) {
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")

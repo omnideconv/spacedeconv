@@ -31,7 +31,7 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts") 
 
 
   # max UMI Count per Observation, only if value is provided
-  if (!is.null(max_umi)){
+  if (!is.null(max_umi)) {
     nObservation <- sum(colSums(SummarizedExperiment::assay(object, assay)) > max_umi)
     cli::cli_progress_step(
       msg = paste0("Removing ", nObservation, " observations with umi count abvove threshold"),

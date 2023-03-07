@@ -9,7 +9,7 @@
 #'
 #' @export
 
-qualitycontrol <- function(spe, assay="counts") {
+qualitycontrol <- function(spe, assay = "counts") {
   # Add QC metrics
   spe <- addPerCellQC(spe)
 

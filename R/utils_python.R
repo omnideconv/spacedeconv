@@ -28,8 +28,8 @@ init_python <- function(python = NULL) {
   }
 }
 
-check_env <- function(){
-  if (! "spacedeconv" %in% reticulate::conda_list()$name){
+check_env <- function() {
+  if (!"spacedeconv" %in% reticulate::conda_list()$name) {
     reticulate::conda_create(envname = "spacedeconv", packages = c("pip", "numpy"))
     cli::cli_alert_info("created conda environment 'spacedeconv'")
   }
@@ -101,7 +101,7 @@ cell2location_checkload <- function() {
 }
 
 
-install_giotto_python <- function(){
+install_giotto_python <- function() {
   if (!python_available()) {
     base::message("Setting up python environment..")
     init_python()

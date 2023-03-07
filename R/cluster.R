@@ -66,7 +66,7 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
       cli::cli_progress_update()
     }
 
-    #cluster <- cbind(cluster, result)
+    # cluster <- cbind(cluster, result)
     colnames(cluster) <- paste0("cluster_", nclusters)
 
     cluster <- apply(cluster, 2, as.factor)

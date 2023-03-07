@@ -118,8 +118,8 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abunda
 
   # scale
   tmp <- assay(metacell, "metacell_counts")
-  for (i in 1:ncol(metacell)){
-    tmp[, i] <- tmp[, i]/metacell$grouped[i]
+  for (i in 1:ncol(metacell)) {
+    tmp[, i] <- tmp[, i] / metacell$grouped[i]
   }
 
   assay(metacell, "metacell_scaled") <- tmp
