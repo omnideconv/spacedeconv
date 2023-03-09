@@ -17,13 +17,15 @@ To introduce spacedeconvs celltype colocalization and distribution analysis func
 
 ```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
 library(spacedeconv)
-library(EPIC) # quickfix
+
 data("spatial_data_3")
 
-spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+spe <- preprocess(spatial_data_3)
+
+spe <- spacedeconv::normalize(spe, method = "cpm")
 
 deconv <- spacedeconv::deconvolute(
-  spatial_data_3,
+  spe,
   method = "epic",
   assay_sp = "cpm"
 )
