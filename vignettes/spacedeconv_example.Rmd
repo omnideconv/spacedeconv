@@ -99,16 +99,16 @@ For each Spot the estimated cell fraction is available as object annotation and 
 # plot all available results: provide the tool as parameter
 spacedeconv::plot_celltype(deconv,
   cell_type = "spatialdwls",
-  density = FALSE, 
-  smooth = T, 
+  density = FALSE,
+  smooth = T,
   title_size = 12
 )
 
 # ... or plot a specific result
 spacedeconv::plot_celltype(deconv,
   cell_type = "spatialdwls_Cancer.Epithelial",
-  density = FALSE, 
-  smooth = T, 
+  density = FALSE,
+  smooth = T,
   title_size = 12
 )
 ```
