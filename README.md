@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml)
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available. 
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
@@ -20,13 +20,14 @@ spacedeconv::install_all_python()
 ```
 
 ## :sparkles: Features
+
 - access to 31 deconvolution tools and X
- - direct deconvolution of immune cells 
- - compute custom reference signatures to deconvolute any celltype
- - flexible visualization functions
- - resource optimization with metacell
- - ...
- - easy integration into spatial transcriptomics workflows
+- direct deconvolution of immune cells
+- compute custom reference signatures to deconvolute any celltype
+- flexible visualization functions
+- resource optimization with metacell
+- ...
+- easy integration into spatial transcriptomics workflows
 
 ## :floppy_disk: Data requirements
 
@@ -37,10 +38,10 @@ Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioc
 ## :technologist: Usage
 
 The main workflow consists of:
-1. Reference signature computation using annotated single-cell data
-2. Deconvolution 
-3. Visualization
 
+1. Reference signature computation using annotated single-cell data
+2. Deconvolution
+3. Visualization
 
 ### 1. Build a Signature Matrix
 
@@ -57,7 +58,7 @@ signature <- spacedeconv::build_model(
 
 ### 2. Deconvolution
 
-While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature computed in step 1). 
+While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature computed in step 1).
 
 ```r
 result <- spacedeconv::deconvolute(
