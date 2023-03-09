@@ -20,6 +20,7 @@ In the following the metacell functions of spacedeconv are outlined and integrat
 We use spacedeconvs sample data for this analysis. Since Metacell is python based we need to convert the SingleCellExperiment to an AnnData object. The original dataset contains 5789 cells. 
 ```{r}
 library(spacedeconv)
+library(SpatialExperiment)
 data("single_cell_data_1")
 single_cell_data_1
 ad <- spe_to_ad(single_cell_data_1) # convert to anndata
@@ -58,7 +59,6 @@ metacells <- compute_metacells(filtered, suspect_genes,
   cell_type_col = "celltype_major",
   abundance_score = 0.9
 )
-metacells <- metacells[[2]]
 ```
 
 # The result

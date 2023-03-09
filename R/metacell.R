@@ -13,6 +13,9 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
                                   properly_sampled_max_cell_total = 8000,
                                   properly_sampled_max_excluded_genes_fraction = 0.1,
                                   exclude_genes = "", exclude_gene_patterns = "", seed = 123456) {
+  init_python()
+  metacells_checkload()
+
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   res <- clean_genes_and_cells(anndata,
@@ -36,6 +39,10 @@ compute_forbidden_genes <- function(clean,
                                     suspect_gene_names = "",
                                     suspect_gene_patterns = "",
                                     seed = 123456) {
+
+  init_python()
+  metacells_checkload()
+
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   res <- compute_forbidden_genes(
@@ -55,6 +62,10 @@ compute_forbidden_genes <- function(clean,
 #'
 #' @export
 extract_forbidden_from_modules <- function(clean, forbidden_modules) {
+
+  init_python()
+  metacells_checkload()
+
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   res <- extract_forbidden_from_modules(clean = clean, forbidden_modules = forbidden_modules)
@@ -69,6 +80,10 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 #' @param abundance_score metacell celltype purity score
 #' @export
 compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abundance_score = 0.9) {
+
+  init_python()
+  metacells_checkload()
+
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
   if (is.null(cell_type_col)) {
