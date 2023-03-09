@@ -81,7 +81,7 @@ To access the presence of a single cell-type use the thresholded `plot_celltype_
 ```{r plotCelltype}
 spacedeconv::plot_celltype_presence(deconv,
   cell_type = "epic_B.cell",
-  threshold = 0.05, 
+  threshold = 0.05,
   show_image = T
 )
 ```

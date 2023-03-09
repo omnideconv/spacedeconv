@@ -39,7 +39,6 @@ compute_forbidden_genes <- function(clean,
                                     suspect_gene_names = "",
                                     suspect_gene_patterns = "",
                                     seed = 123456) {
-
   init_python()
   metacells_checkload()
 
@@ -62,7 +61,6 @@ compute_forbidden_genes <- function(clean,
 #'
 #' @export
 extract_forbidden_from_modules <- function(clean, forbidden_modules) {
-
   init_python()
   metacells_checkload()
 
@@ -80,7 +78,6 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 #' @param abundance_score metacell celltype purity score
 #' @export
 compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, abundance_score = 0.9) {
-
   init_python()
   metacells_checkload()
 
