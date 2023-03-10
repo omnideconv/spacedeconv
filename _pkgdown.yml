@@ -8,100 +8,100 @@ navbar:
 reference:
   - title: Setup
     contents:
-    - set_cibersort_binary
-    - set_cibersort_mat
+      - set_cibersort_binary
+      - set_cibersort_mat
   - title: Datatype conversion
     contents:
-    - anndata_to_singlecellexperiment
-    - anndata_to_spatialexperiment
-    - seurat_to_spatialexperiment
-    - subsetSCE
-    - spe_to_ad
+      - anndata_to_singlecellexperiment
+      - anndata_to_spatialexperiment
+      - seurat_to_spatialexperiment
+      - subsetSCE
+      - spe_to_ad
   - title: Main Workflow
     contents:
-    - deconvolution_methods
-    - preprocess
-    - normalize
-    - build_model
-    - deconvolute
-    - build_and_deconvolute
-    - available_results
+      - deconvolution_methods
+      - preprocess
+      - normalize
+      - build_model
+      - deconvolute
+      - build_and_deconvolute
+      - available_results
   - title: Custom access to methods
     contents:
-    - starts_with("build_model_")
-    - starts_with("deconvolute_")
+      - starts_with("build_model_")
+      - starts_with("deconvolute_")
   - title: Visualization
     contents:
-    - plot_gene
-    - plot_celltype
-    - plot_umi_count
-    - plot_ndetected_genes
-    - plot_most_abundant
-    - plot_celltype_presence
-    - plot_comparison
-    - plot_scatter
+      - plot_gene
+      - plot_celltype
+      - plot_umi_count
+      - plot_ndetected_genes
+      - plot_most_abundant
+      - plot_celltype_presence
+      - plot_comparison
+      - plot_scatter
   - title: Sample Data
     contents:
-    - starts_with("single_cell_data")
-    - starts_with("spatial_data")
+      - starts_with("single_cell_data")
+      - starts_with("spatial_data")
   - title: Utils
     contents:
-    - aggregate_results
-    - annotate_spots
-    - cluster
-    - get_mostAbundantInCluster
-    - print_info
-    - filter_sample_id
-    - compare_signatures
+      - aggregate_results
+      - annotate_spots
+      - cluster
+      - get_mostAbundantInCluster
+      - print_info
+      - filter_sample_id
+      - compare_signatures
   - title: Metacell
     contents:
-    - clean_genes_and_cells
-    - compute_forbidden_genes
-    - extract_forbidden_from_modules
-    - compute_metacells
-    - plot_metacell_nCells
-    - plot_metacell_abundance
+      - clean_genes_and_cells
+      - compute_forbidden_genes
+      - extract_forbidden_from_modules
+      - compute_metacells
+      - plot_metacell_nCells
+      - plot_metacell_abundance
   - title: Colocalization
     contents:
-    - presence
-    - antimode_cutoff
-    - cell_pair_localization
-    - coloc_avoid
-    - get_iniche
-    - ripleys_k
-    - localization_heatmap
-    - qualitycontrol
+      - presence
+      - antimode_cutoff
+      - cell_pair_localization
+      - coloc_avoid
+      - get_iniche
+      - ripleys_k
+      - localization_heatmap
+      - qualitycontrol
   - title: DecoupleR
     contents:
-    - get_decoupleR_reference
-    - compute_decoupleR_activites
+      - get_decoupleR_reference
+      - compute_decoupleR_activites
   - title: internal
     contents:
-    - spacedeconv_pkg
-    - addResultToObject
-    - anndata_checkload
-    - checkCol
-    - check_and_install
-    - convertImmunedeconvMatrix
-    - convert_to_sce
-    - doGiottoWorkflow
-    - getMarkersSPOTlight
-    - getMatricesFromSCE
-    - get_results_from_object
-    - init_python
-    - python_available
-    - required_packages
-    - checkRowColumn
-    - removeZeroExpression
-    - attachToken
-    - get_hex_polygon
-    - get_polygon_geometry
-    - make_baseplot
-    - smooth_celltype
-    - save_plot
-    - checkENSEMBL
-    - get_spot_coordinates
-    - install_all_python
-    - metacells_checkload
-    - cell2location_checkload
-    - get_mostAbundantInCluster
+      - spacedeconv_pkg
+      - addResultToObject
+      - anndata_checkload
+      - checkCol
+      - check_and_install
+      - convertImmunedeconvMatrix
+      - convert_to_sce
+      - doGiottoWorkflow
+      - getMarkersSPOTlight
+      - getMatricesFromSCE
+      - get_results_from_object
+      - init_python
+      - python_available
+      - required_packages
+      - checkRowColumn
+      - removeZeroExpression
+      - attachToken
+      - get_hex_polygon
+      - get_polygon_geometry
+      - make_baseplot
+      - smooth_celltype
+      - save_plot
+      - checkENSEMBL
+      - get_spot_coordinates
+      - install_all_python
+      - metacells_checkload
+      - cell2location_checkload
+      - get_mostAbundantInCluster
