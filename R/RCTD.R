@@ -37,7 +37,7 @@ deconvolute_rctd <- function(single_cell_obj, cell_type_col, spatial_obj, assay_
   message("Preparing Data for RCTD")
 
   # check if assay_sc/sp is "counts" or "metacell_counts" for metacell support
-  if (assay_sc != "counts" || assay_sp != "counts" || assay_sc != "metacell_counts") {
+  if (assay_sc != "counts" && assay_sp != "counts" && assay_sc != "metacell_counts") {
     message("RCTD requires unnormalized count data but ", assay_sc, " / ", assay_sp, " was requested.")
     message("Using 'counts' assay")
     assay_sc <- "counts"
