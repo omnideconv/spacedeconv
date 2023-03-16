@@ -96,21 +96,24 @@ def extract_forbidden_from_modules(clean, forbidden_modules):
   
   return (clean)
   
-def compute_metacells(clean, forbidden_gene_names, seed=123456):
+def compute_metacells(clean, forbidden_gene_names, target_size = 160000, seed=123456):
   
-  mc.pl.set_max_parallel_piles(mc.pl.guess_max_parallel_piles(clean))
+  max_piles = mc.pl.guess_max_parallel_piles(clean)
+  mc.pl.set_max_parallel_piles(max_piles)
+  
+  print ("Using ", max_piles, " piles")
   
   name = "AnnData"
   
-  print ("computing metacells...")
+  #print ("computing metacells...")
   
   # with mc.ut.progress_bar(): # does not work somehow
   mc.pl.divide_and_conquer_pipeline(clean,
                                     forbidden_gene_names=forbidden_gene_names,
-                                    #target_metacell_size=...,
+                                    target_metacell_size= target_size,
                                     random_seed=seed)
                                       
-  print ("finished divide and conquer")
+  #print ("finished divide and conquer")
                                       
   metacells = mc.pl.collect_metacells(clean, name = name + ".metacells")
 
