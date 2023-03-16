@@ -13,7 +13,7 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
                                   properly_sampled_max_cell_total = 8000,
                                   properly_sampled_max_excluded_genes_fraction = 0.1,
                                   exclude_genes = "", exclude_gene_patterns = "", seed = 123456) {
-  cli::cli_rule(left="metacell")
+  cli::cli_rule(left = "metacell")
 
   cli::cli_progress_step("Cleaning genes and cells", msg_done = "Cleaned genes and cells")
 
@@ -46,7 +46,7 @@ compute_forbidden_genes <- function(clean,
                                     suspect_gene_names = "",
                                     suspect_gene_patterns = "",
                                     seed = 123456) {
-  cli::cli_rule(left="metacell")
+  cli::cli_rule(left = "metacell")
 
   cli::cli_progress_step("Computing forbidden genes", msg_done = "Computed forbidden genes")
 
@@ -74,7 +74,7 @@ compute_forbidden_genes <- function(clean,
 #'
 #' @export
 extract_forbidden_from_modules <- function(clean, forbidden_modules) {
-  cli::cli_rule(left="metacell")
+  cli::cli_rule(left = "metacell")
 
   cli::cli_progress_step("Extracting forbidden genes", msg_done = "Extracted forbidden genes")
 
@@ -96,9 +96,8 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 #' @param cell_type_col cell type column of cleaned anndata, used for reannotation
 #' @param abundance_score metacell celltype purity score
 #' @export
-compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target_size = 160000, abundance_score = 0.9, n_cores = NULL, seed=12345) {
-
-  cli::cli_rule(left="metacell")
+compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target_size = 160000, abundance_score = 0.9, n_cores = NULL, seed = 12345) {
+  cli::cli_rule(left = "metacell")
 
   cli::cli_progress_step("Computing metacells", msg_done = "computed metacells")
 
@@ -111,23 +110,23 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target
     stop("Please provide a cell type column name")
   }
 
-  if (is.numeric(n_cores)){
-    Sys.setenv(METACELLS_PROCESSORS_COUNT=n_cores)
+  if (is.numeric(n_cores)) {
+    Sys.setenv(METACELLS_PROCESSORS_COUNT = n_cores)
   }
 
-  res <- compute_metacells(clean = clean, forbidden_gene_names = forbidden_gene_names, target_size=as.integer(target_size), seed=as.integer(seed))
+  res <- compute_metacells(clean = clean, forbidden_gene_names = forbidden_gene_names, target_size = as.integer(target_size), seed = as.integer(seed))
 
   # reannotation
   internal <- res[[1]]
   metacell <- res[[2]]
 
-  #cli::cli_progress_step("Reannotating cell types", msg_done = "Reannotated cell types")
+  # cli::cli_progress_step("Reannotating cell types", msg_done = "Reannotated cell types")
 
   celllist <- data.frame(matrix(ncol = 3, nrow = 0))
   colnames(celllist) <- c("metacell", "mostAbundant", "percentage")
 
-  #pb <- progress::progress_bar$new(total = length(rownames(metacell)))
-  #pb$tick(0)
+  # pb <- progress::progress_bar$new(total = length(rownames(metacell)))
+  # pb$tick(0)
   intDF <- internal$obs
 
   for (cell in rownames(metacell)) {
@@ -167,9 +166,9 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target
   assay(metacell, "round") <- round(tmp)
 
   # make them sparse
-  assay(metacell, "counts") <- Matrix::Matrix(assay(metacell, "counts"), sparse=TRUE)
-  assay(metacell, "scaled") <- Matrix::Matrix(assay(metacell, "scaled"), sparse=TRUE)
-  assay(metacell, "round") <- Matrix::Matrix(assay(metacell, "round"), sparse=TRUE)
+  assay(metacell, "counts") <- Matrix::Matrix(assay(metacell, "counts"), sparse = TRUE)
+  assay(metacell, "scaled") <- Matrix::Matrix(assay(metacell, "scaled"), sparse = TRUE)
+  assay(metacell, "round") <- Matrix::Matrix(assay(metacell, "round"), sparse = TRUE)
 
   cli::cli_progress_done()
 
