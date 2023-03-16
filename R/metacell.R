@@ -94,7 +94,10 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 #' @param clean anndata object
 #' @param forbidden_gene_names list of genes names that are not used as metacell base
 #' @param cell_type_col cell type column of cleaned anndata, used for reannotation
+#' @param target_size target UMI count per metacells
 #' @param abundance_score metacell celltype purity score
+#' @param n_cores number of cores to use
+#' @param seed seed
 #' @export
 compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target_size = 160000, abundance_score = 0.9, n_cores = NULL, seed = 12345) {
   cli::cli_rule(left = "metacell")
