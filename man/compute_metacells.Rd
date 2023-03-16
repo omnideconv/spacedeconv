@@ -8,7 +8,10 @@ compute_metacells(
   clean,
   forbidden_gene_names,
   cell_type_col,
-  abundance_score = 0.9
+  target_size = 160000,
+  abundance_score = 0.9,
+  n_cores = NULL,
+  seed = 12345
 )
 }
 \arguments{
