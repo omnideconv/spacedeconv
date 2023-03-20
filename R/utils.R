@@ -288,6 +288,8 @@ available_results <- function(deconv, method = NULL) {
     print("Please provide a SpatialExperiment")
   }
 
+  res <- sort(res)
+
   return(res)
 }
 
