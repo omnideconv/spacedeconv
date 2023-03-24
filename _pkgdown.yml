@@ -88,8 +88,6 @@ reference:
       - getMarkersSPOTlight
       - getMatricesFromSCE
       - get_results_from_object
-      - init_python
-      - python_available
       - required_packages
       - checkRowColumn
       - removeZeroExpression
@@ -101,7 +99,4 @@ reference:
       - save_plot
       - checkENSEMBL
       - get_spot_coordinates
-      - install_all_python
-      - metacells_checkload
-      - cell2location_checkload
       - get_mostAbundantInCluster
