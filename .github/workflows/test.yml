@@ -62,9 +62,6 @@ jobs:
           extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
           needs: check
 
-      - name: Install Python
-        run: Rscript -e "spacedeconv::install_all_python()"
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
