@@ -52,5 +52,4 @@ NULL
   if (!reticulate::py_module_available("cell2location")) {
     reticulate::py_install("cell2location", pip = TRUE)
   }
-
 }
