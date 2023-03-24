@@ -13,7 +13,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     stop("cell_type_col not available")
   }
 
-  init_python()
+  #init_python()
 
   # TODO, implement instructions
   if (!exists("giotto_instructions")) {
@@ -89,7 +89,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
-  init_python()
+  #init_python()
 
   ##########
   if (!exists("giotto_instructions")) {
