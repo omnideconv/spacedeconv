@@ -59,7 +59,8 @@ Suggests:
     scuttle, 
     grid, 
     decoupleR,
-    tidyr
+    tidyr,
+    xCell
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
@@ -67,7 +68,8 @@ Remotes:
     drieslab/Giotto,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
-    drighelli/SpatialExperiment
+    drighelli/SpatialExperiment, 
+    dviraran/xCell
 Config/testthat/edition: 3
 Config/reticulate: 
   list(
