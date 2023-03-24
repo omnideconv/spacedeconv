@@ -51,7 +51,8 @@ Perform cell type deconvolution with spacedeconv.
 # more examples can be found in the documentation website
 data("spatial_data_2")
 
-spatial_data_2 <- spacedeconv::normalize(spatial_data_2, method = "cpm")
+spatial_data_2 <- spacedeconv::preprocess(spatial_data_2)
+spatial_data_2 <- spacedeconv::normalize(spatial_data_2)
 
 deconvolution <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_2,
