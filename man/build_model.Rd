@@ -52,7 +52,7 @@ single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
 
 signature <- spacedeconv::build_model(
   single_cell_data_2,
-  method = "autogenes",
+  method = "spatialdwls",
   cell_type_col = "celltype_major",
   assay_sc = "cpm"
 )
