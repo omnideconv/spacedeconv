@@ -79,7 +79,6 @@ reference:
     contents:
       - spacedeconv_pkg
       - addResultToObject
-      - anndata_checkload
       - checkCol
       - check_and_install
       - convertImmunedeconvMatrix
