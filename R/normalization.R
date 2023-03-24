@@ -4,7 +4,7 @@
 #' @param method normalization method, ("cpm", "logcpm")
 #' @param assay assay to use
 #' @export
-normalize <- function(object, method = "cpm", assay="counts") {
+normalize <- function(object, method = "cpm", assay = "counts") {
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
