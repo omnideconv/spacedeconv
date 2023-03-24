@@ -17,8 +17,8 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
 
   cli::cli_progress_step("Cleaning genes and cells", msg_done = "Cleaned genes and cells")
 
-  init_python()
-  metacells_checkload()
+  #init_python()
+  #metacells_checkload()
 
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
@@ -50,8 +50,8 @@ compute_forbidden_genes <- function(clean,
 
   cli::cli_progress_step("Computing forbidden genes", msg_done = "Computed forbidden genes")
 
-  init_python()
-  metacells_checkload()
+  #init_python()
+  #metacells_checkload()
 
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
@@ -78,8 +78,8 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
 
   cli::cli_progress_step("Extracting forbidden genes", msg_done = "Extracted forbidden genes")
 
-  init_python()
-  metacells_checkload()
+  #init_python()
+  #metacells_checkload()
 
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 
@@ -104,8 +104,8 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target
 
   cli::cli_progress_step("Computing metacells", msg_done = "computed metacells")
 
-  init_python()
-  metacells_checkload()
+  #init_python()
+  #metacells_checkload()
 
   reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
 

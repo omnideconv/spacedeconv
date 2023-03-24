@@ -40,30 +40,19 @@ Imports:
     ComplexHeatmap, 
     circlize, 
     cli, 
-    patchwork
+    patchwork, 
+    reticulate
 Suggests: 
     spacexr,
     SPOTlight,
     immunedeconv,
     omnideconv,
-    BisqueRNA,
-    BayesPrism,
-    bseqsc,
-    CDSeq,
     devtools,
-    DWLS,
-    MOMF,
-    EPIC,
-    MuSiC,
     pkgdown,
-    reticulate,
     rmarkdown,
-    scBio,
-    SCDC,
     uuid,
     scran,
     CARD,
-    xCell,
     Giotto,
     knitr,
     testthat (>= 3.0.0),
@@ -72,21 +61,26 @@ Suggests:
     decoupleR,
     tidyr
 Remotes:
-    amitfrish/scBio,
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
     drieslab/Giotto,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
-    omnideconv/MOMF,
-    omnideconv/SCDC,
-    omnideconv/CDSeq,
-    omnideconv/dwls,
-    shenorrlab/bseqsc,
-    omnideconv/MuSiC, 
-    omnideconv/BayesPrism, 
-    GfellerLab/EPIC,
-    dviraran/xCell,
     drighelli/SpatialExperiment
 Config/testthat/edition: 3
+Config/reticulate: 
+  list(
+    packages = list(
+      list(package = "python-igraph"), 
+      list(package = "leidenalg"),
+      list(package = "python-louvain"), 
+      list(package = "scikit-learn"), 
+      list(package = "python.app", pip=TRUE),
+      list(package = "scanpy", pip=TRUE), 
+      list(package = "cell2location", pip=TRUE),
+      list(package = "metacells", pip=TRUE),
+      list(package = "autogenes", pip = TRUE),
+      list(package = "scaden", pip = TRUE)
+    )
+  )  
