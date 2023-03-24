@@ -1,4 +1,4 @@
----
+i---
 title: "Example"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 
 spacedeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total spacedeconv gives access to `r length(spacedeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
+library(spacedeconv)
 spacedeconv::deconvolution_methods
 ```
 

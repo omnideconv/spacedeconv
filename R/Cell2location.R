@@ -12,7 +12,7 @@
 build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = "counts", sample = "sample_id", cell_type_col = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = TRUE) {
   # build anndata, gene names as rownames
 
-  init_python()
+  # init_python()
 
   ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
 
@@ -41,7 +41,7 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
 #' @param result_name token to identify deconvolution results in object, default = "card"
 #' @param values relative or absolute, default: relative
 deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "c2l", values = "relative") {
-  init_python()
+  # init_python()
 
   # TURN INTO ANNDATA
   ad <- spe_to_ad(spatial_obj)
