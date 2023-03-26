@@ -2,8 +2,9 @@
 #'
 #' @param object SingleCellExperiment
 #' @param method normalization method, ("cpm", "logcpm")
+#' @param assay which assay to use
 #' @export
-normalize <- function(object, method = "cpm") {
+normalize <- function(object, method = "cpm", assay="counts") {
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
@@ -22,9 +23,9 @@ normalize <- function(object, method = "cpm") {
 
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
     if (method == "cpm") {
-      SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(object), "dgCMatrix")
+      SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(SummarizedExperiment::assay(object, assay)), "dgCMatrix")
     } else if (method == "logcpm") {
-      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(object) + 1), "dgCMatrix") # log(cpm+1)
+      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(SummarizedExperiment::assay(object, assay)) + 1), "dgCMatrix") # log(cpm+1)
     }
   } else {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")

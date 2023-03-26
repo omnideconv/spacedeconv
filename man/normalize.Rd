@@ -4,12 +4,14 @@
 \alias{normalize}
 \title{Normalize Expression Object}
 \usage{
-normalize(object, method = "cpm")
+normalize(object, method = "cpm", assay = "counts")
 }
 \arguments{
 \item{object}{SingleCellExperiment}
 
 \item{method}{normalization method, ("cpm", "logcpm")}
+
+\item{assay}{which assay to use}
 }
 \description{
 Normalize Expression Object
