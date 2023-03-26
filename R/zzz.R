@@ -16,21 +16,21 @@ NULL
 
   # We ensure to have the r-spacedeconv env
   # if (!file.exists(reticulate::conda_python("r-reticulate"))) {
-  if (!("r-spacedeconv" %in% reticulate::conda_list()$name)) {
-    reticulate::conda_create(envname = "r-spacedeconv")
+  if (!("r-omnideconv" %in% reticulate::conda_list()$name)) {
+    reticulate::conda_create(envname = "r-omnideconv")
   }
 
   paths <- reticulate::conda_list()
-  path <- paths[paths$name == "r-spacedeconv", 2]
+  path <- paths[paths$name == "r-omnideconv", 2]
   if (.Platform$OS.type == "windows") {
     path <- gsub("\\\\", "/", path)
   }
-  path.bin <- gsub("/envs/spacedeconv/python.exe", "/library/bin", path)
+  path.bin <- gsub("/envs/r-omnideconv/python.exe", "/library/bin", path)
   Sys.setenv(PATH = paste(path.bin, Sys.getenv()["PATH"], sep = ";"))
   Sys.setenv(RETICULATE_PYTHON = path)
 
 
-  reticulate::use_miniconda(condaenv = "r-spacedeconv", required = TRUE)
+  reticulate::use_miniconda(condaenv = "r-omnideconv", required = TRUE)
   reticulate::py_config()
   reticulate::configure_environment(pkgname, force = TRUE)
 
