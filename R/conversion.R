@@ -32,7 +32,7 @@ convert_to_sce <- function(obj) {
 #' Thanks to Omnideconv
 #' @export
 anndata_to_singlecellexperiment <- function(ad) {
-  anndata_checkload()
+  # anndata_checkload()
   ad <- ad$transpose()
   X_mat <- ad$X
   rownames(X_mat) <- ad$obs_names

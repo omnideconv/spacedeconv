@@ -106,7 +106,7 @@ first_gen <- c(
 #'
 #' signature <- spacedeconv::build_model(
 #'   single_cell_data_2,
-#'   method = "autogenes",
+#'   method = "spatialdwls",
 #'   cell_type_col = "celltype_major",
 #'   assay_sc = "cpm"
 #' )
@@ -283,7 +283,8 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' # more examples can be found in the documentation website
 #' data("spatial_data_2")
 #'
-#' spatial_data_2 <- spacedeconv::normalize(spatial_data_2, method = "cpm")
+#' spatial_data_2 <- spacedeconv::preprocess(spatial_data_2)
+#' spatial_data_2 <- spacedeconv::normalize(spatial_data_2)
 #'
 #' deconvolution <- spacedeconv::deconvolute(
 #'   spatial_obj = spatial_data_2,
