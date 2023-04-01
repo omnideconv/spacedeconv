@@ -1,6 +1,6 @@
 #' Heatmaps cell pair localization and correlation of scores
 #'
-#' Generates a heatmap of cell pair localization p-values and a correlation heatmap of scores between all celltypes found after deconvolution
+#' Generates a heatmap of cell pair localization ratios and p-values as asterisks as well as a correlation heatmap of scores and correlation probabilities as asterisks between all cell types found after deconvolution
 #'
 #' @param spe SpatialExperiment object
 #' @param method deconvolution method

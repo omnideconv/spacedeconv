@@ -28,6 +28,9 @@
 #' @importFrom stats median quantile
 #' @importFrom graphics abline
 #' @importFrom grDevices dev.off png
+#' @importFrom corrplot corrplot
+#' @importFrom psych corr.test
+#' @importFrom multimode locmode
 #'
 #' @name spacedeconv_pkg
 #' @docType package
