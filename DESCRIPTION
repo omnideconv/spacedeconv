@@ -71,7 +71,9 @@ Suggests:
     ComplexHeatmap, 
     grid, 
     decoupleR,
-    psych
+    psych,
+    multimode,
+    corrplot
 Remotes:
     amitfrish/scBio,
     omnideconv/omnideconv, 
