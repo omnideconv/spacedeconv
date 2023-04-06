@@ -11,11 +11,7 @@ normalize(object, method = "cpm", assay = "counts")
 
 \item{method}{normalization method, ("cpm", "logcpm")}
 
-<<<<<<< HEAD
-\item{assay}{which assay to use}
-=======
 \item{assay}{assay to use}
->>>>>>> 39680fed84b9d6642f666ae9841aec75309bbe2c
 }
 \description{
 Normalize Expression Object
