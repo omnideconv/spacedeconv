@@ -198,6 +198,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "music", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     scaden = {
+      check_path_scaden()
       build_model_omnideconv(single_cell_obj, cell_type_col, method = "scaden", spatial_obj, batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     scdc = {
@@ -396,6 +397,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_omnideconv(spatial_obj, signature, method = "music", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
     },
     scaden = {
+      check_path_scaden()
       deconvolute_omnideconv(spatial_obj, signature, method = "scaden", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
     },
     scdc = {
