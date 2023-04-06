@@ -338,7 +338,7 @@ get_spot_coordinates <- function(df, spotid) {
 
 
 #' check if scaden can be found in the path variable
-check_path_scaden <- function(){
+check_path_scaden <- function() {
   path <- paste0(reticulate::miniconda_path(), "/envs/r-omnideconv/bin/") # scaden is in there
-  Sys.setenv(PATH=paste0(Sys.getenv("PATH"), ":", path))
+  Sys.setenv(PATH = paste0(Sys.getenv("PATH"), ":", path))
 }
