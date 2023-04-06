@@ -38,7 +38,7 @@ single_cell_data_3
 
 # for performance reasons we are subsampling the data
 
-single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 1000)
+single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 500)
 ```
 
 
