@@ -1,4 +1,4 @@
-i---
+---
 title: "Example"
 output: rmarkdown::html_vignette
 vignette: >
