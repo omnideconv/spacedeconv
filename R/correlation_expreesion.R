@@ -18,7 +18,7 @@ corr_expr <- function(sig, log = FALSE, cor_method = c("pearson", "spearman"), m
   }
   corr_matrix <- corr.test(sig, method = cor_method, adjust = "none")$r
   corr_p <- corr.test(sig, adjust = "none")$p
-  corrplot(correlation, p.mat = corr_p, method = 'color', diag = FALSE, type = 'lower',
+  corrplot(corr_matrix, p.mat = corr_p, method = 'color', diag = FALSE, type = 'lower',
            sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
            insig = 'label_sig', pch.col = 'black', tl.col = "black",
            title = "Correlation expression with significance",
@@ -26,7 +26,7 @@ corr_expr <- function(sig, log = FALSE, cor_method = c("pearson", "spearman"), m
   cat(paste0("\t", c("Significance correlation:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
   if (matrix == TRUE) {
     print("Correlation of expression")
-    print(correlation)
+    print(corr_matrix)
     print("p_correlation")
     print(corr_p)
   }
