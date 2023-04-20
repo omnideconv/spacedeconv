@@ -84,9 +84,9 @@ deconv <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_3,
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method="card",
+  method = "card",
   batch_id_col = "orig.ident",
-  assay_sp = "cpm", 
+  assay_sp = "cpm",
   assay_sc = "cpm"
 )
 ```
