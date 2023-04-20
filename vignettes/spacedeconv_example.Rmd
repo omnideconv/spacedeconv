@@ -63,16 +63,16 @@ names(colData(single_cell_data_3))
 There are three different resolutions of cell type annotation available. For this tutorial we will choose `"celltype_major"` as cell type  annotation which includes 9 different cell-types. 
 
 Next we can calculate a signature using the annotated single-data and the deconvolution tool "spatialDWLS". 
-```{r build_model, message=FALSE, warning=FALSE}
+```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
 signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "spatialdwls"
+  method = "card"
 )
 ```
 
 The signature contains expression values for all celltypes and a subset of distinctly expressed genes. The following example shows the first 10 rows of the signature calculated in the previous step. 
-```{r}
+```{r, eval=FALSE}
 knitr::kable(round(signature[1:10, ], 4))
 ```
 
@@ -81,10 +81,13 @@ knitr::kable(round(signature[1:10, ], 4))
 To deconvolute the Visium slide we use the signature we just calculated. Depending on the selected deconvolution tool further parameters need to be passed, in this case `cell_type_col` and `batch_id_col` as well as the scRNA-seq reference dataset. 
 ```{r deconvolution, message=FALSE, warning=FALSE}
 deconv <- spacedeconv::deconvolute(
-  spatial_data_3,
-  signature = signature,
-  method = "spatialdwls",
-  assay_sp = "cpm"
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method="card",
+  batch_id_col = "orig.ident",
+  assay_sp = "cpm", 
+  assay_sc = "cpm"
 )
 ```
 
@@ -103,7 +106,7 @@ For each Spot the estimated cell fraction is available as object annotation and 
 ```{r visualization, fig.width=12, fig.height=12}
 # plot all available results: provide the tool as parameter
 spacedeconv::plot_celltype(deconv,
-  cell_type = "spatialdwls",
+  cell_type = "card",
   density = FALSE,
   smooth = T,
   title_size = 12
@@ -111,7 +114,7 @@ spacedeconv::plot_celltype(deconv,
 
 # ... or plot a specific result
 spacedeconv::plot_celltype(deconv,
-  cell_type = "spatialdwls_Cancer.Epithelial",
+  cell_type = "card_Cancer.Epithelial",
   density = FALSE,
   smooth = T,
   title_size = 12
