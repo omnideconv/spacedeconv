@@ -10,6 +10,7 @@
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
+#' @param background background color
 #' @param palette_type discrete, sequential or diverging
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
@@ -185,6 +186,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param method select which results should be displayed
 #' @param cell_type one or more celltype to plot, NULL for all
 #' @param remove vector of cell types to be removed from the plot
+#' @param min_spot minimum number of spots the cell-type has to be present in
 #' @param palette colorspace palette (sequential)
 # #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
