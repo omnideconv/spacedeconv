@@ -38,6 +38,8 @@ plot_most_abundant(
 
 \item{remove}{vector of cell types to be removed from the plot}
 
+\item{min_spot}{minimum number of spots the cell-type has to be present in}
+
 \item{palette}{colorspace palette (sequential)}
 
 \item{sample_id}{sample id to plot, default: "sample01"}

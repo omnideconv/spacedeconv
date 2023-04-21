@@ -48,6 +48,8 @@ plot_celltype(
 
 \item{show_image}{logical, whether to display the image, default = TRUE}
 
+\item{background}{background color}
+
 \item{palette_type}{discrete, sequential or diverging}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
