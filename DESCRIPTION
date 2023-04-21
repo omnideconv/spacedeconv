@@ -60,7 +60,8 @@ Suggests:
     grid, 
     decoupleR,
     tidyr,
-    xCell
+    xCell, 
+    MuSiC
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
@@ -69,7 +70,8 @@ Remotes:
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
     drighelli/SpatialExperiment, 
-    dviraran/xCell
+    dviraran/xCell, 
+    omnideconv/MuSiC
 Config/testthat/edition: 3
 Config/reticulate: 
   list(
