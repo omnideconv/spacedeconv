@@ -23,6 +23,7 @@
 #' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
+#' @param assay assay
 #'
 #' @returns plot number of detected genes
 #'
@@ -37,12 +38,13 @@ plot_ndetected_genes <- function(spe, palette = "Mako", transform_scale = NULL,
                                  smooth = FALSE, smoothing_factor = 1.5,
                                  title_size = 30, title = NULL, font_size = 20,
                                  legend_size = 40, density = TRUE,
-                                 save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+                                 save = FALSE, path = NULL, png_width = 1500, png_height = 750,
+                                 assay = "counts") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  gene_count <- counts(spe) >= 1
+  gene_count <- assay(spe, assay) >= 1
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe),
     ndetected_genes = colSums(gene_count)

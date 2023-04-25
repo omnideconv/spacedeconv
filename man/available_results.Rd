@@ -4,10 +4,12 @@
 \alias{available_results}
 \title{Check wich deconvolutionr results are available in a SpatialExperiment object}
 \usage{
-available_results(deconv)
+available_results(deconv, method = NULL)
 }
 \arguments{
 \item{deconv}{SpatialExperiment}
+
+\item{method}{deconvolution method (optional)}
 }
 \description{
 Check wich deconvolutionr results are available in a SpatialExperiment object

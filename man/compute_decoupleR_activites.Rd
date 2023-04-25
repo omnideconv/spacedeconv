@@ -4,7 +4,14 @@
 \alias{compute_decoupleR_activites}
 \title{Compute Pathway activities with decoupleR}
 \usage{
-compute_decoupleR_activites(spe, reference, method = "wsum", assay = "counts")
+compute_decoupleR_activites(
+  spe,
+  reference,
+  method = "wsum",
+  assay = "counts",
+  statistic = NULL,
+  ...
+)
 }
 \arguments{
 \item{spe}{SpatialExperiment}
@@ -14,6 +21,10 @@ compute_decoupleR_activites(spe, reference, method = "wsum", assay = "counts")
 \item{method}{calculation method to use}
 
 \item{assay}{which assay to use}
+
+\item{statistic}{select a sub results in case methods produce mutliple ones}
+
+\item{...}{further arguments passed to the methods}
 }
 \description{
 Compute Pathway activities with decoupleR

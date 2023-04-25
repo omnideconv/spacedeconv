@@ -6,14 +6,14 @@
 \usage{
 build_model_cell2location(
   single_cell_obj,
-  epochs = 20,
+  epochs = 250,
   assay_sc = "counts",
-  sample = "Sample",
-  cell_type_column = "celltype_major",
+  sample = "sample_id",
+  cell_type_col = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
   nonz_mean_cutoff = 1.12,
-  gpu = FALSE
+  gpu = TRUE
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ build_model_cell2location(
 
 \item{sample}{sample column}
 
-\item{cell_type_column}{column of single_cell_obj containing cell type labels}
+\item{cell_type_col}{column of single_cell_obj containing cell type labels}
 
 \item{cell_count_cutoff}{cell2location parameter}
 

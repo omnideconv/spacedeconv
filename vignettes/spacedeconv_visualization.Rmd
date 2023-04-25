@@ -11,13 +11,15 @@ To introduce spacedeconvs visualization functions we will utilize a deconvolutio
 
 ```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
 library(spacedeconv)
-library(EPIC) # quickfix
+library(SpatialExperiment)
 data("spatial_data_3")
 
-spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+spe <- preprocess(spatial_data_3)
+spe <- spacedeconv::normalize(spe, method = "cpm")
+
 
 deconv <- spacedeconv::deconvolute(
-  spatial_data_3,
+  spe,
   method = "epic",
   assay_sp = "cpm"
 )
@@ -37,7 +39,7 @@ At the moment spacedeconv offers two visualization functions.
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F)
+spacedeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F, smooth = T)
 ```
 
 ## 2. `plot_gene()`
@@ -52,7 +54,7 @@ spacedeconv::plot_gene(deconv, gene = "AKT1", density = F, smooth = T)
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F)
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T)
 ```
 
 ## 4. `plot_most_abundant()`
@@ -80,8 +82,7 @@ To access the presence of a single cell-type use the thresholded `plot_celltype_
 spacedeconv::plot_celltype_presence(deconv,
   cell_type = "epic_B.cell",
   threshold = 0.05,
-  palette = "Red-Blue",
-  reverse_palette = T
+  show_image = T
 )
 ```
 

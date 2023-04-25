@@ -46,10 +46,13 @@ reference:
       - starts_with("spatial_data")
   - title: Utils
     contents:
-      - aggregate
+      - aggregate_results
       - annotate_spots
       - cluster
+      - get_mostAbundantInCluster
       - print_info
+      - filter_sample_id
+      - compare_signatures
   - title: Metacell
     contents:
       - clean_genes_and_cells
@@ -71,12 +74,11 @@ reference:
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
-      - compute_decoupleR_activities
+      - compute_decoupleR_activites
   - title: internal
     contents:
       - spacedeconv_pkg
       - addResultToObject
-      - anndata_checkload
       - checkCol
       - check_and_install
       - convertImmunedeconvMatrix
@@ -85,8 +87,6 @@ reference:
       - getMarkersSPOTlight
       - getMatricesFromSCE
       - get_results_from_object
-      - init_python
-      - python_available
       - required_packages
       - checkRowColumn
       - removeZeroExpression
@@ -98,5 +98,4 @@ reference:
       - save_plot
       - checkENSEMBL
       - get_spot_coordinates
-      - install_all_python
-      - metacells_checkload
+      - get_mostAbundantInCluster

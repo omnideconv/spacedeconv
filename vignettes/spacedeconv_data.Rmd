@@ -19,7 +19,7 @@ spacedeconv integrates first- and second-generation deconvolution algorithms for
 # Example Data
 spacedeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:
 
-```{r loadingData}
+```{r loadingData, eval=FALSE}
 library(spacedeconv)
 data("single_cell_data_1")
 data("single_cell_data_2")

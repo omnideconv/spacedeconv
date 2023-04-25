@@ -45,7 +45,7 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
   set.seed(seed)
   cli::cli_alert_info(paste0("Set seed to ", seed))
 
-  cli::cli_progress_step(msg = paste0("extracting up to ", ncells, " cells"), msg_done = paste0("Extracted ", ncells, " cells"))
+  cli::cli_progress_step(msg = paste0("extracting up to ", ncells, " cells"))
 
   # full selection vector
   x <- rep(FALSE, ncol(sce))
@@ -85,6 +85,7 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 
   # actually subset and return the sce
   sce <- sce[, x]
+  cli::cli_progress_step(paste("extracted", ncol(sce), "cells"))
 
   cli::cli_progress_done()
 

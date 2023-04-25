@@ -4,7 +4,7 @@
 \alias{print_info}
 \title{Print info about dataset}
 \usage{
-print_info(sce = NULL, spe = NULL, signature = NULL)
+print_info(sce = NULL, spe = NULL, signature = NULL, assay = "counts")
 }
 \arguments{
 \item{sce}{singleCellExperiment}
@@ -12,6 +12,8 @@ print_info(sce = NULL, spe = NULL, signature = NULL)
 \item{spe}{SpatialExperiment}
 
 \item{signature}{signature matrix}
+
+\item{assay}{assay to use for computation}
 }
 \description{
 Print info about dataset

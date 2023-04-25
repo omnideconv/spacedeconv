@@ -2,7 +2,7 @@ Package: spacedeconv
 Title: Unified Interface to spatial transcriptomics deconvolution tools
 Version: 0.0.1.0000
 Authors@R: 
-    person("Constantin", "Zackl", , "constantin.zackl@student.uibk.ac.at", role = c("aut", "cre"))
+    person(given="Constantin", family="Zackl", email="constantin.zackl@student.uibk.ac.at", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1991-6943"))
 Description: Collection of 31 deconvolution tools for spatial transcriptomics data.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
@@ -36,35 +36,26 @@ Imports:
     spatstat.geom, 
     spatstat.explore, 
     progress, 
-    DelayedArray
+    DelayedArray, 
+    ComplexHeatmap, 
+    circlize, 
+    cli, 
+    patchwork, 
+    reticulate
 Suggests: 
     spacexr,
     SPOTlight,
     immunedeconv,
     omnideconv,
-    BisqueRNA,
-    BayesPrism,
-    bseqsc,
-    CDSeq,
     devtools,
-    DWLS,
-    MOMF,
-    EPIC,
-    MuSiC,
     pkgdown,
-    reticulate,
     rmarkdown,
-    scBio,
-    SCDC,
     uuid,
-    scuttle,
     scran,
     CARD,
-    xCell,
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    emo, 
     cli, 
     DelayedArray, 
     circlize, 
@@ -73,24 +64,34 @@ Suggests:
     decoupleR,
     psych,
     multimode,
-    corrplot
+    corrplot,
+    scuttle,
+    tidyr,
+    xCell, 
+    MuSiC
 Remotes:
-    amitfrish/scBio,
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
-    RubD/Giotto,
+    drieslab/Giotto,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
-    omnideconv/MOMF,
-    omnideconv/SCDC,
-    omnideconv/CDSeq,
-    omnideconv/dwls,
-    shenorrlab/bseqsc,
-    omnideconv/MuSiC, 
-    omnideconv/BayesPrism, 
-    GfellerLab/EPIC,
-    dviraran/xCell,
     drighelli/SpatialExperiment, 
-    hadley/emo
+    dviraran/xCell, 
+    omnideconv/MuSiC
 Config/testthat/edition: 3
+Config/reticulate: 
+  list(
+    packages = list(
+      list(package = "python-igraph"), 
+      list(package = "leidenalg"),
+      list(package = "python-louvain"), 
+      list(package = "scikit-learn"), 
+      list(package = "python.app", pip=TRUE),
+      list(package = "scanpy", pip=TRUE), 
+      list(package = "cell2location", pip=TRUE),
+      list(package = "metacells", pip=TRUE),
+      list(package = "autogenes", pip = TRUE),
+      list(package = "scaden", pip = TRUE)
+    )
+  )  

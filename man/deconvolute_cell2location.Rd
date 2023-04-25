@@ -7,11 +7,12 @@
 deconvolute_cell2location(
   spatial_obj,
   signature = NULL,
-  epochs = 1000,
+  epochs = 30000,
   n_cell = 10,
   alpha = 20,
-  gpu = FALSE,
-  result_name = "c2l"
+  gpu = TRUE,
+  result_name = "c2l",
+  values = "relative"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ deconvolute_cell2location(
 \item{gpu}{whether to use nvidia gpu for training}
 
 \item{result_name}{token to identify deconvolution results in object, default = "card"}
+
+\item{values}{relative or absolute, default: relative}
 }
 \description{
 Deconvolute Cell2location

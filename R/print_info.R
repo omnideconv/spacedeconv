@@ -3,8 +3,9 @@
 #' @param sce singleCellExperiment
 #' @param spe SpatialExperiment
 #' @param signature signature matrix
+#' @param assay assay to use for computation
 #' @export
-print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
+print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay = "counts") {
   # check for correct class
 
   if (!is.null(sce) & !is(sce, "SingleCellExperiment")) {
@@ -18,16 +19,23 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   # exclamation, rocket, check, cross mark, ok, hourglass, entry
   # sce
   if (!is.null(sce)) {
+    if ("counts" %in% assayNames(sce)) {
+      assaysce <- "counts"
+    } else {
+      assaysce <- assayNames(sce)[1]
+      cli::cli_alert_info(paste("Using assay", assaysce, "for single cell data"))
+    }
+
     cli::cli_h3("Single Cell")
     cli::cli_text("Assays: {.val {assayNames(sce)}}")
     cli::cli_text("Genes: {.val {nrow(sce)}}")
 
-    genes0 <- sum(DelayedArray::rowSums(counts(sce)) == 0)
+    genes0 <- sum(DelayedArray::rowSums(assay(sce, assaysce)) == 0)
     percentGenes0 <- round(genes0 / nrow(sce) * 100, 2)
     cli::cli_alert("without expression: {.val {genes0}} ({percentGenes0}%)")
 
     cli::cli_text("Cells: {.val {ncol(sce)}}")
-    umi <- colSums(counts(sce))
+    umi <- colSums(assay(sce, assaysce))
     cells0 <- sum(umi == 0)
     percentCells0 <- round(cells0 / ncol(sce) * 100, 2)
     cli::cli_alert("without expression: {.val {cells0}} ({percentCells0}%)")
@@ -51,12 +59,19 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
   # spe
 
   if (!is.null(spe)) {
+    if ("counts" %in% assayNames(spe)) {
+      assayspe <- "counts"
+    } else {
+      assayspe <- assayNames(spe)[1]
+      cli::cli_alert_info(paste("Using assay", assayspe, "for single cell data"))
+    }
+
     message()
     cli::cli_h3("Spatial")
     cli::cli_text("Assays: {.val {assayNames(spe)}}")
     cli::cli_text("Genes: {.val {nrow(spe)}}")
 
-    genes0 <- sum(DelayedArray::rowSums(counts(spe)) == 0)
+    genes0 <- sum(DelayedArray::rowSums(assay(spe, assayspe)) == 0)
     percentGenes0 <- round(genes0 / nrow(spe) * 100, 2)
     cli::cli_alert("without expression: {.val {genes0}} ({percentGenes0}%)")
 
@@ -68,11 +83,11 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
     } else {
       cli::cli_alert_warning("Spatial Object does not contain tissue presence annotation")
     }
-    medianGenesPerSpot <- median(DelayedArray::colSums(counts(spe) >= 1))
+    medianGenesPerSpot <- median(DelayedArray::colSums(assay(spe, assayspe) >= 1))
     cli::cli_text("Median Genes Per Spot: {.val {medianGenesPerSpot}}")
 
 
-    umi <- colSums(counts(spe))
+    umi <- colSums(assay(spe, assayspe))
     umiBelow500 <- umi[umi < 500]
     umiBelow500Percent <- round(length(umiBelow500) / nrow(spe) * 100, 2)
     cells0 <- sum(umi == 0)
@@ -105,7 +120,7 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL) {
 
     if (!is.null(spe)) {
       overlapGenes <- sum(rownames(spe) %in% rownames(signature))
-      overlapGenesPercent <- round(overlapGenes / length(rownames(spe)) * 100, 2)
+      overlapGenesPercent <- round(overlapGenes / length(rownames(signature)) * 100, 2)
       cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
     }
   }

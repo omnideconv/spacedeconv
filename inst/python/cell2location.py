@@ -3,7 +3,7 @@ import anndata
 import pandas as pd
 import os
 
-os.environ["THEANO_FLAGS"] = 'device=cuda0,floatX=float32,force_device=True'
+os.environ["THEANO_FLAGS"] = 'device=cuda,floatX=float32,force_device=True'
 
 
 import cell2location

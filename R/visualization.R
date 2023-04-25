@@ -38,7 +38,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           show_image = FALSE, background = NULL, palette_type = "sequential",
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
                           smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -49,23 +49,58 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe)))) {
+  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type == "c2l" && !cell_type == "decoupleR" && !cell_type == "cluster") {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  return(make_baseplot(spe, df,
-    palette = palette,
-    to_plot = cell_type, sample_id = sample_id,
-    image_id = image_id, show_image = show_image, background = background,
-    palette_type = palette_type, offset_rotation = offset_rotation,
-    transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits, title = title,
-    smooth = smooth, smoothing_factor = smoothing_factor,
-    title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density, save = save, path = path, png_width = png_width, png_height = png_height
-  ))
+
+  # if a method is passed then make grid, otherwise, only one
+  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type == "decoupleR" || cell_type == "cluster") {
+    plot <- make_baseplot(spe, df,
+      palette = palette,
+      to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
+      image_id = image_id, show_image = show_image, background = background,
+      palette_type = palette_type, offset_rotation = offset_rotation,
+      transform_scale = transform_scale, reverse_palette = reverse_palette,
+      spot_size = spot_size, limits = limits, title = title,
+      smooth = smooth, smoothing_factor = smoothing_factor,
+      title_size = title_size, font_size = font_size, legend_size = legend_size,
+      density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    )
+
+    for (result in available_results(spe, method = cell_type)[-1]) {
+      plot <- plot + make_baseplot(spe, df,
+        palette = palette,
+        to_plot = result, sample_id = sample_id,
+        image_id = image_id, show_image = show_image, background = background,
+        palette_type = palette_type, offset_rotation = offset_rotation,
+        transform_scale = transform_scale, reverse_palette = reverse_palette,
+        spot_size = spot_size, limits = limits, title = title,
+        smooth = smooth, smoothing_factor = smoothing_factor,
+        title_size = title_size, font_size = font_size, legend_size = legend_size,
+        density = density, save = save, path = path, png_width = png_width, png_height = png_height
+      )
+    }
+
+    return(plot)
+  } else {
+    return(make_baseplot(spe, df,
+      palette = palette,
+      to_plot = cell_type, sample_id = sample_id,
+      image_id = image_id, show_image = show_image, background = background,
+      palette_type = palette_type, offset_rotation = offset_rotation,
+      transform_scale = transform_scale, reverse_palette = reverse_palette,
+      spot_size = spot_size, limits = limits, title = title,
+      smooth = smooth, smoothing_factor = smoothing_factor,
+      title_size = title_size, font_size = font_size, legend_size = legend_size,
+      density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    ))
+  }
+
 
   # TODO
   # add facet wrap
@@ -116,12 +151,14 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            show_image = FALSE, background = NULL, offset_rotation = FALSE,
                            spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
-                           title_size = 30, title = NULL, font_size = 20,
-                           legend_size = 40, density = TRUE,
+                           title_size = 30, title = NULL, font_size = 15,
+                           legend_size = 20, density = TRUE,
                            save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
+
+  spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe),
     nUMI = colSums(counts(spe))
@@ -174,12 +211,12 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, background = NULL, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
-                               title_size = 30, font_size = 20, legend_size = 40,
+                               title_size = 30, font_size = 15, legend_size = 20,
                                density = TRUE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL) {
   # checks
@@ -205,6 +242,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     available <- available[!available %in% remove]
   }
 
+  spe <- filter_sample_id(spe, sample_id)
+
   # create df
   df <- as.data.frame(colData(spe))[, available, drop = FALSE]
   df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop = FALSE]
@@ -213,6 +252,11 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
   res <- colnames(df)[max.col(df)]
+
+  # ensure min_spot parameter
+  df <- df[, names(table(res)[table(res) >= min_spot])]
+  res <- colnames(df)[max.col(df)]
+
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
@@ -269,9 +313,11 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    show_image = FALSE, offset_rotation = FALSE,
                                    spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
-                                   title_size = 30, title = NULL, font_size = 20,
-                                   legend_size = 40, save = FALSE, path = NULL,
+                                   title_size = 30, title = NULL, font_size = 15,
+                                   legend_size = 20, save = FALSE, path = NULL,
                                    png_width = 1500, png_height = 750) {
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   # extract method from celltype
@@ -341,9 +387,11 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             show_image = FALSE, offset_rotation = FALSE,
                             spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
-                            title_size = 30, title = NULL, font_size = 20,
-                            legend_size = 40, palette_type = "diverging", density = TRUE,
+                            title_size = 30, title = NULL, font_size = 15,
+                            legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+  spe <- filter_sample_id(spe, sample_id)
+
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
   comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
@@ -408,7 +456,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
                       show_image = FALSE, background = NULL, palette_type = "sequential",
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5,
-                      title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                      title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                       save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -422,6 +470,8 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
   if (!gene %in% rownames(spe)) {
     stop("Provides gene is not present in SpatialExperiment")
   }
+
+  spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), gene = SummarizedExperiment::assay(spe, assay)[gene, ]))
 
@@ -490,7 +540,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           image_id = "lowres", show_image = FALSE, background = NULL,
                           palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
-                          title_size = 30, title = NULL, font_size = 20, legend_size = 40, density = TRUE,
+                          title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -562,6 +612,18 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # no overwrite the points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
+  # check discrete and, if yes, remove the hexagons which should not be plotted
+  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
+    palette_type <- "discrete"
+  }
+
+  if (palette_type == "discrete") {
+    tmp <- as.data.frame(sf_poly)
+    if (is.logical(tmp[, to_plot])) {
+      sf_poly <- sf_poly[tmp[, to_plot], ]
+    }
+  }
+
   # extract image and dimensions
   img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
   width <- dim(img)[2]
@@ -573,12 +635,14 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # add spatial image
   if (show_image) {
     p <- p + annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
+    # p <- p + annotation_raster(img, xmin = min(df$pxl_col_in_fullres), xmax = max(df$pxl_col_in_fullres), ymin = max(df$pxl_row_in_fullres), ymax = min(df$pxl_row_in_fullres))
   }
 
   # add hexagons
   p <- p +
     geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
-    coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
+    # coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
+    coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres))) +
     theme(
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -615,7 +679,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # create density plot if requested
   suppressMessages(
-    if (density) {
+    if (density && palette_type != "discrete") {
       data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
       density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
         # ggplot2::geom_density() +
@@ -640,7 +704,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       # ggplot2::ylim(0, max(data["values"]))
 
       # cowplot::plot_grid(spatial, density)
-      plot <- ggpubr::ggarrange(p, density, ncol = 2) # add functions to pkg.R
+      plot <- ggpubr::ggarrange(p, density, ncol = 2, widths = c(2, 1)) # add functions to pkg.R
       # plot <- grid::grid.draw(plot) # add functions to pkg.R
     } else {
       plot <- p
@@ -740,4 +804,31 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
   png(width = png_width, height = png_height, units = "px", filename = filename)
   grid::grid.draw(plot)
   dev.off()
+}
+
+#' Filter SPE to contain only one sample ID
+#' @param spe SpatialExperiment
+#' @param sample_id sample_id
+#' @export
+filter_sample_id <- function(spe, sample_id) {
+  if (is.null(spe)) {
+    cli::cli_alert_danger("Spatial Object not provided")
+    stop()
+  }
+
+  # check if sample id is provided, if no and only one available use this one
+  if (is.null(sample_id)) {
+    if (length(unique(spe$sample_id)) == 1) {
+      cli::cli_alert_info("No sample ID provided, using the only one available")
+      sample_id <- unique(spe$sample_id)
+    } else {
+      cli::cli_alert_danger("Multiple Sample Ids in Objet, please select one")
+      stop()
+    }
+  }
+
+  # remove columns not in this sample
+  spe <- spe[, spe$sample_id == sample_id]
+
+  return(spe)
 }

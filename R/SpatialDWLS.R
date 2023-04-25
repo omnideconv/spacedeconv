@@ -13,9 +13,11 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     stop("cell_type_col not available")
   }
 
+  # init_python()
+
   # TODO, implement instructions
-  if (!exists("instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  if (!exists("giotto_instructions")) {
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
   }
 
   # check if requested assay exists
@@ -87,9 +89,11 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
+  # init_python()
+
   ##########
-  if (!exists("instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = "~/miniconda3/envs/spacedeconv/bin/python3.8")
+  if (!exists("giotto_instructions")) {
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
   }
 
 
@@ -98,6 +102,8 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   obj <- doGiottoWorkflow(obj, ...)
 
   deconvolution <- Giotto::runDWLSDeconv(obj, sign_matrix = signature, n_cell = 10, return_gobject = FALSE)
+
+  deconvolution$cell_ID <- NULL
 
   # attach method token
   deconvolution <- attachToken(deconvolution, result_name)

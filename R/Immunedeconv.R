@@ -75,9 +75,7 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   deconv <- immunedeconv::deconvolute(
     gene_expression = bulk,
     method = method,
-    indications = NULL,
-    tumor = TRUE,
-    arrays = FALSE
+    ... # rest of the parameters by choice
   )
 
   # attach token

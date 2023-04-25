@@ -8,7 +8,10 @@ compute_metacells(
   clean,
   forbidden_gene_names,
   cell_type_col,
-  abundance_score = 0.9
+  target_size = 160000,
+  abundance_score = 0.9,
+  n_cores = NULL,
+  seed = 12345
 )
 }
 \arguments{
@@ -18,7 +21,13 @@ compute_metacells(
 
 \item{cell_type_col}{cell type column of cleaned anndata, used for reannotation}
 
+\item{target_size}{target UMI count per metacells}
+
 \item{abundance_score}{metacell celltype purity score}
+
+\item{n_cores}{number of cores to use}
+
+\item{seed}{seed}
 }
 \description{
 Compute Metacells
