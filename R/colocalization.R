@@ -4,7 +4,7 @@
 #' @param method deconvolution method
 #' @param threshold if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector
 #'
-#'
+#' @export
 presence <- function(spe, method, threshold = NULL) {
   if (!method %in% deconvolution_methods) {
     stop("method not supported")
