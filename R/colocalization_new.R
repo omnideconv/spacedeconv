@@ -31,9 +31,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
     A <- presence_matrix[, cell_type_A]
     B <- presence_matrix[, cell_type_B]
-
-
-  }else if (distance > 0) {
+  } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
     # # for all spots get the spots in distance and calculate mean value
@@ -98,19 +96,19 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   if (density) {
     dens <- density(coloc_rand)
     p <- plot(dens,
-              main = paste0(
-                "Colocalization ",
-                cell_type_A, "_", cell_type_B
-              ),
-              xlim = range(coloc, coloc_rand)
+      main = paste0(
+        "Colocalization ",
+        cell_type_A, "_", cell_type_B
+      ),
+      xlim = range(coloc, coloc_rand)
     )
     abline(v = coloc, col = "red")
     plot(density(avoid_rand),
-         main = paste0(
-           "Avoidance ",
-           cell_type_A, "_", cell_type_B
-         ),
-         xlim = range(avoid, avoid_rand)
+      main = paste0(
+        "Avoidance ",
+        cell_type_A, "_", cell_type_B
+      ),
+      xlim = range(avoid, avoid_rand)
     )
     abline(v = avoid, col = "red")
   }
@@ -140,7 +138,3 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
   return(res)
 }
-
-
-
-
