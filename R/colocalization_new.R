@@ -58,14 +58,13 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
         niche_pres_B[i] <- TRUE
       }
     }
-
-    # combine
+  }
+  # combine
     niche_A_B <- rbind(niche_pres_A, niche_pres_B)
     rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
 
     A <- niche_A_B[cell_type_A, ]
     B <- niche_A_B[cell_type_B, ]
-  }
 
   # Calculate real colocalization and avoidance events
   loc_original <- coloc_avoid(A, B)
