@@ -40,9 +40,15 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   avoid_rand <- vector(length = niter)
 
   for (i in 1:niter) {
-    # shuffle coordinates
-    presence_matrix_rand <- presence_matrix
-    row.names(presence_matrix_rand) <- sample(row.names(presence_matrix_rand))
+    # randomize coordinates
+    # Shuffle barcode names together with spatial coordinates
+    shuffle_spe <- colData(spe)[sample(nrow(colData(spe))),c("in_tissue", "array_row", "array_col", "sample_id")]
+    # Create new colData with shuffeled coordinates
+    new_col <- cbind(shuffle_spe, colData(spe)[, -c(1:4)]) ## How to remove the first 4 columns by name?
+    colData(spe) <- new_col
+
+    # Calculate presence matrix for randomized version
+    presence_matrix_rand <- presence(spe, method)
 
     # Create randomized presence/absence vector for both cell types
     A_rand <- presence_matrix_rand[, cell_type_A]
@@ -57,19 +63,19 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   if (density) {
     dens <- density(coloc_rand)
     p <- plot(dens,
-      main = paste0(
-        "Colocalization ",
-        cell_type_A, "_", cell_type_B
-      ),
-      xlim = range(coloc, coloc_rand)
+              main = paste0(
+                "Colocalization ",
+                cell_type_A, "_", cell_type_B
+              ),
+              xlim = range(coloc, coloc_rand)
     )
     abline(v = coloc, col = "red")
     plot(density(avoid_rand),
-      main = paste0(
-        "Avoidance ",
-        cell_type_A, "_", cell_type_B
-      ),
-      xlim = range(avoid, avoid_rand)
+         main = paste0(
+           "Avoidance ",
+           cell_type_A, "_", cell_type_B
+         ),
+         xlim = range(avoid, avoid_rand)
     )
     abline(v = avoid, col = "red")
   }
