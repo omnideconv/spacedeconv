@@ -46,35 +46,35 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
         )
         # Create heatmap
         ht1 <- Heatmap(mat_coloc,
-                       heatmap_legend_param = list(
-                         title = "Colocalization", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
-                         break_dist = 1,
-                         labels = c("***", "**", "*", alpha, "ns")),
-                       rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Colocalization significance", col = mycols,
-                       cell_fun = function(j, i, x, y, w , h , fill) {
-                         if (i > j) {
-                           grid.rect(x, y, w , h , gp = gpar(fill = fill, col = fill))
-                         }
-                         else if(i<j){
-                           grid.text(mat_coloc[i,j], x , y, gp = gpar(fontsize = 10))
-                         }
-                       }
+          heatmap_legend_param = list(
+            title = "Colocalization", at = c(0, alpha - 2 * alpha / 3, alpha - alpha / 3, alpha, 1),
+            break_dist = 1,
+            labels = c("***", "**", "*", alpha, "ns")
+          ),
+          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Colocalization significance", col = mycols,
+          cell_fun = function(j, i, x, y, w, h, fill) {
+            if (i > j) {
+              grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+            } else if (i < j) {
+              grid.text(mat_coloc[i, j], x, y, gp = gpar(fontsize = 10))
+            }
+          }
         )
 
         ht2 <- Heatmap(mat_avoid,
-                       heatmap_legend_param = list(
-                         title = "Avoidance", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
-                         break_dist = 1,
-                         labels = c("***", "**", "*", alpha, "ns")),
-                       rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance", col = mycols,
-                       cell_fun = function(j, i, x, y, w, h, fill) {
-                         if (i > j) {
-                           grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-                         }
-                         else if(i<j){
-                           grid.text(mat_avoid[i,j], x ,y, gp = gpar(fontsize = 10))
-                         }
-                       }
+          heatmap_legend_param = list(
+            title = "Avoidance", at = c(0, alpha - 2 * alpha / 3, alpha - alpha / 3, alpha, 1),
+            break_dist = 1,
+            labels = c("***", "**", "*", alpha, "ns")
+          ),
+          rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Avoidance significance", col = mycols,
+          cell_fun = function(j, i, x, y, w, h, fill) {
+            if (i > j) {
+              grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+            } else if (i < j) {
+              grid.text(mat_avoid[i, j], x, y, gp = gpar(fontsize = 10))
+            }
+          }
         )
       }
     }
@@ -91,31 +91,30 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     correlation <- corr.test(m, adjust = "none")$r
     cor_prob <- corr.test(m, adjust = "none")$p
 
-    ht3 <-Heatmap(correlation,
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation",
-                  cell_fun = function(j, i, x, y, w, h, fill) {
-                    if (i > j) {
-                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-                    }
-                    else if(i<j){
-                      grid.text(round(correlation[i,j], digits = 3), x ,y, gp = gpar(fontsize = 10))
-                    }
-                  }
-                 )
-    ht4 <-Heatmap(cor_prob,
-                  heatmap_legend_param = list(
-                    title = "Correlation probability", at = c(0, alpha-2*alpha/3, alpha-alpha/3 ,alpha, 1),
-                    break_dist = 1,
-                    labels = c("***", "**", "*", alpha, "ns")),
-                  rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability",
-                  cell_fun = function(j, i, x, y, w, h, fill) {
-                    if (i >j) {
-                      grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
-                    }
-                    else if(i<j){
-                      grid.text(round(cor_prob[i,j], digits = 3), x ,y, gp = gpar(fontsize = 10))
-                    }
-                  }
+    ht3 <- Heatmap(correlation,
+      rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation",
+      cell_fun = function(j, i, x, y, w, h, fill) {
+        if (i > j) {
+          grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+        } else if (i < j) {
+          grid.text(round(correlation[i, j], digits = 3), x, y, gp = gpar(fontsize = 10))
+        }
+      }
+    )
+    ht4 <- Heatmap(cor_prob,
+      heatmap_legend_param = list(
+        title = "Correlation probability", at = c(0, alpha - 2 * alpha / 3, alpha - alpha / 3, alpha, 1),
+        break_dist = 1,
+        labels = c("***", "**", "*", alpha, "ns")
+      ),
+      rect_gp = gpar(type = "none"), cluster_rows = F, cluster_columns = F, name = "Correlation probability",
+      cell_fun = function(j, i, x, y, w, h, fill) {
+        if (i > j) {
+          grid.rect(x, y, w, h, gp = gpar(fill = fill, col = fill))
+        } else if (i < j) {
+          grid.text(round(cor_prob[i, j], digits = 3), x, y, gp = gpar(fontsize = 10))
+        }
+      }
     )
 
     draw(ht3, ht_gap = unit(-75, "mm"))
