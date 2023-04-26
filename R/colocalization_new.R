@@ -18,9 +18,17 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     stop("cell type 1 or 2 missing or null")
   }
 
-  ########## cell type test
+  if(!(is.null(presence_matrix)& is.null(threshold))){
+    stop("only presence_marix or threshold can be supplied")
+  }
+
+  # Calculate custom presence matrix based on threshold
+  if(!(is.null(threshold))){
+    presence_matrix <- presence(spe, method, threshold)
+  }
+
   # Calculate presence matrix based on antimode cutoff approach
-  if (is.null(presence_matrix)) {
+  if (is.null(presence_matrix)& is.null(threshold)) {
     presence_matrix <- presence(spe, method)
   }
   # Set NA values to absent
@@ -31,10 +39,11 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
     A <- presence_matrix[, cell_type_A]
     B <- presence_matrix[, cell_type_B]
-  } else if (distance > 0) {
+
+    } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
-    # # for all spots get the spots in distance and calculate mean value
+    # for all spots get the spots in distance and calculate mean value
     iniche <- vector(mode = "list", length = niter)
     for (spot in rownames(df)) {
       iniche[spot] <- list(get_iniche(df, get_spot_coordinates(df, spot), distance = distance))
@@ -45,35 +54,36 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     niche_pres_B <- rep(FALSE, length(iniche))
 
     for (i in 1:length(iniche)) {
+      # extract spots of iniche
       bar <- iniche[[i]]
-
+      # calculate presence values for cell type A and B in the iniche
       uni <- presence[bar, cell_type_A]
       dui <- presence[bar, cell_type_B]
-
+      # set whole iniche value to present, if at least one spot contains cell type A
       if (sum(uni) >= 1) {
         niche_pres_A[i] <- TRUE
       }
-
+      # set whole iniche value to present, if at least one spot contains cell type B
       if (sum(dui) >= 1) {
         niche_pres_B[i] <- TRUE
       }
     }
-  }
-  # combine
+
+  # combine presence/absence values for both cell types
   niche_A_B <- rbind(niche_pres_A, niche_pres_B)
   rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
-
+  # create presence/absence vectors for cell type A and B
   A <- niche_A_B[cell_type_A, ]
   B <- niche_A_B[cell_type_B, ]
-
-  # Calculate real colocalization and avoidance events
+  }
+  # Calculate real colocalization and avoidance events based on the presence/absence vectors for cell type A and B
   loc_original <- coloc_avoid(A, B)
   coloc <- loc_original["coloc"]
   avoid <- loc_original["avoid"]
 
 
 
-  ################  Randomization??
+#################  Randomization??
   # Create randomized presence matrices and calculate corresponding colocalization/avoidance events
   coloc_rand <- vector(length = niter)
   avoid_rand <- vector(length = niter)
