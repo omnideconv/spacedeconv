@@ -18,17 +18,17 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     stop("cell type 1 or 2 missing or null")
   }
 
-  if(!(is.null(presence_matrix)& is.null(threshold))){
+  if (!(is.null(presence_matrix) & is.null(threshold))) {
     stop("only presence_marix or threshold can be supplied")
   }
 
   # Calculate custom presence matrix based on threshold
-  if(!(is.null(threshold))){
+  if (!(is.null(threshold))) {
     presence_matrix <- presence(spe, method, threshold)
   }
 
   # Calculate presence matrix based on antimode cutoff approach
-  if (is.null(presence_matrix)& is.null(threshold)) {
+  if (is.null(presence_matrix) & is.null(threshold)) {
     presence_matrix <- presence(spe, method)
   }
   # Set NA values to absent
@@ -39,8 +39,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
     A <- presence_matrix[, cell_type_A]
     B <- presence_matrix[, cell_type_B]
-
-    } else if (distance > 0) {
+  } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
     # for all spots get the spots in distance and calculate mean value
@@ -69,12 +68,12 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
       }
     }
 
-  # combine presence/absence values for both cell types
-  niche_A_B <- rbind(niche_pres_A, niche_pres_B)
-  rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
-  # create presence/absence vectors for cell type A and B
-  A <- niche_A_B[cell_type_A, ]
-  B <- niche_A_B[cell_type_B, ]
+    # combine presence/absence values for both cell types
+    niche_A_B <- rbind(niche_pres_A, niche_pres_B)
+    rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
+    # create presence/absence vectors for cell type A and B
+    A <- niche_A_B[cell_type_A, ]
+    B <- niche_A_B[cell_type_B, ]
   }
   # Calculate real colocalization and avoidance events based on the presence/absence vectors for cell type A and B
   loc_original <- coloc_avoid(A, B)
@@ -83,7 +82,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
 
 
-#################  Randomization??
+  #################  Randomization??
   # Create randomized presence matrices and calculate corresponding colocalization/avoidance events
   coloc_rand <- vector(length = niter)
   avoid_rand <- vector(length = niter)
