@@ -23,6 +23,8 @@ localization_heatmap(
 \item{correlation}{correlation heatmap based on scores}
 
 \item{localization}{colocalization and avoidance heatmap}
+
+\item{matrix}{matrix (TRUE/FALSE)}
 }
 \value{
 cell pair localization heatmap and correlation heatmap

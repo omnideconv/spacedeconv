@@ -31,9 +31,8 @@ install.packages("pak")
 # minimal installation
 pak::pkg_install("omnideconv/spacedeconv")
 
-# complete installation, including Python dependencies
+# complete installation
 pak::pkg_install("omnideconv/spacedeconv", dependencies = TRUE)
-spacedeconv::install_all_python()
 ```
 
 # Data requirements
