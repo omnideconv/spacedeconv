@@ -410,14 +410,14 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_immunedeconv(spatial_obj, method = "mcp_counter", assay_sp = assay_sp, ...)
     },
     epic = {
-      require("EPIC") # quick fix, did not work with requireNamespace()
+      requireNamespace("EPIC") # quick fix, did not work with requireNamespace()
       deconvolute_immunedeconv(spatial_obj, method = "epic", assay_sp = assay_sp, ...)
     },
     quantiseq = {
       deconvolute_immunedeconv(spatial_obj, method = "quantiseq", assay_sp = assay_sp, ...)
     },
     xcell = {
-      require("xCell") # quick fix
+      requireNamespace("xCell") # quick fix
       deconvolute_immunedeconv(spatial_obj, method = "xcell", assay_sp = assay_sp, ...)
     },
     cibersort = {

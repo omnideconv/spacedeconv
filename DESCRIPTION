@@ -62,7 +62,9 @@ Suggests:
     tidyr,
     xCell, 
     MuSiC, 
-    markdown
+    markdown, 
+    EPIC, 
+    xCell
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
