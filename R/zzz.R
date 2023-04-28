@@ -40,7 +40,7 @@ NULL
     anndata::install_anndata()
   }
 
-  # if (!reticulate::py_module_available("python.app")) {
+  # if (!reticulate::py_module_available("python.app")) { # only MAC!
   #   reticulate::py_install("python.app", pip=TRUE)
   # }
 
