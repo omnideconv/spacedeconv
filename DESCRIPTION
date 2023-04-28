@@ -68,7 +68,7 @@ Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
-    drieslab/Giotto@master,
+    github:drieslab/Giotto@master,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
     drighelli/SpatialExperiment, 
