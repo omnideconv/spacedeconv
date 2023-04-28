@@ -40,10 +40,7 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/addResultToObject.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/aggregate.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/anndata_checkload.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/aggregate_results.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/anndata_to_singlecellexperiment.html</loc>
@@ -106,6 +103,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/check_and_install.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/check_path_scaden.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/clean_genes_and_cells.html</loc>
   </url>
   <url>
@@ -113,6 +113,12 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/coloc_avoid.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/compare_signatures.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_decoupleR_activites.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/compute_forbidden_genes.html</loc>
@@ -163,16 +169,25 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/extract_forbidden_from_modules.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/filter_sample_id.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/getMarkersSPOTlight.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/getMatricesFromSCE.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_decoupleR_reference.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_hex_polygon.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_iniche.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_mostAbundantInCluster.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_polygon_geometry.html</loc>
@@ -187,16 +202,10 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/init_python.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/install_all_python.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/localization_heatmap.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/make_baseplot.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/metacells_checkload.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/normalize.html</loc>
@@ -214,7 +223,19 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_gene.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_metacell_abundance.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_metacell_nCells.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_most_abundant.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ndetected_genes.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_scatter.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_umi_count.html</loc>
@@ -226,7 +247,10 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/presence.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/python_available.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/print_info.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/qualitycontrol.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/removeZeroExpression.html</loc>
