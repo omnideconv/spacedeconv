@@ -28,7 +28,7 @@
 #' @importFrom stats median quantile cor density
 #' @importFrom graphics abline par
 #' @importFrom grDevices dev.off png
-#' @importFrom methods hasAg is
+#' @importFrom methods hasArg is
 #'
 #'
 #' @name spacedeconv_pkg
