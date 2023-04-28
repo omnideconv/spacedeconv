@@ -63,8 +63,7 @@ Suggests:
     xCell, 
     MuSiC, 
     markdown, 
-    EPIC, 
-    xCell
+    EPIC
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
