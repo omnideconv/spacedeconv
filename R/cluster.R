@@ -92,7 +92,7 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
 get_mostAbundantInCluster <- function(spe, method = "mean", k = 3) {
   df <- colData(spe)[, available_results(spe)]
 
-  token = paste0("cluster_", k)
+  token <- paste0("cluster_", k)
 
   clusters <- df[[token]]
   # df$cluster <- NULL
