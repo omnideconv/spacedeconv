@@ -25,9 +25,11 @@
 #' @importFrom circlize colorRamp2
 #' @importFrom ComplexHeatmap Heatmap draw
 #' @importFrom grid gpar
-#' @importFrom stats median quantile
-#' @importFrom graphics abline
+#' @importFrom stats median quantile cor density
+#' @importFrom graphics abline par
 #' @importFrom grDevices dev.off png
+#' @importFrom methods hasAg is
+#'
 #'
 #' @name spacedeconv_pkg
 #' @docType package
