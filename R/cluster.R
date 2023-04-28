@@ -91,7 +91,10 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
 #' @export
 get_mostAbundantInCluster <- function(spe, method = "mean", k = 3) {
   df <- colData(spe)[, available_results(spe)]
-  clusters <- df$cluster
+
+  token = paste0("cluster_", k)
+
+  clusters <- df[[token]]
   # df$cluster <- NULL
 
   if (!method %in% c("mean", "median")) {
@@ -101,12 +104,12 @@ get_mostAbundantInCluster <- function(spe, method = "mean", k = 3) {
   result <- list()
 
   for (cluster in unique(clusters)) {
-    tmp <- df[df$cluster == cluster, ]
-    tmp$cluster <- NULL
+    tmp <- df[df[[token]] == cluster, ]
+    tmp[[cluster]] <- NULL
 
     res <- sort(apply(tmp, 2, method), decreasing = T)
     res <- res[1:k]
-    result[[cluster]] <- res
+    result[[paste0("cluster_", cluster)]] <- res
   }
 
   return(result)
