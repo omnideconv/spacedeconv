@@ -13,7 +13,6 @@ build_model(
   batch_id_col = NULL,
   assay_sc = "counts",
   assay_sp = "counts",
-  sample = "sample_id",
   ...
 )
 }
@@ -33,8 +32,6 @@ build_model(
 \item{assay_sc}{assay of single cell object to use}
 
 \item{assay_sp}{assay of spatial object to use}
-
-\item{sample}{column containing the sample_id, for cell2location}
 
 \item{...}{additional parameters passed to the functions}
 }

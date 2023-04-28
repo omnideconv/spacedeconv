@@ -160,7 +160,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
       build_model_spatial_dwls(single_cell_obj, assay_sc = assay_sc, marker_method = "scran", cell_type_col = cell_type_col, ...)
     },
     cell2location = {
-      build_model_cell2location(single_cell_obj, assay_sc = assay_sc, cell_type_col = cell_type_col, batch_id_col = sample, ...)
+      build_model_cell2location(single_cell_obj, assay_sc = assay_sc, cell_type_col = cell_type_col, batch_id_col = batch_id_col, ...)
     },
 
     ##############
