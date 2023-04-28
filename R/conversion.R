@@ -106,7 +106,7 @@ anndata_to_spatialexperiment <- function() {
   # library(DFrame)
 
 
-  ad = anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
+  ad <- anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
 
   expr <- Matrix::t(Matrix::Matrix(ad$X, sparse = T))
 
@@ -116,10 +116,12 @@ anndata_to_spatialexperiment <- function() {
   spatial_coords <- ad$obsm$spatial
 
 
-  spe = SpatialExperiment::SpatialExperiment(assays= list(counts=expr),
-                                             colData=sample_metadata,
-                                             rowData=gene_metadata,
-                                             spatialCoords = spatial_coords)
+  spe <- SpatialExperiment::SpatialExperiment(
+    assays = list(counts = expr),
+    colData = sample_metadata,
+    rowData = gene_metadata,
+    spatialCoords = spatial_coords
+  )
 
 
   # image
