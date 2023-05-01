@@ -699,7 +699,8 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           axis.text.y = ggplot2::element_blank(),
           axis.ticks.y = ggplot2::element_blank(),
           axis.line.y = ggplot2::element_blank(),
-          axis.title = ggplot2::element_blank()
+          axis.title = ggplot2::element_blank(),
+          axis.text.x = ggplot2::element_text(size = 12)
         )
       # ggplot2::ylim(0, max(data["values"]))
 
