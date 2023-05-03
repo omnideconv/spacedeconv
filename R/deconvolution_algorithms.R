@@ -102,6 +102,7 @@ first_gen <- c(
 #' data("single_cell_data_2")
 #'
 #' single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
+#' single_cell_data_2 <- subsetSCE(single_cell_data_2, ncells = 300) # just an example
 #'
 #' signature <- spacedeconv::build_model(
 #'   single_cell_data_2,
