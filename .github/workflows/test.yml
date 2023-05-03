@@ -52,10 +52,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: remotes
-        run: Rscript -e "install.packages('remotes')"
+      - name: Install pak
+        run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
+
       - name: harmony
-        run: Rscript -e "remotes::install_github('omnideconv/harmony')"
+        run: Rscript -e "pak::install_github('omnideconv/harmony')"
+
+      - name: Giotto
+        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
