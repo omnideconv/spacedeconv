@@ -25,7 +25,7 @@ jobs:
           # - { os: windows-latest, r: "release" }
           # TODO devel currently fails because a dependency can't be installed. Hopefully this gets fixed.
           # - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
-          - { os: ubuntu-22.04, r: "release" }
+          - { os: ubuntu-22.04, r: "4.2.2" }
           - { os: ubuntu-22.04, r: "oldrel-1" }
 
     env:
