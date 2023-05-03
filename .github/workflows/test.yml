@@ -59,7 +59,7 @@ jobs:
         run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
 
       - name: Giotto
-        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
+        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master', dependencies=TRUE)"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
