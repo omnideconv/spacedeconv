@@ -4,7 +4,7 @@
 #'
 #' @importFrom methods as is
 #' @importFrom SingleCellExperiment counts colData
-#' @importFrom SpatialExperiment colData<-
+#' @importFrom SpatialExperiment colData<- spatialCoords
 #' @importFrom utils askYesNo install.packages
 #' @importFrom remotes install_github
 #' @importFrom Seurat as.SingleCellExperiment
