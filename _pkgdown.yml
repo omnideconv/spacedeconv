@@ -99,3 +99,4 @@ reference:
       - checkENSEMBL
       - get_spot_coordinates
       - get_mostAbundantInCluster
+      - check_path_scaden

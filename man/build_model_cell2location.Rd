@@ -8,7 +8,7 @@ build_model_cell2location(
   single_cell_obj,
   epochs = 250,
   assay_sc = "counts",
-  sample = "sample_id",
+  batch_id_col = "sample_id",
   cell_type_col = "celltype_major",
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
@@ -23,7 +23,7 @@ build_model_cell2location(
 
 \item{assay_sc}{assay to extract}
 
-\item{sample}{sample column}
+\item{batch_id_col}{batch_id_col column}
 
 \item{cell_type_col}{column of single_cell_obj containing cell type labels}
 
