@@ -55,7 +55,9 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
       sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
       insig = "label_sig", pch.col = "black", tl.col = "black",
       title = "Colocalization ratio with significance",
-      mar = c(0, 0, 2, 0)
+      mar = c(0, 0, 2, 0),
+      cex.lab = 1.6,
+      cex.main = 1.5
     )
 
     # Avoidance ratio with p-value
@@ -66,7 +68,9 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
       sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
       insig = "label_sig", pch.col = "black", tl.col = "black",
       title = "Avoidance ratio with significance",
-      mar = c(0, 0, 2, 0)
+      mar = c(0, 0, 2, 0),
+      cex.lab = 1.6,
+      cex.main = 1.5
     )
     cat(paste0("\t", c("Significance Colocalization/Avoidance:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
 
@@ -90,7 +94,9 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
       sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
       insig = "label_sig", pch.col = "black", tl.col = "black",
       title = "Correlation with significance",
-      mar = c(0, 0, 2, 0)
+      mar = c(0, 0, 2, 0),
+      cex.lab = 1.6,
+      cex.main = 1.5
     )
     cat(paste0("\t", c("Significance correlation:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
 

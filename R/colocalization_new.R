@@ -88,20 +88,21 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   avoid_rand <- vector(length = niter)
 
   for (i in 1:niter) {
+
     # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
     A_rand <- sample(A)
     names(A_rand) <- names(A)
     B_rand <- sample(B)
     names(A_rand) <- names(B)
 
-    # randomize coordinates
+  # randomize coordinates
     # Shuffle barcode names together with spatial coordinates
-    shuffle_spe <- colData(spe)[sample(nrow(colData(spe))), c("in_tissue", "array_row", "array_col", "sample_id")]
+    shuffle_spe <- colData(spe)[sample(nrow(colData(spe))),c("in_tissue", "array_row", "array_col", "sample_id")]
     # Create new colData with shuffeled coordinates
     new_col <- cbind(shuffle_spe, colData(spe)[, -c(1:4)]) ## How to remove the first 4 columns by name?
     colData(spe) <- new_col
 
-    # Calculate presence matrix for randomized version
+  # Calculate presence matrix for randomized version
     presence_matrix_rand <- presence(spe, method)
 
 
@@ -111,7 +112,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     avoid_rand[i] <- loc_rand["avoid"]
   }
 
-  ################# add density graph and statistics: can we use make_baseplot? Increase title size and size of axis values!
+  ################# add density graph and statistics: can we use make_baseplot for the plot? Increase title size and size of axis values!
   if (density) {
     dens <- density(coloc_rand)
     p <- plot(dens,
