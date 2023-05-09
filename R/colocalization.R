@@ -263,13 +263,15 @@ coloc_avoid <- function(A, B) {
 #' @param spe SpatialExperiment
 #' @param cell_type celltype of interest
 #' @param method deconvolution method
+#' @param threshold cutoff for cell type presence
+#' @param title title of the plot
 #' @returns plot
 #' @export
-ripleys_k <- function(spe, cell_type, method) {
+ripleys_k <- function(spe, cell_type, method, threshold, title = cell_type) {
   coords <- spatialCoords(spe)
 
-  # a <- antimode_cutoff(spe = spe, method = method, )
-  p <- presence(spe = spe, method = method)
+  # a <- antimode_cutoff(spe = spe, method = method, ), if threshold = NULL
+  p <- presence(spe = spe, method = method, threshold = threshold)
   type <- as.factor(p[, cell_type])
 
   pp <- spatstat.geom::ppp(
@@ -279,7 +281,8 @@ ripleys_k <- function(spe, cell_type, method) {
     yrange = range(coords[, 1]),
     marks = type
   )
-  plot(spatstat.explore::Kcross(pp, i = "TRUE", correction = "Ripley"), main = cell_type)
+  plot(spatstat.explore::Kcross(pp, i = "TRUE", correction = "Ripley"), main = title, cex.axis = 1.3,
+       cex.lab = 1.3, cex.main = 1.8)
 }
 
 
