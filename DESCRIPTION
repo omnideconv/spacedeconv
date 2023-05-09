@@ -68,7 +68,8 @@ Suggests:
     scuttle,
     tidyr,
     xCell, 
-    MuSiC
+    MuSiC, 
+    markdown
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

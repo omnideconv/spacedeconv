@@ -124,14 +124,15 @@ required_packages <- list(
   "autogenes" = c("reticulate"),
   "bisque" = c("BisqueRNA"),
   "bseqsc" = c("shenorrlab/bseqsc"),
-  "cdseq" = c("PelzKo/CDSeq_R_Package"),
+  "cdseq" = c("omnideconv/CDSeq"),
   "cibersortx" = c("uuid"),
   "cpm" = c("amitfrish/scBio"),
-  "dwls" = c("PelzKo/dwls"),
-  "momf" = c("grst/MOMF"),
-  "music" = c("xuranw/MuSiC"),
+  "dwls" = c("omnideconv/DWLS"),
+  "momf" = c("omnideconv/MOMF"),
+  "music" = c("omnideconv/MuSiC"),
   "scaden" = c("reticulate"),
-  "scdc" = c("grst/SCDC")
+  "scdc" = c("omnideconv/SCDC"),
+  "bayesprism" = c("omnideconv/BayesPrism")
 )
 
 
@@ -333,4 +334,11 @@ annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name
 get_spot_coordinates <- function(df, spotid) {
   df <- as.data.frame(df)
   return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
+}
+
+
+#' check if scaden can be found in the path variable
+check_path_scaden <- function() {
+  path <- paste0(reticulate::miniconda_path(), "/envs/r-omnideconv/bin/") # scaden is in there
+  Sys.setenv(PATH = paste0(Sys.getenv("PATH"), ":", path))
 }

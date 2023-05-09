@@ -35,7 +35,7 @@ import matplotlib as mpl
 
 def py_build_model_cell2location(adata_ref, 
                                   epochs = 20, 
-                                  sample = "sample_id", 
+                                  batch_id_col = "sample_id", 
                                   cell_type_column = "celltype_major", 
                                   cell_count_cutoff=5, 
                                   cell_percentage_cutoff=0.03, 
@@ -70,7 +70,7 @@ def py_build_model_cell2location(adata_ref,
 
   cell2location.models.RegressionModel.setup_anndata(adata=adata_ref,
                           # 10X reaction / sample / batch
-                          batch_key=sample,
+                          batch_key=batch_id_col,
                           # cell type, covariate used for constructing signatures
                           labels_key=cell_type_column
                          )
@@ -105,7 +105,7 @@ def py_build_model_cell2location(adata_ref,
 def py_deconvolute_cell2location(sp_obj, 
                                  signature, 
                                  epochs= 30000, 
-                                 sample = "sample_id", 
+                                 batch_id_col = "sample_id", 
                                  n_cell=10, 
                                  alpha=20, 
                                  gpu = True, 
@@ -136,7 +136,7 @@ def py_deconvolute_cell2location(sp_obj,
   signature = signature.loc[intersect, :].copy()
   
   # prepare anndata for cell2location model
-  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key=sample)
+  cell2location.models.Cell2location.setup_anndata(adata=sp_obj, batch_key=batch_id_col)
   
   # create and train the model
   mod = cell2location.models.Cell2location(
