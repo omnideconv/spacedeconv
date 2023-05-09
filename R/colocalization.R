@@ -281,8 +281,10 @@ ripleys_k <- function(spe, cell_type, method, threshold, title = cell_type) {
     yrange = range(coords[, 1]),
     marks = type
   )
-  plot(spatstat.explore::Kcross(pp, i = "TRUE", correction = "Ripley"), main = title, cex.axis = 1.3,
-       cex.lab = 1.3, cex.main = 1.8)
+  plot(spatstat.explore::Kcross(pp, i = "TRUE", correction = "Ripley"),
+    main = title, cex.axis = 1.3,
+    cex.lab = 1.3, cex.main = 1.8
+  )
 }
 
 
