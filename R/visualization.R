@@ -691,7 +691,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           color = "red",
           linetype = "dashed",
           size = 1
-        ) +
+        )  +
         ggplot2::theme_classic() +
         # ggplot2::ylim(c(0, 1000)) +
         ggplot2::theme(
