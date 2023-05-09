@@ -4,7 +4,7 @@
 \alias{ripleys_k}
 \title{Ripley´s K celltype distribution}
 \usage{
-ripleys_k(spe, cell_type, method)
+ripleys_k(spe, cell_type, method, threshold, title = cell_type)
 }
 \arguments{
 \item{spe}{SpatialExperiment}
@@ -12,6 +12,10 @@ ripleys_k(spe, cell_type, method)
 \item{cell_type}{celltype of interest}
 
 \item{method}{deconvolution method}
+
+\item{threshold}{cutoff for cell type presence}
+
+\item{title}{title of the plot}
 }
 \value{
 plot
