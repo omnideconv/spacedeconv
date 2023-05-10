@@ -111,9 +111,9 @@ compute_decoupleR_activities <- function(spe, reference, method = "wsum", assay 
   df$condition <- NULL # remove spot
 
   # check if dorothea or progeny reference, for naming
-  if ("p_value" %in% names(reference)){
+  if ("p_value" %in% names(reference)) {
     decouple_tool <- "progeny"
-  } else if ("mor" %in% names(reference)){
+  } else if ("mor" %in% names(reference)) {
     decouple_tool <- "dorothea"
   } else {
     decouple_tool <- "decoupleR"
