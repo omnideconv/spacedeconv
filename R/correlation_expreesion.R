@@ -22,7 +22,10 @@ corr_expr <- function(sig, log = FALSE, cor_method = c("pearson", "spearman"), m
     sig.level = c(0.001, 0.01, 0.05), pch.cex = 0.9,
     insig = "label_sig", pch.col = "black", tl.col = "black",
     title = "Correlation expression with significance",
-    mar = c(0, 0, 2, 0)
+    mar = c(0, 0, 2, 0),
+    cl.cex = 1.2,
+    tl.cex = 1.2,
+    cex.main = 1.3,
   )
   cat(paste0("\t", c("Significance correlation:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
   if (matrix == TRUE) {
