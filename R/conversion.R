@@ -101,7 +101,41 @@ seurat_to_spatialexperiment <- function(seurat) {
 
 #' Convert SpatialExperiment to AnnData
 anndata_to_spatialexperiment <- function() {
+  # library(anndata)
+  # library(SpatialExperiment)
+  # library(DFrame)
 
+
+  ad <- anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
+
+  expr <- Matrix::t(Matrix::Matrix(ad$X, sparse = T))
+
+  sample_metadata <- ad$obs
+  gene_metadata <- ad$var
+
+  spatial_coords <- ad$obsm$spatial
+
+
+  spe <- SpatialExperiment::SpatialExperiment(
+    assays = list(counts = expr),
+    colData = sample_metadata,
+    rowData = gene_metadata,
+    spatialCoords = spatial_coords
+  )
+
+
+  # image
+  images <- names(ad$uns[["spatial"]])
+
+  tmp <- images[1]
+
+  ad$uns$spatial[[tmp]]
+
+  lowres <- ad$uns$spatial[[tmp]]$images$lowres
+
+  scalefactor <- ad$uns$spatial[[tmp]]$scalefactors$tissue_lowres_scalef
+
+  spot_dim <- ad$uns$spatial[[tmp]]$scalefactors$spot_diameter_fullres
 }
 
 

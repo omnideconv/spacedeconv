@@ -41,16 +41,3 @@ cell-type specific expression signature
 \description{
 Build_model calculates a reference signature from annotated scRNA-seq expression data
 }
-\examples{
-# more examples can be found in the documentation website
-data("single_cell_data_2")
-
-single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
-
-signature <- spacedeconv::build_model(
-  single_cell_data_2,
-  method = "spatialdwls",
-  cell_type_col = "celltype_major",
-  assay_sc = "cpm"
-)
-}
