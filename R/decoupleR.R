@@ -110,7 +110,16 @@ compute_decoupleR_activites <- function(spe, reference, method = "wsum", assay =
 
   df$condition <- NULL # remove spot
 
-  df <- attachToken(df, token = "decoupleR")
+  # check if dorothea or progeny reference, for naming
+  if ("p_value" %in% names(reference)){
+    decouple_tool <- "progeny"
+  } else if ("mor" %in% names(reference)){
+    decouple_tool <- "dorothea"
+  } else {
+    decouple_tool <- "decoupleR"
+  }
+
+  df <- attachToken(df, token = decouple_tool)
 
   colData(spe) <- cbind(colData(spe), df)
 
