@@ -118,7 +118,7 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/compare_signatures.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_decoupleR_activites.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_decoupleR_activities.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/compute_forbidden_genes.html</loc>
@@ -290,6 +290,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/spacedeconv_pkg.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/spacedeconvstartup.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/spatial_data_1.html</loc>
