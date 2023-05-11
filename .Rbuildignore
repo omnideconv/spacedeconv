@@ -7,3 +7,5 @@
 ^.github
 ^.prettierignore
 ^.pre-commit-config.yaml
+^doc$
+^Meta$
