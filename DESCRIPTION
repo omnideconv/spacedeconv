@@ -41,7 +41,8 @@ Imports:
     circlize, 
     cli, 
     patchwork, 
-    reticulate
+    reticulate, 
+    decoupleR
 Suggests: 
     spacexr,
     SPOTlight,
@@ -66,10 +67,12 @@ Suggests:
     multimode,
     corrplot,
     scuttle,
+    grid,
     tidyr,
     xCell, 
     MuSiC, 
-    markdown
+    markdown, 
+    EPIC
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

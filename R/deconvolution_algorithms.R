@@ -96,19 +96,6 @@ first_gen <- c(
 #' @returns cell-type specific expression signature
 #'
 #' @export
-#'
-#' @examples
-#' # more examples can be found in the documentation website
-#' data("single_cell_data_2")
-#'
-#' single_cell_data_2 <- spacedeconv::normalize(single_cell_data_2, method = "cpm")
-#'
-#' signature <- spacedeconv::build_model(
-#'   single_cell_data_2,
-#'   method = "spatialdwls",
-#'   cell_type_col = "celltype_major",
-#'   assay_sc = "cpm"
-#' )
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
   cli::cli_rule(left = "spacedeconv")
 

@@ -36,7 +36,7 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 #' @param statistic select a sub results in case methods produce mutliple ones
 #' @param ... further arguments passed to the methods
 #' @export
-compute_decoupleR_activites <- function(spe, reference, method = "wsum", assay = "counts", statistic = NULL, ...) {
+compute_decoupleR_activities <- function(spe, reference, method = "wsum", assay = "counts", statistic = NULL, ...) {
   requireNamespace("decoupleR")
   cli::cli_rule(left = "spacedeconv")
 
@@ -110,7 +110,16 @@ compute_decoupleR_activites <- function(spe, reference, method = "wsum", assay =
 
   df$condition <- NULL # remove spot
 
-  df <- attachToken(df, token = "decoupleR")
+  # check if dorothea or progeny reference, for naming
+  if ("p_value" %in% names(reference)) {
+    decouple_tool <- "progeny"
+  } else if ("mor" %in% names(reference)) {
+    decouple_tool <- "dorothea"
+  } else {
+    decouple_tool <- "decoupleR"
+  }
+
+  df <- attachToken(df, token = decouple_tool)
 
   colData(spe) <- cbind(colData(spe), df)
 

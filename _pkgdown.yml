@@ -74,7 +74,7 @@ reference:
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
-      - compute_decoupleR_activites
+      - compute_decoupleR_activities
   - title: internal
     contents:
       - spacedeconv_pkg
@@ -100,3 +100,4 @@ reference:
       - get_spot_coordinates
       - get_mostAbundantInCluster
       - check_path_scaden
+      - spacedeconvstartup

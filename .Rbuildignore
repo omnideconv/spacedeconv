@@ -2,9 +2,10 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^_pkgdown\.yml$
-^docs$
 ^pkgdown$
 ^codecov\.yml$
 ^.github
 ^.prettierignore
 ^.pre-commit-config.yaml
+^doc$
+^Meta$
