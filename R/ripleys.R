@@ -1,3 +1,12 @@
+#' Ripley´s K celltype distribution
+#'
+#' @param spe SpatialExperiment
+#' @param cell_type celltype of interest
+#' @param method deconvolution method
+#' @param threshold cutoff for cell type presence
+#' @param title title of the plot
+#' @returns ripley´s k statistics
+#' @export
 
 ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_type) {
   coords <- spatialCoords(spe)
@@ -17,6 +26,13 @@ ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_typ
   return(k)
 }
 
+
+#' Plot multiple Ripley´s K statistics
+#'
+#' @param k_functions a list with named ripley´s k statistics
+#' @returns combined ripley´s k plot
+#'
+#' @export
 
 plot_ripleys_k <- function(k_functions){
   # Get largest r and iso value
@@ -44,6 +60,11 @@ plot_ripleys_k <- function(k_functions){
 
 }
 
+#' Largest radius and isotropic value
+#'
+#' @param k_functions a list with named ripley´s k statistics
+#' @return largest radius and isotropic value in a list of k statistics
+#'
 
 get_largest_r_and_iso <- function(k_functions) {
   # Create reference values for r and iso
