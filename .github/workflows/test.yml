@@ -66,6 +66,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
           needs: check
+          error-on: '"error"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
