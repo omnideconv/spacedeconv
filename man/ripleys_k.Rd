@@ -4,7 +4,7 @@
 \alias{ripleys_k}
 \title{Ripley´s K celltype distribution}
 \usage{
-ripleys_k(spe, cell_type, method, threshold, title = cell_type)
+ripleys_k(spe, cell_type, method, threshold = NULL, title = cell_type)
 }
 \arguments{
 \item{spe}{SpatialExperiment}
