@@ -34,7 +34,7 @@ ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_typ
 #'
 #' @export
 
-plot_ripleys_k <- function(k_functions){
+plot_ripleys_k <- function(k_functions) {
   # Get largest r and iso value
   lims <- get_largest_r_and_iso(k_functions)
 
