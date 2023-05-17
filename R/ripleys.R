@@ -18,30 +18,29 @@ ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_typ
 }
 
 
-plot_ripleys_k <- function(k_functions){
+plot_ripleys_k <- function(k_functions) {
   # Get largest r and iso value
   lims <- get_largest_r_and_iso(k_functions)
 
   # Create an empty plot
-  plot(NULL, ylim = c(0, lims$largest_iso ), xlim = c(0,lims$largest_r), cex.lab=1.5, cex.axis=1.5, xlab = "r", ylab = "K(r)", main = "Combined Ripley´s K plot", cex.main = 1.5)
+  plot(NULL, ylim = c(0, lims$largest_iso), xlim = c(0, lims$largest_r), cex.lab = 1.5, cex.axis = 1.5, xlab = "r", ylab = "K(r)", main = "Combined Ripley´s K plot", cex.main = 1.5)
   title <- vector()
 
   # Plot the computed K functions
-  for (i in seq_along(k_functions)){
+  for (i in seq_along(k_functions)) {
     k <- k_functions[[i]]
     title[i] <- names(k_functions)[[i]]
 
     # Plot poisson distribution
-    lines(x= k$r, y = k$the, col = "Red", lty = "dotted")
+    lines(x = k$r, y = k$the, col = "Red", lty = "dotted")
 
     # Plot the K function
-    lines(x= k$r, y= k$iso, col = i, lwd = 1.3, lty = "solid")
+    lines(x = k$r, y = k$iso, col = i, lwd = 1.3, lty = "solid")
   }
-    # Add legend entry
-    legend_entry <- unlist(title)
-    legend("topleft", legend = legend_entry, col = seq_along(k_functions), lwd = 2, lty = "solid", title = "Isotropic", bty ="n", cex = 1.3)
-    legend("bottomright", legend = "Poisson", col = "Red", lty = "dotted", bty = "n", cex = 1.3)
-
+  # Add legend entry
+  legend_entry <- unlist(title)
+  legend("topleft", legend = legend_entry, col = seq_along(k_functions), lwd = 2, lty = "solid", title = "Isotropic", bty = "n", cex = 1.3)
+  legend("bottomright", legend = "Poisson", col = "Red", lty = "dotted", bty = "n", cex = 1.3)
 }
 
 
@@ -59,11 +58,10 @@ get_largest_r_and_iso <- function(k_functions) {
     if (max_r > largest_r) {
       largest_r <- max_r
     }
-    if(max_iso > largest_iso ){
+    if (max_iso > largest_iso) {
       largest_iso <- max_iso
     }
   }
 
   return(list(largest_r = largest_r, largest_iso = largest_iso))
 }
-
