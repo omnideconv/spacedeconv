@@ -13,7 +13,6 @@
 #' @importFrom ggridges geom_density_ridges geom_density_ridges_gradient
 #' @importFrom magrittr %>%
 #' @importFrom testit assert
-#' @importFrom multimode locmodes
 #' @importFrom ggpubr ggarrange
 #' @importFrom utils read.table
 #' @importFrom grDevices colorRampPalette
@@ -31,7 +30,7 @@
 #' @importFrom grDevices dev.off png
 #' @importFrom corrplot corrplot
 #' @importFrom psych corr.test
-#' @importFrom multimode locmode
+#' @importFrom multimode locmodes
 #' @importFrom methods hasArg is
 #' @importFrom decoupleR run_wsum run_aucell run_fgsea run_gsva run_mdt run_mlm run_ora run_udt run_ulm run_viper run_wmean
 #'
