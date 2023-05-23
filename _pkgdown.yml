@@ -97,6 +97,7 @@ reference:
       - smooth_celltype
       - save_plot
       - checkENSEMBL
+      - topfeat
       - get_spot_coordinates
       - get_cluster_features
       - check_path_scaden
