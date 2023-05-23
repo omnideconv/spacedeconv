@@ -40,7 +40,7 @@ deconv <- spacedeconv::deconvolute(
 Calculates colocalization and avoidance statistics of two celltypes of interest based on a random distribution. Internally, the presence or absence of the celltypes is determined based on the antimode of the celltype density distribution. Spotwise comparisons or groupwise comparisons with increasing distances are possible. Thereby, distance = 0 corresponds to a spotwise approach, distance = 1 considers hexagonal rings of spots around each spot and distance = 2 refers to two rings of spots around each spot. 
 
 ```{r}
-spacedeconv::cell_pair_localization(deconv, method = "epic", cell_type_1 = "epic_NK.cell", cell_type_2 = "epic_B.cell", density = TRUE, distance = 0)
+spacedeconv::cell_pair_localization(deconv, method = "epic", cell_type_A = "epic_NK.cell", cell_type_B = "epic_B.cell", density = TRUE, distance = 0)
 ```
 
 ## 2. 'riples_k()' 
