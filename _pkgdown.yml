@@ -71,6 +71,8 @@ reference:
       - ripleys_k
       - localization_heatmap
       - qualitycontrol
+      - corr_expr
+      - plot_ripleys_k
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
@@ -101,3 +103,4 @@ reference:
       - get_mostAbundantInCluster
       - check_path_scaden
       - spacedeconvstartup
+      - get_largest_r_and_iso
