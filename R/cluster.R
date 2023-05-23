@@ -15,12 +15,11 @@ cluster <- function(spe,
                     method = c("kmeans", "hclust"),
                     data = c("deconvolution", "expression", "pathway", "tf"),
                     dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-                    hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median","centroid"),
+                    hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median", "centroid"),
                     nclusters = 3,
                     spmethod = NULL,
-                    pca_dim = seq(1,30),
+                    pca_dim = seq(1, 30),
                     clusres = 0.5, ...) {
-
   cli::cli_rule(left = "spacedeconv")
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -31,48 +30,49 @@ cluster <- function(spe,
   cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
 
   if (data == "expression") {
-
-    #convert the spe to a seurat object
-    #create expression data matrix and rename the rows to normal gene names instead of the ENSEMBL
+    # convert the spe to a seurat object
+    # create expression data matrix and rename the rows to normal gene names instead of the ENSEMBL
     expression_data <- spe@assays@data@listData[["counts"]]
 
-    #create spatialcoordinates matrix
+    # create spatialcoordinates matrix
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
 
-    #create seurat object
-    seurat_obj <- SeuratObject::CreateSeuratObject(counts = expression_data,
-                                                   spatial = spatial_coordinates,
-                                                   project = "ST",
-                                                   assay = "Spatial")
+    # create seurat object
+    seurat_obj <- SeuratObject::CreateSeuratObject(
+      counts = expression_data,
+      spatial = spatial_coordinates,
+      project = "ST",
+      assay = "Spatial"
+    )
 
     # normalize spatial counts
     seurat_obj <- Seurat::SCTransform(seurat_obj,
-                                      assay = "Spatial",
-                                      verbose = FALSE)
+      assay = "Spatial",
+      verbose = FALSE
+    )
 
-    #run PCA and do the clustering
+    # run PCA and do the clustering
     seurat_obj <- Seurat::RunPCA(seurat_obj,
-                                 assay = "SCT",
-                                 verbose = FALSE)
+      assay = "SCT",
+      verbose = FALSE
+    )
     seurat_obj <- Seurat::FindNeighbors(seurat_obj,
-                                        reduction = "pca",
-                                        dims = pca_dim)
-    #clusres to define the resolution of the clustering
+      reduction = "pca",
+      dims = pca_dim
+    )
+    # clusres to define the resolution of the clustering
     for (i in clusres) {
-
       seurat_obj <- Seurat::FindClusters(seurat_obj,
-                                         verbose = FALSE,
-                                         resolution = i)
+        verbose = FALSE,
+        resolution = i
+      )
       cluster <- seurat_obj@meta.data[["seurat_clusters"]]
       names(cluster) <- rownames(seurat_obj@meta.data)
       cname <- paste0("cluster_expression_", i)
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
-
-  }
-  else if (data %in% c("deconvolution", "tf", "pathway")) {
-
+  } else if (data %in% c("deconvolution", "tf", "pathway")) {
     if (is.null(spmethod)) {
       stop("Parameter 'spmethod' is null or missing, but is required")
     }
@@ -85,29 +85,29 @@ cluster <- function(spe,
       stop("`dist_method` must be one of the following: correlation, euclidean, maximum, manhattan, canberra, binary or minkowski")
     }
 
-    if (!hclust_method %in% c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median","centroid")) {
+    if (!hclust_method %in% c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid")) {
       stop("`hclust_method` must be one of the following: ward.D, ward.D2, single, complete, average, mcquitty, median,centroid")
     }
 
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe,
-                                                                method = spmethod)]
-    #clusters
+      method = spmethod
+    )]
+    # clusters
     cli::cli_progress_bar("Clustering", total = length(nclusters))
     for (i in nclusters) {
       result <- switch(method,
-                       kmeans = {
-                         stats::kmeans(tmp, centers = i, ...)$cluster
-                       },
-                       hclust = {
-                         if (dist_method == "correlation"){
-                           d <- as.dist(1 - cor(t(as.matrix(tmp))))
-                         }
-                         else {
-                           d <- dist(tmp, method = dist_method)
-                         }
-                         hc <- stats::hclust(d, method = hclust_method)
-                         stats::cutree(hc, k = i)
-                       }
+        kmeans = {
+          stats::kmeans(tmp, centers = i, ...)$cluster
+        },
+        hclust = {
+          if (dist_method == "correlation") {
+            d <- as.dist(1 - cor(t(as.matrix(tmp))))
+          } else {
+            d <- dist(tmp, method = dist_method)
+          }
+          hc <- stats::hclust(d, method = hclust_method)
+          stats::cutree(hc, k = i)
+        }
       )
 
       cluster <- as.factor(result)
@@ -128,12 +128,11 @@ cluster <- function(spe,
 #' @param idx ids
 #' @param scores scores
 #' @param topn number of features
-topfeat <- function (idx, scores, topn) {
+topfeat <- function(idx, scores, topn) {
   if (length(idx) > 1) {
-    return(head(sort(apply(scores[idx,], 2, mean), decreasing = TRUE), topn))
-
+    return(head(sort(apply(scores[idx, ], 2, mean), decreasing = TRUE), topn))
   } else {
-    return(head(sort(scores[idx,], decreasing = TRUE), topn))
+    return(head(sort(scores[idx, ], decreasing = TRUE), topn))
   }
 }
 
@@ -149,7 +148,6 @@ get_cluster_features <- function(spe,
                                  topn = 3,
                                  spmethod = NULL,
                                  zscore = TRUE) {
-
   # Many checks are still missing
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -163,21 +161,20 @@ get_cluster_features <- function(spe,
 
   # Extract clusters
   clusters <- colData(spe)[, available_results(spe, method = "cluster"),
-                           drop = FALSE]
+    drop = FALSE
+  ]
   clusters <- clusters[, clusterid]
 
   # Scores
   if (spmethod == "expression") {
-
     if (is.element("cpm", assayNames(spe)) && !is.null(spe@assays@data$cpm)) {
       # if all good, extract the CPM values from the spe in a new expression_data variable
       scores <- t(as.matrix(spe@assays@data$cpm))
-
     } else {
       # normalize the spe object and then extract the cpm
       spe <- spacedeconv::normalize(spe, method = "cpm", assay = "counts")
 
-      #extract the cpm as above in the scores variable (take as.matrix to avoid sparse matrix)
+      # extract the cpm as above in the scores variable (take as.matrix to avoid sparse matrix)
       scores <- t(as.matrix(spe@assays@data$cpm))
     }
   } else {
@@ -187,7 +184,7 @@ get_cluster_features <- function(spe,
   # Transform to z-scores
   if (zscore) {
     scores <- as.matrix(scores)
-    scores <- t((t(scores) - apply(scores,2,mean)) / apply(scores,2,sd))
+    scores <- t((t(scores) - apply(scores, 2, mean)) / apply(scores, 2, sd))
   }
 
   # Compute most abundant cell types
@@ -195,5 +192,4 @@ get_cluster_features <- function(spe,
   topscores <- lapply(idx, topfeat, scores = scores, topn = topn)
 
   return(topscores)
-
 }
