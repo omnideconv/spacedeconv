@@ -98,6 +98,6 @@ reference:
       - save_plot
       - checkENSEMBL
       - get_spot_coordinates
-      - get_mostAbundantInCluster
+      - get_cluster_features
       - check_path_scaden
       - spacedeconvstartup
