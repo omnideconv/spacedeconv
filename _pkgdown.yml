@@ -49,7 +49,7 @@ reference:
       - aggregate_results
       - annotate_spots
       - cluster
-      - get_mostAbundantInCluster
+      - get_cluster_features
       - print_info
       - filter_sample_id
       - compare_signatures

@@ -9,7 +9,7 @@
 #' @param clusres clustering resolution to be used for the clustering of expression data - Seurat::FindClusters
 
 
-
+#' @export
 
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
@@ -142,7 +142,7 @@ topfeat <- function(idx, scores, topn) {
 #' @param topn number of top features to be shown
 #' @param spmethod spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used
 #' @param zscore = if the results should be z-score scaled or not
-
+#' @export
 get_cluster_features <- function(spe,
                                  clusterid = NULL,
                                  topn = 3,
