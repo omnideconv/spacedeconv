@@ -58,9 +58,11 @@ jobs:
       - name: harmony
         run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
 
-      - name: Giotto
-        # run: Rscript -e "pak::pkg_install('drieslab/Giotto@master', dependencies=TRUE)"
+      - name: Giotto deps
         run: Rscript -e "install.packages(c('lfa', 'SPARK', 'trendsceek'), repos='https://cran.rstudio.com/')"
+
+      - name: Giotto
+        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master', dependencies=TRUE)"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -71,3 +73,4 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          error-on: '"error"'
