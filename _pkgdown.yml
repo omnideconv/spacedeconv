@@ -104,3 +104,4 @@ reference:
       - check_path_scaden
       - spacedeconvstartup
       - get_largest_r_and_iso
+      - check_datatype

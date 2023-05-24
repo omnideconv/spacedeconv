@@ -19,6 +19,9 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts") 
     object <- convert_to_sce(object)
   }
 
+  # convert to sparse matrices
+  object <- check_datatype(object)
+
   # Filtering
   # min UMI Count per Observation
   nObservation <- sum(colSums(SummarizedExperiment::assay(object, assay)) < min_umi)
