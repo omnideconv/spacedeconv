@@ -102,3 +102,4 @@ reference:
       - get_cluster_features
       - check_path_scaden
       - spacedeconvstartup
+      - check_datatype

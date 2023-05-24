@@ -28,6 +28,9 @@ cluster <- function(spe,
   }
 
   cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
+  
+   # convert to sparse matrices
+  spe <- check_datatype(spe)
 
   if (data == "expression") {
     # convert the spe to a seurat object
@@ -36,6 +39,10 @@ cluster <- function(spe,
 
     # create spatialcoordinates matrix
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
+
+ 
+
+  cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
 
     # create seurat object
     seurat_obj <- SeuratObject::CreateSeuratObject(

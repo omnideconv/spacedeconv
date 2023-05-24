@@ -28,7 +28,7 @@ Imports:
     testit, 
     RColorBrewer, 
     S4Vectors, 
-    Matrix, 
+    Matrix (>= 1.5-4), 
     colorspace, 
     sf, 
     ggpubr, 
