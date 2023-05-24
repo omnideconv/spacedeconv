@@ -181,6 +181,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/getMatricesFromSCE.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_cluster_features.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_decoupleR_reference.html</loc>
   </url>
   <url>
@@ -188,9 +191,6 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_iniche.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/get_mostAbundantInCluster.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_polygon_geometry.html</loc>
@@ -314,5 +314,8 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/subsetSCE.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/topfeat.html</loc>
   </url>
 </urlset>
