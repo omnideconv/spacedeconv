@@ -2,33 +2,40 @@
 % Please edit documentation in R/cluster.R
 \name{cluster}
 \alias{cluster}
-\title{Cluster Spots}
+\title{Cluster spacedeconv results}
 \usage{
 cluster(
   spe,
-  method = "kmeans",
-  cluster = "expression",
-  assay = "counts",
+  method = c("kmeans", "hclust"),
+  data = c("deconvolution", "expression", "pathway", "tf"),
+  dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra",
+    "binary", "minkowski"),
+  hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty",
+    "median", "centroid"),
   nclusters = 3,
+  spmethod = NULL,
+  pca_dim = seq(1, 30),
+  clusres = 0.5,
   ...
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{method}{clustering method to be chosen between kmeans and hclust}
 
-\item{method}{clustering method, (kmeans)}
+\item{data}{what data to cluster}
 
-\item{cluster}{what to cluster, c("expression", "deconvolution")}
+\item{dist_method}{the distance measure to be used if method = hclust}
 
-\item{assay}{assay to use for clustering}
+\item{hclust_method}{the agglomeration method to be used if method = hclust}
 
-\item{nclusters}{number of clusters, for kmeans}
+\item{nclusters}{number of clusters}
 
-\item{...}{further arguments passed to the clustering functions}
-}
-\value{
-SpatialExperiment containing cluster information
+\item{spmethod}{spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used}
+
+\item{pca_dim}{PCA dimensions to be used for the clustering of expression data - Seurat::FindNeighbors}
+
+\item{clusres}{clustering resolution to be used for the clustering of expression data - Seurat::FindClusters}
 }
 \description{
-Cluster spots and add cluster annotation to the spatial object
+Cluster spacedeconv results
 }
