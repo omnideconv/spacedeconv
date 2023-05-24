@@ -4,11 +4,10 @@
 #' @param cell_type celltype of interest
 #' @param method deconvolution method
 #' @param threshold cutoff for cell type presence
-#' @param title title of the plot
 #' @returns ripley´s k statistics
 #' @export
 
-ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_type) {
+ripleys_k <- function(spe, cell_type, method, threshold = NULL) {
   coords <- spatialCoords(spe)
 
   # a <- antimode_cutoff(spe = spe, method = method, ), if threshold = NULL
@@ -27,14 +26,14 @@ ripleys_k <- function(spe, cell_type, method, threshold = NULL, title = cell_typ
 }
 
 
-#' Plot multiple Ripley´s K statistics
+#' Plot multiple Ripley´s K statistics using base plotting
 #'
 #' @param k_functions a list with named ripley´s k statistics
 #' @returns combined ripley´s k plot
 #'
 #' @export
 
-plot_ripleys_k <- function(k_functions) {
+plot_ripleys_k_base <- function(k_functions) {
   # Get largest r and iso value
   lims <- get_largest_r_and_iso(k_functions)
 
@@ -86,3 +85,49 @@ get_largest_r_and_iso <- function(k_functions) {
 
   return(list(largest_r = largest_r, largest_iso = largest_iso))
 }
+
+
+## Use ggplot2 for the plotting function
+
+#' @param k_functions a list with named ripley´s k statistics
+#' @returns combined ripley´s k plot
+#'
+#' @export
+
+plot_ripleys_k <- function(k_functions){
+  # Get largest r and iso value
+  lims <- get_largest_r_and_iso(k_functions)
+
+  # Convert the list to a data frame
+  k_data <- data.frame(
+    cell_type = names(k_functions),
+    k_stats = I(k_functions),
+    stringsAsFactors = FALSE
+  )
+
+  # Unnest the k_stats column
+  k_data_unnested <- k_data %>%
+    unnest(cols = k_stats)
+
+  # Create an empty plot
+  p <- ggplot() +
+    ylim(0, lims$largest_iso) +
+    xlim(0, lims$largest_r) +
+    labs(x = "r", y = "K(r)", title = "Combined Ripley's K plot") +
+    theme_minimal()
+
+  # Poisson distribution
+  p <- p + geom_line(data = k_data_unnested, aes(x = r, y = theo), color = "red", linetype = "dotted", size = 1)
+
+  # Isotropic distribution of each cell type
+  p <- p + geom_line(data = k_data_unnested, aes(x =r, y = iso, color = cell_type), size = 1)
+
+  # Adjust the size of the text in the plot
+  p <- p + theme(axis.text = element_text(size = 14), legend.text = element_text(size = 14), legend.title = element_text (size = 14), axis.title = element_text(size = 14), title = element_text(size = 14))
+
+  # Add label for poisson distribution
+  p <- p + labs(subtitle = " ... poisson distribution") + theme( plot.subtitle = element_text(color = "red", size = 12, hjust = 2))
+
+  return(p)
+}
+
