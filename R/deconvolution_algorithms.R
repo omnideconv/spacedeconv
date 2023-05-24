@@ -115,6 +115,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     method <- deconvolution_methods[[method]]
   }
 
+  # convert to sparse matrices
+  spatial_obj <- check_datatype(spatial_obj)
+
   # check if method available
   method <- tolower(method)
   check_and_install(method)
@@ -325,6 +328,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
   if (method %in% first_gen && checkENSEMBL(rownames(spatial_obj))) {
     stop("You requested a first-generation method and your spatial object contains ENSEBML IDs, please provide HGNC Symbols!")
   }
+
+  # convert to sparse matrices
+  spatial_obj <- check_datatype(spatial_obj)
 
   cli::cli_progress_done()
 

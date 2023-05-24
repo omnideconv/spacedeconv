@@ -19,6 +19,9 @@ normalize <- function(object, method = "cpm", assay = "counts") {
     stop("Rownames or colnames not set for expression object but need to be available!")
   }
 
+  # convert to sparse matrices
+  object <- check_datatype(object)
+
   cli::cli_progress_step(msg = paste0("Normalizing using ", method), msg_done = paste0("Finished normalization using ", method))
 
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
