@@ -101,3 +101,4 @@ reference:
       - get_mostAbundantInCluster
       - check_path_scaden
       - spacedeconvstartup
+      - check_datatype

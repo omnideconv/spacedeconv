@@ -30,6 +30,9 @@ cluster <- function(spe, method = "kmeans", cluster = "expression", assay = "cou
     stop("can only cluster expression or deconvolution")
   }
 
+  # convert to sparse matrices
+  spe <- check_datatype(spe)
+
   cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
 
   if (cluster == "expression") {

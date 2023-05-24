@@ -342,3 +342,17 @@ check_path_scaden <- function() {
   path <- paste0(reticulate::miniconda_path(), "/envs/r-omnideconv/bin/") # scaden is in there
   Sys.setenv(PATH = paste0(Sys.getenv("PATH"), ":", path))
 }
+
+#' Convert assays to sparse Matrices
+#'
+#' @param spe SpatialExperiment
+#' @param assay assay to use
+check_datatype <- function(spe, assay = "counts") {
+  if (!is(assay(spe, assay), "dgCMatrix")) {
+    assay(spe, assay) <- as(assay(spe, assay), "sparseMatrix")
+
+    cli::cli_alert_info("Converting data to sparse matrices")
+  }
+
+  return(spe)
+}

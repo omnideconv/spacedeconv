@@ -7,8 +7,8 @@
 compute_decoupleR_activities(
   spe,
   reference,
-  method = "wsum",
-  assay = "counts",
+  method = "wmean",
+  assay = "cpm",
   statistic = NULL,
   ...
 )
