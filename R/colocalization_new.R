@@ -111,7 +111,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     avoid_rand[i] <- loc_rand["avoid"]
   }
 
-  ################# add density graph and statistics: can we use make_baseplot for the plot? Increase title size and size of axis values!
+  #################  Increase title size and size of axis values!
   if (density) {
     dens <- density(coloc_rand)
     p <- plot(dens,
@@ -119,7 +119,10 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
         "Colocalization ",
         cell_type_A, "_", cell_type_B
       ),
-      xlim = range(coloc, coloc_rand)
+      xlim = range(coloc, coloc_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
     )
     abline(v = coloc, col = "red")
     plot(density(avoid_rand),
@@ -127,7 +130,10 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
         "Avoidance ",
         cell_type_A, "_", cell_type_B
       ),
-      xlim = range(avoid, avoid_rand)
+      xlim = range(avoid, avoid_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
     )
     abline(v = avoid, col = "red")
   }
