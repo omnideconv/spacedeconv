@@ -89,12 +89,13 @@ get_largest_r_and_iso <- function(k_functions) {
 
 ## Use ggplot2 for the plotting function
 
-#' @param k_functions a list with named ripley´s k statistics
-#' @returns combined ripley´s k plot
+#' Combined Ripley´s K statistics in one plot
 #'
+#' @param k_functions named list of k statistics from different SpatialExperiments
+#' @returns combined Ripley´s K results in one plot
 #' @export
 
-plot_ripleys_k <- function(k_functions) {
+plot_ripleys_k <- function(k_functions){
   # Get largest r and iso value
   lims <- get_largest_r_and_iso(k_functions)
 
@@ -117,16 +118,13 @@ plot_ripleys_k <- function(k_functions) {
     theme_minimal()
 
   # Poisson distribution
-  p <- p + geom_line(data = k_data_unnested, aes(x = r, y = theo), color = "red", linetype = "dotted", size = 1)
+  p <- p + geom_line(data = k_data_unnested, aes(x = r, y = theo), color = "black", linetype = "dotted", size = 1)
 
   # Isotropic distribution of each cell type
-  p <- p + geom_line(data = k_data_unnested, aes(x = r, y = iso, color = cell_type), size = 1)
+  p <- p + geom_line(data = k_data_unnested, aes(x =r, y = iso, color = cell_type), size = 1)
 
   # Adjust the size of the text in the plot
-  p <- p + theme(axis.text = element_text(size = 14), legend.text = element_text(size = 14), legend.title = element_text(size = 14), axis.title = element_text(size = 14), title = element_text(size = 14))
-
-  # Add label for poisson distribution
-  p <- p + labs(subtitle = " ... poisson distribution") + theme(plot.subtitle = element_text(color = "red", size = 12, hjust = 2))
+  p <- p + theme(axis.text = element_text(size = 14), legend.text = element_text(size = 14), legend.title = element_text (size = 14), axis.title = element_text(size = 14), title = element_text(size = 14))
 
   return(p)
 }
