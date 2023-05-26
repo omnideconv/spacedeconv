@@ -95,7 +95,7 @@ get_largest_r_and_iso <- function(k_functions) {
 #' @returns combined Ripley´s K results in one plot
 #' @export
 
-plot_ripleys_k <- function(k_functions){
+plot_ripleys_k <- function(k_functions) {
   # Get largest r and iso value
   lims <- get_largest_r_and_iso(k_functions)
 
@@ -121,10 +121,10 @@ plot_ripleys_k <- function(k_functions){
   p <- p + geom_line(data = k_data_unnested, aes(x = r, y = theo), color = "black", linetype = "dotted", size = 1)
 
   # Isotropic distribution of each cell type
-  p <- p + geom_line(data = k_data_unnested, aes(x =r, y = iso, color = cell_type), size = 1)
+  p <- p + geom_line(data = k_data_unnested, aes(x = r, y = iso, color = cell_type), size = 1)
 
   # Adjust the size of the text in the plot
-  p <- p + theme(axis.text = element_text(size = 14), legend.text = element_text(size = 14), legend.title = element_text (size = 14), axis.title = element_text(size = 14), title = element_text(size = 14))
+  p <- p + theme(axis.text = element_text(size = 14), legend.text = element_text(size = 14), legend.title = element_text(size = 14), axis.title = element_text(size = 14), title = element_text(size = 14))
 
   return(p)
 }
