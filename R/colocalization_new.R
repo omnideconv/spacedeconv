@@ -27,7 +27,7 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     presence_matrix <- presence(spe, method, threshold)
   }
 
-  # Calculate presence matrix based on antimode cutoff approach
+  # Calculate presence matrix based with an automatic method
   if (is.null(presence_matrix) & is.null(threshold)) {
     presence_matrix <- presence(spe, method)
   }
