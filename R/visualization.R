@@ -402,6 +402,10 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
   df <- cbind(df, comparison = comparison)
 
+  if (is.null(title)) {
+    title <- paste0("comparison", cell_type_1, "_", "cell_type_2")
+  }
+
   return(make_baseplot(
     spe = spe, df = df, to_plot = "comparison", palette = palette,
     transform_scale = transform_scale, sample_id = sample_id,
@@ -411,7 +415,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background,
     density = density, palette_type = palette_type, save = save, path = path,
-    png_width = png_width, png_height = png_height
+    png_width = png_width, png_height = png_height, title = title
   ))
 }
 
