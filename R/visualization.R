@@ -396,12 +396,23 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
-  comparison <- comparison - 1
-  comparison[is.infinite(comparison)] <- NA # ?
+  comparison <-df[, cell_type_1] - df[, cell_type_2]
+
+  cmean <- mean(comparison)
+  csd <- sd(comparison)
+
+  zcomparison <- (comparison-cmean)/csd
+  comparison <- zcomparison
+
+
+  # comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
+  # #comparison <- comparison - 1
+  # comparison <- log(comparison)
+  # comparison[is.infinite(comparison)] <- NA # ?
 
   df <- cbind(df, comparison = comparison)
 
+  # custom title
   if (is.null(title)) {
     title <- paste0("comparison", cell_type_1, "_", "cell_type_2")
   }
