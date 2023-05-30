@@ -37,8 +37,8 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   if (distance == 0) {
     # create presence/absence vector for both celltypes
 
-    A <- presence_matrix[, cell_type_A]
-    B <- presence_matrix[, cell_type_B]
+    cellA_pres <- presence_matrix[, cell_type_A]
+    cellB_pres <- presence_matrix[, cell_type_B]
   } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
@@ -72,11 +72,11 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     niche_A_B <- rbind(niche_pres_A, niche_pres_B)
     rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
     # create presence/absence vectors for cell type A and B
-    A <- niche_A_B[cell_type_A, ]
-    B <- niche_A_B[cell_type_B, ]
+    cellA_pres <- niche_A_B[cell_type_A, ]
+    cellB_pres <- niche_A_B[cell_type_B, ]
   }
   # Calculate real colocalization and avoidance events based on the presence/absence vectors for cell type A and B
-  loc_original <- coloc_avoid(A, B)
+  loc_original <- coloc_avoid(cellA_pres, cellB_pres)
   coloc <- loc_original["coloc"]
   avoid <- loc_original["avoid"]
 
@@ -89,11 +89,12 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
   for (i in 1:niter) {
     # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
-    A_rand <- sample(A)
-    names(A_rand) <- names(A)
-    B_rand <- sample(B)
-    names(A_rand) <- names(B)
+    A_rand <- sample(cellA_pres)
+    names(A_rand) <- names(cellA_pres)
+    B_rand <- sample(cellB_pres)
+    names(A_rand) <- names(cellB_pres)
 
+    # OR
     # randomize coordinates
     # Shuffle barcode names together with spatial coordinates
     shuffle_spe <- colData(spe)[sample(nrow(colData(spe))), c("in_tissue", "array_row", "array_col", "sample_id")]
