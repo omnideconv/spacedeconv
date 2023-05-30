@@ -5,20 +5,21 @@
 #' @param distance distance in spot diameter
 #' @param cell_type_A celltype 1
 #' @param cell_type_B celltype 2
-#' @param density logical
 #' @param niter permutations
 #' @param presence_matrix presence matrix if available
 #' @param threshold threshold for custom presence determination
-#' @returns statistics and graph
+#' @returns presence/absence for each cell type
 #' @export
-cell_pair_localization <- function(spe, method = NULL, distance = 0,
+
+cell_pair_presence <- function(spe, method = NULL, distance = 0,
                                    cell_type_A = NULL, cell_type_B = NULL,
-                                   density = FALSE, niter = 100, presence_matrix = NULL, threshold = NULL) {
+                                    niter = 100, presence_matrix = NULL, threshold = NULL) {
+
+  # Warning if cell types are not specified or presence and threshold are both provided
   if (is.null(cell_type_A) || is.null(cell_type_B)) {
     stop("cell type 1 or 2 missing or null")
   }
-
-  if (!(is.null(presence_matrix) & is.null(threshold))) {
+   else if (!(is.null(presence_matrix) & is.null(threshold))) {
     stop("only presence_marix or threshold can be supplied")
   }
 
@@ -31,14 +32,13 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
   if (is.null(presence_matrix) & is.null(threshold)) {
     presence_matrix <- presence(spe, method)
   }
-  # Set NA values to absent
-  presence_matrix[is.na(presence_matrix)] <- FALSE
 
   if (distance == 0) {
-    # create presence/absence vector for both celltypes
 
+    # create presence/absence vector for both celltypes
     cellA_pres <- presence_matrix[, cell_type_A]
     cellB_pres <- presence_matrix[, cell_type_B]
+
   } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
@@ -71,10 +71,29 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     # combine presence/absence values for both cell types
     niche_A_B <- rbind(niche_pres_A, niche_pres_B)
     rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
+
     # create presence/absence vectors for cell type A and B
     cellA_pres <- niche_A_B[cell_type_A, ]
     cellB_pres <- niche_A_B[cell_type_B, ]
   }
+
+  return(c(cellA_pres = cellA_pres, cellB_pres = cellB_pres))
+}
+
+
+#' Colocalization of two celltypes
+#'
+#' @param A presence of cell type
+#' @param B presence of cell type
+#'
+coloc_avoid <- function(A, B) {
+  coloc <- sum(A & B) / length(A)
+  avoidance <- sum(!A & B) / length(A)
+  return(c(coloc = coloc, avoid = avoidance))
+}
+
+
+
   # Calculate real colocalization and avoidance events based on the presence/absence vectors for cell type A and B
   loc_original <- coloc_avoid(cellA_pres, cellB_pres)
   coloc <- loc_original["coloc"]
@@ -93,14 +112,6 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
     names(A_rand) <- names(cellA_pres)
     B_rand <- sample(cellB_pres)
     names(A_rand) <- names(cellB_pres)
-
-    # OR
-    # randomize coordinates
-    # Shuffle barcode names together with spatial coordinates
-    shuffle_spe <- colData(spe)[sample(nrow(colData(spe))), c("in_tissue", "array_row", "array_col", "sample_id")]
-    # Create new colData with shuffeled coordinates
-    new_col <- cbind(shuffle_spe, colData(spe)[, -c(1:4)]) ## How to remove the first 4 columns by name?
-    colData(spe) <- new_col
 
     # Calculate presence matrix for randomized version
     presence_matrix_rand <- presence(spe, method)
