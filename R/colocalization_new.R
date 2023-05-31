@@ -76,13 +76,13 @@ cell_pair_presence <- function(spe, method = NULL, distance = 0,
   # Warning if cell types are not specified or presence and threshold are both provided
   if (is.null(cell_type_A) || is.null(cell_type_B)) {
     stop("cell type 1 or 2 missing or null")
-   } else if (!(is.null(presence_matrix) & is.null(threshold))) {
-   stop("only presence_marix or threshold can be supplied")
+  } else if (!(is.null(presence_matrix) & is.null(threshold))) {
+    stop("only presence_marix or threshold can be supplied")
   }
 
   # Presence matrix
   # Use custome presence matrix
-  if(!(is.null(presence_matrix))){
+  if (!(is.null(presence_matrix))) {
     presence_matrix <- presence_matrix
   }
   # Calculate custom presence matrix based on threshold
