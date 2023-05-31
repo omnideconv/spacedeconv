@@ -71,14 +71,12 @@ get_iniche <- function(df, coordinates, distance) {
 #' @export
 
 cell_pair_presence <- function(spe, method = NULL, distance = 0,
-                                   cell_type_A = NULL, cell_type_B = NULL,
-                                    niter = 100, presence_matrix = NULL, threshold = NULL) {
-
+                               cell_type_A = NULL, cell_type_B = NULL,
+                               niter = 100, presence_matrix = NULL, threshold = NULL) {
   # Warning if cell types are not specified or presence and threshold are both provided
   if (is.null(cell_type_A) || is.null(cell_type_B)) {
     stop("cell type 1 or 2 missing or null")
-  }
-   else if (!(is.null(presence_matrix) & is.null(threshold))) {
+  } else if (!(is.null(presence_matrix) & is.null(threshold))) {
     stop("only presence_marix or threshold can be supplied")
   }
 
@@ -93,11 +91,9 @@ cell_pair_presence <- function(spe, method = NULL, distance = 0,
   }
 
   if (distance == 0) {
-
     # create presence/absence vector for both celltypes
     A_pres <- presence_matrix[, cell_type_A]
     B_pres <- presence_matrix[, cell_type_B]
-
   } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
@@ -166,89 +162,87 @@ coloc_avoid <- function(A, B) {
 
 cell_pair_localization <- function(spe, method = NULL, distance = 0, density = FALSE,
                                    cell_type_A = NULL, cell_type_B = NULL,
-                                   niter = 100, presence_matrix = NULL, threshold = NULL){
+                                   niter = 100, presence_matrix = NULL, threshold = NULL) {
   # Calculate cell type presence
-   pair_pres <- cell_pair_presence(spe, method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
-                                   niter = niter, presence_matrix = presence_matrix, threshold = threshold)
-   cellA_pres <- pair_pres$A_pres
-   cellB_pres <- pair_pres$B_pres
+  pair_pres <- cell_pair_presence(spe,
+    method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
+    niter = niter, presence_matrix = presence_matrix, threshold = threshold
+  )
+  cellA_pres <- pair_pres$A_pres
+  cellB_pres <- pair_pres$B_pres
 
   # Calculate real colocalization and avoidance events
-   real_coloc <- coloc_avoid(cellA_pres, cellB_pres)["coloc"]
-   real_avoid <- coloc_avoid(cellA_pres, cellB_pres)["avoid"]
+  real_coloc <- coloc_avoid(cellA_pres, cellB_pres)["coloc"]
+  real_avoid <- coloc_avoid(cellA_pres, cellB_pres)["avoid"]
 
   # Randomize presence/absence vectors independently and determine colocalization/avoidance events
-   for (i in 1:niter) {
+  for (i in 1:niter) {
+    coloc_rand <- vector(length = niter)
+    avoid_rand <- vector(length = niter)
 
-     coloc_rand <- vector(length = niter)
-     avoid_rand <- vector(length = niter)
+    # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
+    A_rand <- sample(cellA_pres)
+    names(A_rand) <- names(cellA_pres)
+    B_rand <- sample(cellB_pres)
+    names(B_rand) <- names(cellB_pres)
 
-     # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
-     A_rand <- sample(cellA_pres)
-     names(A_rand) <- names(cellA_pres)
-     B_rand <- sample(cellB_pres)
-     names(B_rand) <- names(cellB_pres)
+    # Calculate colocalization/avoidance events of randomized version
 
-     # Calculate colocalization/avoidance events of randomized version
-
-     coloc_rand[i] <- coloc_avoid(A_rand, B_rand)["coloc"]
-     avoid_rand[i] <- coloc_avoid(A_rand, B_rand)["avoid"]
-   }
+    coloc_rand[i] <- coloc_avoid(A_rand, B_rand)["coloc"]
+    avoid_rand[i] <- coloc_avoid(A_rand, B_rand)["avoid"]
+  }
 
   # Colocalization/avoidance statistics
 
-     # p value
-     p_coloc <- sum(coloc_rand > real_coloc) / length(coloc_rand)
-     p_avoid <- sum(avoid_rand > real_avoid) / length(avoid_rand)
+  # p value
+  p_coloc <- sum(coloc_rand > real_coloc) / length(coloc_rand)
+  p_avoid <- sum(avoid_rand > real_avoid) / length(avoid_rand)
 
-     # mean
-     coloc_rand_mean <- mean(coloc_rand)
-     avoid_rand_mean <- mean(avoid_rand)
+  # mean
+  coloc_rand_mean <- mean(coloc_rand)
+  avoid_rand_mean <- mean(avoid_rand)
 
-     # ratio
-     coloc_ratio <- real_coloc / coloc_rand_mean
-     avoid_ratio <- real_avoid / avoid_rand_mean
+  # ratio
+  coloc_ratio <- real_coloc / coloc_rand_mean
+  avoid_ratio <- real_avoid / avoid_rand_mean
 
-     res <- c(
-       coloc = real_coloc,
-       coloc_p = p_coloc,
-       coloc_rand_mean = coloc_rand_mean,
-       coloc_ratio = coloc_ratio,
-       avoid = real_avoid,
-       avoid_p = p_avoid,
-       avoid_rand_mean = avoid_rand_mean,
-       avoid_ratio = avoid_ratio
-     )
+  res <- c(
+    coloc = real_coloc,
+    coloc_p = p_coloc,
+    coloc_rand_mean = coloc_rand_mean,
+    coloc_ratio = coloc_ratio,
+    avoid = real_avoid,
+    avoid_p = p_avoid,
+    avoid_rand_mean = avoid_rand_mean,
+    avoid_ratio = avoid_ratio
+  )
 
   # Density plot
-     if (density){
-       dens <- density(coloc_rand)
-       p <- plot(dens,
-                 main = paste0(
-                   "Colocalization ",
-                   cell_type_A, "_", cell_type_B
-                 ),
-                 xlim = range(real_coloc, coloc_rand),
-                 cex.axis = 1.3,
-                 cex.lab = 1.3,
-                 cex.main = 1.8
-       )
-       abline(v = real_coloc, col = "red")
-       plot(density(avoid_rand),
-            main = paste0(
-              "Avoidance ",
-              cell_type_A, "_", cell_type_B
-            ),
-            xlim = range(real_avoid, avoid_rand),
-            cex.axis = 1.3,
-            cex.lab = 1.3,
-            cex.main = 1.8
-       )
-       abline(v = real_avoid, col = "red")
-     }
+  if (density) {
+    dens <- density(coloc_rand)
+    p <- plot(dens,
+      main = paste0(
+        "Colocalization ",
+        cell_type_A, "_", cell_type_B
+      ),
+      xlim = range(real_coloc, coloc_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
+    )
+    abline(v = real_coloc, col = "red")
+    plot(density(avoid_rand),
+      main = paste0(
+        "Avoidance ",
+        cell_type_A, "_", cell_type_B
+      ),
+      xlim = range(real_avoid, avoid_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
+    )
+    abline(v = real_avoid, col = "red")
+  }
 
   return(res)
 }
-
-
-

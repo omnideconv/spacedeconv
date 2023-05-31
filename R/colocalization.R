@@ -142,7 +142,6 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
     A <- presence[, cell_type_1]
     B <- presence[, cell_type_2]
-
   } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
