@@ -142,10 +142,11 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0,
 
     A <- presence[, cell_type_1]
     B <- presence[, cell_type_2]
+
   } else if (distance > 0) {
     df <- as.data.frame(colData(spe))
 
-    # # for all spots get the spots in distance and calculate mean value
+    # for all spots get the spots in distance and calculate mean value
     iniche <- vector(mode = "list", length = niter)
     for (spot in rownames(df)) {
       iniche[spot] <- list(get_iniche(df, get_spot_coordinates(df, spot), distance = distance))
