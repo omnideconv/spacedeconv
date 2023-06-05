@@ -24,7 +24,6 @@ spe <- scuttle::addPerCellQC(spe)
 ```
 
 ```{r, echo = FALSE, results='asis'}
-
 # number of total spots
 ntotal_spots <- ncol(assay(spe, assay))
 

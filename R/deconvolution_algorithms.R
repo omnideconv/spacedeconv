@@ -1,4 +1,3 @@
-
 #' List of supported deconvolution methods
 #'
 #' @details Spatial Algorithms \cr
