@@ -318,14 +318,14 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
   avoid_ratio <- real_avoid / avoid_rand_mean
 
   res <- c(
-    coloc = real_coloc,
-    coloc_p = p_coloc,
-    coloc_rand_mean = coloc_rand_mean,
-    coloc_ratio = coloc_ratio,
-    avoid = real_avoid,
-    avoid_p = p_avoid,
-    avoid_rand_mean = avoid_rand_mean,
-    avoid_ratio = avoid_ratio
+    coloc_real = round(real_coloc, digits = 2),
+    coloc_p = round(p_coloc, digits = 2),
+    coloc_rand_mean = round(coloc_rand_mean, digits = 2),
+    coloc_ratio = round(coloc_ratio, digits = 2),
+    avoid_real = round(real_avoid, digits = 2),
+    avoid_p = round(p_avoid, digits = 2),
+    avoid_rand_mean = round(avoid_rand_mean, digits = 2),
+    avoid_ratio = round(avoid_ratio, digits = 2)
   )
 
   # Density plot
