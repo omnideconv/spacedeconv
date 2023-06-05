@@ -26,38 +26,6 @@ ripleys_k <- function(spe, cell_type, method, threshold = NULL) {
 }
 
 
-#' Plot multiple Ripley´s K statistics using base plotting
-#'
-#' @param k_functions a list with named ripley´s k statistics
-#' @returns combined ripley´s k plot
-#'
-#' @export
-
-plot_ripleys_k_base <- function(k_functions) {
-  # Get largest r and iso value
-  lims <- get_largest_r_and_iso(k_functions)
-
-  # Create an empty plot
-  plot(NULL, ylim = c(0, lims$largest_iso), xlim = c(0, lims$largest_r), cex.lab = 1.5, cex.axis = 1.5, xlab = "r", ylab = "K(r)", main = "Combined Ripley´s K plot", cex.main = 1.5)
-  title <- vector()
-
-  # Plot the computed K functions
-  for (i in seq_along(k_functions)) {
-    k <- k_functions[[i]]
-    title[i] <- names(k_functions)[[i]]
-
-    # Plot poisson distribution
-    lines(x = k$r, y = k$the, col = "Red", lty = "dotted")
-
-    # Plot the K function
-    lines(x = k$r, y = k$iso, col = i, lwd = 1.3, lty = "solid")
-  }
-  # Add legend entry
-  legend_entry <- unlist(title)
-  legend("topleft", legend = legend_entry, col = seq_along(k_functions), lwd = 2, lty = "solid", title = "Isotropic", bty = "n", cex = 1.3)
-  legend("bottomright", legend = "Poisson", col = "Red", lty = "dotted", bty = "n", cex = 1.3)
-}
-
 #' Largest radius and isotropic value
 #'
 #' @param k_functions a list with named ripley´s k statistics

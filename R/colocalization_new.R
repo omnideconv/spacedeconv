@@ -1,15 +1,131 @@
+#' Threshold a matrix
+#'
+#' @param spe A SpatialExperiment containing deconvolution scores for each spot and celltype
+#' @param method deconvolution method
+#' @param threshold if single value is provided the same threshold is used for all celltypes, it is also possible to provide a threshold vector
+#'
+#' @export
+presence <- function(spe, method, threshold = NULL) {
+  if (!method %in% deconvolution_methods) {
+    stop("method not supported")
+  }
+
+  # create matrix with scores for each spot and celltype
+  available <- available_results(spe)[startsWith(available_results(spe), method)]
+  m <- as.matrix(colData(spe)[, available])
+
+  # remove NAN????
+  m[is.nan(m)] <- 0
+
+  # calculate log(scores) +1
+  m <- log(m + 1)
+
+  # initialize matrix
+  m_row <- nrow(m)
+  m_col <- ncol(m)
+  m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
+                  nrow = m_row,
+                  ncol = m_col
+  )
+
+
+  if (is.null(threshold)) {
+    print("Calculating Antimode cutoffs")
+    threshold <- antimode_cutoff(spe, method)
+  }
+
+
+  # calculate threshold
+  if (length(threshold) == 1) {
+    m_out[m > threshold] <- TRUE
+  } else if (length(threshold) == m_col) {
+    for (i in 1:m_row) {
+      m_out[i, ] <- m[i, ] > threshold
+    }
+  } else {
+    stop(
+      "As threshold, you can enter either a number or a vector of length ",
+      m_col, "\n"
+    )
+  }
+
+  rownames(m_out) <- rownames(m)
+  colnames(m_out) <- colnames(m)
+
+  return(m_out)
+}
+
+#' Determine threshold for celltype presence based on antimode of celltype density
+#' @param spe A SpatialExperiment Object
+#' @param method deconvolution method
+#' @return A vector with celltype specific cutoff values
+
+
+antimode_cutoff <- function(spe, method) {
+  if (!method %in% deconvolution_methods) {
+    stop("method not supported")
+  }
+
+  # create matrix with scores for each spot and celltype
+  available <- available_results(spe)[startsWith(available_results(spe), method)]
+  spe <- colData(spe)[, available]
+  # threshold vector
+  cutoffs <- c()
+  # vector with all celltype names
+  celltypes <- colnames(spe)
+
+  for (celltype in celltypes) {
+    score <- spe[, celltype]
+
+    # Compute log-score
+
+    logscore <- log(score + 1)
+
+    # Exclude 1% most extreme values
+
+    interval <- quantile(logscore,
+                         p = c(0.005, 0.995), na.rm = T
+    )
+
+    ###### PARAMETER ohne PROZENT, default hardcoded 1%
+    logscore <- logscore[logscore > interval[1] & logscore < interval[2]]
+    ###### PARAMETER
+
+    # Estimate antimode
+
+    res <- locmodes(logscore,
+                    mod0 = 2,
+                    display = F
+    ) # You can put this to FALSE
+
+    cutoff <- res$locations[2]
+
+    # Add cutoff to threshold vector
+
+    cutoffs <- append(cutoffs, cutoff)
+  }
+
+  names(cutoffs) <- celltypes
+
+  return(cutoffs)
+}
+
+
+
 #' Calculate Iniche recursivley
 #' @param df dataframe with array_row and array_col
 #' @param coordinates vector of (row, columns)
 #' @param distance spot distance
 #'
 #' @returns list of spot ids of iniche
-get_iniche <- function(df, coordinates, distance) {
-  # typecheck df, coordinates and distance
 
+get_iniche <- function(df, coordinates, distance) {
+
+  # extract coordinates from the input
   row <- coordinates[1]
   column <- coordinates[2]
 
+  # check format of coordinate input
   if ((row %% 2) == 0 & (column %% 2) == 1) {
     print("row and col have to be both even or odd to access spots")
     stop()
@@ -20,6 +136,7 @@ get_iniche <- function(df, coordinates, distance) {
     }
   }
 
+  # Extract the center spot based on given coodinates
   center <- rownames(df[df$array_row == row & df$array_col == column, ])
 
 
@@ -27,9 +144,9 @@ get_iniche <- function(df, coordinates, distance) {
   if (distance == 0) {
     return(center)
   } else {
-    # else: get all surounding spots and call get_iniche for them
+    # else: get all surounding spots of the center spot and call get_iniche for them
 
-    # circle around the center
+    # circle around the center to get the iniche of the center spot
     s1 <- rownames(df[df$array_row == row & df$array_col == column - 2, ]) # spot below
     s2 <- rownames(df[df$array_row == row & df$array_col == column + 2, ]) # spot above
     s3 <- rownames(df[df$array_row == row - 1 & df$array_col == column + 1, ]) # spot upper right
@@ -39,23 +156,23 @@ get_iniche <- function(df, coordinates, distance) {
 
     iniche <- c(s1, s2, s3, s4, s5, s6, center)
 
-    tmp <- c(center)
+    spots_group <- c(center)
 
+    # Get iniche for every spot in the iniche of the center spot
     for (spot in iniche) {
-      # get coordinates
 
+      # get coordinates
       row <- df[spot, "array_row"]
       column <- df[spot, "array_col"]
 
-      tmp <- c(tmp, get_iniche(df, c(row, column), distance - 1))
+      spots_group <- c(spots_group, get_iniche(df, c(row, column), distance - 1))
     }
 
-    tmp <- unique(tmp)
+    spots_group <- unique(spots_group)
 
-    return(tmp)
+    return(spots_group)
   }
 }
-
 
 #' Calculate Colocalization
 #'
@@ -73,67 +190,68 @@ get_iniche <- function(df, coordinates, distance) {
 cell_pair_presence <- function(spe, method = NULL, distance = 0,
                                cell_type_A = NULL, cell_type_B = NULL,
                                niter = 100, presence_matrix = NULL, threshold = NULL) {
-  # Warning if cell types are not specified or presence and threshold are both provided
+
+  # Stop if cell types are not specified
   if (is.null(cell_type_A) || is.null(cell_type_B)) {
-    stop("cell type 1 or 2 missing or null")
-  } else if (!(is.null(presence_matrix) & is.null(threshold))) {
-    stop("only presence_marix or threshold can be supplied")
+    stop("'cell_type_A' type 'cell_type_B' must be provided")
   }
 
-  # Presence matrix
-  # Use custome presence matrix
-  if (!(is.null(presence_matrix))) {
-    presence_matrix <- presence_matrix
-  }
-  # Calculate custom presence matrix based on threshold
-  else if (!(is.null(threshold))) {
-    presence_matrix <- presence(spe, method, threshold)
-  }
-  # Calculate presence matrix with an automatic method
-  else if (is.null(presence_matrix) & is.null(threshold)) {
-    presence_matrix <- presence(spe, method)
+  # IF presence_matrix is provided, do nothing
+  # IF not provided, presence must be computed
+  if (is.null(presence_matrix)) {
+
+    if (is.null(method)) {
+      stop("If 'presence_matrix' is not provided, 'method' needs to be specified")
+
+    } else {
+
+      message("Calculating presence matrix...")
+      presence_matrix <- presence(spe, method, threshold)
+
+    }
+
+  } else {
+    message("Using provided presence matrix...")
   }
 
-  if (distance == 0) {
+  if (distance < 0) {
+    stop("'distance' must be non-negative")
+
+  } else if (distance == 0) {
     # create presence/absence vector for both celltypes
     A_pres <- presence_matrix[, cell_type_A]
     B_pres <- presence_matrix[, cell_type_B]
-  } else if (distance > 0) {
+
+  } else {
+
+    # FF: Suggestion, don't use `presence()` again (especially because you are
+    # not even passing the parameters), but compute the niche coordinates
+    # and use them to derive niche presence from `presence_matrix` computed above
+
     df <- as.data.frame(colData(spe))
 
     # for all spots get the spots in distance and calculate mean value
-    iniche <- vector(mode = "list", length = niter)
-    for (spot in rownames(df)) {
-      iniche[spot] <- list(get_iniche(df, get_spot_coordinates(df, spot), distance = distance))
+    iniche <- vector(mode = "list", length = length(rownames(df)))
+    for (i in 1:length(iniche)) {
+      iniche[[i]] <- get_iniche(df, get_spot_coordinates(df, rownames(df)[i]), distance = distance)
     }
 
     # determine presence/absence of celltypes in the iniches
-    niche_pres_A <- rep(FALSE, length(iniche))
-    niche_pres_B <- rep(FALSE, length(iniche))
+    A_pres <- rep(FALSE, length(iniche))
+    B_pres <- rep(FALSE, length(iniche))
 
-    for (i in length(iniche)) {
-      # extract spots of iniche
-      bar <- iniche[[i]]
-      # calculate presence values for cell type A and B in the iniche
-      uni <- presence[bar, cell_type_A]
-      dui <- presence[bar, cell_type_B]
+    for (i in 1:length(iniche)) {
+      # extract presence values for iniche
+      pres_niche <- presence_matrix[iniche[[i]],]
       # set whole iniche value to present, if at least one spot contains cell type A
-      if (sum(uni) >= 1) {
-        niche_pres_A[i] <- TRUE
+      if(sum(pres_niche[, cell_type_A]) >= 1){
+        A_pres[i] <- TRUE
       }
       # set whole iniche value to present, if at least one spot contains cell type B
-      if (sum(dui) >= 1) {
-        niche_pres_B[i] <- TRUE
+      if(sum(pres_niche[, cell_type_B]) >= 1){
+        B_pres[i] <- TRUE
       }
     }
-
-    # combine presence/absence values for both cell types
-    niche_A_B <- rbind(niche_pres_A, niche_pres_B)
-    rownames(niche_A_B) <- c(cell_type_A, cell_type_B)
-
-    # create presence/absence vectors for cell type A and B
-    A_pres <- niche_A_B[cell_type_A, ]
-    B_pres <- niche_A_B[cell_type_B, ]
   }
 
   return(list(A_pres = A_pres, B_pres = B_pres))
@@ -146,9 +264,10 @@ cell_pair_presence <- function(spe, method = NULL, distance = 0,
 #' @param B presence of cell type
 #'
 coloc_avoid <- function(A, B) {
-  coloc <- sum(A & B) / length(A)
-  avoidance <- sum(!A & B) / length(A)
-  return(c(coloc = coloc, avoid = avoidance))
+  ABsum <- A + B
+  coloc <- sum(ABsum == 2) / length(ABsum)
+  avoid <- sum(ABsum == 1) / length(ABsum)
+  return(c(coloc = coloc, avoid = avoid))
 }
 
 #' Cell pair colocalization or avoidance
@@ -161,16 +280,17 @@ coloc_avoid <- function(A, B) {
 #' @param niter permutations
 #' @param presence_matrix presence matrix if available
 #' @param threshold threshold for custom presence determination
+#' @param title adjust title of density plot
 #' @returns presence/absence for each cell type
 #' @export
 
 cell_pair_localization <- function(spe, method = NULL, distance = 0, density = FALSE,
                                    cell_type_A = NULL, cell_type_B = NULL,
-                                   niter = 100, presence_matrix = NULL, threshold = NULL) {
+                                   niter = 100, presence_matrix = NULL, threshold = NULL, title = NULL) {
   # Calculate cell type presence
   pair_pres <- cell_pair_presence(spe,
-    method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
-    niter = niter, presence_matrix = presence_matrix, threshold = threshold
+                                  method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
+                                  niter = niter, presence_matrix = presence_matrix, threshold = threshold
   )
   cellA_pres <- pair_pres$A_pres
   cellB_pres <- pair_pres$B_pres
@@ -180,9 +300,9 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
   real_avoid <- coloc_avoid(cellA_pres, cellB_pres)["avoid"]
 
   # Randomize presence/absence vectors independently and determine colocalization/avoidance events
+  coloc_rand <- vector(length = niter)
+  avoid_rand <- vector(length = niter)
   for (i in 1:niter) {
-    coloc_rand <- vector(length = niter)
-    avoid_rand <- vector(length = niter)
 
     # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
     A_rand <- sample(cellA_pres)
@@ -191,7 +311,6 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
     names(B_rand) <- names(cellB_pres)
 
     # Calculate colocalization/avoidance events of randomized version
-
     coloc_rand[i] <- coloc_avoid(A_rand, B_rand)["coloc"]
     avoid_rand[i] <- coloc_avoid(A_rand, B_rand)["avoid"]
   }
@@ -223,30 +342,41 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
 
   # Density plot
   if (density) {
+    # Title
+    if(is.null(title)){
+      title_coloc <- paste0(
+        "Colocalization ",
+        cell_type_A, "_", cell_type_B)
+      title_avoid <-  paste0(
+        "Avoidance ",
+        cell_type_A, "_", cell_type_B)
+    }
+    else if(!(is.null(title))){
+      title_coloc <- paste0("Colocalization", "_", title)
+      title_avoid <-  paste0("Avoidance", "_", title)
+    }
+    # Colocalization plot
     dens <- density(coloc_rand)
     p <- plot(dens,
-      main = paste0(
-        "Colocalization ",
-        cell_type_A, "_", cell_type_B
-      ),
-      xlim = range(real_coloc, coloc_rand),
-      cex.axis = 1.3,
-      cex.lab = 1.3,
-      cex.main = 1.8
+              main = title_coloc,
+              xlim = range(real_coloc, coloc_rand),
+              cex.axis = 1.3,
+              cex.lab = 1.3,
+              cex.main = 1.8
     )
     abline(v = real_coloc, col = "red")
+
+    # Avoidance plot
     plot(density(avoid_rand),
-      main = paste0(
-        "Avoidance ",
-        cell_type_A, "_", cell_type_B
-      ),
-      xlim = range(real_avoid, avoid_rand),
-      cex.axis = 1.3,
-      cex.lab = 1.3,
-      cex.main = 1.8
+         main = title_avoid,
+         xlim = range(real_avoid, avoid_rand),
+         cex.axis = 1.3,
+         cex.lab = 1.3,
+         cex.main = 1.8
     )
     abline(v = real_avoid, col = "red")
   }
 
   return(res)
 }
+
