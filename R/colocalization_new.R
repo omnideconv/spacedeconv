@@ -24,8 +24,8 @@ presence <- function(spe, method, threshold = NULL) {
   m_row <- nrow(m)
   m_col <- ncol(m)
   m_out <- matrix(FALSE, # Set all to absent (i.e. 0)
-                  nrow = m_row,
-                  ncol = m_col
+    nrow = m_row,
+    ncol = m_col
   )
 
 
@@ -84,7 +84,7 @@ antimode_cutoff <- function(spe, method) {
     # Exclude 1% most extreme values
 
     interval <- quantile(logscore,
-                         p = c(0.005, 0.995), na.rm = T
+      p = c(0.005, 0.995), na.rm = T
     )
 
     ###### PARAMETER ohne PROZENT, default hardcoded 1%
@@ -94,8 +94,8 @@ antimode_cutoff <- function(spe, method) {
     # Estimate antimode
 
     res <- locmodes(logscore,
-                    mod0 = 2,
-                    display = F
+      mod0 = 2,
+      display = F
     ) # You can put this to FALSE
 
     cutoff <- res$locations[2]
@@ -120,7 +120,6 @@ antimode_cutoff <- function(spe, method) {
 #' @returns list of spot ids of iniche
 
 get_iniche <- function(df, coordinates, distance) {
-
   # extract coordinates from the input
   row <- coordinates[1]
   column <- coordinates[2]
@@ -160,7 +159,6 @@ get_iniche <- function(df, coordinates, distance) {
 
     # Get iniche for every spot in the iniche of the center spot
     for (spot in iniche) {
-
       # get coordinates
       row <- df[spot, "array_row"]
       column <- df[spot, "array_col"]
@@ -190,7 +188,6 @@ get_iniche <- function(df, coordinates, distance) {
 cell_pair_presence <- function(spe, method = NULL, distance = 0,
                                cell_type_A = NULL, cell_type_B = NULL,
                                niter = 100, presence_matrix = NULL, threshold = NULL) {
-
   # Stop if cell types are not specified
   if (is.null(cell_type_A) || is.null(cell_type_B)) {
     stop("'cell_type_A' type 'cell_type_B' must be provided")
@@ -199,31 +196,23 @@ cell_pair_presence <- function(spe, method = NULL, distance = 0,
   # IF presence_matrix is provided, do nothing
   # IF not provided, presence must be computed
   if (is.null(presence_matrix)) {
-
     if (is.null(method)) {
       stop("If 'presence_matrix' is not provided, 'method' needs to be specified")
-
     } else {
-
       message("Calculating presence matrix...")
       presence_matrix <- presence(spe, method, threshold)
-
     }
-
   } else {
     message("Using provided presence matrix...")
   }
 
   if (distance < 0) {
     stop("'distance' must be non-negative")
-
   } else if (distance == 0) {
     # create presence/absence vector for both celltypes
     A_pres <- presence_matrix[, cell_type_A]
     B_pres <- presence_matrix[, cell_type_B]
-
   } else {
-
     # FF: Suggestion, don't use `presence()` again (especially because you are
     # not even passing the parameters), but compute the niche coordinates
     # and use them to derive niche presence from `presence_matrix` computed above
@@ -242,13 +231,13 @@ cell_pair_presence <- function(spe, method = NULL, distance = 0,
 
     for (i in 1:length(iniche)) {
       # extract presence values for iniche
-      pres_niche <- presence_matrix[iniche[[i]],]
+      pres_niche <- presence_matrix[iniche[[i]], ]
       # set whole iniche value to present, if at least one spot contains cell type A
-      if(sum(pres_niche[, cell_type_A]) >= 1){
+      if (sum(pres_niche[, cell_type_A]) >= 1) {
         A_pres[i] <- TRUE
       }
       # set whole iniche value to present, if at least one spot contains cell type B
-      if(sum(pres_niche[, cell_type_B]) >= 1){
+      if (sum(pres_niche[, cell_type_B]) >= 1) {
         B_pres[i] <- TRUE
       }
     }
@@ -289,8 +278,8 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
                                    niter = 100, presence_matrix = NULL, threshold = NULL, title = NULL) {
   # Calculate cell type presence
   pair_pres <- cell_pair_presence(spe,
-                                  method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
-                                  niter = niter, presence_matrix = presence_matrix, threshold = threshold
+    method = method, distance = distance, cell_type_A = cell_type_A, cell_type_B = cell_type_B,
+    niter = niter, presence_matrix = presence_matrix, threshold = threshold
   )
   cellA_pres <- pair_pres$A_pres
   cellB_pres <- pair_pres$B_pres
@@ -303,7 +292,6 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
   coloc_rand <- vector(length = niter)
   avoid_rand <- vector(length = niter)
   for (i in 1:niter) {
-
     # shuffle coordinates of presence/absence vectors --> names need to be in the same order for coloc_avoid function
     A_rand <- sample(cellA_pres)
     names(A_rand) <- names(cellA_pres)
@@ -343,40 +331,40 @@ cell_pair_localization <- function(spe, method = NULL, distance = 0, density = F
   # Density plot
   if (density) {
     # Title
-    if(is.null(title)){
+    if (is.null(title)) {
       title_coloc <- paste0(
         "Colocalization ",
-        cell_type_A, "_", cell_type_B)
-      title_avoid <-  paste0(
+        cell_type_A, "_", cell_type_B
+      )
+      title_avoid <- paste0(
         "Avoidance ",
-        cell_type_A, "_", cell_type_B)
-    }
-    else if(!(is.null(title))){
+        cell_type_A, "_", cell_type_B
+      )
+    } else if (!(is.null(title))) {
       title_coloc <- paste0("Colocalization", "_", title)
-      title_avoid <-  paste0("Avoidance", "_", title)
+      title_avoid <- paste0("Avoidance", "_", title)
     }
     # Colocalization plot
     dens <- density(coloc_rand)
     p <- plot(dens,
-              main = title_coloc,
-              xlim = range(real_coloc, coloc_rand),
-              cex.axis = 1.3,
-              cex.lab = 1.3,
-              cex.main = 1.8
+      main = title_coloc,
+      xlim = range(real_coloc, coloc_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
     )
     abline(v = real_coloc, col = "red")
 
     # Avoidance plot
     plot(density(avoid_rand),
-         main = title_avoid,
-         xlim = range(real_avoid, avoid_rand),
-         cex.axis = 1.3,
-         cex.lab = 1.3,
-         cex.main = 1.8
+      main = title_avoid,
+      xlim = range(real_avoid, avoid_rand),
+      cex.axis = 1.3,
+      cex.lab = 1.3,
+      cex.main = 1.8
     )
     abline(v = real_avoid, col = "red")
   }
 
   return(res)
 }
-
