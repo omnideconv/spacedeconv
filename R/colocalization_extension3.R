@@ -33,8 +33,8 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     colnames(ratio_avoid) <- colnames(m)
     rownames(ratio_avoid) <- colnames(m)
 
-    if(is.null(presence_matrix)){
-    presence_matrix <- presence(spe, method)
+    if (is.null(presence_matrix)) {
+      presence_matrix <- presence(spe, method)
     }
 
     # Calculate pairwise p-values and ratios
