@@ -13,7 +13,7 @@
 #'
 #' @export
 
-localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE) {
+localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, localization = TRUE, matrix = FALSE, presence_matrix = NULL) {
   # create matrix with scores for each spot and celltype
   available <- available_results(spe)[startsWith(available_results(spe), method)]
   m <- as.matrix(colData(spe)[, available])
@@ -33,13 +33,14 @@ localization_heatmap <- function(spe, method, distance = 0, correlation = TRUE, 
     colnames(ratio_avoid) <- colnames(m)
     rownames(ratio_avoid) <- colnames(m)
 
-
-    presence <- presence(spe, method)
+    if(is.null(presence_matrix)){
+    presence_matrix <- presence(spe, method)
+    }
 
     # Calculate pairwise p-values and ratios
     for (i in 1:length(rownames(p_coloc))) {
       for (j in 1:length(colnames(p_coloc))) {
-        loco <- cell_pair_localization(spe, method = method, cell_type_1 = rownames(p_coloc)[i], cell_type_2 = rownames(p_coloc)[j], density = F, distance = distance, presence = presence)
+        loco <- cell_pair_localization(spe, method = method, cell_type_A = rownames(p_coloc)[i], cell_type_B = rownames(p_coloc)[j], density = F, distance = distance, presence_matrix = presence_matrix)
         p_coloc[i, j] <- loco["coloc_p"]
         p_avoid[i, j] <- loco["avoid_p"]
         ratio_coloc[i, j] <- loco["coloc_ratio.coloc"]
