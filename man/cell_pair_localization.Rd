@@ -8,24 +8,26 @@ cell_pair_localization(
   spe,
   method = NULL,
   distance = 0,
+  density = FALSE,
   cell_type_A = NULL,
   cell_type_B = NULL,
-  density = FALSE,
   niter = 100,
   presence_matrix = NULL,
-  threshold = NULL
+  threshold = NULL,
+  title = NULL
 )
 
 cell_pair_localization(
   spe,
   method = NULL,
   distance = 0,
+  density = FALSE,
   cell_type_A = NULL,
   cell_type_B = NULL,
-  density = FALSE,
   niter = 100,
   presence_matrix = NULL,
-  threshold = NULL
+  threshold = NULL,
+  title = NULL
 )
 }
 \arguments{
@@ -35,17 +37,19 @@ cell_pair_localization(
 
 \item{distance}{distance in spot diameter}
 
+\item{density}{density plot}
+
 \item{cell_type_A}{celltype 1}
 
 \item{cell_type_B}{celltype 2}
-
-\item{density}{logical}
 
 \item{niter}{permutations}
 
 \item{presence_matrix}{presence matrix if available}
 
 \item{threshold}{threshold for custom presence determination}
+
+\item{title}{adjust title of density plot}
 
 \item{cell_type_1}{celltype 1}
 
@@ -56,10 +60,10 @@ cell_pair_localization(
 \value{
 statistics and graph
 
-statistics and graph
+presence/absence for each cell type
 }
 \description{
 Calculate Colocalization
 
-Calculate Colocalization
+Cell pair colocalization or avoidance
 }
