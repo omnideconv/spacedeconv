@@ -116,7 +116,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
   }
 
   # convert to sparse matrices
-  if (!is.null(spatial_obj)){
+  if (!is.null(spatial_obj)) {
     spatial_obj <- check_datatype(spatial_obj)
   }
 
@@ -336,7 +336,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
   # convert to sparse matrices
   spatial_obj <- check_datatype(spatial_obj)
 
-  if(!is.null(single_cell_obj)){
+  if (!is.null(single_cell_obj)) {
     single_cell_obj <- check_datatype(single_cell_obj)
   }
 
