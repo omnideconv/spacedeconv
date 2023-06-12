@@ -29,7 +29,8 @@ plot_comparison(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  show_legend = TRUE
 )
 }
 \arguments{
@@ -82,6 +83,8 @@ plot_comparison(
 \item{png_width}{when saving, png width in px}
 
 \item{png_height}{when saving, png height in px}
+
+\item{show_legend}{whether to show the legend}
 }
 \value{
 plot of a celltypes presence/absence using a threshold
