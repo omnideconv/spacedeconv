@@ -691,7 +691,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     ggplot2::labs(title = legend_title, fill = element_blank())
 
   # show legend?
-  if (!show_legend){
+  if (!show_legend) {
     p <- p + theme(legend.position = "none")
   }
 
