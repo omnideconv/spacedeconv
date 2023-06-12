@@ -654,7 +654,11 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     if (is.logical(tmp[, to_plot])) {
       sf_poly <- sf_poly[tmp[, to_plot], ]
     }
+
+    # update df accordingly
+    df <- df[rownames(sf_poly), ]
   }
+
 
   # extract image and dimensions
   img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
@@ -687,7 +691,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     ggplot2::labs(title = legend_title, fill = element_blank())
 
   # show legend?
-
   if (!show_legend){
     p <- p + theme(legend.position = "none")
   }
