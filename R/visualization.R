@@ -62,7 +62,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 
 
   # if a method is passed then make grid, otherwise, only one
-  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type == "decoupleR" || cell_type == "cluster") {
+  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type == "progeny" || cell_type == "dorothea" || cell_type == "cluster") {
     plot <- make_baseplot(spe, df,
       palette = palette,
       to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
