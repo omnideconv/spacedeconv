@@ -26,7 +26,8 @@ plot_most_abundant(
   path = NULL,
   png_width = 1500,
   png_height = 750,
-  title = NULL
+  title = NULL,
+  show_legend = TRUE
 )
 }
 \arguments{
@@ -73,6 +74,8 @@ plot_most_abundant(
 \item{png_height}{when saving, png height in px}
 
 \item{title}{set a custom title}
+
+\item{show_legend}{whether to show the legend}
 }
 \value{
 plot of cell type fractions
