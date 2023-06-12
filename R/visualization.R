@@ -52,7 +52,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type == "c2l" && !cell_type == "decoupleR" && !cell_type == "cluster") {
+  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type == "c2l" && !cell_type == "progeny" && !cell_type == "dorothea" && !cell_type == "cluster") {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
