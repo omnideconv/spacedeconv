@@ -406,7 +406,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
 
   comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
-  #comparison <- comparison - 1
+  # comparison <- comparison - 1
   comparison <- log(comparison)
   comparison[is.infinite(comparison)] <- NA # ?
 
