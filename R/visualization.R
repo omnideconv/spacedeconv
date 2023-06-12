@@ -396,11 +396,26 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
+  # comparison <-df[, cell_type_1] - df[, cell_type_2]
+  #
+  # cmean <- mean(comparison)
+  # csd <- sd(comparison)
+  #
+  # zcomparison <- (comparison-cmean)/csd
+  # comparison <- zcomparison
+
+
   comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
-  comparison <- comparison - 1
+  # comparison <- comparison - 1
+  comparison <- log(comparison)
   comparison[is.infinite(comparison)] <- NA # ?
 
   df <- cbind(df, comparison = comparison)
+
+  # custom title
+  if (is.null(title)) {
+    title <- paste0("comparison", cell_type_1, "_", "cell_type_2")
+  }
 
   return(make_baseplot(
     spe = spe, df = df, to_plot = "comparison", palette = palette,
@@ -411,7 +426,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background,
     density = density, palette_type = palette_type, save = save, path = path,
-    png_width = png_width, png_height = png_height
+    png_width = png_width, png_height = png_height, title = title
   ))
 }
 
