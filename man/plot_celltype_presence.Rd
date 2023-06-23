@@ -14,6 +14,7 @@ plot_celltype_presence(
   image_id = "lowres",
   reverse_palette = FALSE,
   background = NULL,
+  zoom = TRUE,
   show_image = FALSE,
   offset_rotation = FALSE,
   spot_size = 1,
@@ -48,6 +49,8 @@ plot_celltype_presence(
 \item{reverse_palette}{reverse color palette}
 
 \item{background}{custom background color}
+
+\item{zoom}{zoom to the available spots}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
 

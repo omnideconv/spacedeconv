@@ -17,6 +17,7 @@
 #' @param limits vector of color scale limits
 #' @param smooth whether to smooth the plot
 #' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param zoom zoom to the available spots
 #' @param title_size font size of title
 #' @param title set a custom title
 #' @param font_size font size of legend
@@ -39,7 +40,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, background = NULL, palette_type = "sequential",
                           offset_rotation = FALSE, spot_size = 1, limits = NULL,
-                          smooth = FALSE, smoothing_factor = 1.5,
+                          smooth = FALSE, smoothing_factor = 1.5, zoom = TRUE,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750,
                           show_legend = TRUE) {
@@ -66,7 +67,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     plot <- make_baseplot(spe, df,
       palette = palette,
       to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
-      image_id = image_id, show_image = show_image, background = background,
+      image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,
       spot_size = spot_size, limits = limits, title = title,
@@ -80,7 +81,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       plot <- plot + make_baseplot(spe, df,
         palette = palette,
         to_plot = result, sample_id = sample_id,
-        image_id = image_id, show_image = show_image, background = background,
+        image_id = image_id, show_image = show_image, background = background, zoom = zoom,
         palette_type = palette_type, offset_rotation = offset_rotation,
         transform_scale = transform_scale, reverse_palette = reverse_palette,
         spot_size = spot_size, limits = limits, title = title,
@@ -96,7 +97,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
     return(make_baseplot(spe, df,
       palette = palette,
       to_plot = cell_type, sample_id = sample_id,
-      image_id = image_id, show_image = show_image, background = background,
+      image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,
       spot_size = spot_size, limits = limits, title = title,
@@ -127,6 +128,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 #' @param limits vector of color scale limits
@@ -154,7 +156,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' plot_umi_count(deconv)
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
-                           reverse_palette = FALSE,
+                           reverse_palette = FALSE, zoom = TRUE,
                            show_image = FALSE, background = NULL, offset_rotation = FALSE,
                            spot_size = 1, limits = NULL,
                            smooth = FALSE, smoothing_factor = 1.5,
@@ -175,7 +177,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
   return(make_baseplot(spe,
     df,
     to_plot = "nUMI", sample_id = sample_id,
-    image_id = image_id, show_image = show_image, background = background,
+    image_id = image_id, show_image = show_image, background = background, zoom = zoom,
     offset_rotation = offset_rotation, palette = palette,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
     spot_size = spot_size, limits = limits, title = title,
@@ -202,6 +204,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 # #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
@@ -224,7 +227,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, # palette_type = FALSE,
+                               show_image = FALSE, background = NULL, zoom = TRUE, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
@@ -279,7 +282,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 
   return(make_baseplot(
     spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
-    sample_id = sample_id, image_id = image_id, background = background,
+    sample_id = sample_id, image_id = image_id, background = background, zoom = zoom,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
     title_size = title_size, palette_type = "discrete",
@@ -298,6 +301,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, wether to display the image, default = TRUE
@@ -322,7 +326,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    palette = "Mako", transform_scale = NULL,
                                    sample_id = "sample01", image_id = "lowres",
-                                   reverse_palette = FALSE, background = NULL,
+                                   reverse_palette = FALSE, background = NULL, zoom = TRUE,
                                    show_image = FALSE, offset_rotation = FALSE,
                                    spot_size = 1, limits = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
@@ -356,7 +360,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
     show_image = show_image, offset_rotation = offset_rotation,
     spot_size = spot_size, limits = limits, smooth = smooth,
     smoothing_factor = smoothing_factor, title_size = title_size,
-    font_size = font_size, legend_size = legend_size, background = background,
+    font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = FALSE, palette_type = "discrete", save = save, path = path,
     png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
   ))
@@ -373,6 +377,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 #' @param show_image logical, wether to display the image, default = TRUE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
@@ -397,7 +402,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
 plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             palette = "Blue-Red", transform_scale = NULL,
                             sample_id = "sample01", image_id = "lowres",
-                            reverse_palette = FALSE, background = NULL,
+                            reverse_palette = FALSE, background = NULL, zoom = TRUE,
                             show_image = FALSE, offset_rotation = FALSE,
                             spot_size = 1, limits = NULL,
                             smooth = FALSE, smoothing_factor = 1.5,
@@ -437,7 +442,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     show_image = show_image, offset_rotation = offset_rotation,
     spot_size = spot_size, limits = limits, smooth = smooth,
     smoothing_factor = smoothing_factor, title_size = title_size,
-    font_size = font_size, legend_size = legend_size, background = background,
+    font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = density, palette_type = palette_type, save = save, path = path,
     png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
   ))
@@ -458,6 +463,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param image_id which image to plot, default: "lowres"
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 #' @param palette_type discrete, sequential or diverging
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
@@ -484,7 +490,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
                       sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                      show_image = FALSE, background = NULL, palette_type = "sequential",
+                      show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "sequential",
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5, show_legend = TRUE,
                       title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
@@ -518,7 +524,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
     image_id = image_id, show_image = show_image,
     palette_type = palette_type, offset_rotation = offset_rotation,
     transform_scale = transform_scale, reverse_palette = reverse_palette,
-    spot_size = spot_size, limits = limits, background = background,
+    spot_size = spot_size, limits = limits, background = background, zoom = zoom,
     smooth = smooth, smoothing_factor = smoothing_factor, show_legend = show_legend,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
     density = density, save = save, path = path, png_width = png_width, png_height = png_height
@@ -551,6 +557,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #' @param image_id image id for background image
 #' @param show_image whether to show the spatial image
 #' @param background custom background color
+#' @param zoom zoom to the available spots
 #' @param palette_type "discrete", "sequential", "diverging"
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
@@ -569,7 +576,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #' @param show_legend whether to show the legend
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
-                          image_id = "lowres", show_image = FALSE, background = NULL,
+                          image_id = "lowres", show_image = FALSE, background = NULL, zoom = TRUE,
                           palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
@@ -694,7 +701,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   p <- p +
     geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
     # coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
-    coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres))) +
     theme(
       axis.text = element_blank(),
       axis.ticks = element_blank(),
@@ -705,6 +711,13 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
       legend.key.size = unit(legend_size, "points")
     ) +
     ggplot2::labs(title = legend_title, fill = element_blank())
+
+  # zoom if requested
+  if (zoom){
+    p <- p + coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres)))
+  } else {
+    p <- p + coord_sf(xlim = c(0, width), ylim = c(0, -height))
+  }
 
   # show legend?
   if (!show_legend) {
