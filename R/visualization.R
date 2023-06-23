@@ -604,35 +604,51 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     df[[to_plot]] <- smooth_celltype(df, spot_distance = spot_distance, smoothing_factor = smoothing_factor, cell_type = to_plot)
   }
 
-  # apply potential transform_scaleations
-  legend_title <- as.character(to_plot)
-  if (is.null(title)) {
-    if (!is.null(transform_scale)) {
-      if (transform_scale == "ln") {
-        df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
-        legend_title <- paste0(legend_title, "_", "ln")
-      } else if (transform_scale == "log10") {
-        df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
-        legend_title <- paste0(legend_title, "_", "log10")
-      } else if (transform_scale == "log2") {
-        df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
-        legend_title <- paste0(legend_title, "_", "log2")
-      } else if (transform_scale == "sqrt") {
-        df[[to_plot]] <- sqrt(df[[to_plot]])
-        legend_title <- paste0(legend_title, "_", "sqrt")
-      } else if (transform_scale == "log") {
-        df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1)
-        legend_title <- paste0(legend_title, "_", "log")
-      } else {
-        print("Unknown transform_scaleation, plotting untransform_scaleed data")
-      }
-    }
-    # additionally check if plot is smoothed
-    if (smooth) {
-      legend_title <- paste0(legend_title, "_", "smoothed")
+  # tranform scale
+  if (!is.null(transform_scale)) {
+    if (transform_scale == "ln") {
+      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
+      transform_suffix <- "ln"
+    } else if (transform_scale == "log10") {
+      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
+      transform_suffix <- "log10"
+    } else if (transform_scale == "log2") {
+      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
+      transform_suffix <- "log2"
+    } else if (transform_scale == "sqrt") {
+      df[[to_plot]] <- sqrt(df[[to_plot]])
+      transform_suffix <- "sqrt"
+    } else if (transform_scale == "log") {
+      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1)
+      transform_suffix <- "log"
+    } else {
+      print("Unknown transformation, plotting untransformed data")
+      transform_suffix <- ""
     }
   } else {
-    legend_title <- title # custom title overwrites everything
+    transform_suffix <- ""
+  }
+
+  # Check if plot is smoothed
+  if (smooth) {
+    smooth_suffix <- "smoothed"
+  } else {
+    smooth_suffix <- ""
+  }
+
+  # handle legend title
+  if (is.null(title)) {
+    # Construct legend_title based on transformation and smoothing
+    legend_title <- as.character(to_plot)
+    if (transform_suffix != "") {
+      legend_title <- paste0(legend_title, "_", transform_suffix)
+    }
+    if (smooth_suffix != "") {
+      legend_title <- paste0(legend_title, "_", smooth_suffix)
+    }
+  } else {
+    # custom title overwrites everything
+    legend_title <- title
   }
 
   # preparing the dataframe with sf, inserting points
