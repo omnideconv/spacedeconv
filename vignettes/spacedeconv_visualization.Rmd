@@ -94,8 +94,8 @@ spacedeconv::plot_comparison(deconv,
   cell_type_1 = "epic_T.cell.CD4.",
   cell_type_2 = "epic_T.cell.CD8.",
   palette = "Vik",
-  density = F, 
-  smooth = T, 
+  density = F,
+  smooth = T,
 )
 ```
 
