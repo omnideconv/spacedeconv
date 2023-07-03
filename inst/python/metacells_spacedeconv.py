@@ -11,6 +11,16 @@ def clean_genes_and_cells(anndata, properly_sampled_min_cell_total = 800,
   properly_sampled_max_cell_total = 8000, 
   properly_sampled_max_excluded_genes_fraction = 0.1, 
   exclude_genes = "", exclude_gene_patterns = "", seed = 123456): 
+    
+  import metacells as mc
+  import anndata as ad
+  import numpy as np
+  import pandas as pd
+  import seaborn as sb # viz
+  import matplotlib.pyplot as plt # viz
+  
+  print (mc)
+      
   name = "AnnData"
   
   anndata.X = anndata.X.astype('float32') # metacells needs the count values to be float32
