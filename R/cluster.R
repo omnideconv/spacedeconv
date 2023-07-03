@@ -33,6 +33,12 @@ cluster <- function(spe,
   # convert to sparse matrices
   spe <- check_datatype(spe)
 
+  data <- match.arg(data)
+
+  # if (!data %in% c("expression", "deconvolution", "pathway", "tf")) {
+  #   stop("`data` must be one of the following: expression, deconvolution, pathway, tf")
+  # }
+
   if (data == "expression") {
     # convert the spe to a seurat object
     # create expression data matrix and rename the rows to normal gene names instead of the ENSEMBL
@@ -40,6 +46,9 @@ cluster <- function(spe,
 
     # create spatialcoordinates matrix
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
+
+    cli::cli_alert_info(paste("Clustering:", data))
+    cli::cli_alert_info(paste("Cluster resolution:", clusres))
 
 
 
@@ -82,19 +91,25 @@ cluster <- function(spe,
     }
   } else if (data %in% c("deconvolution", "tf", "pathway")) {
     if (is.null(spmethod)) {
-      stop("Parameter 'spmethod' is null or missing, but is required")
+      if (data == "tf"){
+        spmethod="dorothea"
+      } else if (data =="pathway"){
+        spmethod="progeny"
+      } else {
+        stop("Parameter 'spmethod' is null or missing, but is required")
+      }
     }
 
-    if (!data %in% c("expression", "deconvolution", "pathway", "tf")) {
-      stop("`data` must be one of the following: expression, deconvolution, pathway, tf")
-    }
+    dist_method <- match.arg(dist_method)
+    hclust_method <- match.arg(hclust_method)
+    method <- match.arg(method)
 
-    if (!dist_method %in% c("correlation", "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")) {
-      stop("`dist_method` must be one of the following: correlation, euclidean, maximum, manhattan, canberra, binary or minkowski")
-    }
-
-    if (!hclust_method %in% c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid")) {
-      stop("`hclust_method` must be one of the following: ward.D, ward.D2, single, complete, average, mcquitty, median,centroid")
+    cli::cli_alert_info(paste("Clustering:", data))
+    cli::cli_alert_info(paste("By:", method))
+    cli::cli_alert_info(paste("Number of clusters:", nclusters))
+    if (method=="hclust"){
+      cli::cli_alert_info(paste("Distance Method:", dist_method))
+      cli::cli_alert_info(paste("Hclust Method:", hclust_method))
     }
 
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe,
