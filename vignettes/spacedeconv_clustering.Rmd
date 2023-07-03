@@ -22,8 +22,8 @@ data("spatial_data_3")
 
 ```{r deconv}
 spe <- preprocess(spatial_data_3)
-spe <- normalize(spe, method="cpm")
-deconv <- deconvolute(spe, method="epic", assay_sc = "cpm")
+spe <- normalize(spe, method = "cpm")
+deconv <- deconvolute(spe, method = "epic", assay_sc = "cpm")
 ```
 
 First we show how to cluster deconvolution data. Set the data parameter to "deconvolution" and provide the deconvolution tool you used. You can further set the following parameters: 
@@ -36,7 +36,7 @@ First we show how to cluster deconvolution data. Set the data parameter to "deco
 
 
 ```{r clusterDeconv, fig.width=10, fig.height=10}
-cluster <- cluster(deconv, data="deconvolution", spmethod="epic", nclusters = 3:6)
+cluster <- cluster(deconv, data = "deconvolution", spmethod = "epic", nclusters = 3:6)
 plot_celltype(cluster, "cluster")
 ```
 
@@ -46,7 +46,7 @@ This function applies the Seurat clustering approach in the background. Set data
 * pca_dim: Number of PCA dimensions to use
 
 ```{r clusterExpression}
-cluster <- cluster(deconv, data = "expression", clusres=0.5)
+cluster <- cluster(deconv, data = "expression", clusres = 0.5)
 plot_celltype(cluster, "cluster") # plot the clustering stored in this object
 ```
 
@@ -54,8 +54,5 @@ plot_celltype(cluster, "cluster") # plot the clustering stored in this object
 With an available clustering you can exract the top features for each cluster. Here we extract the top features for each cluster based on expression, but we want the top features from the deconvolution results from this area. See the associated clusters in the plot above. 
 
 ```{r topFeatures}
-get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod="epic")
+get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "epic")
 ```
-
-
-
