@@ -15,9 +15,6 @@ spacedeconv is a unified interface to 31 deconvolution tools with focus on spati
 install.packages("pak")
 
 pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
-
-# install python dependencies in a conda environment
-spacedeconv::install_all_python()
 ```
 
 ## :sparkles: Features
