@@ -66,6 +66,7 @@ reference:
       - presence
       - antimode_cutoff
       - cell_pair_localization
+      - cell_pair_presence
       - coloc_avoid
       - get_iniche
       - ripleys_k
