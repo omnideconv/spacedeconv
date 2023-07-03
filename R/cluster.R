@@ -91,10 +91,10 @@ cluster <- function(spe,
     }
   } else if (data %in% c("deconvolution", "tf", "pathway")) {
     if (is.null(spmethod)) {
-      if (data == "tf"){
-        spmethod="dorothea"
-      } else if (data =="pathway"){
-        spmethod="progeny"
+      if (data == "tf") {
+        spmethod <- "dorothea"
+      } else if (data == "pathway") {
+        spmethod <- "progeny"
       } else {
         stop("Parameter 'spmethod' is null or missing, but is required")
       }
@@ -107,7 +107,7 @@ cluster <- function(spe,
     cli::cli_alert_info(paste("Clustering:", data))
     cli::cli_alert_info(paste("By:", method))
     cli::cli_alert_info(paste("Number of clusters:", nclusters))
-    if (method=="hclust"){
+    if (method == "hclust") {
       cli::cli_alert_info(paste("Distance Method:", dist_method))
       cli::cli_alert_info(paste("Hclust Method:", hclust_method))
     }
