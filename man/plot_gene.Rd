@@ -21,6 +21,7 @@ plot_gene(
   limits = NULL,
   smooth = FALSE,
   smoothing_factor = 1.5,
+  show_legend = TRUE,
   title_size = 30,
   title = NULL,
   font_size = 15,
@@ -64,6 +65,8 @@ plot_gene(
 \item{smooth}{whether to smooth the plot}
 
 \item{smoothing_factor}{kernel size factor (multiples of spot distance)}
+
+\item{show_legend}{whether to show the legend}
 
 \item{title_size}{font size of title}
 

@@ -20,6 +20,7 @@ Imports:
     SpatialExperiment, 
     SummarizedExperiment,
     Seurat,
+    SeuratObject,
     anndata, 
     edgeR, 
     ggplot2, 
