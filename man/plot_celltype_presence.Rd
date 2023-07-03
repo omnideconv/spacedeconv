@@ -27,7 +27,8 @@ plot_celltype_presence(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  show_legend = TRUE
 )
 }
 \arguments{
