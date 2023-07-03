@@ -1,5 +1,5 @@
-spe = readRDS(system.file("testdata", "spe.rds", package = "spacedeconv"))
-sce = readRDS(system.file("testdata", "sce.rds", package = "spacedeconv"))
+spe <- readRDS(system.file("testdata", "spe.rds", package = "spacedeconv"))
+sce <- readRDS(system.file("testdata", "sce.rds", package = "spacedeconv"))
 
 
 test_that("SPOTlight deconvolution works", {
