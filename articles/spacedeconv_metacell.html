@@ -51,6 +51,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
     <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
@@ -98,6 +99,14 @@ python based we need to convert the SingleCellExperiment to an AnnData
 object. The original dataset contains 5789 cells.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">spacedeconv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
+<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
+<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
+<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
+<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
+<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
+<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
+<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
 <span><span class="co">#&gt; Configuring package 'spacedeconv': please wait ...</span></span>
 <span><span class="co">#&gt; Done!</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
@@ -202,7 +211,15 @@ documentation.</p>
 <code class="sourceCode R"><span><span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_genes_and_cells.html">clean_genes_and_cells</a></span><span class="op">(</span><span class="va">ad</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Cleaning genes and cells</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Cleaned genes and cells <span style="color: #B2B2B2;">[13.6s]</span></span></span>
+<span><span class="co">#&gt; python:         /home/runner/.local/share/r-miniconda/envs/r-omnideconv/bin/python</span></span>
+<span><span class="co">#&gt; libpython:      /home/runner/.local/share/r-miniconda/envs/r-omnideconv/lib/libpython3.8.so</span></span>
+<span><span class="co">#&gt; pythonhome:     /home/runner/.local/share/r-miniconda/envs/r-omnideconv:/home/runner/.local/share/r-miniconda/envs/r-omnideconv</span></span>
+<span><span class="co">#&gt; version:        3.8.17 | packaged by conda-forge | (default, Jun 16 2023, 07:06:00)  [GCC 11.4.0]</span></span>
+<span><span class="co">#&gt; numpy:          /home/runner/.local/share/r-miniconda/envs/r-omnideconv/lib/python3.8/site-packages/numpy</span></span>
+<span><span class="co">#&gt; numpy_version:  1.23.5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; NOTE: Python version was forced by RETICULATE_PYTHON</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Cleaned genes and cells <span style="color: #B2B2B2;">[16.2s]</span></span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -218,7 +235,7 @@ workflow.</p>
 <code class="sourceCode R"><span><span class="va">suspect_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_forbidden_genes.html">compute_forbidden_genes</a></span><span class="op">(</span><span class="va">filtered</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Computing forbidden genes</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Computed forbidden genes <span style="color: #B2B2B2;">[1s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Computed forbidden genes <span style="color: #B2B2B2;">[1.2s]</span></span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -256,7 +273,7 @@ used as well.</p>
 <span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Computing metacells</span></span>
 <span><span class="co">#&gt; Removing 1 metacell with abundance score under 0.9</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> computed metacells <span style="color: #B2B2B2;">[2.4s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> computed metacells <span style="color: #B2B2B2;">[3s]</span></span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
 <div class="section level2">

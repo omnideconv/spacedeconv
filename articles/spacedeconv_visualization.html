@@ -51,6 +51,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
     <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
@@ -210,8 +211,9 @@ cell-types.</p>
 <code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_comparison.html">plot_comparison</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
 <span>  cell_type_1 <span class="op">=</span> <span class="st">"epic_T.cell.CD4."</span>,</span>
 <span>  cell_type_2 <span class="op">=</span> <span class="st">"epic_T.cell.CD8."</span>,</span>
-<span>  palette <span class="op">=</span> <span class="st">"Blue-Red"</span>,</span>
-<span>  density <span class="op">=</span> <span class="cn">F</span></span>
+<span>  palette <span class="op">=</span> <span class="st">"Vik"</span>,</span>
+<span>  density <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  smooth <span class="op">=</span> <span class="cn">T</span>,</span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="spacedeconv_visualization_files/figure-html/plotComparison-1.png" width="700"></p>
 </div>
