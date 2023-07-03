@@ -20,6 +20,8 @@ cluster(
 )
 }
 \arguments{
+\item{spe}{SpatialExperiment}
+
 \item{method}{clustering method to be chosen between kmeans and hclust}
 
 \item{data}{what data to cluster}

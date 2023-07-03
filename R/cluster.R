@@ -1,4 +1,5 @@
 #' Cluster spacedeconv results
+#' @param spe SpatialExperiment
 #' @param method clustering method to be chosen between kmeans and hclust
 #' @param data what data to cluster
 #' @param dist_method the distance measure to be used if method = hclust
