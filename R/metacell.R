@@ -20,7 +20,9 @@ clean_genes_and_cells <- function(anndata, properly_sampled_min_cell_total = 800
   # init_python()
   # metacells_checkload()
 
-  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
+  print(reticulate::py_config())
+
+  reticulate::source_python(system.file("python", "metacells_spacedeconv.py", package = "spacedeconv"))
 
   res <- clean_genes_and_cells(anndata,
     properly_sampled_min_cell_total = as.integer(properly_sampled_min_cell_total),
@@ -53,7 +55,7 @@ compute_forbidden_genes <- function(clean,
   # init_python()
   # metacells_checkload()
 
-  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
+  reticulate::source_python(system.file("python", "metacells_spacedeconv.py", package = "spacedeconv"))
 
   res <- compute_forbidden_genes(
     clean = clean,
@@ -81,7 +83,7 @@ extract_forbidden_from_modules <- function(clean, forbidden_modules) {
   # init_python()
   # metacells_checkload()
 
-  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
+  reticulate::source_python(system.file("python", "metacells_spacedeconv.py", package = "spacedeconv"))
 
   res <- extract_forbidden_from_modules(clean = clean, forbidden_modules = forbidden_modules)
 
@@ -107,7 +109,7 @@ compute_metacells <- function(clean, forbidden_gene_names, cell_type_col, target
   # init_python()
   # metacells_checkload()
 
-  reticulate::source_python(system.file("python", "metacells.py", package = "spacedeconv"))
+  reticulate::source_python(system.file("python", "metacells_spacedeconv.py", package = "spacedeconv"))
 
   if (is.null(cell_type_col)) {
     stop("Please provide a cell type column name")
