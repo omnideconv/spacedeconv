@@ -66,11 +66,14 @@ reference:
       - presence
       - antimode_cutoff
       - cell_pair_localization
+      - cell_pair_presence
       - coloc_avoid
       - get_iniche
       - ripleys_k
       - localization_heatmap
       - qualitycontrol
+      - corr_expr
+      - plot_ripleys_k
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
@@ -102,4 +105,5 @@ reference:
       - get_cluster_features
       - check_path_scaden
       - spacedeconvstartup
+      - get_largest_r_and_iso
       - check_datatype

@@ -761,7 +761,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
         # ggplot2::geom_density() +
         ggridges::geom_density_ridges() + # _gradient()
         # ggplot2::scale_fill_viridis_c() +
-        ggplot2::scale_y_discrete() +
+        ggplot2::scale_y_discrete(expand = c(0, 0)) +
         ggplot2::geom_vline(
           ggplot2::aes(xintercept = mean(unlist(data["values"]))),
           color = "red",
@@ -775,7 +775,8 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           axis.text.y = ggplot2::element_blank(),
           axis.ticks.y = ggplot2::element_blank(),
           axis.line.y = ggplot2::element_blank(),
-          axis.title = ggplot2::element_blank()
+          axis.title = ggplot2::element_blank(),
+          axis.text.x = ggplot2::element_text(size = 14)
         )
       # ggplot2::ylim(0, max(data["values"]))
 

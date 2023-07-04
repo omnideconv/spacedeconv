@@ -43,7 +43,9 @@ Imports:
     cli, 
     patchwork, 
     reticulate, 
-    decoupleR
+    decoupleR, 
+    corrplot, 
+    psych
 Suggests: 
     spacexr,
     SPOTlight,
@@ -58,7 +60,14 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    scuttle, 
+    cli, 
+    DelayedArray, 
+    circlize, 
+    ComplexHeatmap, 
+    grid, 
+    decoupleR,
+    multimode,
+    scuttle,
     grid,
     tidyr,
     xCell, 

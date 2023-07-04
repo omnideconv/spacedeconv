@@ -48,12 +48,12 @@ range_genesperspot <- range(colSums(assay(spe, assay) > 0))
 <div class = "row">
 <div class = "column">
 # Plot UMI and number of detected genes
-```{r, echo=FALSE, fig.align='left'}
+```{r, echo=FALSE, fig.align='left', fig.height= 4, fig.width= 6}
 # Plot UMI
-plot_umi_count(spe, offset_rotation = T, transform_scale = "log")
+plot_umi_count(spe, offset_rotation = T, transform_scale = "log", title = "UMI_log", title_size = 20, legend_size = 20)
 
 # Plot number of detected genes
-plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
+plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log", title = "genes_log", title_size = 20, legend_size = 20)
 ```
 </div>
 
@@ -61,10 +61,10 @@ plot_ndetected_genes(spe, offset_rotation = T, transform_scale = "log")
 
 ```{r, echo = FALSE}
 # Make a table
-res <- c(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = paste0(range_umiperspot[1], "-", range_umiperspot[2]), UMI_above500 = paste0(round(UMI_above500, digits = 3), "%"), UMI_below500 = paste0(round(UMI_below500, digits = 3), "%"), range_genesperspot = paste0(range_genesperspot[1], "-", range_genesperspot[2]))
+res <- c(ntotal_genes = ntotal_genes, ntotal_spots = ntotal_spots, range_umiperspot = paste0(range_umiperspot[1], "-", range_umiperspot[2]), UMI_above500 = paste0(round(UMI_above500, digits = 2), "%"), UMI_below500 = paste0(round(UMI_below500, digits = 2), "%"), range_genesperspot = paste0(range_genesperspot[1], "-", range_genesperspot[2]))
 
 library(knitr)
-kable(res)
+kable(res, col.names = " ")
 ```
 
 
