@@ -679,7 +679,13 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     }
 
     # update df accordingly
-    df <- df[rownames(sf_poly), ]
+    #df <- df[rownames(sf_poly), ]
+
+    # calculate border coordinates
+    # min_col <- min(df$pxl_col_in_fullres)
+    # max_col <- max(df$pxl_col_in_fullres)
+    # max_row <- max(df$pxl_row_in_fullres)
+    # min_row <- min(df$pxl_row_in_fullres)
   }
 
 
@@ -715,6 +721,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # zoom if requested
   if (zoom) {
     p <- p + coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres)))
+    # p <- p + coord_sf(xlim = c(min_col, max_col), ylim = c(max_row, min_row))
   } else {
     p <- p + coord_sf(xlim = c(0, width), ylim = c(0, -height))
   }
