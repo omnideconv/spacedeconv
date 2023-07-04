@@ -15,6 +15,7 @@ make_baseplot(
   image_id = "lowres",
   show_image = FALSE,
   background = NULL,
+  zoom = TRUE,
   palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1,
@@ -53,6 +54,8 @@ make_baseplot(
 \item{show_image}{whether to show the spatial image}
 
 \item{background}{custom background color}
+
+\item{zoom}{zoom to the available spots}
 
 \item{palette_type}{"discrete", "sequential", "diverging"}
 

@@ -11,6 +11,7 @@ plot_umi_count(
   sample_id = "sample01",
   image_id = "lowres",
   reverse_palette = FALSE,
+  zoom = TRUE,
   show_image = FALSE,
   background = NULL,
   offset_rotation = FALSE,
@@ -42,6 +43,8 @@ plot_umi_count(
 \item{image_id}{which image to plot, default: "lowres"}
 
 \item{reverse_palette}{reverse color palette}
+
+\item{zoom}{zoom to the available spots}
 
 \item{show_image}{logical, wether to display the image, default = TRUE}
 
