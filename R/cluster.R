@@ -183,7 +183,7 @@ get_cluster_features <- function(spe,
   }
 
   # check if spmethod is actually available
-  if (!any(grepl(spmethod, names(colData(spe))))){
+  if (!any(grepl(spmethod, names(colData(spe))))) {
     stop(paste("spmethod", spmethod, "not found in spe object"))
   }
 
