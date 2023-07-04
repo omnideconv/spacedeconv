@@ -679,7 +679,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     }
 
     # update df accordingly
-    #df <- df[rownames(sf_poly), ]
+    # df <- df[rownames(sf_poly), ]
 
     # calculate border coordinates
     # min_col <- min(df$pxl_col_in_fullres)
