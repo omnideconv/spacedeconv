@@ -182,11 +182,18 @@ get_cluster_features <- function(spe,
     spmethod <- unlist(strsplit(clusterid, "_"))[2]
   }
 
+  # check if spmethod is actually available
+  if (!any(grepl(spmethod, names(colData(spe))))){
+    stop(paste("spmethod", spmethod, "not found in spe object"))
+  }
+
   # Extract clusters
   clusters <- colData(spe)[, available_results(spe, method = "cluster"),
     drop = FALSE
   ]
   clusters <- clusters[, clusterid]
+
+
 
   # Scores
   if (spmethod == "expression") {
@@ -207,6 +214,19 @@ get_cluster_features <- function(spe,
   # Transform to z-scores
   if (zscore) {
     scores <- as.matrix(scores)
+
+    # number of complete cases
+    num_na_rows <- sum(!complete.cases(scores))
+
+    # remove incomplete cases from scores and clusters
+    clusters <- clusters[complete.cases(scores)]
+    scores <- scores[complete.cases(scores), ]
+
+    # notify user
+    if (num_na_rows > 0) {
+      cli::cli_alert_info(paste(num_na_rows, "rows were removed due to NA values."))
+    }
+
     scores <- t((t(scores) - apply(scores, 2, mean)) / apply(scores, 2, sd))
   }
 
