@@ -64,6 +64,7 @@
 <span>  sample_id <span class="op">=</span> <span class="st">"sample01"</span>,</span>
 <span>  image_id <span class="op">=</span> <span class="st">"lowres"</span>,</span>
 <span>  reverse_palette <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  zoom <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_image <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  background <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  offset_rotation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -108,6 +109,10 @@
 
 <dt>reverse_palette</dt>
 <dd><p>reverse color palette</p></dd>
+
+
+<dt>zoom</dt>
+<dd><p>zoom to the available spots</p></dd>
 
 
 <dt>show_image</dt>
@@ -191,7 +196,7 @@
 <span class="r-in"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"estimate"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[41ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[34ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -213,7 +218,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Merged dataset includes 9969 genes (443 mismatched)."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1 gene set: StromalSignature  overlap= 136"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2 gene set: ImmuneSignature  overlap= 140"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[11.8s]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[9.3s]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">plot_umi_count</span><span class="op">(</span><span class="va">deconv</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_umi_count-1.png" alt="" width="700" height="433"></span>

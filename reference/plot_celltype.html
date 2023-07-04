@@ -73,6 +73,7 @@
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  smoothing_factor <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>  zoom <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  title_size <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  font_size <span class="op">=</span> <span class="fl">15</span>,</span>
@@ -148,6 +149,10 @@
 <dd><p>kernel size factor (multiples of spot distance)</p></dd>
 
 
+<dt>zoom</dt>
+<dd><p>zoom to the available spots</p></dd>
+
+
 <dt>title_size</dt>
 <dd><p>font size of title</p></dd>
 
@@ -201,7 +206,7 @@
 <span class="r-in"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spatial_data_2</span>, method <span class="op">=</span> <span class="st">"estimate"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[54ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[41ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -223,7 +228,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Merged dataset includes 9969 genes (443 mismatched)."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1 gene set: StromalSignature  overlap= 136"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2 gene set: ImmuneSignature  overlap= 140"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[15.1s]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[11.1s]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu">plot_celltype</span><span class="op">(</span><span class="va">deconv</span>, cell_type <span class="op">=</span> <span class="st">"estimate_immune.score"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_celltype-1.png" alt="" width="700" height="433"></span>
