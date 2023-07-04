@@ -713,7 +713,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     ggplot2::labs(title = legend_title, fill = element_blank())
 
   # zoom if requested
-  if (zoom){
+  if (zoom) {
     p <- p + coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)), ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres)))
   } else {
     p <- p + coord_sf(xlim = c(0, width), ylim = c(0, -height))
