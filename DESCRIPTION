@@ -43,7 +43,9 @@ Imports:
     cli, 
     patchwork, 
     reticulate, 
-    decoupleR
+    decoupleR, 
+    corrplot, 
+    psych
 Suggests: 
     spacexr,
     SPOTlight,
@@ -64,9 +66,7 @@ Suggests:
     ComplexHeatmap, 
     grid, 
     decoupleR,
-    psych,
     multimode,
-    corrplot,
     scuttle,
     grid,
     tidyr,
