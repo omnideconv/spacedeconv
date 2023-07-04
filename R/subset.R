@@ -42,6 +42,7 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
   if (!is.numeric(seed)) {
     stop("seed has to be numeric!")
   }
+
   set.seed(seed)
   cli::cli_alert_info(paste0("Set seed to ", seed))
 
