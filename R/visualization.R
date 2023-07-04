@@ -332,7 +332,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, title = NULL, font_size = 15,
                                    legend_size = 20, save = FALSE, path = NULL,
-                                   png_width = 1500, png_height = 750) {
+                                   png_width = 1500, png_height = 750, show_legend = TRUE) {
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
