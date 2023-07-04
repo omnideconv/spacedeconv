@@ -127,7 +127,8 @@ comparisons with increasing distances are possible. Thereby, distance =
 rings of spots around each spot and distance = 2 refers to two rings of
 spots around each spot.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cell_pair_localization.html">cell_pair_localization</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"epic"</span>, cell_type_1 <span class="op">=</span> <span class="st">"epic_NK.cell"</span>, cell_type_2 <span class="op">=</span> <span class="st">"epic_B.cell"</span>, density <span class="op">=</span> <span class="cn">TRUE</span>, distance <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cell_pair_localization.html">cell_pair_localization</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"epic"</span>, cell_type_A <span class="op">=</span> <span class="st">"epic_NK.cell"</span>, cell_type_B <span class="op">=</span> <span class="st">"epic_B.cell"</span>, density <span class="op">=</span> <span class="cn">TRUE</span>, distance <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Calculating presence matrix...</span></span>
 <span><span class="co">#&gt; [1] "Calculating Antimode cutoffs"</span></span>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
@@ -153,10 +154,10 @@ spots around each spot.</p>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span></code></pre></div>
 <p><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-2-1.png" width="700"><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
-<pre><code><span><span class="co">#&gt;       coloc.coloc           coloc_p   coloc_rand_mean coloc_ratio.coloc </span></span>
-<span><span class="co">#&gt;      0.0000000000      0.1200000000      0.0001097046      0.0000000000 </span></span>
-<span><span class="co">#&gt;       avoid.avoid           avoid_p   avoid_rand_mean avoid_ratio.avoid </span></span>
-<span><span class="co">#&gt;      0.0109704641      0.0000000000      0.0109029536      1.0061919505</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;  coloc_real.coloc           coloc_p   coloc_rand_mean coloc_ratio.coloc </span></span>
+<span><span class="co">#&gt;              0.00              0.13              0.00              0.00 </span></span>
+<span><span class="co">#&gt;  avoid_real.avoid           avoid_p   avoid_rand_mean avoid_ratio.avoid </span></span>
+<span><span class="co">#&gt;              0.02              0.00              0.02              1.01</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="riples_k">2. ‘riples_k()’<a class="anchor" aria-label="anchor" href="#riples_k"></a>
@@ -190,8 +191,23 @@ internally taken as input.</p>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
 <span></span>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
-<span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span></code></pre></div>
-<p><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
+<span><span class="co">#&gt; Function value object (class 'fv')</span></span>
+<span><span class="co">#&gt; for the function r -&gt; "K"["TRUE","TRUE"](r)</span></span>
+<span><span class="co">#&gt; ................................................................................</span></span>
+<span><span class="co">#&gt;      Math.label                        </span></span>
+<span><span class="co">#&gt; r    r                                 </span></span>
+<span><span class="co">#&gt; theo {K[list(TRUE,TRUE)]^{pois}}(r)    </span></span>
+<span><span class="co">#&gt; iso  {hat(K)[list(TRUE,TRUE)]^{iso}}(r)</span></span>
+<span><span class="co">#&gt;      Description                                          </span></span>
+<span><span class="co">#&gt; r    distance argument r                                  </span></span>
+<span><span class="co">#&gt; theo theoretical Poisson "K"["TRUE","TRUE"](r)            </span></span>
+<span><span class="co">#&gt; iso  isotropic-corrected estimate of "K"["TRUE","TRUE"](r)</span></span>
+<span><span class="co">#&gt; ................................................................................</span></span>
+<span><span class="co">#&gt; Default plot formula:  .~r</span></span>
+<span><span class="co">#&gt; where "." stands for 'iso', 'theo'</span></span>
+<span><span class="co">#&gt; Recommended range of argument r: [0, 1338.8]</span></span>
+<span><span class="co">#&gt; Available range of argument r: [0, 1338.8]</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

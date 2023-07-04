@@ -94,6 +94,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/cell_pair_localization.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/cell_pair_presence.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/checkCol.html</loc>
   </url>
   <url>
@@ -137,6 +140,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/convert_to_sce.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/corr_expr.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute.html</loc>
@@ -196,6 +202,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_iniche.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/get_largest_r_and_iso.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_polygon_geometry.html</loc>
   </url>
   <url>
@@ -239,6 +248,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ndetected_genes.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ripleys_k.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_scatter.html</loc>
