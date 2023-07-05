@@ -351,10 +351,10 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
       deconvolute_rctd(single_cell_obj, cell_type_col, spatial_obj, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
     spotlight = {
-      deconvolute_spotlight(spatial_obj = spatial_obj, model = signature, assay_sp = assay_sp)
+      deconvolute_spotlight(spatial_obj = spatial_obj, model = signature, assay_sp = assay_sp, ...)
     },
     card = {
-      deconvolute_card(single_cell_obj, spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col)
+      deconvolute_card(single_cell_obj, spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, batch_id_col = batch_id_col, ...)
     },
     spatialdwls = {
       deconvolute_spatial_dwls(spatial_obj, signature, assay_sp = assay_sp, ...)
@@ -367,41 +367,41 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     # omnideconv #
     ##############
     autogenes = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "autogenes", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "autogenes", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bayesprism = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "bayesprism", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "bayesprism", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bisque = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "bisque", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "bisque", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     bseqsc = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "bseqsc", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "bseqsc", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     cibersortx = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "cibersortx", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "cibersortx", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     cdseq = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "cdseq", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "cdseq", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     cpm = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "cpm", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "cpm", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     dwls = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "dwls", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "dwls", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     momf = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "momf", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "momf", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     music = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "music", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "music", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     scaden = {
       check_path_scaden()
-      deconvolute_omnideconv(spatial_obj, signature, method = "scaden", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "scaden", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
     scdc = {
-      deconvolute_omnideconv(spatial_obj, signature, method = "scdc", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose)
+      deconvolute_omnideconv(spatial_obj, signature, method = "scdc", single_cell_obj, cell_type_col, batch_id_col = batch_id_col, assay_sc = assay_sc, assay_sp = assay_sp, verbose = verbose, ...)
     },
 
     ################
