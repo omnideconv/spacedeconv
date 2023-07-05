@@ -3,7 +3,6 @@ library(SingleCellExperiment)
 
 # Test the subsetSCE function
 testthat::test_that("subsetSCE subsets the SingleCellExperiment correctly", {
-
   # Call the subsetSCE function
   result <- subsetSCE(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 500, notEnough = "all", seed = 12345)
 
@@ -18,8 +17,10 @@ testthat::test_that("subsetSCE subsets the SingleCellExperiment correctly", {
 # Test case when the input SingleCellExperiment is NULL
 testthat::test_that("subsetSCE throws an error when SingleCellExperiment is missing", {
   # Call the subsetSCE function with NULL input
-  expect_error(subsetSCE(NULL, cell_type_col = "celltype_major", scenario = "even", ncells = 100, notEnough = "asis", seed = 12345),
-               "SingleCellExperiment missing but required")
+  expect_error(
+    subsetSCE(NULL, cell_type_col = "celltype_major", scenario = "even", ncells = 100, notEnough = "asis", seed = 12345),
+    "SingleCellExperiment missing but required"
+  )
 })
 
 # Test case when row and column names are not set in the SingleCellExperiment
@@ -28,8 +29,10 @@ testthat::test_that("subsetSCE throws an error when row or column names are not 
   sce <- SingleCellExperiment(assays = list(counts = matrix(rpois(5000, lambda = 10), nrow = 100, ncol = 50)))
 
   # Call the subsetSCE function with the mock SingleCellExperiment
-  expect_error(subsetSCE(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 100, notEnough = "asis", seed = 12345),
-               "Rownames or colnames are not set for SingleCellExperiment but are required")
+  expect_error(
+    subsetSCE(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 100, notEnough = "asis", seed = 12345),
+    "Rownames or colnames are not set for SingleCellExperiment but are required"
+  )
 })
 
 
@@ -103,7 +106,6 @@ test_that("Check filtering based on minimum UMI count", {
 
 # Test: Verify filtering based on maximum UMI count
 test_that("Check filtering based on maximum UMI count", {
-
   filtered_sce <- preprocess(sce, max_umi = 10000)
 
   # Check if the filtered 'sce' object has the correct number of observations
