@@ -17,7 +17,7 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
   ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv"))
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv"))
 
   model <- py_build_model_cell2location(ad,
     epochs = as.integer(epochs), # int!
@@ -47,7 +47,7 @@ deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30
   ad <- spe_to_ad(spatial_obj)
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
 
   deconv <- py_deconvolute_cell2location(
     sp_obj = ad,
