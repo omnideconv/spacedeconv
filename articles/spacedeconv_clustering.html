@@ -107,27 +107,27 @@ activities.</p>
 <code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[73ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[77ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[1.1s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[1.2s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[20ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[21ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[24ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[25ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.3s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.6s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
 <span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"epic"</span>, assay_sc <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[31ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[33ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -155,7 +155,7 @@ activities.</p>
 <span><span class="co">#&gt; NULL, : mRNA_cell value unknown for some cell types: CAFs, Endothelial - using</span></span>
 <span><span class="co">#&gt; the default value of 0.4 for these but this might bias the true cell</span></span>
 <span><span class="co">#&gt; proportions from all cell types.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[48.8s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[47.3s]</span></span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
 <p>First we show how to cluster deconvolution data. Set the data
 parameter to “deconvolution” and provide the deconvolution tool you
@@ -175,7 +175,7 @@ when clustering decoupleR results</li>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">cluster</span>(deconv, <span class="at">data =</span> <span class="st">"deconvolution"</span>, <span class="at">spmethod =</span> <span class="st">"epic"</span>, <span class="at">nclusters =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m testing parameter</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m parameter OK  [38;5;249m[8ms] [39m</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m parameter OK  [38;5;249m[9ms] [39m</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Clustering: deconvolution</span></span>
@@ -184,7 +184,7 @@ when clustering decoupleR results</li>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> [36mℹ [39m Number of clusters<span class="sc">:</span> 3Number of clusters<span class="sc">:</span> 4Number of clusters<span class="sc">:</span> 5Number of clusters<span class="sc">:</span> <span class="dv">6</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[47ms] [39m</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[50ms] [39m</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_celltype</span>(cluster, <span class="st">"cluster"</span>)</span></code></pre></div>
 <p><img src="spacedeconv_clustering_files/figure-html/clusterDeconv-1.png" width="960"></p>
 <p>This function applies the Seurat clustering approach in the
@@ -205,7 +205,7 @@ Vignette</a> for details.</li>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a> [36mℹ [39m Cluster resolution<span class="sc">:</span> <span class="fl">0.5</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[32ms] [39m</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[33ms] [39m</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Invalid name supplied, making object name syntactically valid. New</span></span>
@@ -214,7 +214,7 @@ Vignette</a> for details.</li>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computing nearest neighbor graph</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computing SNN</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m Extracted data for clustering  [38;5;249m[21s] [39m</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m Extracted data for clustering  [38;5;249m[22.6s] [39m</span></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_celltype</span>(cluster, <span class="st">"cluster"</span>) <span class="co"># plot the clustering stored in this object</span></span></code></pre></div>
 <p><img src="spacedeconv_clustering_files/figure-html/clusterExpression-1.png" width="700"></p>
 <p>With an available clustering you can exract the top features for each
