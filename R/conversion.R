@@ -100,13 +100,13 @@ seurat_to_spatialexperiment <- function(seurat) {
 # }
 
 #' Convert SpatialExperiment to AnnData
-anndata_to_spatialexperiment <- function() {
+anndata_to_spatialexperiment <- function(ad) {
   # library(anndata)
   # library(SpatialExperiment)
   # library(DFrame)
 
 
-  ad <- anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
+  #ad <- anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
 
   expr <- Matrix::t(Matrix::Matrix(ad$X, sparse = T))
 
@@ -120,22 +120,39 @@ anndata_to_spatialexperiment <- function() {
     assays = list(counts = expr),
     colData = sample_metadata,
     rowData = gene_metadata,
-    spatialCoords = spatial_coords
+    spatialCoords = spatial_coords,
+    sample_id = as.character(ad$obs$sample)
   )
 
-
-  # image
   images <- names(ad$uns[["spatial"]])
+  df <- NULL
 
-  tmp <- images[1]
+  for (sample in levels(ad$obs$sample)) {
+    matchingSample <- images[grep(sample, images)]
 
-  ad$uns$spatial[[tmp]]
+    lowres <- ad$uns$spatial[[matchingSample]]$images$lowres
+    scalefactor <- ad$uns$spatial[[matchingSample]]$scalefactors$tissue_lowres_scalef
 
-  lowres <- ad$uns$spatial[[tmp]]$images$lowres
+    # spot_dim <- ad$uns$spatial[[tmp]]$scalefactors$spot_diameter_fullres
 
-  scalefactor <- ad$uns$spatial[[tmp]]$scalefactors$tissue_lowres_scalef
+    #plot(as.raster(lowres))
+    if (is.null(df)) {
+      df <- DataFrame(sample_id = sample, image_id = "lowres", data = I(list(SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor)
+    } else {
+      df <- rbind(df, data.frame(sample_id = sample, image_id = "lowres", data = I(list(SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor))
+    }
+  }
 
-  spot_dim <- ad$uns$spatial[[tmp]]$scalefactors$spot_diameter_fullres
+  SpatialExperiment::imgData(spe) <- df
+
+  spatialCoordinates <- ad$obsm$spatial
+
+  colnames(spatialCoordinates) <- c("pxl_col_in_fullres", "pxl_row_in_fullres")
+
+  SpatialExperiment::spatialCoords(spe) <- spatialCoordinates
+
+
+  return(spe)
 }
 
 
