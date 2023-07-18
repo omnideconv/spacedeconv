@@ -99,15 +99,10 @@ seurat_to_spatialexperiment <- function(seurat) {
 #   obj <- Seurat::CreateSeuratObject(counts = , assay = "Spatial", project = )
 # }
 
-#' Convert SpatialExperiment to AnnData
+#' Convert AnnData to SpatialExperiment
+#' @param ad anndata object
+#' @export
 anndata_to_spatialexperiment <- function(ad) {
-  # library(anndata)
-  # library(SpatialExperiment)
-  # library(DFrame)
-
-
-  #ad <- anndata::read_h5ad("~/data/visium_merge_inter_upload.h5ad")
-
   expr <- Matrix::t(Matrix::Matrix(ad$X, sparse = T))
 
   sample_metadata <- ad$obs
