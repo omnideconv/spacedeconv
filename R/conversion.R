@@ -130,7 +130,7 @@ anndata_to_spatialexperiment <- function(ad) {
 
     # spot_dim <- ad$uns$spatial[[tmp]]$scalefactors$spot_diameter_fullres
 
-    #plot(as.raster(lowres))
+    # plot(as.raster(lowres))
     if (is.null(df)) {
       df <- DataFrame(sample_id = sample, image_id = "lowres", data = I(list(SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor)
     } else {
