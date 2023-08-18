@@ -227,7 +227,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, zoom = TRUE,  palette_type = "sequential",
+                               show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "sequential",
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
