@@ -348,7 +348,7 @@ check_path_scaden <- function() {
 #' @param spe SpatialExperiment
 #' @param assay assay to use
 check_datatype <- function(spe, assay = "counts") {
-  if (!is(assay(spe, assay), "dgCMatrix")) {
+  if (!is(assay(spe, assay), "dgCMatrix") && !is(assay(spe, assay), "TENxMatrix")) {
     assay(spe, assay) <- as(assay(spe, assay), "sparseMatrix")
 
     cli::cli_alert_info("Converting data to sparse matrices")
