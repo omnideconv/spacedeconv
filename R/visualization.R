@@ -221,11 +221,12 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param min_abundance minimum abundance of celltypes to be included in the analysis
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, background = NULL, zoom = TRUE, # palette_type = FALSE,
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
@@ -233,7 +234,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                title_size = 30, font_size = 15, legend_size = 20,
                                density = TRUE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
-                               show_legend = TRUE) {
+                               show_legend = TRUE, min_abundance = 0.05) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
