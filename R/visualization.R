@@ -228,7 +228,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, zoom = TRUE,  palette_type = "discrete",
+                               show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "discrete",
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
@@ -757,18 +757,18 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # add color scale
-  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])|| palette_type =="discrete") {
+  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
     # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
     # manual fix !!!
-    if (palette_type == "sequential" || palette_type == "discrete"){
+    if (palette_type == "sequential" || palette_type == "discrete") {
       pal <- function(n) {
         colorspace::sequential_hcl(n, palette, rev = reverse_palette)
       }
-    } else if (palette_type == "diverging"){
+    } else if (palette_type == "diverging") {
       pal <- function(n) {
         colorspace::diverging_hcl(n, palette, rev = reverse_palette)
       }
-    } else if (palette_type == "qualitative"){
+    } else if (palette_type == "qualitative") {
       pal <- function(n) {
         colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
       }
