@@ -269,18 +269,17 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
   # handle min_abundance: set all other to 0
-  df[df<min_abundance] <- 0
+  df[df < min_abundance] <- 0
 
   # ensure min_spot parameter
-  if (min_spot >0){
-
+  if (min_spot > 0) {
     # compute how many spots have >0 values for each celltype
-    n_above_zero <- sapply(df,  function(column){
-      sum(column!=0)
+    n_above_zero <- sapply(df, function(column) {
+      sum(column != 0)
     })
 
     # subset df again if celltypes to sparse
-    df = df[, names(n_above_zero)[n_above_zero>min_spot]]
+    df <- df[, names(n_above_zero)[n_above_zero > min_spot]]
   }
 
 
@@ -288,7 +287,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   res <- colnames(df)[max.col(df)]
 
   # update the rows with all zero rows to specific string
-  res[rowSums(df)==0] <- "Not enough Data"
+  res[rowSums(df) == 0] <- "Not enough Data"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
