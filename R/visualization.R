@@ -205,7 +205,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param background custom background color
 #' @param zoom zoom to the available spots
-# #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
+#' #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 # #' @param limits vector of color scale limits
@@ -228,11 +228,11 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, zoom = TRUE, # palette_type = FALSE,
+                               show_image = FALSE, background = NULL, zoom = TRUE,  palette_type = "discrete",
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
-                               density = TRUE, save = FALSE, path = NULL,
+                               density = FALSE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
                                show_legend = TRUE, min_abundance = 0.01) {
   # checks
@@ -301,10 +301,10 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     sample_id = sample_id, image_id = image_id, background = background, zoom = zoom,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
-    title_size = title_size, palette_type = "discrete",
+    title_size = title_size, palette_type = palette_type,
     font_size = font_size, legend_size = legend_size, density = density,
     save = save, path = path, png_width = png_width, png_height = png_height,
-    title = title, show_legend = show_legend
+    title = title, show_legend = show_legend,
   ))
 }
 
@@ -684,9 +684,10 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
   # check discrete and, if yes, remove the hexagons which should not be plotted
-  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
-    palette_type <- "discrete"
-  }
+
+  # if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
+  #   palette_type <- "discrete"
+  # }
 
   if (palette_type == "discrete") {
     tmp <- as.data.frame(sf_poly)
@@ -756,12 +757,25 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # add color scale
-  if (palette_type == "discrete") {
+  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])|| palette_type =="discrete") {
     # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
     # manual fix !!!
-    pal <- function(n) {
-      colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+    if (palette_type == "sequential" || palette_type == "discrete"){
+      pal <- function(n) {
+        colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+      }
+    } else if (palette_type == "diverging"){
+      pal <- function(n) {
+        colorspace::diverging_hcl(n, palette, rev = reverse_palette)
+      }
+    } else if (palette_type == "qualitative"){
+      pal <- function(n) {
+        colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
+      }
+    } else {
+      print("fail")
     }
+
     p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
   } else if (palette_type == "sequential") {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)

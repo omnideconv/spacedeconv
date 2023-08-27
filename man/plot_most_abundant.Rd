@@ -17,19 +17,20 @@ plot_most_abundant(
   show_image = FALSE,
   background = NULL,
   zoom = TRUE,
+  palette_type = "discrete",
   offset_rotation = FALSE,
   spot_size = 1,
   title_size = 30,
   font_size = 15,
   legend_size = 20,
-  density = TRUE,
+  density = FALSE,
   save = FALSE,
   path = NULL,
   png_width = 1500,
   png_height = 750,
   title = NULL,
   show_legend = TRUE,
-  min_abundance = 0.05
+  min_abundance = 0.01
 )
 }
 \arguments{
@@ -55,7 +56,8 @@ plot_most_abundant(
 
 \item{background}{custom background color}
 
-\item{zoom}{zoom to the available spots}
+\item{zoom}{zoom to the available spots
+#' @param palette_type logical, whether to scale the color palette_type, default = FALSE}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
