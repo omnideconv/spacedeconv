@@ -221,19 +221,20 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param min_abundance minimum abundance of celltypes to be included in the analysis
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "sequential",
+                               show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "discrete",
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
-                               density = TRUE, save = FALSE, path = NULL,
+                               density = FALSE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
-                               show_legend = TRUE) {
+                               show_legend = TRUE, min_abundance = 0.01) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -257,21 +258,36 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     available <- available[!available %in% remove]
   }
 
+  # filter sample from object
   spe <- filter_sample_id(spe, sample_id)
 
-  # create df
+  # create df with data to plot
   df <- as.data.frame(colData(spe))[, available, drop = FALSE]
   df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop = FALSE]
 
   # remove all columns not numeric
   df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
-  res <- colnames(df)[max.col(df)]
+  # handle min_abundance: set all other to 0
+  df[df < min_abundance] <- 0
 
   # ensure min_spot parameter
-  df <- df[, names(table(res)[table(res) >= min_spot])]
+  if (min_spot > 0) {
+    # compute how many spots have >0 values for each celltype
+    n_above_zero <- sapply(df, function(column) {
+      sum(column != 0)
+    })
+
+    # subset df again if celltypes to sparse
+    df <- df[, names(n_above_zero)[n_above_zero > min_spot]]
+  }
+
+
+  # list of the mostAbundant celltype per spot
   res <- colnames(df)[max.col(df)]
 
+  # update the rows with all zero rows to specific string
+  res[rowSums(df) == 0] <- "Not enough Data"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
@@ -288,7 +304,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     title_size = title_size, palette_type = palette_type,
     font_size = font_size, legend_size = legend_size, density = density,
     save = save, path = path, png_width = png_width, png_height = png_height,
-    title = title, show_legend = show_legend
+    title = title, show_legend = show_legend,
   ))
 }
 
@@ -668,9 +684,10 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
   # check discrete and, if yes, remove the hexagons which should not be plotted
-  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
-    palette_type <- "discrete"
-  }
+
+  # if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
+  #   palette_type <- "discrete"
+  # }
 
   if (palette_type == "discrete") {
     tmp <- as.data.frame(sf_poly)
@@ -740,12 +757,25 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # add color scale
-  if (palette_type == "discrete") {
+  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
     # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
     # manual fix !!!
-    pal <- function(n) {
-      colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+    if (palette_type == "sequential" || palette_type == "discrete") {
+      pal <- function(n) {
+        colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+      }
+    } else if (palette_type == "diverging") {
+      pal <- function(n) {
+        colorspace::diverging_hcl(n, palette, rev = reverse_palette)
+      }
+    } else if (palette_type == "qualitative") {
+      pal <- function(n) {
+        colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
+      }
+    } else {
+      print("fail")
     }
+
     p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
   } else if (palette_type == "sequential") {
     p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
