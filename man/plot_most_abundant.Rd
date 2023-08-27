@@ -59,6 +59,8 @@ plot_most_abundant(
 \item{zoom}{zoom to the available spots
 #' @param palette_type logical, whether to scale the color palette_type, default = FALSE}
 
+\item{palette_type}{logical, whether to scale the color palette_type, default = FALSE}
+
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
