@@ -205,7 +205,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param show_image logical, whether to display the image, default = TRUE
 #' @param background custom background color
 #' @param zoom zoom to the available spots
-# #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
+#' @param palette_type logical, whether to scale the color palette_type, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
 # #' @param limits vector of color scale limits
@@ -227,7 +227,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 20, palette = "Mako", # transform_scale = NULL,
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                               show_image = FALSE, background = NULL, zoom = TRUE, # palette_type = FALSE,
+                               show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "sequential",
                                offset_rotation = FALSE, spot_size = 1, # limits = NULL,
                                # smooth = FALSE, smoothing_factor = 1.5,
                                title_size = 30, font_size = 15, legend_size = 20,
@@ -285,7 +285,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     sample_id = sample_id, image_id = image_id, background = background, zoom = zoom,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
-    title_size = title_size, palette_type = "discrete",
+    title_size = title_size, palette_type = palette_type,
     font_size = font_size, legend_size = legend_size, density = density,
     save = save, path = path, png_width = png_width, png_height = png_height,
     title = title, show_legend = show_legend

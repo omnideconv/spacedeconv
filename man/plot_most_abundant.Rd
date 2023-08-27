@@ -17,6 +17,7 @@ plot_most_abundant(
   show_image = FALSE,
   background = NULL,
   zoom = TRUE,
+  palette_type = "sequential",
   offset_rotation = FALSE,
   spot_size = 1,
   title_size = 30,
@@ -55,6 +56,8 @@ plot_most_abundant(
 \item{background}{custom background color}
 
 \item{zoom}{zoom to the available spots}
+
+\item{palette_type}{logical, whether to scale the color palette_type, default = FALSE}
 
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
