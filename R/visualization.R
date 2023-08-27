@@ -234,7 +234,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                title_size = 30, font_size = 15, legend_size = 20,
                                density = TRUE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
-                               show_legend = TRUE, min_abundance = 0.05) {
+                               show_legend = TRUE, min_abundance = 0.01) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -258,21 +258,37 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     available <- available[!available %in% remove]
   }
 
+  # filter sample from object
   spe <- filter_sample_id(spe, sample_id)
 
-  # create df
+  # create df with data to plot
   df <- as.data.frame(colData(spe))[, available, drop = FALSE]
   df <- df[, !names(df) %in% c("in_tissue", "array_row", "array_col", "sample_id"), drop = FALSE]
 
   # remove all columns not numeric
   df <- df[, unlist(lapply(df, is.numeric)), drop = FALSE]
 
-  res <- colnames(df)[max.col(df)]
+  # handle min_abundance: set all other to 0
+  df[df<min_abundance] <- 0
 
   # ensure min_spot parameter
-  df <- df[, names(table(res)[table(res) >= min_spot])]
+  if (min_spot >0){
+
+    # compute how many spots have >0 values for each celltype
+    n_above_zero <- sapply(df,  function(column){
+      sum(column!=0)
+    })
+
+    # subset df again if celltypes to sparse
+    df = df[, names(n_above_zero)[n_above_zero>min_spot]]
+  }
+
+
+  # list of the mostAbundant celltype per spot
   res <- colnames(df)[max.col(df)]
 
+  # update the rows with all zero rows to specific string
+  res[rowSums(df)==0] <- "Not enough Data"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))

@@ -9,7 +9,7 @@ plot_most_abundant(
   method = NULL,
   cell_type = NULL,
   remove = NULL,
-  min_spot = 20,
+  min_spot = 0,
   palette = "Mako",
   sample_id = "sample01",
   image_id = "lowres",
@@ -28,7 +28,8 @@ plot_most_abundant(
   png_width = 1500,
   png_height = 750,
   title = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  min_abundance = 0.05
 )
 }
 \arguments{
@@ -79,6 +80,8 @@ plot_most_abundant(
 \item{title}{set a custom title}
 
 \item{show_legend}{whether to show the legend}
+
+\item{min_abundance}{minimum abundance of celltypes to be included in the analysis}
 }
 \value{
 plot of cell type fractions
