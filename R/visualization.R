@@ -756,31 +756,42 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     p <- p + theme(panel.background = element_blank())
   }
 
-  # add color scale
-  if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
-    # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
-    # manual fix !!!
-    if (palette_type == "sequential" || palette_type == "discrete") {
-      pal <- function(n) {
-        colorspace::sequential_hcl(n, palette, rev = reverse_palette)
-      }
-    } else if (palette_type == "diverging") {
-      pal <- function(n) {
-        colorspace::diverging_hcl(n, palette, rev = reverse_palette)
-      }
-    } else if (palette_type == "qualitative") {
-      pal <- function(n) {
-        colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
-      }
-    } else {
-      print("fail")
-    }
 
-    p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
-  } else if (palette_type == "sequential") {
-    p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
-  } else if (palette_type == "diverging") {
-    p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+  # choose the palette type/coloring
+  if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+    # if (palette_type == "discrete") {
+    #   brewer_palette <- brewer.pal(length(unique(df[[to_plot]])), palette)
+    # } else {
+    #   brewer_palette <- brewer.pal(length(unique(df[[to_plot]])), palette)
+    # }
+    p <- p + scale_fill_brewer(palette = palette) # reverse!
+  } else {
+    # add color scale
+    if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
+      # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
+      # manual fix !!!
+      if (palette_type == "sequential" || palette_type == "discrete") {
+        pal <- function(n) {
+          colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+        }
+      } else if (palette_type == "diverging") {
+        pal <- function(n) {
+          colorspace::diverging_hcl(n, palette, rev = reverse_palette)
+        }
+      } else if (palette_type == "qualitative") {
+        pal <- function(n) {
+          colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
+        }
+      } else {
+        print("fail")
+      }
+
+      p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
+    } else if (palette_type == "sequential") {
+      p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+    } else if (palette_type == "diverging") {
+      p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+    }
   }
 
   # create density plot if requested
