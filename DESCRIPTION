@@ -19,8 +19,6 @@ Imports:
     SingleCellExperiment,
     SpatialExperiment, 
     SummarizedExperiment,
-    Seurat,
-    SeuratObject,
     anndata, 
     edgeR, 
     ggplot2, 
@@ -73,7 +71,9 @@ Suggests:
     xCell, 
     MuSiC, 
     markdown, 
-    EPIC
+    EPIC,
+    Seurat,
+    SeuratObject
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

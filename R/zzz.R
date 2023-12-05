@@ -5,7 +5,9 @@
 NULL
 
 .onLoad <- function(libname, pkgname) {
-  tmp <- utils::capture.output({
+  cli::cli_alert("checking spacedeconv environment and dependencies")
+  suppressWarnings({
+    tmp <- utils::capture.output({
     # Make sure miniconda is installed
     if (!dir.exists(reticulate::miniconda_path())) {
       message("Setting python version in miniconda to be 3.8")
@@ -53,5 +55,6 @@ NULL
     if (!reticulate::py_module_available("cell2location")) {
       reticulate::py_install("cell2location", pip = TRUE)
     }
-  })
+  })})
+
 }
