@@ -40,7 +40,9 @@ Imports:
     reticulate, 
     decoupleR, 
     corrplot, 
-    ggridges
+    ggridges, 
+    testit, 
+    ggpubr
 Suggests: 
     spacexr,
     SPOTlight,
@@ -71,9 +73,7 @@ Suggests:
     Seurat,
     SeuratObject,
     ComplexHeatmap, 
-    psych, 
-    ggpubr, 
-    testit
+    psych
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
