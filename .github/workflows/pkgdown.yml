@@ -41,8 +41,9 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"' # do not install suggests
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown, local::., pak::omnideconv/immunedeconv
           needs: website
+
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
