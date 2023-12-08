@@ -56,3 +56,21 @@ deconv <- spacedeconv::deconvolute(
 ## ----accessColData------------------------------------------------------------
 available_results(deconv)
 
+## ----visualization, fig.width=12, fig.height=12-------------------------------
+# plot all available results: provide the tool as parameter
+# spacedeconv::plot_celltype(deconv,
+#   cell_type = "card",
+#   density = FALSE,
+#   smooth = T,
+#   title_size = 12
+# )
+
+## ----visualization2, fig.width=12, fig.height=12------------------------------
+# ... or plot a specific result
+spacedeconv::plot_celltype(deconv,
+  cell_type = "card_Cancer.Epithelial",
+  density = FALSE,
+  smooth = T,
+  title_size = 12
+)
+
