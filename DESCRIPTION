@@ -18,6 +18,7 @@ Imports:
     remotes,
     SingleCellExperiment,
     SpatialExperiment, 
+    SummarizedExperiment,
     anndata, 
     edgeR, 
     ggplot2, 
