@@ -39,7 +39,9 @@ Imports:
     reticulate, 
     corrplot, 
     ggridges, 
-    testit
+    testit, 
+    decoupleR, 
+    multimode
 Suggests: 
     spacexr,
     SPOTlight,
@@ -54,8 +56,6 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    decoupleR,
-    multimode,
     scuttle,
     grid,
     tidyr,
