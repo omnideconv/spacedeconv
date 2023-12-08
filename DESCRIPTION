@@ -29,7 +29,6 @@ Imports:
     colorspace, 
     sf, 
     ggpubr, 
-    multimode,
     spatstat.geom, 
     spatstat.explore, 
     progress, 
@@ -38,11 +37,9 @@ Imports:
     cli, 
     patchwork, 
     reticulate, 
-    decoupleR, 
     corrplot, 
     ggridges, 
-    testit, 
-    ggpubr
+    testit
 Suggests: 
     spacexr,
     SPOTlight,
@@ -57,10 +54,6 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    DelayedArray, 
-    circlize, 
-    ComplexHeatmap, 
-    grid, 
     decoupleR,
     multimode,
     scuttle,
