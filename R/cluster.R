@@ -8,6 +8,7 @@
 #' @param spmethod spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used
 #' @param pca_dim PCA dimensions to be used for the clustering of expression data - Seurat::FindNeighbors
 #' @param clusres clustering resolution to be used for the clustering of expression data - Seurat::FindClusters
+#' @param ... additional parameters
 
 
 #' @export

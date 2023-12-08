@@ -8,6 +8,7 @@
 #' @param correlation correlation heatmap based on scores
 #' @param localization colocalization and avoidance heatmap
 #' @param matrix return colocalization, avoidance, correlation matrices separately
+#' @param presence_matrix manually input a presence matrix
 #'
 #' @returns cell pair localization heatmap and correlation heatmap
 #'
