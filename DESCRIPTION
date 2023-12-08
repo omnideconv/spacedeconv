@@ -70,7 +70,8 @@ Suggests:
     Seurat,
     SeuratObject,
     ComplexHeatmap, 
-    psych
+    psych, 
+    ggpubr
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
