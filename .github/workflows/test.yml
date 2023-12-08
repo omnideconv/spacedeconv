@@ -52,11 +52,11 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Install pak
-        run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
+      #- name: Install pak
+      #  run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
 
-      - name: harmony
-        run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
+      #- name: harmony
+      #  run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
 
       # - name: BiocManager
       #   run: Rscript -e "pak::pkg_install('BiocManager')"
@@ -64,13 +64,13 @@ jobs:
       # - name: Giotto deps
       #   run: Rscript -e "BiocManager::install(c('lfa', 'SPARK', 'trendsceek'))"
 
-      - name: Giotto
-        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
+      #- name: Giotto
+      #  run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"' # do not install suggests
-          extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
+          extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, pak::omnideconv/immunedeconv, local::.
           needs: check
           error-on: '"error"'
 
