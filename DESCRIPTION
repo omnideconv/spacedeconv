@@ -39,7 +39,8 @@ Imports:
     patchwork, 
     reticulate, 
     decoupleR, 
-    corrplot
+    corrplot, 
+    ggridges
 Suggests: 
     spacexr,
     SPOTlight,
@@ -72,8 +73,7 @@ Suggests:
     ComplexHeatmap, 
     psych, 
     ggpubr, 
-    testit, 
-    ggridges
+    testit
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
