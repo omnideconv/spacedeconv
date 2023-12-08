@@ -25,4 +25,3 @@ metacells <- compute_metacells(filtered, suspect_genes,
 
 ## -----------------------------------------------------------------------------
 metacells
-

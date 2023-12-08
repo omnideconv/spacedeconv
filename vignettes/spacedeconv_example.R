@@ -73,4 +73,3 @@ spacedeconv::plot_celltype(deconv,
   smooth = T,
   title_size = 12
 )
-

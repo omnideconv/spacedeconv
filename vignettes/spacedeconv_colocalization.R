@@ -24,4 +24,3 @@ spacedeconv::cell_pair_localization(deconv, method = "epic", cell_type_A = "epic
 
 ## -----------------------------------------------------------------------------
 spacedeconv::ripleys_k(deconv, method = "epic", cell_type = "epic_B.cell")
-

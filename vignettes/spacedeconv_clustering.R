@@ -12,4 +12,3 @@ data("spatial_data_3")
 spe <- preprocess(spatial_data_3)
 spe <- spacedeconv::normalize(spe, method = "cpm")
 deconv <- deconvolute(spe, method = "epic", assay_sc = "cpm")
-

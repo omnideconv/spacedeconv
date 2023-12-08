@@ -88,4 +88,3 @@ spacedeconv::plot_celltype(deconv,
 
 ## ----aggregation, eval=FALSE--------------------------------------------------
 #  spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
-

@@ -6,10 +6,10 @@ knitr::opts_chunk$set(
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  install.packages("pak")
-#  
+#
 #  # minimal installation
 #  pak::pkg_install("omnideconv/spacedeconv")
-#  
+#
 #  # complete installation
 #  pak::pkg_install("omnideconv/spacedeconv", dependencies = TRUE)
 
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## ----normalization, eval=FALSE------------------------------------------------
 #  spe <- spacedeconv::normalize(spe, method = "cpm")
-#  
+#
 #  # specify expression assay to use
 #  signature <- spacedeconv::build_model(spe,
 #    method = "quantiseq",
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(
 #    signature,
 #    method = "spotlight"
 #  )
-#  
+#
 #  # return deconvolution results in table form
 #  result <- spacedeconv::deconvolute(
 #    spatial_object,
@@ -53,7 +53,6 @@ knitr::opts_chunk$set(
 #  # sample does refer to the first column of ColData(spe)
 #  # for cell_type input a celltype present in the deconvolution result
 #  spacedeconv::plot_celltype(spe, cell_type = "spotlight_B.cells")
-#  
+#
 #  # umi count
 #  spacedeconv::plot_umi_count(spe)
-
