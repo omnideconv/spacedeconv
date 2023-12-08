@@ -37,6 +37,8 @@ cluster(
 \item{pca_dim}{PCA dimensions to be used for the clustering of expression data - Seurat::FindNeighbors}
 
 \item{clusres}{clustering resolution to be used for the clustering of expression data - Seurat::FindClusters}
+
+\item{...}{additional parameters}
 }
 \description{
 Cluster spacedeconv results
