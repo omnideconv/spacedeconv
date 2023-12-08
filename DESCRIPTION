@@ -71,7 +71,9 @@ Suggests:
     SeuratObject,
     ComplexHeatmap, 
     psych, 
-    ggpubr
+    ggpubr, 
+    testit, 
+    ggridges
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
