@@ -55,11 +55,9 @@ NULL
       if (!reticulate::py_module_available("cell2location")) {
         reticulate::py_install("cell2location", pip = TRUE)
       }
-
-
     })
   })
 
   # bug fix
-  Csparse_validate = "CsparseMatrix_validate"
+  Csparse_validate <- "CsparseMatrix_validate"
 }
