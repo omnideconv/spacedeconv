@@ -4,7 +4,13 @@
 \alias{preprocess}
 \title{Preprocess SingleCellExperiments and Spatial Experiments}
 \usage{
-preprocess(object, min_umi = 500, max_umi = NULL, assay = "counts")
+preprocess(
+  object,
+  min_umi = 500,
+  max_umi = NULL,
+  assay = "counts",
+  remove_mito = FALSE
+)
 }
 \arguments{
 \item{object}{SingleCellExperiment or SpatialExperiment, if AnnData or Seurat it will be converted}
@@ -14,6 +20,8 @@ preprocess(object, min_umi = 500, max_umi = NULL, assay = "counts")
 \item{max_umi}{maximimum umi}
 
 \item{assay}{assay to use for calculation, you can use any assay but counts is recommended}
+
+\item{remove_mito}{remove mitochondria genes}
 }
 \description{
 Preprocess SingleCellExperiments and Spatial Experiments

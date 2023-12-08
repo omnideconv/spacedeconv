@@ -56,8 +56,7 @@ plot_most_abundant(
 
 \item{background}{custom background color}
 
-\item{zoom}{zoom to the available spots
-#' @param palette_type logical, whether to scale the color palette_type, default = FALSE}
+\item{zoom}{zoom to the available spots}
 
 \item{palette_type}{logical, whether to scale the color palette_type, default = FALSE}
 
