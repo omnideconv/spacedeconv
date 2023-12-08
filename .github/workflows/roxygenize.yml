@@ -33,6 +33,7 @@ jobs:
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          dependencies: '"hard"' # do not install suggests
           extra-packages: any::roxygen2
           needs: roxygen2
 
