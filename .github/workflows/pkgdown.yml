@@ -41,7 +41,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"' # do not install suggests
-          extra-packages: any::pkgdown, local::., omnideconv/immunedeconv, Seurat
+          extra-packages: any::pkgdown, local::., omnideconv/immunedeconv, seurat
           needs: website
 
       - name: Build site
