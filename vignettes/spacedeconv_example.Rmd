@@ -16,15 +16,13 @@ knitr::opts_chunk$set(
 spacedeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total spacedeconv gives access to `r length(spacedeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
 library(spacedeconv)
+library(SpatialExperiment)
 spacedeconv::deconvolution_methods
 ```
 
 # Sample Data
 For this tutorial we will use one of spacedeconvs sample dataset and the deconvolution algorithm "SCDC".
 ```{r loadData, message=FALSE, eval = FALSE}
-library(spacedeconv)
-library(SpatialExperiment)
-
 data("single_cell_data_3")
 data("spatial_data_3")
 ```
