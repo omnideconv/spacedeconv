@@ -27,7 +27,7 @@ ad <- spe_to_ad(single_cell_data_1) # convert to anndata
 ```
 
 ```{r}
-if (!reticulate::py_module_available("metacells")){
+if (!reticulate::py_module_available("metacells")) {
   stop("Python error!")
 }
 ```
