@@ -36,7 +36,7 @@
 #' @examples
 #' # Example usage
 #' data("spatial_data_3")
-#' spe_clustered <- cluster(spatial_data_3, method = "kmeans", data = "expression")
+#' spe_clustered <- spacedeconv::cluster(spatial_data_3, method = "kmeans", data = "expression")
 #'
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
