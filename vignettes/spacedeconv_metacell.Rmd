@@ -26,7 +26,6 @@ single_cell_data_1
 ad <- spe_to_ad(single_cell_data_1) # convert to anndata
 ```
 
-
 The main workflow consists of 2 mandatory and 2 optional functions:
 
 * Filter Dataset
