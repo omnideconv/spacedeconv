@@ -22,7 +22,7 @@ spacedeconv::deconvolution_methods
 
 # Sample Data
 For this tutorial we will use one of spacedeconvs sample dataset and the deconvolution algorithm "SCDC".
-```{r loadData, message=FALSE, eval = FALSE}
+```{r loadData, message=FALSE, eval = TRUE}
 data("single_cell_data_3")
 data("spatial_data_3")
 ```
