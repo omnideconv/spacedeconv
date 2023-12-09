@@ -38,7 +38,7 @@ single_cell_data_3
 
 # for performance reasons we are subsampling the data
 
-#single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
+# single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
 ```
 
 
@@ -72,7 +72,7 @@ signature <- spacedeconv::build_model(
 ```
 
 ```{r}
-signature  = readRDS(system.file("extdata", "signature_dwls.rds", package = "spacedeconv"))
+signature <- readRDS(system.file("extdata", "signature_dwls.rds", package = "spacedeconv"))
 ```
 
 
@@ -96,7 +96,7 @@ deconv <- spacedeconv::deconvolute(
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-deconv = readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
 ```
 
 # Visualization 
@@ -115,7 +115,7 @@ For each Spot the estimated cell fraction is available as object annotation and 
 spacedeconv::plot_celltype(deconv,
   cell_type = "dwls_B.cells",
   density = FALSE,
-  smooth =T,
+  smooth = T,
   title_size = 12
 )
 ```
