@@ -39,14 +39,14 @@ This function applies the Seurat clustering approach in the background. Set data
 * clusres: Cluster resolution, check the [Seurat Vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) for details.
 * pca_dim: Number of PCA dimensions to use
 
-```{r clusterExpression}
-cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
-plot_celltype(cluster, "cluster", density = F) # plot the clustering stored in this object
+```{r clusterExpression, eval=FALSE}
+#cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
+#plot_celltype(cluster, "cluster", density = F) # plot the clustering stored in this object
 ```
 
 
 With an available clustering you can exract the top features for each cluster. Here we extract the top features for each cluster based on expression, but we want the top features from the deconvolution results from this area. See the associated clusters in the plot above. 
 
 ```{r topFeatures}
-get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "epic")
+#get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "epic")
 ```
