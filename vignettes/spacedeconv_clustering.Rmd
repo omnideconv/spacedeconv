@@ -17,13 +17,38 @@ To gain more insights into a tissues composition the clustering function can be 
 
 ```{r}
 library(spacedeconv)
+library(SpatialExperiment)
+
+data("single_cell_data_3")
 data("spatial_data_3")
 ```
 
-```{r deconv}
-spe <- preprocess(spatial_data_3)
-spe <- spacedeconv::normalize(spe, method = "cpm")
+```{r deconv, eval=FALSE}
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
+single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 deconv <- deconvolute(spe, method = "epic", assay_sc = "cpm")
+```
+
+```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
+signature <- spacedeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
+)
+```
+
+```{r deconvolution, eval=FALSE, message=FALSE, warning=FALSE}
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls",
+  signature = signature,
+  assay_sp = "cpm"
+)
 ```
 
 First we show how to cluster deconvolution data. Set the data parameter to "deconvolution" and provide the deconvolution tool you used. You can further set the following parameters: 
@@ -39,14 +64,21 @@ This function applies the Seurat clustering approach in the background. Set data
 * clusres: Cluster resolution, check the [Seurat Vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) for details.
 * pca_dim: Number of PCA dimensions to use
 
+```{r, eval=FALSE}
+cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
+```
+
+```{r}
+cluster = readRDS(system.file("extdata", "cluster.rds", package = "spacedeconv"))
+```
+
 ```{r clusterExpression, eval=FALSE}
-# cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
-# plot_celltype(cluster, "cluster", density = F) # plot the clustering stored in this object
+plot_celltype(cluster, "cluster", density = F) # plot the clustering stored in this object
 ```
 
 
 With an available clustering you can exract the top features for each cluster. Here we extract the top features for each cluster based on expression, but we want the top features from the deconvolution results from this area. See the associated clusters in the plot above. 
 
 ```{r topFeatures}
-# get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "epic")
+get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "dwls")
 ```

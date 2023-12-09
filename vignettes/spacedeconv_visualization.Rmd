@@ -9,21 +9,24 @@ vignette: >
 
 To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `EPIC`. Note that EPIC requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
 
-```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
+```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 library(spacedeconv)
-library(SpatialExperiment)
 data("spatial_data_3")
 
 spe <- preprocess(spatial_data_3)
 spe <- spacedeconv::normalize(spe, method = "cpm")
 
-
 deconv <- spacedeconv::deconvolute(
   spe,
-  method = "epic",
+  method = "quantiseq",
   assay_sp = "cpm"
 )
 ```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv = readRDS(system.file("extdata", "deconv_quantiseq.rds", package = "spacedeconv"))
+```
+
 
 # Available Visualizations
 
@@ -39,7 +42,7 @@ At the moment spacedeconv offers two visualization functions.
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_celltype(deconv, cell_type = "epic_B.cell", density = F, smooth = T)
+spacedeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell", density = F, smooth = T)
 ```
 
 ## 2. `plot_gene()`
@@ -65,12 +68,12 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `remove` vector of celltypes to be removed from the plot
 ```{r plotMostAbundant}
 spacedeconv::plot_most_abundant(deconv,
-  method = "epic",
+  method = "quantiseq",
   density = F,
   title_size = 25,
   legend_size = 15,
   font_size = 10,
-  remove = c("epic_uncharacterized.cell")
+  remove = c("quantiseq_uncharacterized.cell")
 )
 ```
 
@@ -80,7 +83,7 @@ To access the presence of a single cell-type use the thresholded `plot_celltype_
 
 ```{r plotCelltype}
 spacedeconv::plot_celltype_presence(deconv,
-  cell_type = "epic_B.cell",
+  cell_type = "quantiseq_B.cell",
   threshold = 0.05,
   show_image = T
 )
@@ -91,9 +94,9 @@ Use this function to plot the ratio of deconvolution results from two cell-types
 
 ```{r plotComparison}
 spacedeconv::plot_comparison(deconv,
-  cell_type_1 = "epic_T.cell.CD4.",
-  cell_type_2 = "epic_T.cell.CD8.",
-  palette = "Vik",
+  cell_type_1 = "quantiseq_T.cell.CD4...non.regulatory.", # red
+  cell_type_2 = "quantiseq_T.cell.CD8.", # blue
+  palette = "Blue-Red",
   density = F,
   smooth = T,
 )
@@ -132,7 +135,7 @@ With this parameter the expression values can be smoothed to simplify pattern re
 
 ```{r}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "epic_B.cell",
+  cell_type = "quantiseq_B.cell",
   smooth = T,
   smoothing_factor = 1.5,
   density = FALSE
@@ -144,7 +147,7 @@ You can add a density distribution by setting `density = TRUE`. The red line cor
 
 ```{r}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "epic_B.cell",
+  cell_type = "quantiseq_B.cell",
   smooth = TRUE,
   density = TRUE,
   title_size = 20,
@@ -158,7 +161,7 @@ You can save a plot by setting `save=TRUE`. Specify a file path with the `path` 
 
 ```{r, eval= FALSE}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "epic_B.cell",
+  cell_type = "quantiseq_B.cell",
   smooth = TRUE,
   density = TRUE,
   save = TRUE,
