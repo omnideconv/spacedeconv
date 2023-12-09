@@ -66,6 +66,6 @@ results, expression data, pathway, or transcription factors (TF) analyses.
 \examples{
 # Example usage
 data("spatial_data_3")
-spe_clustered <- cluster(spatial_data_3, method = "kmeans", data = "expression")
+spe_clustered <- spacedeconv::cluster(spatial_data_3, method = "kmeans", data = "expression")
 
 }
