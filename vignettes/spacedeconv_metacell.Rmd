@@ -26,6 +26,13 @@ single_cell_data_1
 ad <- spe_to_ad(single_cell_data_1) # convert to anndata
 ```
 
+```{r}
+if (!reticulate::py_module_available("metacells")){
+  stop("Python error!")
+}
+```
+
+
 The main workflow consists of 2 mandatory and 2 optional functions:
 
 * Filter Dataset

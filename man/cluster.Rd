@@ -63,9 +63,3 @@ Performs clustering on data obtained from a SpatialExperiment object using
 specified methods. This function allows clustering based on deconvolution
 results, expression data, pathway, or transcription factors (TF) analyses.
 }
-\examples{
-# Example usage
-data("spatial_data_3")
-spe_clustered <- spacedeconv::cluster(spatial_data_3, method = "kmeans", data = "expression")
-
-}

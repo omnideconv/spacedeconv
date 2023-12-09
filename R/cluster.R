@@ -33,11 +33,6 @@
 #' @return The modified SpatialExperiment object with clustering results.
 #' @export
 #'
-#' @examples
-#' # Example usage
-#' data("spatial_data_3")
-#' spe_clustered <- spacedeconv::cluster(spatial_data_3, method = "kmeans", data = "expression")
-#'
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
                     data = c("deconvolution", "expression", "pathway", "tf"),
@@ -84,13 +79,13 @@ cluster <- function(spe,
     seurat_obj <- SeuratObject::CreateSeuratObject(
       counts = expression_data,
       spatial = spatial_coordinates,
-      project = "ST",
-      assay = "Spatial"
+      project = "ST"#,
+      #assay = "Spatial"
     )
 
     # normalize spatial counts
     seurat_obj <- Seurat::SCTransform(seurat_obj,
-      assay = "Spatial",
+      #assay = "Spatial",
       verbose = FALSE
     )
 
