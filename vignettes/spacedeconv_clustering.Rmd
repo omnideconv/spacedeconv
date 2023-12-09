@@ -69,7 +69,7 @@ cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
 ```
 
 ```{r}
-cluster = readRDS(system.file("extdata", "cluster.rds", package = "spacedeconv"))
+cluster <- readRDS(system.file("extdata", "cluster.rds", package = "spacedeconv"))
 ```
 
 ```{r clusterExpression, eval=FALSE}

@@ -24,7 +24,7 @@ deconv <- spacedeconv::deconvolute(
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-deconv = readRDS(system.file("extdata", "deconv_quantiseq.rds", package = "spacedeconv"))
+deconv <- readRDS(system.file("extdata", "deconv_quantiseq.rds", package = "spacedeconv"))
 ```
 
 

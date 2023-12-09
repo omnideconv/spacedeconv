@@ -62,7 +62,7 @@ metacells <- compute_metacells(filtered, suspect_genes,
 ```
 
 ```{r}
-metacells = readRDS(system.file("extdata", "metacells.rds", package = "spacedeconv"))
+metacells <- readRDS(system.file("extdata", "metacells.rds", package = "spacedeconv"))
 ```
 
 
