@@ -6,6 +6,9 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
   cli::cli_alert("checking spacedeconv environment and dependencies")
+
+  sink("/dev/null")
+
   suppressWarnings({
     tmp <- utils::capture.output({
       # Make sure miniconda is installed
@@ -60,4 +63,6 @@ NULL
 
   # bug fix
   Csparse_validate <- "CsparseMatrix_validate"
+
+  sink()
 }
