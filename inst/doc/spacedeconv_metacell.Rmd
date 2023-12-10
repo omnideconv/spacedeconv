@@ -1,0 +1,75 @@
+---
+title: "Metacell"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Metacell}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Building cell-type specific expression signatures from annotated single-cell data can be time comsuming. To reduce resource requirements spacedeconv contains access to metacell2. The software is able to reduce the dataset by computing robust "metacells" as a mixture of similar cells from the originating single cell dataset. This approach can improve the data input size by the factor 100. 
+
+In the following the metacell functions of spacedeconv are outlined and integrated in a workflow. 
+
+We use spacedeconvs sample data for this analysis. Since Metacell is python based we need to convert the SingleCellExperiment to an AnnData object. The original dataset contains 5789 cells. 
+```{r}
+library(spacedeconv)
+library(SpatialExperiment)
+data("single_cell_data_1")
+single_cell_data_1
+ad <- spe_to_ad(single_cell_data_1) # convert to anndata
+```
+
+The main workflow consists of 2 mandatory and 2 optional functions:
+
+* Filter Dataset
+* (optional) Compute forbidden genes and modules
+* (optional) Extract forbidden genes from modules
+* Compute Metacells
+
+## Clean Genes and Cells
+The first step filters the dataset to remove low quality genes and cells. It is possible to manually remove genes from the dataset and set specific UMI cutoffs. For more instructions please view the functions documentation.
+```{r clean, eval=FALSE}
+filtered <- clean_genes_and_cells(ad)
+```
+## (optional) compute forbidden genes
+This function finds genes in the dataset which should not be included in the metacells and are calculated from hardcoded gene patterns. The function returns a list of genes which can be used as input for the metacell computation step. In addition gene modules are calculated and stored in the single cell object which is used in the third step of this workflow. 
+
+```{r, eval=FALSE}
+suspect_genes <- compute_forbidden_genes(filtered)
+```
+
+## (optional) extract forbidden genes from gene modules
+In this functions the genes from unsuited gene modules are extracted. You just have to provide a list of unsuited gene modules and the function returns an improved list of forbidden genes which can be used as input for the last step in this workflow.
+
+### TODO
+here will be plots and instructions.
+
+## Compute Metacells 
+This function uses the filtered single cell data and optional forbidden genes to calculate metacells. Since metacells don't have a cell type annotation we reannotate the metacells based on the original single cell data using the cell type column name you have to provide. It is further possible to select an AbundanceScore to further subset the metacells. The Abundance Score quantifies the purity of a metacells, namely the percentage of the "most Abundant cell" in the metacell compared to all cells. Not every cell merged to a metacell is of the same cell type in the original dataset. Using the Abundance Score we only keep metacells with more than 90% purity but other values can be used as well. 
+
+```{r, eval=FALSE}
+metacells <- compute_metacells(filtered, suspect_genes,
+  cell_type_col = "celltype_major",
+  abundance_score = 0.9
+)
+```
+
+```{r}
+metacells <- readRDS(system.file("extdata", "metacells.rds", package = "spacedeconv"))
+```
+
+
+# The result
+
+The Input dataset was reduced in size drastically and now contains 30 cells with robust expression information. The new celltype annotation is stored in the "celltype" column. The column "grouped" contains the number of cells merged in this metacell while the "percentage" column stores the abundanceScore of this metacell. 
+
+```{r}
+metacells
+```

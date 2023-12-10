@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #    method = "dwls",
 #    cell_type_col = "celltype_major",
 #  )
-#
+#  
 #  # some methods require batch_id information as well
 #  sigature <- build_model(single_cell_data_1,
 #    method = "scdc",
@@ -36,6 +36,7 @@ knitr::opts_chunk$set(
 
 ## ----deconvolution, eval = FALSE----------------------------------------------
 #  spe <- normalize(spe, method = "cpm")
-#
+#  
 #  # make sure to use cpm assay in deconvolution step
 #  deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
+

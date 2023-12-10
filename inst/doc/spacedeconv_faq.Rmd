@@ -1,0 +1,42 @@
+---
+title: "FAQ"
+output: rmarkdown::html_vignette
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{FAQ}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+# FAQ
+
+### My SpatialExperiment contains ENSEMBL IDs. Can i still perform deconvolution? 
+It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment `rowData()` for available annotation to overwrite ENSEMBL IDs. In most cases this can be solved by using the following code: 
+
+```{r, eval = FALSE}
+rownames(spe) <- rowData(spe)$symbol
+```
+
+
+### How can i see which deconvolution results are available in my object?
+You can use `available_results(object)` or access `names(colData(object))` to see which deconvolution results are available. 
+
+### The spacedeconv plots contain a lot of white spots
+When reading raw spatial data the SpatialExperiment contains expression information for all spots, even if they are not located over tissue. Remove those spots with the following code 
+```{r, eval=FALSE}
+spe <- spe[, colData(spe)$in_tissue == TRUE]
+```
+
+### The Visium Slide and the spatial data are not rotated in the same direction
+The SpatialExperiment wrapper includes function to rotate/mirror the image. More information can be found in the Visualization Vignette or the SpatialExperiment Documentation. 
+
+### The hexagons in my plots are rotated and don't give an even appearance
+Your Visium slide might be aligned incorrectly. Try rotating the image or use `offset_rotation=TRUE` as a parameter in the plotting function.
+
+### Which deconvolution tools are available?
+This list includes the methods name and the internally used tokens. More detailed descriptions of each method can be found at the end of this vignette. 
+```{r availableMethods}
+spacedeconv::deconvolution_methods
+```
+
+# References

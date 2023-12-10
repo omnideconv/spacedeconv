@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>FAQ</title>
+<style type="text/css">
+/**
+ * Prism.s theme ported from highlight.js's xcode style
+ */
+pre code {
+  padding: 1em;
+}
+.token.comment {
+  color: #007400;
+}
+.token.punctuation {
+  color: #999;
+}
+.token.tag,
+.token.selector {
+  color: #aa0d91;
+}
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #1c00cf;
+}
+.token.property,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #c41a16;
+}
+.token.inserted {
+  background-color: #ccffd8;
+}
+.token.deleted {
+  background-color: #ffebe9;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #9a6e3a;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #836c28;
+}
+.token.function,
+.token.class-name {
+  color: #DD4A68;
+}
+.token.regex,
+.token.important,
+.token.variable {
+  color: #5c2699;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+</style>
+<style type="text/css">
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+body, .footnotes, code { font-size: .9em; }
+li li { font-size: .95em; }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+pre, img { max-width: 100%; }
+pre, pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre code {
+  display: block;
+  overflow-x: auto;
+}
+code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
+:not(pre) > code, code[class] { background-color: #F8F8F8; }
+code.language-undefined, pre > code:not([class]) {
+  background-color: inherit;
+  border: 1px solid #eee;
+}
+table {
+  margin: auto;
+  border-top: 1px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+thead, tfoot, tr:nth-child(even) { background: #eee; }
+blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 1em;
+  border-left: 0.5em solid #eee;
+}
+hr, .footnotes::before { border: 1px dashed #ddd; }
+.frontmatter { text-align: center; }
+#TOC .numbered li { list-style: none; }
+#TOC .numbered { padding-left: 0; }
+#TOC .numbered ul { padding-left: 1em; }
+table, .body h2 { border-bottom: 1px solid #666; }
+.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
+.footnote-ref a::before { content: "["; }
+.footnote-ref a::after { content: "]"; }
+.footnotes::before {
+  content: "";
+  display: block;
+  max-width: 20em;
+}
+
+@media print {
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+  tr, img { page-break-inside: avoid; }
+}
+@media only screen and (min-width: 992px) {
+  pre { white-space: pre; }
+}
+</style>
+</head>
+<body>
+<div class="include-before">
+</div>
+<div class="frontmatter">
+<div class="title"><h1>FAQ</h1></div>
+<div class="author"><h2></h2></div>
+<div class="date"><h3></h3></div>
+</div>
+<div class="body">
+<h1 id="faq">FAQ</h1>
+<h3 id="my-spatialexperiment-contains-ensembl-ids-can-i-still-perform-deconvolution">My SpatialExperiment contains ENSEMBL IDs. Can i still perform deconvolution?</h3>
+<p>It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment <code>rowData()</code> for available annotation to overwrite ENSEMBL IDs. In most cases this can be solved by using the following code:</p>
+<pre><code class="language-r">rownames(spe) &lt;- rowData(spe)$symbol
+</code></pre>
+<h3 id="how-can-i-see-which-deconvolution-results-are-available-in-my-object">How can i see which deconvolution results are available in my object?</h3>
+<p>You can use <code>available_results(object)</code> or access <code>names(colData(object))</code> to see which deconvolution results are available.</p>
+<h3 id="the-spacedeconv-plots-contain-a-lot-of-white-spots">The spacedeconv plots contain a lot of white spots</h3>
+<p>When reading raw spatial data the SpatialExperiment contains expression information for all spots, even if they are not located over tissue. Remove those spots with the following code</p>
+<pre><code class="language-r">spe &lt;- spe[, colData(spe)$in_tissue == TRUE]
+</code></pre>
+<h3 id="the-visium-slide-and-the-spatial-data-are-not-rotated-in-the-same-direction">The Visium Slide and the spatial data are not rotated in the same direction</h3>
+<p>The SpatialExperiment wrapper includes function to rotate/mirror the image. More information can be found in the Visualization Vignette or the SpatialExperiment Documentation.</p>
+<h3 id="the-hexagons-in-my-plots-are-rotated-and-don-t-give-an-even-appearance">The hexagons in my plots are rotated and don’t give an even appearance</h3>
+<p>Your Visium slide might be aligned incorrectly. Try rotating the image or use <code>offset_rotation=TRUE</code> as a parameter in the plotting function.</p>
+<h3 id="which-deconvolution-tools-are-available">Which deconvolution tools are available?</h3>
+<p>This list includes the methods name and the internally used tokens. More detailed descriptions of each method can be found at the end of this vignette.</p>
+<pre><code class="language-r">spacedeconv::deconvolution_methods
+</code></pre>
+<pre><code>##             RCTD        SPOTlight             CARD      spatialDWLS 
+##           &quot;rctd&quot;      &quot;spotlight&quot;           &quot;card&quot;    &quot;spatialdwls&quot; 
+##    cell2location        AutoGeneS       BayesPrism           Bisque 
+##  &quot;cell2location&quot;      &quot;autogenes&quot;     &quot;bayesprism&quot;         &quot;bisque&quot; 
+##          BSeq-sc       CIBERSORTx            CDSeq              CPM 
+##         &quot;bseqsc&quot;     &quot;cibersortx&quot;          &quot;cdseq&quot;            &quot;cpm&quot; 
+##             DWLS             MOMF            MuSiC           Scaden 
+##           &quot;dwls&quot;           &quot;momf&quot;          &quot;music&quot;         &quot;scaden&quot; 
+##             SCDC       MCPcounter             EPIC        quanTIseq 
+##           &quot;scdc&quot;    &quot;mcp_counter&quot;           &quot;epic&quot;      &quot;quantiseq&quot; 
+##            xCell        CIBERSORT CIBERSORT (abs.)            TIMER 
+##          &quot;xcell&quot;      &quot;cibersort&quot;  &quot;cibersort_abs&quot;          &quot;timer&quot; 
+##     ConsensusTME             ABIS         ESTIMATE      mMCPcounter 
+##  &quot;consensus_tme&quot;           &quot;abis&quot;       &quot;estimate&quot;   &quot;mmcp_counter&quot; 
+##        seqImmuCC              DCQ             BASE 
+##      &quot;seqimmucc&quot;            &quot;dcq&quot;           &quot;base&quot;
+</code></pre>
+<h1 id="references">References</h1>
+</div>
+<div class="include-after">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+</body>
+</html>

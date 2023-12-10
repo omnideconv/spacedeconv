@@ -1,0 +1,129 @@
+---
+title: "Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+spacedeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total spacedeconv gives access to `r length(spacedeconv::deconvolution_methods)` deconvolution methods: 
+```{r echo=FALSE}
+library(spacedeconv)
+library(SpatialExperiment)
+spacedeconv::deconvolution_methods
+```
+
+# Sample Data
+For this tutorial we will use one of spacedeconvs sample dataset and the deconvolution algorithm "SCDC".
+```{r loadData, message=FALSE, eval = TRUE}
+data("single_cell_data_3")
+data("spatial_data_3")
+```
+
+
+# Preprocessing and Normalization
+To get a first insight into the data we type the dataset name into the terminal: 
+
+```{r viewData, eval=FALSE}
+single_cell_data_3
+
+# for performance reasons we are subsampling the data
+
+# single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
+```
+
+
+We can see that the single-cell data is available as a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html). In total this dataset includes expression values from 29733 genes and 7986 cells. It can further be seen that cell type information is available in `colData` where cell related annotation is stored. 
+
+As the next step we normalize the data as `cpm` ("Counts Per Million"). The normalization is stored as an additional assay in the single-cell object. 
+
+```{r normalization, warning=FALSE, eval=FALSE}
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
+single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+```
+# Build Model
+
+To build a model we need to provide a single cell expression object annotated with cell type information. Let's have a look into the object to see which annotation is available. 
+```{r viewData3}
+names(colData(single_cell_data_3))
+``` 
+
+There are three different resolutions of cell type annotation available. For this tutorial we will choose `"celltype_major"` as cell type  annotation which includes 9 different cell-types. 
+
+Next we can calculate a signature using the annotated single-data and the deconvolution tool "spatialDWLS". 
+```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
+signature <- spacedeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
+)
+```
+
+```{r}
+signature <- readRDS(system.file("extdata", "signature_dwls.rds", package = "spacedeconv"))
+```
+
+
+The signature contains expression values for all celltypes and a subset of distinctly expressed genes. The following example shows the first 10 rows of the signature calculated in the previous step. 
+```{r, eval=TRUE}
+knitr::kable(round(signature[1:10, ], 4))
+```
+
+
+# Deconvolution
+To deconvolute the Visium slide we use the signature we just calculated. Depending on the selected deconvolution tool further parameters need to be passed, in this case `cell_type_col` and `batch_id_col` as well as the scRNA-seq reference dataset. 
+```{r deconvolution, eval=FALSE, message=FALSE, warning=FALSE}
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls",
+  signature = signature,
+  assay_sp = "cpm"
+)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+```
+
+# Visualization 
+
+The deconvolution results are stored in the spatial object to simplify visualizations. spacedeconv offers 6 visualization functions with different scopes, further explained in the visualization [vignette](spacedeconv_visualization.html).
+
+We can see the available deconvolution results by using `available_results(deconv)` or by accessing the objects `colData`: 
+
+```{r accessColData}
+available_results(deconv)
+```
+For each Spot the estimated cell fraction is available as object annotation and can be used for visualizations. 
+
+```{r visualization, fig.width=12, fig.height=12}
+# plot all available results: provide the tool as parameter
+spacedeconv::plot_celltype(deconv,
+  cell_type = "dwls_B.cells",
+  density = FALSE,
+  smooth = T,
+  title_size = 12
+)
+```
+
+```{r visualization2, fig.width=12, fig.height=12}
+# ... or plot a specific result
+# spacedeconv::plot_celltype(deconv,
+#   cell_type = "card_Cancer.Epithelial",
+#   density = FALSE,
+#   smooth = T,
+#   title_size = 12
+# )
+```

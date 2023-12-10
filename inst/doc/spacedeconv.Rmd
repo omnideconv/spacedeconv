@@ -1,0 +1,107 @@
+---
+title: "Getting started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# spacedeconv 
+spacedeconv is a unified interface to `r length(spacedeconv::deconvolution_methods)` deconvolution tools with focus on spatial transcriptomics datasets. In total 17 second-generation deconvolution tools are included, enabling deconvolution of any cell types when single-cell reference data is available. Additionally 10 first-generation tools, which are focussing on deconvolution of immune cells, are available as well as 4 first-generation methods optimised for mouse data. These methods don't require scRNA-seq data to perform deconvolution as they utilize precomputed and verified signatures. 
+
+# Installation 
+
+There are two ways to install `spacedeconv`:
+
+* The _minimal_ installation installs only the dependencies required for the basic functionalities. All deconvolution methods need to be installed on-demand. 
+* The _complete_ installtation installs all dependencies including all deconvolution methods. This may take a considerable time. 
+
+Since not all dependencies are on CRAN or Bioconductor, `spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager: 
+
+```{r, eval=FALSE}
+install.packages("pak")
+
+# minimal installation
+pak::pkg_install("omnideconv/spacedeconv")
+
+# complete installation
+pak::pkg_install("omnideconv/spacedeconv", dependencies = TRUE)
+```
+
+# Data requirements
+spacedeconv offers convenient access to perform first- and second-generation deconvolution on spatial transcriptomics datasets. While deconvolution can be performed directly with first-generation methods, second-generation algorithms require an additional annotated single-cell reference.
+
+* _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_, will be deconvoluted
+* _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_ containing cell type information
+
+
+You can load 10X Visium Data by providing the [spaceranger](https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger) output folder. It is further possible to run spacedeconv with manually created SpatialExperiments. See the SpatialExperiment [Documentation](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html) for further details.
+
+```{r readData, eval=FALSE}
+spe <- SpatialExperiment::read10xVisium("path_to_directory")
+```
+
+# Workflow
+
+The core modules of spacedeconv are used to build a reference signature and deconvolute spatial transcriptomics data. We further provide convenient functions for normalization and visualization. A full list of deconvolution algorithms can be accessed by `spacedeconv::deconvolution_methods` or in the [FAQ](spacedeconv_faq.html).
+
+### 1. Normalization
+spacedeconv offers a function to normalize spatial expression data. The normalization is saved in an additional assay, so make sure to use the correct data during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`.
+```  {r normalization, eval=FALSE}
+spe <- spacedeconv::normalize(spe, method = "cpm")
+
+# specify expression assay to use
+signature <- spacedeconv::build_model(spe,
+  method = "quantiseq",
+  assay_sp = "cpm"
+)
+```
+
+### 2. Building a reference Signature
+All second-generation deconvolution tools require a cell-type specific reference signature which can be calculated with `build_model()` function. To build a signature annotated single-cell sequencing data is required. 
+
+``` {r, buildModel, eval=FALSE}
+signature <- spacedeconv::build_model(
+  single_cell_object,
+  cell_type_col = "celltype_major",
+  method = "spotlight",
+  assay_sc = "cpm"
+)
+```
+
+### 3. Deconvolution
+This function deconvolutes spatial transcriptomics dataset using one of spacedeconvs `r length(spacedeconv::deconvolution_methods)` deconvolution tools. Since first-generation deconvolution tools contain predefined expression signatures these tools can be used directly on the spatial data. You do not need to provide a signature for this case. spacedeconv returns a SpatialExperiment object annotated with deconvolution results. 
+
+``` {r, deconvolution, eval=FALSE}
+# save the results to an annotated SpatialExperiment
+result <- spacedeconv::deconvolute(
+  spatial_object,
+  signature,
+  method = "spotlight"
+)
+
+# return deconvolution results in table form
+result <- spacedeconv::deconvolute(
+  spatial_object,
+  signature,
+  method = "spotlight",
+  return_object = FALSE
+)
+```
+### 4. Visualization 
+We offer 6 visualization function aiming different insight of the data. A full example of each visualization option is available in the visualization [Vignette](spacedeconv_visualization.html).
+```{r visualization, eval=FALSE}
+# sample does refer to the first column of ColData(spe)
+# for cell_type input a celltype present in the deconvolution result
+spacedeconv::plot_celltype(spe, cell_type = "spotlight_B.cells")
+
+# umi count
+spacedeconv::plot_umi_count(spe)
+```

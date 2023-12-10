@@ -1,0 +1,89 @@
+---
+title: "Data Input"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Input}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction 
+spacedeconv integrates first- and second-generation deconvolution algorithms for transcriptome data. While first-generation tools deconvolute based on internal precomputed signatures, second-generation deconvolution tools compute cell type specific expression signatures from annotated single-cell expression data. In the following requirements and workflow details for both types of data are explained in detail.
+
+# Example Data
+spacedeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:
+
+```{r loadingData, eval=FALSE}
+library(spacedeconv)
+data("single_cell_data_1")
+data("single_cell_data_2")
+data("single_cell_data_3")
+data("single_cell_data_4")
+data("spatial_data_1")
+data("spatial_data_2")
+data("spatial_data_3")
+data("spatial_data_4")
+```
+
+
+# Reference Data
+To build cell-type specific signatures for second-generation deconvolution spacedeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats: 
+
+* [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure) (recommended)
+* [AnnData](https://anndata.dynverse.org/)
+* [Seurat](https://satijalab.org/seurat/)
+
+Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`.
+
+```{r annotationParameters, eval=FALSE}
+signature <- build_model(single_cell_data_1,
+  method = "dwls",
+  cell_type_col = "celltype_major",
+)
+
+# some methods require batch_id information as well
+sigature <- build_model(single_cell_data_1,
+  method = "scdc",
+  cell_type_col = "celltype_major",
+  batch_id_col = "orig.ident"
+)
+```
+
+
+# Spatial Data
+Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the directory create by [SpaceRanger](https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger). More information about data loading and manual object construction can be found in the SpatialExperiment [Vignette](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html).
+
+```{r loadSpatialExperiment, eval=FALSE}
+spe <- SpatialExperiment::read10xVisium(path_to_directory)
+```
+
+Spatial data available as a Seurat Object can be converted into a SpatialExperiment:
+
+```{r seuratConversion, eval=FALSE}
+spe <- seurat_to_spatialexperiment(seurat_object)
+```
+
+# Normalization
+SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`. As normalization method `cpm` and `logcpm` are available. 
+
+```{r deconvolution, eval = FALSE}
+spe <- normalize(spe, method = "cpm")
+
+# make sure to use cpm assay in deconvolution step
+deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
+```
+
+
+# Image Alignment
+In case the background image is not aligned properly the SpatialExperiment class offers convenient functions for rotation / mirroring: 
+
+* `rotateImg(image, degrees)`
+* `mirrorImg(image, axis) # 'h'/'v'`
+
+More Information is available in the SpatialExperiment [Documentation](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#34_Image_transformations)

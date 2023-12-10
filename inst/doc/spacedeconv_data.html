@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Data Input</title>
+<style type="text/css">
+/**
+ * Prism.s theme ported from highlight.js's xcode style
+ */
+pre code {
+  padding: 1em;
+}
+.token.comment {
+  color: #007400;
+}
+.token.punctuation {
+  color: #999;
+}
+.token.tag,
+.token.selector {
+  color: #aa0d91;
+}
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #1c00cf;
+}
+.token.property,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #c41a16;
+}
+.token.inserted {
+  background-color: #ccffd8;
+}
+.token.deleted {
+  background-color: #ffebe9;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #9a6e3a;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #836c28;
+}
+.token.function,
+.token.class-name {
+  color: #DD4A68;
+}
+.token.regex,
+.token.important,
+.token.variable {
+  color: #5c2699;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+</style>
+<style type="text/css">
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+body, .footnotes, code { font-size: .9em; }
+li li { font-size: .95em; }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+pre, img { max-width: 100%; }
+pre, pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre code {
+  display: block;
+  overflow-x: auto;
+}
+code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
+:not(pre) > code, code[class] { background-color: #F8F8F8; }
+code.language-undefined, pre > code:not([class]) {
+  background-color: inherit;
+  border: 1px solid #eee;
+}
+table {
+  margin: auto;
+  border-top: 1px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+thead, tfoot, tr:nth-child(even) { background: #eee; }
+blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 1em;
+  border-left: 0.5em solid #eee;
+}
+hr, .footnotes::before { border: 1px dashed #ddd; }
+.frontmatter { text-align: center; }
+#TOC .numbered li { list-style: none; }
+#TOC .numbered { padding-left: 0; }
+#TOC .numbered ul { padding-left: 1em; }
+table, .body h2 { border-bottom: 1px solid #666; }
+.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
+.footnote-ref a::before { content: "["; }
+.footnote-ref a::after { content: "]"; }
+.footnotes::before {
+  content: "";
+  display: block;
+  max-width: 20em;
+}
+
+@media print {
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+  tr, img { page-break-inside: avoid; }
+}
+@media only screen and (min-width: 992px) {
+  pre { white-space: pre; }
+}
+</style>
+</head>
+<body>
+<div class="include-before">
+</div>
+<div class="frontmatter">
+<div class="title"><h1>Data Input</h1></div>
+<div class="author"><h2></h2></div>
+<div class="date"><h3></h3></div>
+</div>
+<div class="body">
+<h1 id="introduction">Introduction</h1>
+<p>spacedeconv integrates first- and second-generation deconvolution algorithms for transcriptome data. While first-generation tools deconvolute based on internal precomputed signatures, second-generation deconvolution tools compute cell type specific expression signatures from annotated single-cell expression data. In the following requirements and workflow details for both types of data are explained in detail.</p>
+<h1 id="example-data">Example Data</h1>
+<p>spacedeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:</p>
+<pre><code class="language-r">library(spacedeconv)
+data(&quot;single_cell_data_1&quot;)
+data(&quot;single_cell_data_2&quot;)
+data(&quot;single_cell_data_3&quot;)
+data(&quot;single_cell_data_4&quot;)
+data(&quot;spatial_data_1&quot;)
+data(&quot;spatial_data_2&quot;)
+data(&quot;spatial_data_3&quot;)
+data(&quot;spatial_data_4&quot;)
+</code></pre>
+<h1 id="reference-data">Reference Data</h1>
+<p>To build cell-type specific signatures for second-generation deconvolution spacedeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats:</p>
+<ul>
+<li><a href="https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure">SingleCellExperiment</a> (recommended)</li>
+<li><a href="https://anndata.dynverse.org/">AnnData</a></li>
+<li><a href="https://satijalab.org/seurat/">Seurat</a></li>
+</ul>
+<p>Cell type information needs to be available. You can specify the column containing the annotation with the <code>cell_type_col</code> parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter <code>batch_id_col</code>.</p>
+<pre><code class="language-r">signature &lt;- build_model(single_cell_data_1,
+  method = &quot;dwls&quot;,
+  cell_type_col = &quot;celltype_major&quot;,
+)
+
+# some methods require batch_id information as well
+sigature &lt;- build_model(single_cell_data_1,
+  method = &quot;scdc&quot;,
+  cell_type_col = &quot;celltype_major&quot;,
+  batch_id_col = &quot;orig.ident&quot;
+)
+</code></pre>
+<h1 id="spatial-data">Spatial Data</h1>
+<p>Spatially resolved data needs to be available in the SpatialExperiment format. For 10XVisium slides the data can be loaded easily by providing the path to the directory create by <a href="https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/what-is-space-ranger">SpaceRanger</a>. More information about data loading and manual object construction can be found in the SpatialExperiment <a href="https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html">Vignette</a>.</p>
+<pre><code class="language-r">spe &lt;- SpatialExperiment::read10xVisium(path_to_directory)
+</code></pre>
+<p>Spatial data available as a Seurat Object can be converted into a SpatialExperiment:</p>
+<pre><code class="language-r">spe &lt;- seurat_to_spatialexperiment(seurat_object)
+</code></pre>
+<h1 id="normalization">Normalization</h1>
+<p>SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters <code>assay_sc</code> and <code>assay_sp</code>. As normalization method <code>cpm</code> and <code>logcpm</code> are available.</p>
+<pre><code class="language-r">spe &lt;- normalize(spe, method = &quot;cpm&quot;)
+
+# make sure to use cpm assay in deconvolution step
+deconvolution &lt;- deconvolute(spe, method = &quot;quantiseq&quot;, assay_sp = &quot;cpm&quot;)
+</code></pre>
+<h1 id="image-alignment">Image Alignment</h1>
+<p>In case the background image is not aligned properly the SpatialExperiment class offers convenient functions for rotation / mirroring:</p>
+<ul>
+<li><code>rotateImg(image, degrees)</code></li>
+<li><code>mirrorImg(image, axis) # 'h'/'v'</code></li>
+</ul>
+<p>More Information is available in the SpatialExperiment <a href="https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#34_Image_transformations">Documentation</a></p>
+</div>
+<div class="include-after">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+</body>
+</html>
