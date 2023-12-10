@@ -14,7 +14,7 @@ data("spatial_data_3")
 ## ----deconv, eval=FALSE-------------------------------------------------------
 #  single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 #  spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
-#  
+#
 #  single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 #  spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 #  deconv <- deconvolute(spe, method = "epic", assay_sc = "cpm")
@@ -47,4 +47,3 @@ cluster <- readRDS(system.file("extdata", "cluster.rds", package = "spacedeconv"
 
 ## ----topFeatures--------------------------------------------------------------
 get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "dwls")
-

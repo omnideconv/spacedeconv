@@ -1,10 +1,10 @@
 ## ----deconvolute, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE-------
 #  library(spacedeconv)
 #  data("spatial_data_3")
-#  
+#
 #  spe <- preprocess(spatial_data_3)
 #  spe <- spacedeconv::normalize(spe, method = "cpm")
-#  
+#
 #  deconv <- spacedeconv::deconvolute(
 #    spe,
 #    method = "quantiseq",
@@ -89,4 +89,3 @@ spacedeconv::plot_celltype(deconv,
 
 ## ----aggregation, eval=FALSE--------------------------------------------------
 #  spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
-

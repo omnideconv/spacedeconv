@@ -14,7 +14,7 @@ data("spatial_data_3")
 ## ----normalization, warning=FALSE, eval=FALSE---------------------------------
 #  single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 #  spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
-#  
+#
 #  single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 #  spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 
@@ -43,4 +43,3 @@ spacedeconv::cell_pair_localization(deconv, method = "dwls", cell_type_A = "dwls
 
 ## -----------------------------------------------------------------------------
 spacedeconv::ripleys_k(deconv, method = "dwls", cell_type = "dwls_B.cells")
-

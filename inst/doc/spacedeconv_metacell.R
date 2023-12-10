@@ -28,4 +28,3 @@ metacells <- readRDS(system.file("extdata", "metacells.rds", package = "spacedec
 
 ## -----------------------------------------------------------------------------
 metacells
-

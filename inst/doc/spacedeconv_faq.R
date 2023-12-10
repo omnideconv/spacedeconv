@@ -6,4 +6,3 @@
 
 ## ----availableMethods---------------------------------------------------------
 spacedeconv::deconvolution_methods
-

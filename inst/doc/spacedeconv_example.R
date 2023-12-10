@@ -15,15 +15,15 @@ data("spatial_data_3")
 
 ## ----viewData, eval=FALSE-----------------------------------------------------
 #  single_cell_data_3
-#  
+#
 #  # for performance reasons we are subsampling the data
-#  
+#
 #  # single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
 
 ## ----normalization, warning=FALSE, eval=FALSE---------------------------------
 #  single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 #  spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
-#  
+#
 #  single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 #  spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 
@@ -76,4 +76,3 @@ spacedeconv::plot_celltype(deconv,
 #   smooth = T,
 #   title_size = 12
 # )
-

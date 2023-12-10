@@ -1,156 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Metacell</title>
-<style type="text/css">
-/**
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Metacell</title>
+    <style type="text/css">
+      /**
  * Prism.s theme ported from highlight.js's xcode style
  */
-pre code {
-  padding: 1em;
-}
-.token.comment {
-  color: #007400;
-}
-.token.punctuation {
-  color: #999;
-}
-.token.tag,
-.token.selector {
-  color: #aa0d91;
-}
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol {
-  color: #1c00cf;
-}
-.token.property,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin {
-  color: #c41a16;
-}
-.token.inserted {
-  background-color: #ccffd8;
-}
-.token.deleted {
-  background-color: #ffebe9;
-}
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: #9a6e3a;
-}
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #836c28;
-}
-.token.function,
-.token.class-name {
-  color: #DD4A68;
-}
-.token.regex,
-.token.important,
-.token.variable {
-  color: #5c2699;
-}
-.token.important,
-.token.bold {
-  font-weight: bold;
-}
-.token.italic {
-  font-style: italic;
-}
-</style>
-<style type="text/css">
-body {
-  font-family: sans-serif;
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-body, .footnotes, code { font-size: .9em; }
-li li { font-size: .95em; }
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-pre, img { max-width: 100%; }
-pre, pre:hover {
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-pre code {
-  display: block;
-  overflow-x: auto;
-}
-code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
-:not(pre) > code, code[class] { background-color: #F8F8F8; }
-code.language-undefined, pre > code:not([class]) {
-  background-color: inherit;
-  border: 1px solid #eee;
-}
-table {
-  margin: auto;
-  border-top: 1px solid #666;
-}
-table thead th { border-bottom: 1px solid #ddd; }
-th, td { padding: 5px; }
-thead, tfoot, tr:nth-child(even) { background: #eee; }
-blockquote {
-  color: #666;
-  margin: 0;
-  padding-left: 1em;
-  border-left: 0.5em solid #eee;
-}
-hr, .footnotes::before { border: 1px dashed #ddd; }
-.frontmatter { text-align: center; }
-#TOC .numbered li { list-style: none; }
-#TOC .numbered { padding-left: 0; }
-#TOC .numbered ul { padding-left: 1em; }
-table, .body h2 { border-bottom: 1px solid #666; }
-.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
-.footnote-ref a::before { content: "["; }
-.footnote-ref a::after { content: "]"; }
-.footnotes::before {
-  content: "";
-  display: block;
-  max-width: 20em;
-}
+      pre code {
+        padding: 1em;
+      }
+      .token.comment {
+        color: #007400;
+      }
+      .token.punctuation {
+        color: #999;
+      }
+      .token.tag,
+      .token.selector {
+        color: #aa0d91;
+      }
+      .token.boolean,
+      .token.number,
+      .token.constant,
+      .token.symbol {
+        color: #1c00cf;
+      }
+      .token.property,
+      .token.attr-name,
+      .token.string,
+      .token.char,
+      .token.builtin {
+        color: #c41a16;
+      }
+      .token.inserted {
+        background-color: #ccffd8;
+      }
+      .token.deleted {
+        background-color: #ffebe9;
+      }
+      .token.operator,
+      .token.entity,
+      .token.url,
+      .language-css .token.string,
+      .style .token.string {
+        color: #9a6e3a;
+      }
+      .token.atrule,
+      .token.attr-value,
+      .token.keyword {
+        color: #836c28;
+      }
+      .token.function,
+      .token.class-name {
+        color: #dd4a68;
+      }
+      .token.regex,
+      .token.important,
+      .token.variable {
+        color: #5c2699;
+      }
+      .token.important,
+      .token.bold {
+        font-weight: bold;
+      }
+      .token.italic {
+        font-style: italic;
+      }
+    </style>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        max-width: 800px;
+        margin: auto;
+        padding: 1em;
+        line-height: 1.5;
+        box-sizing: border-box;
+      }
+      body,
+      .footnotes,
+      code {
+        font-size: 0.9em;
+      }
+      li li {
+        font-size: 0.95em;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+      pre,
+      img {
+        max-width: 100%;
+      }
+      pre,
+      pre:hover {
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      pre code {
+        display: block;
+        overflow-x: auto;
+      }
+      code {
+        font-family: "DejaVu Sans Mono", "Droid Sans Mono", "Lucida Console",
+          Consolas, Monaco, monospace;
+      }
+      :not(pre) > code,
+      code[class] {
+        background-color: #f8f8f8;
+      }
+      code.language-undefined,
+      pre > code:not([class]) {
+        background-color: inherit;
+        border: 1px solid #eee;
+      }
+      table {
+        margin: auto;
+        border-top: 1px solid #666;
+      }
+      table thead th {
+        border-bottom: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 5px;
+      }
+      thead,
+      tfoot,
+      tr:nth-child(even) {
+        background: #eee;
+      }
+      blockquote {
+        color: #666;
+        margin: 0;
+        padding-left: 1em;
+        border-left: 0.5em solid #eee;
+      }
+      hr,
+      .footnotes::before {
+        border: 1px dashed #ddd;
+      }
+      .frontmatter {
+        text-align: center;
+      }
+      #TOC .numbered li {
+        list-style: none;
+      }
+      #TOC .numbered {
+        padding-left: 0;
+      }
+      #TOC .numbered ul {
+        padding-left: 1em;
+      }
+      table,
+      .body h2 {
+        border-bottom: 1px solid #666;
+      }
+      .body .appendix,
+      .appendix ~ h2 {
+        border-bottom-style: dashed;
+      }
+      .footnote-ref a::before {
+        content: "[";
+      }
+      .footnote-ref a::after {
+        content: "]";
+      }
+      .footnotes::before {
+        content: "";
+        display: block;
+        max-width: 20em;
+      }
 
-@media print {
-  body {
-    font-size: 12pt;
-    max-width: 100%;
-  }
-  tr, img { page-break-inside: avoid; }
-}
-@media only screen and (min-width: 992px) {
-  pre { white-space: pre; }
-}
-</style>
-</head>
-<body>
-<div class="include-before">
-</div>
-<div class="frontmatter">
-<div class="title"><h1>Metacell</h1></div>
-<div class="author"><h2></h2></div>
-<div class="date"><h3></h3></div>
-</div>
-<div class="body">
-<p>Building cell-type specific expression signatures from annotated single-cell data can be time comsuming. To reduce resource requirements spacedeconv contains access to metacell2. The software is able to reduce the dataset by computing robust “metacells” as a mixture of similar cells from the originating single cell dataset. This approach can improve the data input size by the factor 100.</p>
-<p>In the following the metacell functions of spacedeconv are outlined and integrated in a workflow.</p>
-<p>We use spacedeconvs sample data for this analysis. Since Metacell is python based we need to convert the SingleCellExperiment to an AnnData object. The original dataset contains 5789 cells.</p>
-<pre><code class="language-r">library(spacedeconv)
+      @media print {
+        body {
+          font-size: 12pt;
+          max-width: 100%;
+        }
+        tr,
+        img {
+          page-break-inside: avoid;
+        }
+      }
+      @media only screen and (min-width: 992px) {
+        pre {
+          white-space: pre;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="include-before"></div>
+    <div class="frontmatter">
+      <div class="title"><h1>Metacell</h1></div>
+      <div class="author"><h2></h2></div>
+      <div class="date"><h3></h3></div>
+    </div>
+    <div class="body">
+      <p>
+        Building cell-type specific expression signatures from annotated
+        single-cell data can be time comsuming. To reduce resource requirements
+        spacedeconv contains access to metacell2. The software is able to reduce
+        the dataset by computing robust “metacells” as a mixture of similar
+        cells from the originating single cell dataset. This approach can
+        improve the data input size by the factor 100.
+      </p>
+      <p>
+        In the following the metacell functions of spacedeconv are outlined and
+        integrated in a workflow.
+      </p>
+      <p>
+        We use spacedeconvs sample data for this analysis. Since Metacell is
+        python based we need to convert the SingleCellExperiment to an AnnData
+        object. The original dataset contains 5789 cells.
+      </p>
+      <pre><code class="language-r">library(spacedeconv)
 library(SpatialExperiment)
 data(&quot;single_cell_data_1&quot;)
 single_cell_data_1
@@ -168,37 +238,75 @@ single_cell_data_1
 #&gt; altExpNames(0):
 ad &lt;- spe_to_ad(single_cell_data_1) # convert to anndata
 </code></pre>
-<p>The main workflow consists of 2 mandatory and 2 optional functions:</p>
-<ul>
-<li>Filter Dataset</li>
-<li>(optional) Compute forbidden genes and modules</li>
-<li>(optional) Extract forbidden genes from modules</li>
-<li>Compute Metacells</li>
-</ul>
-<h2 id="clean-genes-and-cells">Clean Genes and Cells</h2>
-<p>The first step filters the dataset to remove low quality genes and cells. It is possible to manually remove genes from the dataset and set specific UMI cutoffs. For more instructions please view the functions documentation.</p>
-<pre><code class="language-r">filtered &lt;- clean_genes_and_cells(ad)
+      <p>The main workflow consists of 2 mandatory and 2 optional functions:</p>
+      <ul>
+        <li>Filter Dataset</li>
+        <li>(optional) Compute forbidden genes and modules</li>
+        <li>(optional) Extract forbidden genes from modules</li>
+        <li>Compute Metacells</li>
+      </ul>
+      <h2 id="clean-genes-and-cells">Clean Genes and Cells</h2>
+      <p>
+        The first step filters the dataset to remove low quality genes and
+        cells. It is possible to manually remove genes from the dataset and set
+        specific UMI cutoffs. For more instructions please view the functions
+        documentation.
+      </p>
+      <pre><code class="language-r">filtered &lt;- clean_genes_and_cells(ad)
 </code></pre>
-<h2 id="optional-compute-forbidden-genes">(optional) compute forbidden genes</h2>
-<p>This function finds genes in the dataset which should not be included in the metacells and are calculated from hardcoded gene patterns. The function returns a list of genes which can be used as input for the metacell computation step. In addition gene modules are calculated and stored in the single cell object which is used in the third step of this workflow.</p>
-<pre><code class="language-r">suspect_genes &lt;- compute_forbidden_genes(filtered)
+      <h2 id="optional-compute-forbidden-genes">
+        (optional) compute forbidden genes
+      </h2>
+      <p>
+        This function finds genes in the dataset which should not be included in
+        the metacells and are calculated from hardcoded gene patterns. The
+        function returns a list of genes which can be used as input for the
+        metacell computation step. In addition gene modules are calculated and
+        stored in the single cell object which is used in the third step of this
+        workflow.
+      </p>
+      <pre><code class="language-r">suspect_genes &lt;- compute_forbidden_genes(filtered)
 </code></pre>
-<h2 id="optional-extract-forbidden-genes-from-gene-modules">(optional) extract forbidden genes from gene modules</h2>
-<p>In this functions the genes from unsuited gene modules are extracted. You just have to provide a list of unsuited gene modules and the function returns an improved list of forbidden genes which can be used as input for the last step in this workflow.</p>
-<h3 id="todo">TODO</h3>
-<p>here will be plots and instructions.</p>
-<h2 id="compute-metacells">Compute Metacells</h2>
-<p>This function uses the filtered single cell data and optional forbidden genes to calculate metacells. Since metacells don’t have a cell type annotation we reannotate the metacells based on the original single cell data using the cell type column name you have to provide. It is further possible to select an AbundanceScore to further subset the metacells. The Abundance Score quantifies the purity of a metacells, namely the percentage of the “most Abundant cell” in the metacell compared to all cells. Not every cell merged to a metacell is of the same cell type in the original dataset. Using the Abundance Score we only keep metacells with more than 90% purity but other values can be used as well.</p>
-<pre><code class="language-r">metacells &lt;- compute_metacells(filtered, suspect_genes,
+      <h2 id="optional-extract-forbidden-genes-from-gene-modules">
+        (optional) extract forbidden genes from gene modules
+      </h2>
+      <p>
+        In this functions the genes from unsuited gene modules are extracted.
+        You just have to provide a list of unsuited gene modules and the
+        function returns an improved list of forbidden genes which can be used
+        as input for the last step in this workflow.
+      </p>
+      <h3 id="todo">TODO</h3>
+      <p>here will be plots and instructions.</p>
+      <h2 id="compute-metacells">Compute Metacells</h2>
+      <p>
+        This function uses the filtered single cell data and optional forbidden
+        genes to calculate metacells. Since metacells don’t have a cell type
+        annotation we reannotate the metacells based on the original single cell
+        data using the cell type column name you have to provide. It is further
+        possible to select an AbundanceScore to further subset the metacells.
+        The Abundance Score quantifies the purity of a metacells, namely the
+        percentage of the “most Abundant cell” in the metacell compared to all
+        cells. Not every cell merged to a metacell is of the same cell type in
+        the original dataset. Using the Abundance Score we only keep metacells
+        with more than 90% purity but other values can be used as well.
+      </p>
+      <pre><code class="language-r">metacells &lt;- compute_metacells(filtered, suspect_genes,
   cell_type_col = &quot;celltype_major&quot;,
   abundance_score = 0.9
 )
 </code></pre>
-<pre><code class="language-r">metacells &lt;- readRDS(system.file(&quot;extdata&quot;, &quot;metacells.rds&quot;, package = &quot;spacedeconv&quot;))
+      <pre><code class="language-r">metacells &lt;- readRDS(system.file(&quot;extdata&quot;, &quot;metacells.rds&quot;, package = &quot;spacedeconv&quot;))
 </code></pre>
-<h1 id="the-result">The result</h1>
-<p>The Input dataset was reduced in size drastically and now contains 30 cells with robust expression information. The new celltype annotation is stored in the “celltype” column. The column “grouped” contains the number of cells merged in this metacell while the “percentage” column stores the abundanceScore of this metacell.</p>
-<pre><code class="language-r">metacells
+      <h1 id="the-result">The result</h1>
+      <p>
+        The Input dataset was reduced in size drastically and now contains 30
+        cells with robust expression information. The new celltype annotation is
+        stored in the “celltype” column. The column “grouped” contains the
+        number of cells merged in this metacell while the “percentage” column
+        stores the abundanceScore of this metacell.
+      </p>
+      <pre><code class="language-r">metacells
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 22299 32 
 #&gt; metadata(1): __name__
@@ -213,10 +321,15 @@ ad &lt;- spe_to_ad(single_cell_data_1) # convert to anndata
 #&gt; mainExpName: NULL
 #&gt; altExpNames(0):
 </code></pre>
-</div>
-<div class="include-after">
-</div>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
-</body>
+    </div>
+    <div class="include-after"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+      defer
+    ></script>
+  </body>
 </html>
