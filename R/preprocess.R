@@ -4,9 +4,10 @@
 #' @param min_umi minimum umi count for spots/cells
 #' @param max_umi maximimum umi
 #' @param assay assay to use for calculation, you can use any assay but counts is recommended
+#' @param remove_mito remove mitochondria genes
 #'
 #' @export
-preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts") {
+preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", remove_mito = FALSE) {
   cli::cli_rule(left = "spacedeconv")
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -52,6 +53,31 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts") 
   )
 
   object <- object[rowSums(SummarizedExperiment::assay(object, assay)) > 0, ]
+
+  # Check if mitochondrial genes removal is requested
+  if (remove_mito) {
+    mito_genes <- grep("^MT-", rownames(SummarizedExperiment::assay(object, assay)), value = TRUE)
+    nMito <- length(mito_genes)
+
+    # If mitochondrial genes are present, remove them
+    if (nMito > 0) {
+      cli::cli_progress_step(
+        msg = paste0("Removing ", nMito, " mitochondria genes"),
+        msg_done = paste0("Removed ", nMito, " mitochondria genes")
+      )
+      object <- object[!rownames(SummarizedExperiment::assay(object, assay)) %in% mito_genes, ]
+    }
+  } else {
+    # Check for mitochondrial genes presence when removal is not requested
+    mito_genes <- grep("^MT-", rownames(SummarizedExperiment::assay(object, assay)), value = TRUE)
+    nMito <- length(mito_genes)
+
+    # Display a warning if mitochondrial genes are present
+    if (nMito > 0) {
+      warning("There are ", nMito, " mitochondrial genes present. Consider removing them.")
+    }
+  }
+
 
   cli::cli_process_done()
 
