@@ -12,13 +12,15 @@ get_decoupleR_reference(
 )
 }
 \arguments{
-\item{method}{method to use, progeny or dorothea}
+\item{method}{method to use, progeny, dorothea or collectri}
 
 \item{organism}{which organism}
 
 \item{n_genes}{number genes to return, for progeny}
 
 \item{confidence}{condfidence level for transcription factor reference, vector of levels to include}
+
+\item{...}{additional parameters to pass to the methods}
 }
 \description{
 Obtain a decoupleR reference

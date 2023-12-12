@@ -1,8 +1,9 @@
 #' Obtain a decoupleR reference
-#' @param method method to use, progeny or dorothea
+#' @param method method to use, progeny, dorothea or collectri
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
 #' @param confidence condfidence level for transcription factor reference, vector of levels to include
+#' @param ... additional parameters to pass to the methods
 #' @export
 get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL) {
   requireNamespace("decoupleR")
@@ -11,9 +12,11 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
   cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
 
   if (method == "progeny") {
-    reference <- decoupleR::get_progeny(organism = organism, top = n_genes)
+    reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)
   } else if (method == "dorothea") {
-    reference <- decoupleR::get_dorothea(organism = organism) ############## missing parameters!
+    reference <- decoupleR::get_dorothea(organism = organism, ...) ############## missing parameters!
+  } else if (method=="collectri"){
+    reference <- decoupleR::get_collectri(organism = organism, ...)
   } else {
     reference <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
