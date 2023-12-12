@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Clustering">
 <meta property="og:description" content="spacedeconv">
@@ -92,71 +92,102 @@ deconvolution results or pathway and transcription factor
 activities.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">spacedeconv</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
-<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
-<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
-<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
-<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
-<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
-<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
-<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
+<span><span class="co">#&gt; → checking spacedeconv environment and dependencies</span></span>
 <span><span class="co">#&gt; Configuring package 'spacedeconv': please wait ...</span></span>
 <span><span class="co">#&gt; Done!</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: SingleCellExperiment</span></span>
+<span><span class="co">#&gt; Loading required package: SummarizedExperiment</span></span>
+<span><span class="co">#&gt; Loading required package: MatrixGenerics</span></span>
+<span><span class="co">#&gt; Loading required package: matrixStats</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'MatrixGenerics'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,</span></span>
+<span><span class="co">#&gt;     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,</span></span>
+<span><span class="co">#&gt;     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,</span></span>
+<span><span class="co">#&gt;     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,</span></span>
+<span><span class="co">#&gt;     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,</span></span>
+<span><span class="co">#&gt;     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,</span></span>
+<span><span class="co">#&gt;     colWeightedMeans, colWeightedMedians, colWeightedSds,</span></span>
+<span><span class="co">#&gt;     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,</span></span>
+<span><span class="co">#&gt;     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,</span></span>
+<span><span class="co">#&gt;     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,</span></span>
+<span><span class="co">#&gt;     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,</span></span>
+<span><span class="co">#&gt;     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,</span></span>
+<span><span class="co">#&gt;     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,</span></span>
+<span><span class="co">#&gt;     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,</span></span>
+<span><span class="co">#&gt;     rowWeightedSds, rowWeightedVars</span></span>
+<span><span class="co">#&gt; Loading required package: GenomicRanges</span></span>
+<span><span class="co">#&gt; Loading required package: stats4</span></span>
+<span><span class="co">#&gt; Loading required package: BiocGenerics</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'BiocGenerics'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:spacedeconv':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     normalize</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     IQR, mad, sd, var, xtabs</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     anyDuplicated, aperm, append, as.data.frame, basename, cbind,</span></span>
+<span><span class="co">#&gt;     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,</span></span>
+<span><span class="co">#&gt;     get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,</span></span>
+<span><span class="co">#&gt;     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,</span></span>
+<span><span class="co">#&gt;     Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,</span></span>
+<span><span class="co">#&gt;     table, tapply, union, unique, unsplit, which.max, which.min</span></span>
+<span><span class="co">#&gt; Loading required package: S4Vectors</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'S4Vectors'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:utils':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     findMatches</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     expand.grid, I, unname</span></span>
+<span><span class="co">#&gt; Loading required package: IRanges</span></span>
+<span><span class="co">#&gt; Loading required package: GenomeInfoDb</span></span>
+<span><span class="co">#&gt; Loading required package: Biobase</span></span>
+<span><span class="co">#&gt; Welcome to Bioconductor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     Vignettes contain introductory material; view with</span></span>
+<span><span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span></span>
+<span><span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'Biobase'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:MatrixGenerics':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     rowMedians</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     anyMissing, rowMedians</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"single_cell_data_3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[77ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[1.2s]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[21ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[25ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.6s]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
-<span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"epic"</span>, assay_sc <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[33ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── Spatial</span></span>
-<span><span class="co">#&gt; Assays: <span style="color: #0000BB;">"counts"</span> and <span style="color: #0000BB;">"cpm"</span></span></span>
-<span><span class="co">#&gt; Genes: <span style="color: #0000BB;">23542</span></span></span>
-<span><span class="co">#&gt; → without expression: <span style="color: #0000BB;">0</span> (0%)</span></span>
-<span><span class="co">#&gt; Spots: <span style="color: #0000BB;">1185</span></span></span>
-<span><span class="co">#&gt; Spots under tissue: <span style="color: #0000BB;">1185</span> (100%)</span></span>
-<span><span class="co">#&gt; Median Genes Per Spot: <span style="color: #0000BB;">4174</span></span></span>
-<span><span class="co">#&gt; → without expression: <span style="color: #0000BB;">0</span> (0%)</span></span>
-<span><span class="co">#&gt; Umi count range: <span style="color: #0000BB;">517</span> - <span style="color: #0000BB;">61586</span></span></span>
-<span><span class="co">#&gt; Spots with UMI count below 500: <span style="color: #0000BB;">0</span> (0%)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Rownames set</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Colnames set</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> deconvoluting</span></span>
-<span><span class="co">#&gt; Loading required package: EPIC</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &gt;&gt;&gt; Running epic</span></span>
-<span><span class="co">#&gt; Warning in cor(x, y): the standard deviation is zero</span></span>
-<span><span class="co">#&gt; Warning in (function (bulk, reference = NULL, mRNA_cell = NULL, mRNA_cell_sub = NULL, : The optimization didn't fully converge for some samples:</span></span>
-<span><span class="co">#&gt; AAATTTGCGGGTGTGG-1; AACCCTGGTGGAACCA-1; AAGCGTCCCTCATCGA-1; AAGGTGATAAACCAGC-1; AATAGTCCGTCCCGAC-1; AATGAGTTCGCATATG-1; ACACCGGTCTGACCGC-1; ACAGCATAGAGCCAGT-1; ACCCGTGTCATCAGTA-1; ACCTCGAACTTATGCT-1; ACGCCAGATGATTTCT-1; ACGTTCCGCGCTCCGT-1; ACGTTTAGTTGTGATC-1; ACTGTATACGCGAGCA-1; AGCGGGAAGGGTCCAT-1; AGGGTGCTCTCGAGGG-1; AGGGTTCCCTTTGGTT-1; AGGTACGATATTGCCA-1; AGGTTGAGGCACGCTT-1; AGTTAAGTCAACCGCT-1; AGTTCTGCGTTGTATC-1; ATAAGTAGGGCGACTC-1; ATATCAACCTACAGAG-1; ATATCGGTAGGGAGAT-1; ATATGTCTCCCTAGCC-1; ATATTGCTGTCAAAGT-1; ATCAGTAGGCAGGGAT-1; ATCGGCAAGCAGTCCA-1; ATGGATCCGGCGTCCG-1; ATGGGCCTCGGCCTCT-1; ATGTTACGAGCAATAC-1; ATTTGTCTTGGGAGCT-1; CAATCCTGCCGTGGAG-1; CACTCAGCTCTTGAGG-1; CAGACGAACCTGATAC-1; CAGAGGCGATGCATGA-1; CAGTAGCCCACGCGGT-1; CATAATGAGCGGGCGA-1; CATCCAATATAGTTTG-1; CATCGCCCGCGGCCAA-1; CATGACTTCGCTGAAT-1; CCAGAAAGCAACTCAT-1; CCATCTCACCAGTGAA-1; CCGAAAGTGGTGAGCA-1; CCGTATCTCGTCGTAG-1; CCGTTACGTTAGAACA-1; CCTAACTAAGGCTCTA-1; CCTAGGCGTAGCGATC-1; CGCCACCCGCATTAAC-1; CGCGCAAATGTCCAGA-1; CGGGTGTACCCATTTA-1; CGTGACATTGGGTCGT-1; CTACGCCATTTCCGAT-1; CTAGGCGGCAGAGAAT-1; CTGCACCTGGAACCGC-1; CTGGTCCTAACTTGGC-1; CTTCCGCTCCGTGAAG-1; CTTGAGTTAGGGTAAT-1; GACGCCGTAAAGGCTA-1; GACGCCTGTTGCAGGG-1; GACGGACCGCGTTCCT-1; GAGCCACGGTAGTAGG-1; GAGCTCTCGGACCTAA-1; GAGGGCGCAGCTCTGC-1; GAGTGTGCGGTACCCA-1; GATAAATCGGTGGATG-1; GATCGCTATATCTCAG-1; GCACTAGTCGCGCTAT-1; GCAGGTAGAGTATGGT-1; GCTACACTGTCCGAAC-1; GCTCATTACTGCATGT-1; GGATACTCATGAATTG-1; GGGTCGTGGCAAGTGT-1; GGTCGGCCAGGAGCTT-1; GTACGACGGCGCTGCG-1; GTACTGCATGAAGCGT-1; GTCGTCAATTATAAGG-1; GTGAAGATTTCAAGTG-1; GTTCTTCCCTCGATGT-1; TAAGCGCGAATCAAAT-1; TAATAGTGACGACCAG-1; TACTGAACAGATTTAG-1; TAGGGAGCTTGGGATG-1; TATTAACCTGACCGCG-1; TATTCCGGCAGTCCTA-1; TCACCGCTCGGCACTC-1; TCACGGCCCAAGAGAG-1; TCACTATCGTGCAATC-1; TCCATTAGTTGGATAG-1; TCGGACGCCCAGCCCA-1; TCGTCAAGTACGCGCA-1; TCTAGCAATCTCCGCC-1; TGATTCTGTCGCCGGT-1; TGCGTCATGACTGAGC-1; TGGTATCGCATCCCAA-1; TGGTTGGAGGATCCTG-1; TGTACTGTGCCAAAGT-1; TGTGGCAAAGCGTATG-1; TTAATCAGTACGTCAG-1; TTACATGCCACAACTA-1; TTAGACACGATCGTTG-1; TTGGTCACACTCGTAA-1</span></span>
-<span><span class="co">#&gt;  - check fit.gof for the convergeCode and convergeMessage</span></span>
-<span><span class="co">#&gt; Warning in (function (bulk, reference = NULL, mRNA_cell = NULL, mRNA_cell_sub =</span></span>
-<span><span class="co">#&gt; NULL, : mRNA_cell value unknown for some cell types: CAFs, Endothelial - using</span></span>
-<span><span class="co">#&gt; the default value of 0.4 for these but this might bias the true cell</span></span>
-<span><span class="co">#&gt; proportions from all cell types.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[47.3s]</span></span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
+<span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"epic"</span>, assay_sc <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
+<span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
+<span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>, verbose <span class="op">=</span> <span class="cn">T</span>, dwls_method <span class="op">=</span> <span class="st">"mast_optimized"</span>, ncores <span class="op">=</span> <span class="fl">10</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
+<span>  spatial_obj <span class="op">=</span> <span class="va">spatial_data_3</span>,</span>
+<span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
+<span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>,</span>
+<span>  signature <span class="op">=</span> <span class="va">signature</span>,</span>
+<span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>First we show how to cluster deconvolution data. Set the data
 parameter to “deconvolution” and provide the deconvolution tool you
 used. You can further set the following parameters:</p>
@@ -172,21 +203,6 @@ when clustering decoupleR results</li>
 “ward.D”, “ward.D2”, “single”, “average”, “mcquitty”, “median”,
 “centroid”)</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">cluster</span>(deconv, <span class="at">data =</span> <span class="st">"deconvolution"</span>, <span class="at">spmethod =</span> <span class="st">"epic"</span>, <span class="at">nclusters =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m testing parameter</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m parameter OK  [38;5;249m[9ms] [39m</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Clustering: deconvolution</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> [36mℹ [39m By<span class="sc">:</span> kmeans</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> [36mℹ [39m Number of clusters<span class="sc">:</span> 3Number of clusters<span class="sc">:</span> 4Number of clusters<span class="sc">:</span> 5Number of clusters<span class="sc">:</span> <span class="dv">6</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[50ms] [39m</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_celltype</span>(cluster, <span class="st">"cluster"</span>)</span></code></pre></div>
-<p><img src="spacedeconv_clustering_files/figure-html/clusterDeconv-1.png" width="960"></p>
 <p>This function applies the Seurat clustering approach in the
 background. Set data to “expression”, this will use “counts” values for
 clustering. You can further set the following parameters:</p>
@@ -195,61 +211,41 @@ clustering. You can further set the following parameters:</p>
 Vignette</a> for details.</li>
 <li>pca_dim: Number of PCA dimensions to use</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">cluster</span>(deconv, <span class="at">data =</span> <span class="st">"expression"</span>, <span class="at">clusres =</span> <span class="fl">0.5</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m testing parameter</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m parameter OK  [38;5;249m[8ms] [39m</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Clustering: expression</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a> [36mℹ [39m Cluster resolution<span class="sc">:</span> <span class="fl">0.5</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m Extracted data <span class="cf">for</span> clustering  [<span class="dv">38</span>;<span class="dv">5</span>;249m[33ms] [39m</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Invalid name supplied, making object name syntactically valid. New</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; object name is Seurat..SCTransform.Spatial; see ?make.names for more details on</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; syntax validity</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computing nearest neighbor graph</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Computing SNN</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Extracting data</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m Extracted data for clustering  [38;5;249m[22.6s] [39m</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_celltype</span>(cluster, <span class="st">"cluster"</span>) <span class="co"># plot the clustering stored in this object</span></span></code></pre></div>
-<p><img src="spacedeconv_clustering_files/figure-html/clusterExpression-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cluster.html">cluster</a></span><span class="op">(</span><span class="va">deconv</span>, data <span class="op">=</span> <span class="st">"expression"</span>, clusres <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"cluster.rds"</span>, package <span class="op">=</span> <span class="st">"spacedeconv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">cluster</span>, <span class="st">"cluster"</span>, density <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># plot the clustering stored in this object</span></span></code></pre></div>
 <p>With an available clustering you can exract the top features for each
 cluster. Here we extract the top features for each cluster based on
 expression, but we want the top features from the deconvolution results
 from this area. See the associated clusters in the plot above.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_cluster_features.html">get_cluster_features</a></span><span class="op">(</span><span class="va">cluster</span>, clusterid <span class="op">=</span> <span class="st">"cluster_expression_0.5"</span>, spmethod <span class="op">=</span> <span class="st">"epic"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_cluster_features.html">get_cluster_features</a></span><span class="op">(</span><span class="va">cluster</span>, clusterid <span class="op">=</span> <span class="st">"cluster_expression_0.5"</span>, spmethod <span class="op">=</span> <span class="st">"dwls"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`0`</span></span>
-<span><span class="co">#&gt; epic_uncharacterized.cell              epic_NK.cell          epic_T.cell.CD8. </span></span>
-<span><span class="co">#&gt;                 0.7455058                -0.1588353                -0.1598687 </span></span>
+<span><span class="co">#&gt; dwls_Cancer.Epithelial               dwls_PVL           dwls_B.cells </span></span>
+<span><span class="co">#&gt;             1.48622765            -0.09684142            -0.20176392 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`1`</span></span>
-<span><span class="co">#&gt; epic_Endothelial.cell      epic_T.cell.CD4.           epic_B.cell </span></span>
-<span><span class="co">#&gt;             0.7995375             0.5359831             0.2246383 </span></span>
+<span><span class="co">#&gt;     dwls_T.cells dwls_Endothelial         dwls_PVL </span></span>
+<span><span class="co">#&gt;        0.7706055        0.6349723        0.5992391 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`2`</span></span>
-<span><span class="co">#&gt; epic_Cancer.associated.fibroblast                  epic_T.cell.CD8. </span></span>
-<span><span class="co">#&gt;                        0.19631458                        0.11402482 </span></span>
-<span><span class="co">#&gt;         epic_uncharacterized.cell </span></span>
-<span><span class="co">#&gt;                        0.07198535 </span></span>
+<span><span class="co">#&gt;              dwls_CAFs dwls_Normal.Epithelial       dwls_Endothelial </span></span>
+<span><span class="co">#&gt;              0.8553145              0.4136625              0.3882446 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`3`</span></span>
-<span><span class="co">#&gt;                   epic_Macrophage epic_Cancer.associated.fibroblast </span></span>
-<span><span class="co">#&gt;                          1.453582                          1.054561 </span></span>
-<span><span class="co">#&gt;                       epic_B.cell </span></span>
-<span><span class="co">#&gt;                          0.755555 </span></span>
+<span><span class="co">#&gt;      dwls_Myeloid dwls_Plasmablasts         dwls_CAFs </span></span>
+<span><span class="co">#&gt;         1.4167673         1.0846283         0.6236146 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`4`</span></span>
-<span><span class="co">#&gt; epic_uncharacterized.cell          epic_T.cell.CD8.          epic_T.cell.CD4. </span></span>
-<span><span class="co">#&gt;                0.45836312                0.07906630               -0.07806116 </span></span>
+<span><span class="co">#&gt; dwls_Normal.Epithelial               dwls_PVL       dwls_Endothelial </span></span>
+<span><span class="co">#&gt;             2.02138850             0.08999605            -0.05634981 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`5`</span></span>
-<span><span class="co">#&gt; epic_uncharacterized.cell           epic_Macrophage              epic_NK.cell </span></span>
-<span><span class="co">#&gt;                0.49559606                0.22889780                0.08610454</span></span></code></pre></div>
+<span><span class="co">#&gt; dwls_Cancer.Epithelial           dwls_Myeloid           dwls_T.cells </span></span>
+<span><span class="co">#&gt;             0.83406399             0.72173387             0.06103056</span></span></code></pre></div>
   </main>
 </div>
 

@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Metacell">
 <meta property="og:description" content="spacedeconv">
@@ -99,14 +99,7 @@ python based we need to convert the SingleCellExperiment to an AnnData
 object. The original dataset contains 5789 cells.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">spacedeconv</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
-<span><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
-<span><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
-<span><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
-<span><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
-<span><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
-<span><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
-<span><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
+<span><span class="co">#&gt; → checking spacedeconv environment and dependencies</span></span>
 <span><span class="co">#&gt; Configuring package 'spacedeconv': please wait ...</span></span>
 <span><span class="co">#&gt; Done!</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
@@ -208,19 +201,7 @@ cells. It is possible to manually remove genes from the dataset and set
 specific UMI cutoffs. For more instructions please view the functions
 documentation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_genes_and_cells.html">clean_genes_and_cells</a></span><span class="op">(</span><span class="va">ad</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Cleaning genes and cells</span></span>
-<span><span class="co">#&gt; python:         /home/runner/.local/share/r-miniconda/envs/r-omnideconv/bin/python</span></span>
-<span><span class="co">#&gt; libpython:      /home/runner/.local/share/r-miniconda/envs/r-omnideconv/lib/libpython3.8.so</span></span>
-<span><span class="co">#&gt; pythonhome:     /home/runner/.local/share/r-miniconda/envs/r-omnideconv:/home/runner/.local/share/r-miniconda/envs/r-omnideconv</span></span>
-<span><span class="co">#&gt; version:        3.8.17 | packaged by conda-forge | (default, Jun 16 2023, 07:06:00)  [GCC 11.4.0]</span></span>
-<span><span class="co">#&gt; numpy:          /home/runner/.local/share/r-miniconda/envs/r-omnideconv/lib/python3.8/site-packages/numpy</span></span>
-<span><span class="co">#&gt; numpy_version:  1.24.3</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; NOTE: Python version was forced by RETICULATE_PYTHON</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Cleaned genes and cells <span style="color: #B2B2B2;">[19.7s]</span></span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_genes_and_cells.html">clean_genes_and_cells</a></span><span class="op">(</span><span class="va">ad</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="optional-compute-forbidden-genes">(optional) compute forbidden genes<a class="anchor" aria-label="anchor" href="#optional-compute-forbidden-genes"></a>
@@ -232,11 +213,7 @@ metacell computation step. In addition gene modules are calculated and
 stored in the single cell object which is used in the third step of this
 workflow.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">suspect_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_forbidden_genes.html">compute_forbidden_genes</a></span><span class="op">(</span><span class="va">filtered</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Computing forbidden genes</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Computed forbidden genes <span style="color: #B2B2B2;">[1.1s]</span></span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">suspect_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_forbidden_genes.html">compute_forbidden_genes</a></span><span class="op">(</span><span class="va">filtered</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="optional-extract-forbidden-genes-from-gene-modules">(optional) extract forbidden genes from gene modules<a class="anchor" aria-label="anchor" href="#optional-extract-forbidden-genes-from-gene-modules"></a>
@@ -269,12 +246,9 @@ used as well.</p>
 <code class="sourceCode R"><span><span class="va">metacells</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_metacells.html">compute_metacells</a></span><span class="op">(</span><span class="va">filtered</span>, <span class="va">suspect_genes</span>,</span>
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
 <span>  abundance_score <span class="op">=</span> <span class="fl">0.9</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── metacell ────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Computing metacells</span></span>
-<span><span class="co">#&gt; Removing 1 metacell with abundance score under 0.9</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> computed metacells <span style="color: #B2B2B2;">[2.6s]</span></span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metacells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metacells.rds"</span>, package <span class="op">=</span> <span class="st">"spacedeconv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="the-result">The result<a class="anchor" aria-label="anchor" href="#the-result"></a>
@@ -284,7 +258,7 @@ cells with robust expression information. The new celltype annotation is
 stored in the “celltype” column. The column “grouped” contains the
 number of cells merged in this metacell while the “percentage” column
 stores the abundanceScore of this metacell.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metacells</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span><span class="co">#&gt; dim: 22299 32 </span></span>

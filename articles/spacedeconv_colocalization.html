@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Colocalization">
 <meta property="og:description" content="spacedeconv">
@@ -94,16 +94,29 @@ and deconvoluting in one step. Therefore only <code><a href="../reference/deconv
 is called.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">spacedeconv</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"single_cell_data_3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
-<span>  <span class="va">spe</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"epic"</span>,</span>
+<span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
+<span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
+<span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>, verbose <span class="op">=</span> <span class="cn">T</span>, dwls_method <span class="op">=</span> <span class="st">"mast_optimized"</span>, ncores <span class="op">=</span> <span class="fl">10</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
+<span>  spatial_obj <span class="op">=</span> <span class="va">spatial_data_3</span>,</span>
+<span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
+<span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>,</span>
+<span>  signature <span class="op">=</span> <span class="va">signature</span>,</span>
 <span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -126,8 +139,8 @@ comparisons with increasing distances are possible. Thereby, distance =
 0 corresponds to a spotwise approach, distance = 1 considers hexagonal
 rings of spots around each spot and distance = 2 refers to two rings of
 spots around each spot.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cell_pair_localization.html">cell_pair_localization</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"epic"</span>, cell_type_A <span class="op">=</span> <span class="st">"epic_NK.cell"</span>, cell_type_B <span class="op">=</span> <span class="st">"epic_B.cell"</span>, density <span class="op">=</span> <span class="cn">TRUE</span>, distance <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cell_pair_localization.html">cell_pair_localization</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"dwls"</span>, cell_type_A <span class="op">=</span> <span class="st">"dwls_T.cells"</span>, cell_type_B <span class="op">=</span> <span class="st">"dwls_B.cells"</span>, density <span class="op">=</span> <span class="cn">TRUE</span>, distance <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Calculating presence matrix...</span></span>
 <span><span class="co">#&gt; [1] "Calculating Antimode cutoffs"</span></span>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
@@ -152,12 +165,15 @@ spots around each spot.</p>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
 <span></span>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
+<span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span></code></pre></div>
-<p><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-2-1.png" width="700"><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<p><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-3-1.png" width="700"><img src="spacedeconv_colocalization_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt;  coloc_real.coloc           coloc_p   coloc_rand_mean coloc_ratio.coloc </span></span>
-<span><span class="co">#&gt;              0.00              0.09              0.00              0.00 </span></span>
+<span><span class="co">#&gt;              0.01              0.00              0.00              6.09 </span></span>
 <span><span class="co">#&gt;  avoid_real.avoid           avoid_p   avoid_rand_mean avoid_ratio.avoid </span></span>
-<span><span class="co">#&gt;              0.02              0.00              0.02              1.01</span></span></code></pre>
+<span><span class="co">#&gt;              0.05              1.00              0.06              0.84</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="riples_k">2. ‘riples_k()’<a class="anchor" aria-label="anchor" href="#riples_k"></a>
@@ -166,9 +182,12 @@ spots around each spot.</p>
 function. A matrix with presence or absence values for each celltype,
 determined using the antimode of the celltype density distribution, is
 internally taken as input.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/ripleys_k.html">ripleys_k</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"epic"</span>, cell_type <span class="op">=</span> <span class="st">"epic_B.cell"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/ripleys_k.html">ripleys_k</a></span><span class="op">(</span><span class="va">deconv</span>, method <span class="op">=</span> <span class="st">"dwls"</span>, cell_type <span class="op">=</span> <span class="st">"dwls_B.cells"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Calculating Antimode cutoffs"</span></span>
+<span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
+<span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
+<span></span>
 <span><span class="co">#&gt; Warning in locmodes(logscore, mod0 = 2, display = F): If the density function</span></span>
 <span><span class="co">#&gt; has an unbounded support, artificial modes may have been created in the tails</span></span>
 <span></span>

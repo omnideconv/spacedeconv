@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Example">
 <meta property="og:description" content="spacedeconv">
@@ -89,7 +89,74 @@
 <p>spacedeconv is a unified interface for the deconvolution of spatial
 transcriptomics data. In total spacedeconv gives access to 31
 deconvolution methods:</p>
-<pre><code><span><span class="co">#&gt;             RCTD        SPOTlight             CARD      spatialDWLS </span></span>
+<pre><code><span><span class="co">#&gt; Loading required package: SingleCellExperiment</span></span>
+<span><span class="co">#&gt; Loading required package: SummarizedExperiment</span></span>
+<span><span class="co">#&gt; Loading required package: MatrixGenerics</span></span>
+<span><span class="co">#&gt; Loading required package: matrixStats</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'MatrixGenerics'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,</span></span>
+<span><span class="co">#&gt;     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,</span></span>
+<span><span class="co">#&gt;     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,</span></span>
+<span><span class="co">#&gt;     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,</span></span>
+<span><span class="co">#&gt;     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,</span></span>
+<span><span class="co">#&gt;     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,</span></span>
+<span><span class="co">#&gt;     colWeightedMeans, colWeightedMedians, colWeightedSds,</span></span>
+<span><span class="co">#&gt;     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,</span></span>
+<span><span class="co">#&gt;     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,</span></span>
+<span><span class="co">#&gt;     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,</span></span>
+<span><span class="co">#&gt;     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,</span></span>
+<span><span class="co">#&gt;     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,</span></span>
+<span><span class="co">#&gt;     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,</span></span>
+<span><span class="co">#&gt;     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,</span></span>
+<span><span class="co">#&gt;     rowWeightedSds, rowWeightedVars</span></span>
+<span><span class="co">#&gt; Loading required package: GenomicRanges</span></span>
+<span><span class="co">#&gt; Loading required package: stats4</span></span>
+<span><span class="co">#&gt; Loading required package: BiocGenerics</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'BiocGenerics'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:spacedeconv':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     normalize</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     IQR, mad, sd, var, xtabs</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     anyDuplicated, aperm, append, as.data.frame, basename, cbind,</span></span>
+<span><span class="co">#&gt;     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,</span></span>
+<span><span class="co">#&gt;     get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,</span></span>
+<span><span class="co">#&gt;     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,</span></span>
+<span><span class="co">#&gt;     Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,</span></span>
+<span><span class="co">#&gt;     table, tapply, union, unique, unsplit, which.max, which.min</span></span>
+<span><span class="co">#&gt; Loading required package: S4Vectors</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'S4Vectors'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:utils':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     findMatches</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     expand.grid, I, unname</span></span>
+<span><span class="co">#&gt; Loading required package: IRanges</span></span>
+<span><span class="co">#&gt; Loading required package: GenomeInfoDb</span></span>
+<span><span class="co">#&gt; Loading required package: Biobase</span></span>
+<span><span class="co">#&gt; Welcome to Bioconductor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     Vignettes contain introductory material; view with</span></span>
+<span><span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span></span>
+<span><span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'Biobase'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:MatrixGenerics':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     rowMedians</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     anyMissing, rowMedians</span></span>
+<span><span class="co">#&gt;             RCTD        SPOTlight             CARD      spatialDWLS </span></span>
 <span><span class="co">#&gt;           "rctd"      "spotlight"           "card"    "spatialdwls" </span></span>
 <span><span class="co">#&gt;    cell2location        AutoGeneS       BayesPrism           Bisque </span></span>
 <span><span class="co">#&gt;  "cell2location"      "autogenes"     "bayesprism"         "bisque" </span></span>
@@ -111,10 +178,7 @@ deconvolution methods:</p>
 <p>For this tutorial we will use one of spacedeconvs sample dataset and
 the deconvolution algorithm “SCDC”.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">spacedeconv</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"single_cell_data_3"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"single_cell_data_3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -122,34 +186,12 @@ the deconvolution algorithm “SCDC”.</p>
 </h2>
 <p>To get a first insight into the data we type the dataset name into
 the terminal:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>single_cell_data_3</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dim: 29733 7986 </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; metadata(1): Samples</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; assays(1): counts</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rownames(29733): RP11-34P13.7 FO538757.3 ... KRTAP9-2 IGLVIV-66-1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rowData names(1): ID</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colnames(7986): CID44971_AAGCCGCCACGCATCG CID44971_AAGGAGCTCAACACAC ...</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   CID44971_TTTCCTCCAAGCCATT CID44971_TTTGGTTGTATCACCA</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; colData names(10): Sample Barcode ... celltype_minor celltype_major</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; reducedDimNames(0):</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mainExpName: NULL</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; altExpNames(0):</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># for performance reasons we are subsampling the data</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>single_cell_data_3 <span class="ot">&lt;-</span> <span class="fu">subsetSCE</span>(single_cell_data_3, <span class="at">cell_type_col =</span> <span class="st">"celltype_major"</span>, <span class="at">ncells =</span> <span class="dv">180</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m testing parameter</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m Set seed to 12345</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m testing parameter</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a> [32m✔ [39m parameter OK  [<span class="dv">38</span>;<span class="dv">5</span>;249m[29ms] [39m</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m extracting up to 180 cells</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m extracting up to 180 cells  [38;5;249m[202ms] [39m</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [36mℹ [39m extracted 180 cells</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [32m✔ [39m extracted 180 cells  [38;5;249m[28ms] [39m</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span></span>
+<span></span>
+<span><span class="co"># for performance reasons we are subsampling the data</span></span>
+<span></span>
+<span><span class="co"># single_cell_data_3 &lt;- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)</span></span></code></pre></div>
 <p>We can see that the single-cell data is available as a <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a>.
 In total this dataset includes expression values from 29733 genes and
 7986 cells. It can further be seen that cell type information is
@@ -160,46 +202,10 @@ Per Million”). The normalization is stored as an additional assay in the
 single-cell object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[31ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 0 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 0 observations with umi count below threshold <span style="color: #B2B2B2;">[1.1s]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 12976 variables with all zero expression</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 12976 variables with all zero expression <span style="color: #B2B2B2;">[12ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[43ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[202ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[12ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
 <span></span>
 <span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[24ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[160ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
-<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[24ms]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.5s]</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span></code></pre></div>
+<span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="build-model">Build Model<a class="anchor" aria-label="anchor" href="#build-model"></a>
@@ -222,13 +228,163 @@ the deconvolution tool “spatialDWLS”.</p>
 <code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"card"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>, verbose <span class="op">=</span> <span class="cn">T</span>, dwls_method <span class="op">=</span> <span class="st">"mast_optimized"</span>, ncores <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"signature_dwls.rds"</span>, package <span class="op">=</span> <span class="st">"spacedeconv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The signature contains expression values for all celltypes and a
 subset of distinctly expressed genes. The following example shows the
 first 10 rows of the signature calculated in the previous step.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">signature</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="7%">
+<col width="11%">
+<col width="6%">
+<col width="6%">
+<col width="7%">
+<col width="12%">
+<col width="7%">
+<col width="7%">
+<col width="16%">
+<col width="16%">
+</colgroup>
+<thead><tr class="header">
+<th align="left"></th>
+<th align="right">Endothelial</th>
+<th align="right">CAFs</th>
+<th align="right">PVL</th>
+<th align="right">B-cells</th>
+<th align="right">Plasmablasts</th>
+<th align="right">T-cells</th>
+<th align="right">Myeloid</th>
+<th align="right">Cancer Epithelial</th>
+<th align="right">Normal Epithelial</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">ACKR1</td>
+<td align="right">15.1019</td>
+<td align="right">0.0086</td>
+<td align="right">0.0110</td>
+<td align="right">0.0081</td>
+<td align="right">0.0208</td>
+<td align="right">0.0082</td>
+<td align="right">0.0118</td>
+<td align="right">0.0089</td>
+<td align="right">0.0068</td>
+</tr>
+<tr class="even">
+<td align="left">PLVAP</td>
+<td align="right">13.4028</td>
+<td align="right">0.0172</td>
+<td align="right">0.0110</td>
+<td align="right">0.0081</td>
+<td align="right">0.1250</td>
+<td align="right">0.0112</td>
+<td align="right">0.1853</td>
+<td align="right">0.0168</td>
+<td align="right">0.0068</td>
+</tr>
+<tr class="odd">
+<td align="left">RBP7</td>
+<td align="right">10.5972</td>
+<td align="right">0.0103</td>
+<td align="right">0.0110</td>
+<td align="right">0.0027</td>
+<td align="right">0.8125</td>
+<td align="right">0.0055</td>
+<td align="right">0.1103</td>
+<td align="right">0.0213</td>
+<td align="right">0.3038</td>
+</tr>
+<tr class="even">
+<td align="left">RAMP2</td>
+<td align="right">9.1157</td>
+<td align="right">0.2646</td>
+<td align="right">0.0440</td>
+<td align="right">0.0027</td>
+<td align="right">0.1250</td>
+<td align="right">0.0048</td>
+<td align="right">0.0176</td>
+<td align="right">0.0492</td>
+<td align="right">0.0817</td>
+</tr>
+<tr class="odd">
+<td align="left">FABP4</td>
+<td align="right">30.1806</td>
+<td align="right">0.1134</td>
+<td align="right">9.7582</td>
+<td align="right">0.0434</td>
+<td align="right">1.5000</td>
+<td align="right">0.0186</td>
+<td align="right">2.3059</td>
+<td align="right">0.2864</td>
+<td align="right">0.0272</td>
+</tr>
+<tr class="even">
+<td align="left">AQP1</td>
+<td align="right">7.3241</td>
+<td align="right">0.2354</td>
+<td align="right">0.0549</td>
+<td align="right">0.0054</td>
+<td align="right">0.1250</td>
+<td align="right">0.0057</td>
+<td align="right">0.0118</td>
+<td align="right">0.0190</td>
+<td align="right">0.0518</td>
+</tr>
+<tr class="odd">
+<td align="left">VWF</td>
+<td align="right">5.4907</td>
+<td align="right">0.0017</td>
+<td align="right">0.0000</td>
+<td align="right">0.0027</td>
+<td align="right">0.0208</td>
+<td align="right">0.0021</td>
+<td align="right">0.0059</td>
+<td align="right">0.0089</td>
+<td align="right">0.0041</td>
+</tr>
+<tr class="even">
+<td align="left">SDPR</td>
+<td align="right">5.7500</td>
+<td align="right">0.0052</td>
+<td align="right">0.3626</td>
+<td align="right">0.0000</td>
+<td align="right">0.0833</td>
+<td align="right">0.0032</td>
+<td align="right">0.0206</td>
+<td align="right">0.0268</td>
+<td align="right">0.0463</td>
+</tr>
+<tr class="odd">
+<td align="left">CLEC14A</td>
+<td align="right">4.8843</td>
+<td align="right">0.1340</td>
+<td align="right">0.0440</td>
+<td align="right">0.0108</td>
+<td align="right">0.0208</td>
+<td align="right">0.0021</td>
+<td align="right">0.0044</td>
+<td align="right">0.0078</td>
+<td align="right">0.0041</td>
+</tr>
+<tr class="even">
+<td align="left">EMCN</td>
+<td align="right">3.8287</td>
+<td align="right">0.0155</td>
+<td align="right">0.0330</td>
+<td align="right">0.0027</td>
+<td align="right">0.0000</td>
+<td align="right">0.0018</td>
+<td align="right">0.0029</td>
+<td align="right">0.0045</td>
+<td align="right">0.0027</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="deconvolution">Deconvolution<a class="anchor" aria-label="anchor" href="#deconvolution"></a>
@@ -238,23 +394,15 @@ calculated. Depending on the selected deconvolution tool further
 parameters need to be passed, in this case <code>cell_type_col</code>
 and <code>batch_id_col</code> as well as the scRNA-seq reference
 dataset.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
 <span>  spatial_obj <span class="op">=</span> <span class="va">spatial_data_3</span>,</span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"card"</span>,</span>
-<span>  batch_id_col <span class="op">=</span> <span class="st">"orig.ident"</span>,</span>
-<span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span>,</span>
-<span>  assay_sc <span class="op">=</span> <span class="st">"cpm"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; ## QC on scRNASeq dataset! ...</span></span>
-<span><span class="co">#&gt; No cell types selected, we will use all the cell types in the scRNA-seq data</span></span>
-<span><span class="co">#&gt; ## QC on spatially-resolved dataset! ...</span></span>
-<span><span class="co">#&gt; ## create reference matrix from scRNASeq...</span></span>
-<span><span class="co">#&gt; ## Select Informative Genes! ...</span></span>
-<span><span class="co">#&gt; ## Deconvolution Starts! ...</span></span>
-<span><span class="co">#&gt; ## Deconvolution Finish! ...</span></span></code></pre></div>
+<span>  method <span class="op">=</span> <span class="st">"dwls"</span>,</span>
+<span>  signature <span class="op">=</span> <span class="va">signature</span>,</span>
+<span>  assay_sp <span class="op">=</span> <span class="st">"cpm"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
@@ -265,32 +413,30 @@ with different scopes, further explained in the visualization <a href="spacedeco
 <p>We can see the available deconvolution results by using
 <code>available_results(deconv)</code> or by accessing the objects
 <code>colData</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/available_results.html">available_results</a></span><span class="op">(</span><span class="va">deconv</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "card_B.cells"           "card_CAFs"              "card_Cancer.Epithelial"</span></span>
-<span><span class="co">#&gt; [4] "card_Endothelial"       "card_Myeloid"           "card_Normal.Epithelial"</span></span>
-<span><span class="co">#&gt; [7] "card_Plasmablasts"      "card_PVL"               "card_T.cells"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "dwls_B.cells"           "dwls_CAFs"              "dwls_Cancer.Epithelial"</span></span>
+<span><span class="co">#&gt; [4] "dwls_Endothelial"       "dwls_Myeloid"           "dwls_Normal.Epithelial"</span></span>
+<span><span class="co">#&gt; [7] "dwls_Plasmablasts"      "dwls_PVL"               "dwls_T.cells"</span></span></code></pre></div>
 <p>For each Spot the estimated cell fraction is available as object
 annotation and can be used for visualizations.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot all available results: provide the tool as parameter</span></span>
 <span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
-<span>  cell_type <span class="op">=</span> <span class="st">"card"</span>,</span>
+<span>  cell_type <span class="op">=</span> <span class="st">"dwls_B.cells"</span>,</span>
 <span>  density <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  title_size <span class="op">=</span> <span class="fl">12</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="spacedeconv_example_files/figure-html/visualization-1.png" width="1152"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># ... or plot a specific result</span></span>
-<span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>,</span>
-<span>  cell_type <span class="op">=</span> <span class="st">"card_Cancer.Epithelial"</span>,</span>
-<span>  density <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  smooth <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  title_size <span class="op">=</span> <span class="fl">12</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><img src="spacedeconv_example_files/figure-html/visualization-2.png" width="1152"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ... or plot a specific result</span></span>
+<span><span class="co"># spacedeconv::plot_celltype(deconv,</span></span>
+<span><span class="co">#   cell_type = "card_Cancer.Epithelial",</span></span>
+<span><span class="co">#   density = FALSE,</span></span>
+<span><span class="co">#   smooth = T,</span></span>
+<span><span class="co">#   title_size = 12</span></span>
+<span><span class="co"># )</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
