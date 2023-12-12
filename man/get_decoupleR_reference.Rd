@@ -8,7 +8,8 @@ get_decoupleR_reference(
   method = "progeny",
   organism = "human",
   n_genes = 500,
-  confidence = NULL
+  confidence = NULL,
+  ...
 )
 }
 \arguments{
