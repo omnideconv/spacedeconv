@@ -15,7 +15,7 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
     reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)
   } else if (method == "dorothea") {
     reference <- decoupleR::get_dorothea(organism = organism, ...) ############## missing parameters!
-  } else if (method=="collectri"){
+  } else if (method == "collectri") {
     reference <- decoupleR::get_collectri(organism = organism, ...)
   } else {
     reference <- NULL
