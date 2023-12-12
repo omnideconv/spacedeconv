@@ -83,7 +83,7 @@ aggregate_results <- function(spatial_obj = NULL, cell_types = NULL, cell_type_1
   }
 
   # set new name
-  aggregation = as.data.frame(aggregation)
+  aggregation <- as.data.frame(aggregation)
   colnames(aggregation) <- name
 
   # merge data
