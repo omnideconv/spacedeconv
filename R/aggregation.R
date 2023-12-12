@@ -75,15 +75,19 @@ aggregate_results <- function(spatial_obj = NULL, cell_types = NULL, cell_type_1
   cli::cli_progress_step("Aggregating cell types", msg_done = "Aggregated cell types")
 
   # aggregate cell types
-  aggregation <- rowSums(colData(spatial_obj)[, cell_types])
+  aggregation <- rowSums(as.matrix(colData(spatial_obj)[, cell_types]))
 
   # remove old cell types if requested
   if (remove) {
     colData(spatial_obj) <- colData(spatial_obj)[, !names(colData(spatial_obj)) %in% cell_types]
   }
 
+  # set new name
+  aggregation = as.data.frame(aggregation)
+  colnames(aggregation) <- name
+
   # merge data
-  tmp <- cbind(colData(spatial_obj), setNames(aggregation, name))
+  tmp <- cbind(colData(spatial_obj), aggregation)
   colData(spatial_obj) <- tmp
 
   cli::cli_process_done()
