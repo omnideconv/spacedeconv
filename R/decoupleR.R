@@ -116,8 +116,10 @@ compute_decoupleR_activities <- function(spe, reference, method = "wmean", assay
   # check if dorothea or progeny reference, for naming
   if ("p_value" %in% names(reference)) {
     decouple_tool <- "progeny"
-  } else if ("mor" %in% names(reference)) {
+  } else if ("confidence" %in% names(reference)) {
     decouple_tool <- "dorothea"
+  } else if ("mor" %in% names(reference)){
+    decouple_tool <- "collectri"
   } else {
     decouple_tool <- "decoupleR"
   }
