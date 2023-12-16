@@ -21,7 +21,7 @@
 #' @importFrom grDevices as.raster
 #' @importFrom Matrix colSums
 #' @importFrom colorspace scale_fill_continuous_sequential sequential_hcl
-#' @importFrom RColorBrewer brewer.pal brewer.palette.info
+#' @importFrom RColorBrewer brewer.pal brewer.pal.info
 #' @importFrom DelayedArray rowSums colSums
 #' @importFrom circlize colorRamp2
 # #' @importFrom ComplexHeatmap Heatmap draw
