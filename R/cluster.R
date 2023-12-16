@@ -105,8 +105,6 @@ cluster <- function(spe,
       cli::cli_progress_update()
     }
   } else if (spmethod %in% c("progeny", "dorothea", "collectri", unname(deconvolution_methods))) {
-
-
     dist_method <- match.arg(dist_method)
     hclust_method <- match.arg(hclust_method)
     method <- match.arg(method)
