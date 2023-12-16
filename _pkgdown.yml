@@ -48,6 +48,7 @@ reference:
     contents:
       - aggregate_results
       - annotate_spots
+      - addCustomAnnotation
       - cluster
       - get_cluster_features
       - print_info

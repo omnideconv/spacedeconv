@@ -328,6 +328,31 @@ annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name
   return(spe)
 }
 
+#' Add Custom Annotation to a SpatialExperiment
+#'
+#' This function adds a new custom annotation column to the `colData` of a
+#' `SpatialExperiment` object.
+#'
+#' @param spatialExp A `SpatialExperiment` object to which the annotation will be added.
+#' @param columnName A `character` string representing the name of the new annotation column.
+#' @param values A vector of values for the annotation. The length of this vector must match
+#' the number of columns in the `SpatialExperiment` object.
+#'
+#' @return A `SpatialExperiment` object with the new annotation added to its `colData`.
+#' @export
+addCustomAnnotation <- function(spatialExp, columnName, values) {
+  # Checking if the length of values matches the number of columns in spatialExp
+  if (length(values) != ncol(spatialExp)) {
+    stop("The length of values must be equal to the number of columns in the SpatialExperiment.")
+  }
+
+  # Adding the new column to colData
+  colData(spatialExp)[[columnName]] <- values
+
+  # Return the updated SpatialExperiment
+  return(spatialExp)
+}
+
 #' Get coordinates of spot id
 #' @param df colData dataframe
 #' @param spotid spotid

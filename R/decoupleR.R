@@ -2,7 +2,7 @@
 #' @param method method to use, progeny, dorothea or collectri
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
-#' @param confidence condfidence level for transcription factor reference, vector of levels to include
+#' @param confidence condfidence level for transcription factor reference, vector of levels to include, for dorothea
 #' @param ... additional parameters to pass to the methods
 #' @export
 get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL, ...) {
@@ -10,6 +10,10 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
+
+  if (method == "collectri" && !is.null(confidence)) {
+    warning("Collectri does not use confidence levels, will not use provided confidence vector")
+  }
 
   if (method == "progeny") {
     reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)

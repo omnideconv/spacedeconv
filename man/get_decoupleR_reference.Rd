@@ -19,7 +19,7 @@ get_decoupleR_reference(
 
 \item{n_genes}{number genes to return, for progeny}
 
-\item{confidence}{condfidence level for transcription factor reference, vector of levels to include}
+\item{confidence}{condfidence level for transcription factor reference, vector of levels to include, for dorothea}
 
 \item{...}{additional parameters to pass to the methods}
 }
