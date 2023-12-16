@@ -680,7 +680,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
   # Determine the palette type based on the palette name
-  if (is.null(palette_type)){
+  if (is.null(palette_type)) {
     palette_type <- get_palette_type(palette)
   }
 
