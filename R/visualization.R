@@ -637,9 +637,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
 
   # manually fix limits, overwrite values to prevent NA
-  if (!is.null(limits)){
-    df[df[, to_plot]<limits[1], to_plot] <- limits[1] # lower limit
-    df[df[, to_plot]>limits[2], to_plot] <- limits[2] # upper limit
+  if (!is.null(limits)) {
+    df[df[, to_plot] < limits[1], to_plot] <- limits[1] # lower limit
+    df[df[, to_plot] > limits[2], to_plot] <- limits[2] # upper limit
   }
 
 
