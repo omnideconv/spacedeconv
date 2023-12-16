@@ -783,7 +783,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
         }
       } else {
-        print("fail")
+        print("Error while adding color palette")
       }
 
       p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
