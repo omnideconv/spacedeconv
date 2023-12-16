@@ -16,7 +16,7 @@ plot_gene(
   show_image = FALSE,
   background = NULL,
   zoom = TRUE,
-  palette_type = "sequential",
+  palette_type = NULL,
   offset_rotation = FALSE,
   spot_size = 1,
   limits = NULL,
