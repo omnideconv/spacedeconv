@@ -107,3 +107,4 @@ reference:
       - spacedeconvstartup
       - get_largest_r_and_iso
       - check_datatype
+      - get_palette_type
