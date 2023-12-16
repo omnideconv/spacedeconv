@@ -623,30 +623,16 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     df[[to_plot]] <- smooth_celltype(df, spot_distance = spot_distance, smoothing_factor = smoothing_factor, cell_type = to_plot)
   }
 
-  # tranform scale
-  if (!is.null(transform_scale)) {
-    if (transform_scale == "ln") {
-      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1) # log(score - min(score) + 1)
-      transform_suffix <- "ln"
-    } else if (transform_scale == "log10") {
-      df[[to_plot]] <- log10((df[[to_plot]] - min(df[[to_plot]])) + 1)
-      transform_suffix <- "log10"
-    } else if (transform_scale == "log2") {
-      df[[to_plot]] <- log2((df[[to_plot]] - min(df[[to_plot]])) + 1)
-      transform_suffix <- "log2"
-    } else if (transform_scale == "sqrt") {
-      df[[to_plot]] <- sqrt(df[[to_plot]])
-      transform_suffix <- "sqrt"
-    } else if (transform_scale == "log") {
-      df[[to_plot]] <- log((df[[to_plot]] - min(df[[to_plot]])) + 1)
-      transform_suffix <- "log"
-    } else {
-      print("Unknown transformation, plotting untransformed data")
-      transform_suffix <- ""
-    }
-  } else {
-    transform_suffix <- ""
-  }
+  # tranform scale, if NULL is provided set to none for the switch to work
+  transform_scale <- tolower(ifelse(is.null(transform_scale), "none", transform_scale))
+  df[[to_plot]] <- switch(transform_scale,
+                          "ln" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
+                          "log10" = log10((df[[to_plot]] - min(df[[to_plot]])) + 1),
+                          "log2" = log2((df[[to_plot]] - min(df[[to_plot]])) + 1),
+                          "sqrt" = sqrt(df[[to_plot]]),
+                          "log" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
+                          df[[to_plot]]) # Default case: no transformation
+  transform_suffix <- if (transform_scale %in% c("ln", "log10", "log2", "sqrt", "log")) transform_scale else ""
 
   # Check if plot is smoothed
   if (smooth) {
