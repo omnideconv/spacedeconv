@@ -1,38 +1,33 @@
 #' Cluster spacedeconv results
 #'
 #' Performs clustering on data obtained from a SpatialExperiment object using
-#' specified methods. This function allows clustering based on deconvolution
+#' specified methods. This function allows for clustering based on deconvolution
 #' results, expression data, pathway, or transcription factors (TF) analyses.
 #'
 #' @param spe A SpatialExperiment object containing the data to be clustered.
 #' @param method A character vector specifying the clustering method to use.
 #'        Options are "kmeans" and "hclust". Default is c("kmeans", "hclust").
-#' @param data A character vector indicating the type of data to cluster.
-#'        Options are "deconvolution", "expression", "pathway", or "tf".
-#'        Default is c("deconvolution", "expression", "pathway", "tf").
+#' @param spmethod A character vector indicating the type of analysis for
+#'        clustering. Options include "expression", "progeny", "dorothea",
+#'        "collectri", and names of deconvolution methods. Default is based on
+#'        the available deconvolution methods.
 #' @param dist_method A character vector specifying the distance measure to be
-#'        used if method = "hclust". Default options are "correlation",
-#'        "euclidean", "maximum", "manhattan", "canberra", "binary",
-#'        "minkowski".
+#'        used for "hclust" method. Options include "correlation", "euclidean",
+#'        "maximum", "manhattan", "canberra", "binary", "minkowski".
 #' @param hclust_method A character vector indicating the agglomeration method
-#'        to be used if method = "hclust". Default options are "complete",
-#'        "ward.D", "ward.D2", "single", "average", "mcquitty", "median",
-#'        "centroid".
+#'        to be used with "hclust". Options include "complete", "ward.D",
+#'        "ward.D2", "single", "average", "mcquitty", "median", "centroid".
 #' @param nclusters An integer specifying the number of clusters to create.
 #'        Default is 3.
-#' @param spmethod A character string indicating the spatial method used for
-#'        the clustering. Must be one of "dorothea", "progeny", "collectri", "expression",
-#'        or the name of the deconvolution method used. Default is NULL.
 #' @param pca_dim An integer vector specifying PCA dimensions to be used for
 #'        clustering of expression data. This is used with Seurat::FindNeighbors.
 #'        Default is seq(1, 30).
 #' @param clusres A numeric value for the clustering resolution to be used
 #'        with Seurat::FindClusters. Default is 0.5.
-#' @param ... Additional parameters.
+#' @param ... Additional parameters for clustering methods.
 #'
-#' @return The modified SpatialExperiment object with clustering results.
+#' @return A modified SpatialExperiment object with added clustering results.
 #' @export
-#'
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
                     spmethod = c("expression", "progeny", "dorothea", "collectri", unname(deconvolution_methods)),

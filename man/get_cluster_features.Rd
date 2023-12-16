@@ -19,7 +19,7 @@ get_cluster_features(
 
 \item{topn}{number of top features to be shown}
 
-\item{spmethod}{spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used}
+\item{spmethod}{spatial method used for the clustering, must be dorothea, collectri, progeny, expression or the name of the deconvolution method used}
 
 \item{zscore}{= if the results should be z-score scaled or not}
 }
