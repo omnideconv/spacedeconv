@@ -626,12 +626,13 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # tranform scale, if NULL is provided set to none for the switch to work
   transform_scale <- tolower(ifelse(is.null(transform_scale), "none", transform_scale))
   df[[to_plot]] <- switch(transform_scale,
-                          "ln" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
-                          "log10" = log10((df[[to_plot]] - min(df[[to_plot]])) + 1),
-                          "log2" = log2((df[[to_plot]] - min(df[[to_plot]])) + 1),
-                          "sqrt" = sqrt(df[[to_plot]]),
-                          "log" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
-                          df[[to_plot]]) # Default case: no transformation
+    "ln" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
+    "log10" = log10((df[[to_plot]] - min(df[[to_plot]])) + 1),
+    "log2" = log2((df[[to_plot]] - min(df[[to_plot]])) + 1),
+    "sqrt" = sqrt(df[[to_plot]]),
+    "log" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
+    df[[to_plot]]
+  ) # Default case: no transformation
   transform_suffix <- if (transform_scale %in% c("ln", "log10", "log2", "sqrt", "log")) transform_scale else ""
 
   # Check if plot is smoothed
