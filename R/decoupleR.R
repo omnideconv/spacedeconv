@@ -11,6 +11,10 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 
   cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
 
+  if (method=="collectri" && !is.null(confidence)){
+    warning("Collectri does not use confidence levels, will not use provided confidence vector")
+  }
+
   if (method == "progeny") {
     reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)
   } else if (method == "dorothea") {
