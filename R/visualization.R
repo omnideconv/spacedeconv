@@ -506,7 +506,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
                       sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
-                      show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "sequential",
+                      show_image = FALSE, background = NULL, zoom = TRUE, palette_type = NULL, # sequential
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5, show_legend = TRUE,
                       title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
@@ -557,10 +557,6 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #### utils ####
 ###############
 
-
-# TODO custom upper limits"
-
-
 #' Render spatial hex plot
 #'
 #' @param spe SpatialExperiment with deconvolution results
@@ -593,7 +589,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = FALSE, background = NULL, zoom = TRUE,
-                          palette_type = "sequential", offset_rotation = FALSE, spot_size = 1,
+                          palette_type = NULL, offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE) {
@@ -680,31 +676,22 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # generate hexagons
   new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
 
-  # no overwrite the points with hex polygons
+  # now overwrite the points with hex polygons
   sf_poly <- sf::st_set_geometry(sf_points, new_geom)
 
-  # check discrete and, if yes, remove the hexagons which should not be plotted
+  # Determine the palette type based on the palette name
+  if (is.null(palette_type)){
+    palette_type <- get_palette_type(palette)
+  }
 
-  # if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]])) {
-  #   palette_type <- "discrete"
-  # }
+  # check discrete and, if yes, remove the hexagons which should not be plotted
 
   if (palette_type == "discrete") {
     tmp <- as.data.frame(sf_poly)
     if (is.logical(tmp[, to_plot])) {
       sf_poly <- sf_poly[tmp[, to_plot], ]
     }
-
-    # update df accordingly
-    # df <- df[rownames(sf_poly), ]
-
-    # calculate border coordinates
-    # min_col <- min(df$pxl_col_in_fullres)
-    # max_col <- max(df$pxl_col_in_fullres)
-    # max_row <- max(df$pxl_row_in_fullres)
-    # min_row <- min(df$pxl_row_in_fullres)
   }
-
 
   # extract image and dimensions
   img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
@@ -756,14 +743,8 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     p <- p + theme(panel.background = element_blank())
   }
 
-
   # choose the palette type/coloring
   if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
-    # if (palette_type == "discrete") {
-    #   brewer_palette <- brewer.pal(length(unique(df[[to_plot]])), palette)
-    # } else {
-    #   brewer_palette <- brewer.pal(length(unique(df[[to_plot]])), palette)
-    # }
     p <- p + scale_fill_brewer(palette = palette) # reverse!
   } else {
     # add color scale
@@ -949,4 +930,34 @@ filter_sample_id <- function(spe, sample_id) {
   spe <- spe[, spe$sample_id == sample_id]
 
   return(spe)
+}
+
+#' Determine the Type of a Given Color Palette
+#'
+#' This function identifies the type of a color palette, supporting palettes
+#' from both the `colorspace` and `RColorBrewer` packages. It is used to
+#' streamline the process of palette type identification for use in plotting functions.
+#'
+#' @param palette A character string specifying the name of the color palette.
+#'                The name should be a valid palette name from either the
+#'                `colorspace` or `RColorBrewer` package.
+#'
+#' @return A character string representing the type of the palette.
+#'         Possible return values are "sequential", "diverging", or "qualitative".
+#'         The function will stop and display an error message if an unknown palette
+#'         name is provided.
+#'
+get_palette_type <- function(palette) {
+  palettes_colorspace <- colorspace::hcl_palettes()
+  if (palette %in% rownames(palettes_colorspace)) {
+    palette_info <- palettes_colorspace[palette, ]
+    return(tolower(palette_info$type))
+  } elseif (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+    palette_info <- RColorBrewer::brewer.pal.info[palette, ]
+    brewer_type <- tolower(palette_info$category)
+    type_mapping <- c("div" = "diverging", "seq" = "sequential", "qual" = "qualitative")
+    return(type_mapping[brewer_type])
+  } else {
+    stop("Unknown palette. Please use a palette from colorspace or RColorBrewer.")
+  }
 }
