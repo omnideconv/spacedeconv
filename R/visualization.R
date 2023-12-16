@@ -952,7 +952,7 @@ get_palette_type <- function(palette) {
   if (palette %in% rownames(palettes_colorspace)) {
     palette_info <- palettes_colorspace[palette, ]
     return(tolower(palette_info$type))
-  } elseif (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+  } else if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
     palette_info <- RColorBrewer::brewer.pal.info[palette, ]
     brewer_type <- tolower(palette_info$category)
     type_mapping <- c("div" = "diverging", "seq" = "sequential", "qual" = "qualitative")
