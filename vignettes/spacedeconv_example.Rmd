@@ -16,15 +16,13 @@ knitr::opts_chunk$set(
 spacedeconv is a unified interface for the deconvolution of spatial transcriptomics data. In total spacedeconv gives access to `r length(spacedeconv::deconvolution_methods)` deconvolution methods: 
 ```{r echo=FALSE}
 library(spacedeconv)
+library(SpatialExperiment)
 spacedeconv::deconvolution_methods
 ```
 
 # Sample Data
 For this tutorial we will use one of spacedeconvs sample dataset and the deconvolution algorithm "SCDC".
-```{r loadData, message=FALSE}
-library(spacedeconv)
-library(SpatialExperiment)
-
+```{r loadData, message=FALSE, eval = TRUE}
 data("single_cell_data_3")
 data("spatial_data_3")
 ```
@@ -33,12 +31,12 @@ data("spatial_data_3")
 # Preprocessing and Normalization
 To get a first insight into the data we type the dataset name into the terminal: 
 
-```{r viewData}
+```{r viewData, eval=FALSE}
 single_cell_data_3
 
 # for performance reasons we are subsampling the data
 
-single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
+# single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
 ```
 
 
@@ -46,7 +44,7 @@ We can see that the single-cell data is available as a [SingleCellExperiment](ht
 
 As the next step we normalize the data as `cpm` ("Counts Per Million"). The normalization is stored as an additional assay in the single-cell object. 
 
-```{r normalization, warning=FALSE}
+```{r normalization, warning=FALSE, eval=FALSE}
 single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
@@ -67,30 +65,37 @@ Next we can calculate a signature using the annotated single-data and the deconv
 signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "card"
+  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
 )
 ```
 
+```{r}
+signature <- readRDS(system.file("extdata", "signature_dwls.rds", package = "spacedeconv"))
+```
+
+
 The signature contains expression values for all celltypes and a subset of distinctly expressed genes. The following example shows the first 10 rows of the signature calculated in the previous step. 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 knitr::kable(round(signature[1:10, ], 4))
 ```
 
 
 # Deconvolution
 To deconvolute the Visium slide we use the signature we just calculated. Depending on the selected deconvolution tool further parameters need to be passed, in this case `cell_type_col` and `batch_id_col` as well as the scRNA-seq reference dataset. 
-```{r deconvolution, message=FALSE, warning=FALSE}
+```{r deconvolution, eval=FALSE, message=FALSE, warning=FALSE}
 deconv <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_3,
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "card",
-  batch_id_col = "orig.ident",
-  assay_sp = "cpm",
-  assay_sc = "cpm"
+  method = "dwls",
+  signature = signature,
+  assay_sp = "cpm"
 )
 ```
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+```
 
 # Visualization 
 
@@ -106,17 +111,19 @@ For each Spot the estimated cell fraction is available as object annotation and 
 ```{r visualization, fig.width=12, fig.height=12}
 # plot all available results: provide the tool as parameter
 spacedeconv::plot_celltype(deconv,
-  cell_type = "card",
+  cell_type = "dwls_B.cells",
   density = FALSE,
   smooth = T,
   title_size = 12
 )
+```
 
+```{r visualization2, fig.width=12, fig.height=12}
 # ... or plot a specific result
-spacedeconv::plot_celltype(deconv,
-  cell_type = "card_Cancer.Epithelial",
-  density = FALSE,
-  smooth = T,
-  title_size = 12
-)
+# spacedeconv::plot_celltype(deconv,
+#   cell_type = "card_Cancer.Epithelial",
+#   density = FALSE,
+#   smooth = T,
+#   title_size = 12
+# )
 ```
