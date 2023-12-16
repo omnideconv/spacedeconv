@@ -21,7 +21,7 @@
 #' @param nclusters An integer specifying the number of clusters to create.
 #'        Default is 3.
 #' @param spmethod A character string indicating the spatial method used for
-#'        the clustering. Must be one of "dorothea", "progeny", "expression",
+#'        the clustering. Must be one of "dorothea", "progeny", "collectri", "expression",
 #'        or the name of the deconvolution method used. Default is NULL.
 #' @param pca_dim An integer vector specifying PCA dimensions to be used for
 #'        clustering of expression data. This is used with Seurat::FindNeighbors.
@@ -35,11 +35,10 @@
 #'
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
-                    data = c("deconvolution", "expression", "pathway", "tf"),
+                    spmethod = c("expression", "progeny", "dorothea", "collectri", unname(deconvolution_methods)),
                     dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
                     hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median", "centroid"),
                     nclusters = 3,
-                    spmethod = NULL,
                     pca_dim = seq(1, 30),
                     clusres = 0.5, ...) {
   cli::cli_rule(left = "spacedeconv")
@@ -54,13 +53,13 @@ cluster <- function(spe,
   # convert to sparse matrices
   spe <- check_datatype(spe)
 
-  data <- match.arg(data)
+  spmethod <- match.arg(spmethod)
 
   # if (!data %in% c("expression", "deconvolution", "pathway", "tf")) {
   #   stop("`data` must be one of the following: expression, deconvolution, pathway, tf")
   # }
 
-  if (data == "expression") {
+  if (spmethod == "expression") {
     # convert the spe to a seurat object
     # create expression data matrix and rename the rows to normal gene names instead of the ENSEMBL
     expression_data <- spe@assays@data@listData[["counts"]]
@@ -68,7 +67,7 @@ cluster <- function(spe,
     # create spatialcoordinates matrix
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
 
-    cli::cli_alert_info(paste("Clustering:", data))
+    cli::cli_alert_info(paste("Clustering:", spmethod))
     cli::cli_alert_info(paste("Cluster resolution:", clusres))
 
 
@@ -110,22 +109,14 @@ cluster <- function(spe,
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
-  } else if (data %in% c("deconvolution", "tf", "pathway")) {
-    if (is.null(spmethod)) {
-      if (data == "tf") {
-        spmethod <- "dorothea"
-      } else if (data == "pathway") {
-        spmethod <- "progeny"
-      } else {
-        stop("Parameter 'spmethod' is null or missing, but is required")
-      }
-    }
+  } else if (spmethod %in% c("progeny", "dorothea", "collectri", unname(deconvolution_methods))) {
+
 
     dist_method <- match.arg(dist_method)
     hclust_method <- match.arg(hclust_method)
     method <- match.arg(method)
 
-    cli::cli_alert_info(paste("Clustering:", data))
+    cli::cli_alert_info(paste("Clustering:", spmethod))
     cli::cli_alert_info(paste("By:", method))
     cli::cli_alert_info(paste("Number of clusters:", nclusters))
     if (method == "hclust") {
@@ -184,7 +175,7 @@ topfeat <- function(idx, scores, topn) {
 #' @param spe spatialExperiment with cluster results
 #' @param clusterid = name of the column with the clustering results
 #' @param topn number of top features to be shown
-#' @param spmethod spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used
+#' @param spmethod spatial method used for the clustering, must be dorothea, collectri, progeny, expression or the name of the deconvolution method used
 #' @param zscore = if the results should be z-score scaled or not
 #' @export
 get_cluster_features <- function(spe,

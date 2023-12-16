@@ -2,7 +2,7 @@
 #' @param method method to use, progeny, dorothea or collectri
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
-#' @param confidence condfidence level for transcription factor reference, vector of levels to include
+#' @param confidence condfidence level for transcription factor reference, vector of levels to include, for dorothea
 #' @param ... additional parameters to pass to the methods
 #' @export
 get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL, ...) {
