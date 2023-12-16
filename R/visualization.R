@@ -635,6 +635,15 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   ) # Default case: no transformation
   transform_suffix <- if (transform_scale %in% c("ln", "log10", "log2", "sqrt", "log")) transform_scale else ""
 
+
+  # manually fix limits, overwrite values to prevent NA
+  if (!is.null(limits)){
+    df[df[, to_plot]<limits[1], to_plot] <- limits[1] # lower limit
+    df[df[, to_plot]>limits[2], to_plot] <- limits[2] # upper limit
+  }
+
+
+
   # Check if plot is smoothed
   if (smooth) {
     smooth_suffix <- "smoothed"
@@ -684,13 +693,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
   width <- dim(img)[2]
   height <- dim(img)[1]
-
-
-  # manually fix limits, overwrite values to prevent NA
-  if (!is.null(limits)){
-    df[df<limits[1]] <- limits[1] # lower limit
-    df[df>limits[2]] <- limits[2] # upper limit
-  }
 
   # initialize plot
   p <- ggplot()
