@@ -20,24 +20,46 @@ cluster(
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{A SpatialExperiment object containing the data to be clustered.}
 
-\item{method}{clustering method to be chosen between kmeans and hclust}
+\item{method}{A character vector specifying the clustering method to use.
+Options are "kmeans" and "hclust". Default is c("kmeans", "hclust").}
 
-\item{data}{what data to cluster}
+\item{data}{A character vector indicating the type of data to cluster.
+Options are "deconvolution", "expression", "pathway", or "tf".
+Default is c("deconvolution", "expression", "pathway", "tf").}
 
-\item{dist_method}{the distance measure to be used if method = hclust}
+\item{dist_method}{A character vector specifying the distance measure to be
+used if method = "hclust". Default options are "correlation",
+"euclidean", "maximum", "manhattan", "canberra", "binary",
+"minkowski".}
 
-\item{hclust_method}{the agglomeration method to be used if method = hclust}
+\item{hclust_method}{A character vector indicating the agglomeration method
+to be used if method = "hclust". Default options are "complete",
+"ward.D", "ward.D2", "single", "average", "mcquitty", "median",
+"centroid".}
 
-\item{nclusters}{number of clusters}
+\item{nclusters}{An integer specifying the number of clusters to create.
+Default is 3.}
 
-\item{spmethod}{spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used}
+\item{spmethod}{A character string indicating the spatial method used for
+the clustering. Must be one of "dorothea", "progeny", "expression",
+or the name of the deconvolution method used. Default is NULL.}
 
-\item{pca_dim}{PCA dimensions to be used for the clustering of expression data - Seurat::FindNeighbors}
+\item{pca_dim}{An integer vector specifying PCA dimensions to be used for
+clustering of expression data. This is used with Seurat::FindNeighbors.
+Default is seq(1, 30).}
 
-\item{clusres}{clustering resolution to be used for the clustering of expression data - Seurat::FindClusters}
+\item{clusres}{A numeric value for the clustering resolution to be used
+with Seurat::FindClusters. Default is 0.5.}
+
+\item{...}{Additional parameters.}
+}
+\value{
+The modified SpatialExperiment object with clustering results.
 }
 \description{
-Cluster spacedeconv results
+Performs clustering on data obtained from a SpatialExperiment object using
+specified methods. This function allows clustering based on deconvolution
+results, expression data, pathway, or transcription factors (TF) analyses.
 }

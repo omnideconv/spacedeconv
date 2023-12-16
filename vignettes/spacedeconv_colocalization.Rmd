@@ -17,19 +17,43 @@ To introduce spacedeconvs celltype colocalization and distribution analysis func
 
 ```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE}
 library(spacedeconv)
+library(SpatialExperiment)
 
+data("single_cell_data_3")
 data("spatial_data_3")
+```
 
-spe <- preprocess(spatial_data_3)
+```{r normalization, warning=FALSE, eval=FALSE}
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
-spe <- spacedeconv::normalize(spe, method = "cpm")
+single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+```
 
+```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
+signature <- spacedeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
+)
+```
+
+```{r deconvolution, eval=FALSE, message=FALSE, warning=FALSE}
 deconv <- spacedeconv::deconvolute(
-  spe,
-  method = "epic",
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "dwls",
+  signature = signature,
   assay_sp = "cpm"
 )
 ```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+```
+
 
 # Available colocalization functions
 
@@ -40,12 +64,12 @@ deconv <- spacedeconv::deconvolute(
 Calculates colocalization and avoidance statistics of two celltypes of interest based on a random distribution. Internally, the presence or absence of the celltypes is determined based on the antimode of the celltype density distribution. Spotwise comparisons or groupwise comparisons with increasing distances are possible. Thereby, distance = 0 corresponds to a spotwise approach, distance = 1 considers hexagonal rings of spots around each spot and distance = 2 refers to two rings of spots around each spot. 
 
 ```{r}
-spacedeconv::cell_pair_localization(deconv, method = "epic", cell_type_A = "epic_NK.cell", cell_type_B = "epic_B.cell", density = TRUE, distance = 0)
+spacedeconv::cell_pair_localization(deconv, method = "dwls", cell_type_A = "dwls_T.cells", cell_type_B = "dwls_B.cells", density = TRUE, distance = 0)
 ```
 
 ## 2. 'riples_k()' 
 Determines the spatial distribution of a celltype based on Ripley´s K function. A matrix with presence or absence values for each celltype, determined using the antimode of the celltype density distribution, is internally taken as input.
 
 ```{r}
-spacedeconv::ripleys_k(deconv, method = "epic", cell_type = "epic_B.cell")
+spacedeconv::ripleys_k(deconv, method = "dwls", cell_type = "dwls_B.cells")
 ```

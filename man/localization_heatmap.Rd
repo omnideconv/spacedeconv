@@ -26,6 +26,8 @@ localization_heatmap(
 \item{localization}{colocalization and avoidance heatmap}
 
 \item{matrix}{return colocalization, avoidance, correlation matrices separately}
+
+\item{presence_matrix}{manually input a presence matrix´}
 }
 \value{
 cell pair localization heatmap and correlation heatmap
