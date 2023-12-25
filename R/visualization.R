@@ -740,53 +740,61 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # choose the palette type/coloring
-  # First R Color Brewer, then colorspace
-  if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+  # First manual, then R Color Brewer, then colorspace
+  if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && colorspace::is_hexcolor(x)))) {
+    # manual palette
+    p <- p + ggplot2::scale_fill_manual(values = palette)
+  } else if (is.character(palette)) {
+    # RColorBrewer
+    if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+      # Number of unique values to be plotted
+      num_values <- length(unique(df[[to_plot]]))
 
-    # Number of unique values to be plotted
-    num_values <- length(unique(df[[to_plot]]))
+      max_colors <- RColorBrewer::brewer.pal.info[palette, "maxcolors"]
 
-    max_colors <- RColorBrewer::brewer.pal.info[palette, "maxcolors"]
+      # if not enough colors then interpolate
+      if (num_values > max_colors) {
+        cli::cli_alert_info("Palette too small, interpolating colors!")
 
-    # if not enough colors then interpolate
-    if (num_values > max_colors) {
-      cli::cli_alert_info("Palette too small, interpolating colors!")
-
-      # Interpolate the palette to get enough colors
-      brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
-      interpolated_palette <- colorRampPalette(brewer_palette)
-      palette_function <- interpolated_palette(num_values)
-      p <- p + ggplot2::scale_fill_manual(values = palette_function)
+        # Interpolate the palette to get enough colors
+        brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
+        interpolated_palette <- colorRampPalette(brewer_palette)
+        palette_function <- interpolated_palette(num_values)
+        p <- p + ggplot2::scale_fill_manual(values = palette_function)
+      } else {
+        p <- p + scale_fill_brewer(palette = palette) # reverse!
+      }
     } else {
-      p <- p + scale_fill_brewer(palette = palette) # reverse!
+      # Colorspace
+
+      if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
+        # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
+        # manual fix !!!
+        if (palette_type == "sequential" || palette_type == "discrete") {
+          pal <- function(n) {
+            colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+          }
+        } else if (palette_type == "diverging") {
+          pal <- function(n) {
+            colorspace::diverging_hcl(n, palette, rev = reverse_palette)
+          }
+        } else if (palette_type == "qualitative") {
+          pal <- function(n) {
+            colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
+          }
+        } else {
+          print("Error while adding color palette")
+        }
+
+        p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
+      } else if (palette_type == "sequential") {
+        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+      } else if (palette_type == "diverging") {
+        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+      }
     }
   } else {
-    # add color scale
-    if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
-      # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
-      # manual fix !!!
-      if (palette_type == "sequential" || palette_type == "discrete") {
-        pal <- function(n) {
-          colorspace::sequential_hcl(n, palette, rev = reverse_palette)
-        }
-      } else if (palette_type == "diverging") {
-        pal <- function(n) {
-          colorspace::diverging_hcl(n, palette, rev = reverse_palette)
-        }
-      } else if (palette_type == "qualitative") {
-        pal <- function(n) {
-          colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
-        }
-      } else {
-        print("Error while adding color palette")
-      }
-
-      p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
-    } else if (palette_type == "sequential") {
-      p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
-    } else if (palette_type == "diverging") {
-      p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
-    }
+    stop("Invalid palette input. It must be either a named palette or a vector of color hex codes.")
   }
 
   # create density plot if requested
