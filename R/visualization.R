@@ -741,7 +741,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
   # choose the palette type/coloring
   # First manual, then R Color Brewer, then colorspace
-  if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && colorspace::is_hexcolor(x)))) {
+  if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && is_hexcolor(x)))) {
     # manual palette
     p <- p + ggplot2::scale_fill_manual(values = palette)
   } else if (is.character(palette)) {
@@ -982,4 +982,10 @@ get_palette_type <- function(palette) {
   } else {
     stop("Unknown palette. Please use a palette from colorspace or RColorBrewer.")
   }
+}
+
+
+# Check if a string is a valid hex color
+is_hexcolor <- function(color) {
+  grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", color)
 }
