@@ -740,8 +740,26 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # choose the palette type/coloring
+  # First R Color Brewer, then colorspace
   if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
-    p <- p + scale_fill_brewer(palette = palette) # reverse!
+
+    # Number of unique values to be plotted
+    num_values <- length(unique(df[[to_plot]]))
+
+    max_colors <- RColorBrewer::brewer.pal.info[palette, "maxcolors"]
+
+    # if not enough colors then interpolate
+    if (num_values > max_colors) {
+      cli::cli_alert_info("Palette too small, interpolating colors!")
+
+      # Interpolate the palette to get enough colors
+      brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
+      interpolated_palette <- colorRampPalette(brewer_palette)
+      palette_function <- interpolated_palette(num_values)
+      p <- p + ggplot2::scale_fill_manual(values = palette_function)
+    } else {
+      p <- p + scale_fill_brewer(palette = palette) # reverse!
+    }
   } else {
     # add color scale
     if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
