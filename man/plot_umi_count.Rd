@@ -28,7 +28,8 @@ plot_umi_count(
   path = NULL,
   png_width = 1500,
   png_height = 750,
-  show_legend = TRUE
+  show_legend = TRUE,
+  ...
 )
 }
 \arguments{
@@ -79,6 +80,8 @@ plot_umi_count(
 \item{png_height}{when saving, png height in px}
 
 \item{show_legend}{whether to show the legend}
+
+\item{...}{additional paramters passed to internal functions}
 }
 \value{
 plot of cell type fractions

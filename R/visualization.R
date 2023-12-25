@@ -28,6 +28,7 @@
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -43,7 +44,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           smooth = FALSE, smoothing_factor = 1.5, zoom = TRUE,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                          show_legend = TRUE) {
+                          show_legend = TRUE, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -74,7 +75,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       smooth = smooth, smoothing_factor = smoothing_factor,
       title_size = title_size, font_size = font_size, legend_size = legend_size,
       density = density, save = save, path = path, png_width = png_width,
-      png_height = png_height, show_legend = show_legend
+      png_height = png_height, show_legend = show_legend, ...
     )
 
     for (result in available_results(spe, method = cell_type)[-1]) {
@@ -88,7 +89,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
         smooth = smooth, smoothing_factor = smoothing_factor,
         title_size = title_size, font_size = font_size, legend_size = legend_size,
         density = density, save = save, path = path, png_width = png_width,
-        png_height = png_height, show_legend = show_legend
+        png_height = png_height, show_legend = show_legend, ...
       )
     }
 
@@ -104,7 +105,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       smooth = smooth, smoothing_factor = smoothing_factor,
       title_size = title_size, font_size = font_size, legend_size = legend_size,
       density = density, save = save, path = path, png_width = png_width,
-      png_height = png_height, show_legend = show_legend
+      png_height = png_height, show_legend = show_legend, ...
     ))
   }
 
@@ -144,6 +145,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #'
 #' @returns plot of cell type fractions
@@ -163,7 +165,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            title_size = 30, title = NULL, font_size = 15,
                            legend_size = 20, density = TRUE,
                            save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                           show_legend = TRUE) {
+                           show_legend = TRUE, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -184,7 +186,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
     density = density, save = save, path = path, png_width = png_width, png_height = png_height,
-    show_legend = show_legend
+    show_legend = show_legend, ...
   ))
 }
 
@@ -222,6 +224,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
 #' @param min_abundance minimum abundance of celltypes to be included in the analysis
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -234,7 +237,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                title_size = 30, font_size = 15, legend_size = 20,
                                density = FALSE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
-                               show_legend = TRUE, min_abundance = 0.01) {
+                               show_legend = TRUE, min_abundance = 0.01, ...) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -304,7 +307,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     title_size = title_size, palette_type = palette_type,
     font_size = font_size, legend_size = legend_size, density = density,
     save = save, path = path, png_width = png_width, png_height = png_height,
-    title = title, show_legend = show_legend,
+    title = title, show_legend = show_legend, ...
   ))
 }
 
@@ -335,6 +338,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
@@ -348,7 +352,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, title = NULL, font_size = 15,
                                    legend_size = 20, save = FALSE, path = NULL,
-                                   png_width = 1500, png_height = 750, show_legend = TRUE) {
+                                   png_width = 1500, png_height = 750, show_legend = TRUE,
+                                   ...) {
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -378,7 +383,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = FALSE, palette_type = "discrete", save = save, path = path,
-    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
+    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend,
+    ...
   ))
 }
 
@@ -411,6 +417,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
@@ -425,7 +432,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             title_size = 30, title = NULL, font_size = 15,
                             legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                            show_legend = TRUE) {
+                            show_legend = TRUE, ...) {
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -460,7 +467,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = density, palette_type = palette_type, save = save, path = path,
-    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
+    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend,
+    ...
   ))
 }
 
@@ -496,6 +504,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -510,7 +519,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5, show_legend = TRUE,
                       title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
-                      save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+                      save = FALSE, path = NULL, png_width = 1500, png_height = 750, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -543,7 +552,8 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
     spot_size = spot_size, limits = limits, background = background, zoom = zoom,
     smooth = smooth, smoothing_factor = smoothing_factor, show_legend = show_legend,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height,
+    ...
   ))
 
   # TODO
@@ -627,13 +637,15 @@ plot_overview <- function(spe, sample_id = "sample01") {
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param nDigits Round Values, Number of Digits after the comma
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = FALSE, background = NULL, zoom = TRUE,
                           palette_type = NULL, offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
-                          save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE) {
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE,
+                          nDigits = NULL) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -682,6 +694,13 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     df[df[, to_plot] < limits[1], to_plot] <- limits[1] # lower limit
     df[df[, to_plot] > limits[2], to_plot] <- limits[2] # upper limit
   }
+
+  # round if requested
+  if (!is.null(nDigits)) {
+    cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
+    df[, to_plot] <- round(df[, to_plot], digits = as.integer(nDigits))
+  }
+
 
 
 
