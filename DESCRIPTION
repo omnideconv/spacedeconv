@@ -41,7 +41,10 @@ Imports:
     ggridges, 
     testit, 
     decoupleR, 
-    multimode
+    multimode, 
+    psych,
+    ComplexHeatmap, 
+    grid
 Suggests: 
     spacexr,
     SPOTlight,
@@ -57,16 +60,13 @@ Suggests:
     knitr,
     testthat (>= 3.0.0),
     scuttle,
-    grid,
     tidyr,
     xCell, 
     MuSiC, 
     markdown, 
     EPIC,
     Seurat,
-    SeuratObject,
-    ComplexHeatmap, 
-    psych
+    SeuratObject
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
