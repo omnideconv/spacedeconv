@@ -91,3 +91,51 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 
   return(sce)
 }
+
+
+
+
+
+
+#' Subset a SpatialExperiment Object
+#'
+#' This function subsets a `SpatialExperiment` object based on specified x and y coordinate ranges.
+#' It is useful in spatial transcriptomics for isolating specific regions of interest.
+#'
+#' @param spe A `SpatialExperiment` object containing spatial coordinates and associated data.
+#' @param colRange A numeric vector of length 2, specifying the minimum and maximum pxl_col_in_fullres.
+#' @param rowRange A numeric vector of length 2, specifying the minimum and maximum pxl_row_in_fullres.
+#'
+#' @return A subset of the `SpatialExperiment` object, including only the data within the specified coordinate ranges.
+#'
+#' @export
+subsetSPE <- function(spe, colRange = NULL, rowRange = NULL) {
+  # Extract spatial coordinates
+  coords <- spatialCoords(spe)
+
+  # Use full range if colRange or rowRange is NULL, sort if in wrong order
+  if (is.null(colRange)) {
+    colRange <- range(coords[, 1], na.rm = TRUE)
+  } else {
+    colRange <- sort(colRange)
+  }
+
+  if (is.null(rowRange)) {
+    rowRange <- range(coords[, 2], na.rm = TRUE)
+  } else {
+    rowRange <- sort(rowRange)
+  }
+
+  # Subset the coordinates based on the specified range
+  subsetCoords <- coords[coords[, 1] >= colRange[1] & coords[, 1] <= colRange[2] &
+                           coords[, 2] >= rowRange[1] & coords[, 2] <= rowRange[2], ]
+
+  # Find the indices of the subset
+  indices <- match(rownames(subsetCoords), rownames(coords))
+
+  # Subset the SpatialExperiment object
+  fovSubset <- spe[, indices]
+
+  return(fovSubset)
+}
+

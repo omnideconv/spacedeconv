@@ -67,7 +67,8 @@ Suggests:
     markdown, 
     EPIC,
     Seurat,
-    SeuratObject
+    SeuratObject, 
+    plotly
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

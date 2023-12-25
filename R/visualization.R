@@ -552,6 +552,42 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
   # confirm the requested image is available in object
 }
 
+#' Plot Overview of a SpatialExperiment
+#'
+#' This function creates an interactive scatter plot of the spatial coordinates
+#' from a SpatialExperiment object. The plot is rendered using Plotly,
+#' allowing for interactive exploration with tooltips displaying the full
+#' resolution row and column coordinates and the associated nUMI values.
+#' The y-axis is inverted for better visual representation.
+#'
+#' @param spe A SpatialExperiment object.
+#'            This is the main data object containing spatial coordinates and UMI counts.
+#' @param sample_id A character string specifying the sample ID to be used for filtering
+#'                  the SpatialExperiment object. Defaults to "sample01".
+#'
+#' @return An interactive Plotly object representing the spatial distribution
+#'         of UMI counts across the provided SpatialExperiment object.
+#'         Each point on the plot corresponds to a spatial location,
+#'         colored by the number of UMIs.
+plot_overview <- function(spe, sample_id = "sample01") {
+  if (is.null(spe)) {
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  spe <- filter_sample_id(spe, sample_id)
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe),
+                            nUMI = colSums(counts(spe))))
+
+  plot_ly(data = df, x = ~pxl_col_in_fullres, y = ~pxl_row_in_fullres,
+          type = 'scatter', mode = 'markers',
+          marker = list(size = 4, color = ~nUMI, colorscale = 'Viridis', colorbar = list(title = 'nUMI')),
+          text = ~paste("Row:", pxl_row_in_fullres, "Col:", pxl_col_in_fullres),
+          hoverinfo = 'text') %>%
+    layout(title = 'SpatialExperiment Overview',
+           xaxis = list(title = 'pxl_col_in_fullres'),
+           yaxis = list(title = 'pxl_row_in_fullres', autorange = "reversed", scaleanchor = "x", scaleratio = 1))
+}
+
 
 ###############
 #### utils ####
