@@ -299,7 +299,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   res <- colnames(df)[max.col(df)]
 
   # update the rows with all zero rows to specific string
-  res[rowSums(df) == 0] <- "Not enough Data"
+  res[rowSums(df) == 0] <- "NoData"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
@@ -307,9 +307,42 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df2$pxl_col_in_fullres <- as.numeric(df2$pxl_col_in_fullres)
   df2$pxl_row_in_fullres <- as.numeric(df2$pxl_row_in_fullres)
 
+  # handle the palette
+  # use provided palette and add light-gray for "noData"
+
+  all_cell_types <- unique(c(available, "NoData"))  # all colors
+  num_colors_needed <- length(all_cell_types) - 1  # Number of celltypes
+
+  # Determine the palette type and generate colors
+  if (is.character(palette) && palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+    # RColorBrewer palette
+    brewer_palette <- RColorBrewer::brewer.pal(RColorBrewer::brewer.pal.info[palette, "maxcolors"], palette)
+    color_vector <- colorRampPalette(brewer_palette)(num_colors_needed)
+  } else if (is.character(palette)) {
+    # Colorspace palette
+    if (palette_type == "sequential" || palette_type == "discrete") {
+      color_vector <- colorspace::sequential_hcl(num_colors_needed, palette)
+    } else if (palette_type == "diverging") {
+      color_vector <- colorspace::diverging_hcl(num_colors_needed, palette)
+    } else if (palette_type == "qualitative") {
+      color_vector <- colorspace::qualitative_hcl(num_colors_needed, palette)
+    } else {
+      stop("Invalid palette type.")
+    }
+  } else if (is.vector(palette) && all(sapply(palette, is.character))) {
+    # Custom color vector
+    color_vector <- palette
+  } else {
+    stop("Invalid palette input.")
+  }
+
+  # Append "lightgray" for "NoData"
+  custom_colors <- c(color_vector, "#D3D3D3")
+  names(custom_colors) <- all_cell_types
+
 
   return(make_baseplot(
-    spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
+    spe = spe, df = df2, to_plot = "mostAbundant", palette = custom_colors,
     sample_id = sample_id, image_id = image_id, background = background, zoom = zoom,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
