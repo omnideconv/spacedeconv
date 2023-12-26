@@ -80,7 +80,7 @@
 </h1>
 </div>
 <p><a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg" alt="docs"></a> <a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg" alt="test-coverage"></a></p>
-<p>spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available.</p>
+<p>spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.</p>
 <div class="section level2">
 <h2 id="arrow_down-installation">
 <span class="emoji" data-emoji="arrow_down">⬇️</span> Installation<a class="anchor" aria-label="anchor" href="#arrow_down-installation"></a>
@@ -90,6 +90,10 @@
 <code class="sourceCode R"><span><span class="co"># install the pak package manager</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># recommended installation, deconvolution tools are installed on-demand</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># full installation including all deconvolution tools</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -97,12 +101,12 @@
 <span class="emoji" data-emoji="sparkles">✨</span> Features<a class="anchor" aria-label="anchor" href="#sparkles-features"></a>
 </h2>
 <ul>
-<li>access to 31 deconvolution tools and X</li>
+<li>unified access to 31 deconvolution tools and decoupleR</li>
 <li>direct deconvolution of immune cells</li>
 <li>compute custom reference signatures to deconvolute any celltype</li>
 <li>flexible visualization functions</li>
-<li>resource optimization with metacell</li>
-<li>…</li>
+<li>resource optimization, including metacell</li>
+<li>colocalization analysis</li>
 <li>easy integration into spatial transcriptomics workflows</li>
 </ul>
 </div>

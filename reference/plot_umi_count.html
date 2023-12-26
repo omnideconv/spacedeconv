@@ -81,7 +81,8 @@
 <span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  png_width <span class="op">=</span> <span class="fl">1500</span>,</span>
 <span>  png_height <span class="op">=</span> <span class="fl">750</span>,</span>
-<span>  show_legend <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  show_legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -182,6 +183,10 @@
 <dt>show_legend</dt>
 <dd><p>whether to show the legend</p></dd>
 
+
+<dt>...</dt>
+<dd><p>additional paramters passed to internal functions</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -196,7 +201,7 @@
 <span class="r-in"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"estimate"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[22ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[24ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -214,7 +219,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Colnames set</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> deconvoluting</span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘immunedeconv’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> deconvoluting <span style="color: #B2B2B2;">[636ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> deconvoluting <span style="color: #B2B2B2;">[671ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">plot_umi_count</span><span class="op">(</span><span class="va">deconv</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'deconv' not found</span>

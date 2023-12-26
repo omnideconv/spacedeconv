@@ -256,6 +256,9 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ndetected_genes.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_overview.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ripleys_k.html</loc>
   </url>
   <url>
@@ -335,6 +338,9 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/subsetSCE.html</loc>
+  </url>
+  <url>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/subsetSPE.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/topfeat.html</loc>

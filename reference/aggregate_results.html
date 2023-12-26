@@ -125,21 +125,13 @@ are added to the 'cell_types' list for aggregation.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># For new code, use:</span></span></span>
-<span class="r-in"><span><span class="fu">aggregate_results</span><span class="op">(</span><span class="va">spatial_obj</span>, cell_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cell_type_A"</span>, <span class="st">"cell_type_B"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'spatial_obj' not found</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> testing parameter <span style="color: #B2B2B2;">[10ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># For new code, use:</span></span></span>
+<span class="r-in"><span><span class="fu">aggregate_results</span><span class="op">(</span><span class="va">spatial_data_3</span>, cell_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cell_type_A"</span>, <span class="st">"cell_type_B"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For backward compatibility:</span></span></span>
-<span class="r-in"><span><span class="fu">aggregate_results</span><span class="op">(</span><span class="va">spatial_obj</span>, cell_type_1 <span class="op">=</span> <span class="st">"cell_type_A"</span>, cell_type_2 <span class="op">=</span> <span class="st">"cell_type_B"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'spatial_obj' not found</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> testing parameter <span style="color: #B2B2B2;">[11ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">aggregate_results</span><span class="op">(</span><span class="va">spatial_data_3</span>, cell_type_1 <span class="op">=</span> <span class="st">"cell_type_A"</span>, cell_type_2 <span class="op">=</span> <span class="st">"cell_type_B"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
