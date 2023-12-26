@@ -94,8 +94,10 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
   object <- object[unique_row_names, ]
 
 
-  cli::cli_progress_step(msg = "Checking for ENSEMBL Identifiers",
-                         msg_done = "Finished Preprocessing")
+  cli::cli_progress_step(
+    msg = "Checking for ENSEMBL Identifiers",
+    msg_done = "Finished Preprocessing"
+  )
   # Check for Ensembl identifiers in row names
   if (any(grepl("^ENS", rownames(SummarizedExperiment::assay(object, assay))))) {
     cli::cli_alert_warning("Warning: ENSEMBL identifiers detected in gene names")
