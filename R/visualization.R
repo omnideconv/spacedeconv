@@ -278,8 +278,17 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   if (min_spot > 0) {
     # compute how many spots have >0 values for each celltype
     n_above_zero <- sapply(df, function(column) {
-      sum(column != 0)
+      sum(column > 0) # !=???
     })
+
+    # which celltypes are removed?
+    removed_cell_types <- names(n_above_zero)[n_above_zero <= min_spot]
+
+    # alert user if celltype were removed
+    if (length(removed_cell_types) > 0) {
+      removed_cell_types_message <- paste("The following celltypes were removed by the min_spot parameter:", toString(removed_cell_types))
+      cli::cli_alert_warning(removed_cell_types_message)
+    }
 
     # subset df again if celltypes to sparse
     df <- df[, names(n_above_zero)[n_above_zero > min_spot]]
