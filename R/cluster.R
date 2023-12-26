@@ -63,7 +63,7 @@ cluster <- function(spe,
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
 
     cli::cli_alert_info(paste("Clustering:", spmethod))
-    cli::cli_alert_info(paste("Cluster resolution:", clusres))
+    cli::cli_alert_info(paste("Cluster resolution:", toString(clusres)))
 
 
 
@@ -111,7 +111,7 @@ cluster <- function(spe,
 
     cli::cli_alert_info(paste("Clustering:", spmethod))
     cli::cli_alert_info(paste("By:", method))
-    cli::cli_alert_info(paste("Number of clusters:", nclusters))
+    cli::cli_alert_info(paste("Number of clusters:", toString(nclusters)))
     if (method == "hclust") {
       cli::cli_alert_info(paste("Distance Method:", dist_method))
       cli::cli_alert_info(paste("Hclust Method:", hclust_method))
