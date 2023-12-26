@@ -100,7 +100,7 @@ cluster <- function(spe,
       )
       cluster <- seurat_obj@meta.data[["seurat_clusters"]]
       names(cluster) <- rownames(seurat_obj@meta.data)
-      cname <- paste0("cluster_expression_", i)
+      cname <- paste0("cluster_expression_res_", i)
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
@@ -139,7 +139,7 @@ cluster <- function(spe,
       )
 
       cluster <- as.factor(result)
-      cname <- paste("cluster", spmethod, i, sep = "_")
+      cname <- paste("cluster", spmethod, "nclusters", i, sep = "_")
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
