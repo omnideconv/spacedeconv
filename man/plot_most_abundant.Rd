@@ -30,7 +30,8 @@ plot_most_abundant(
   png_height = 750,
   title = NULL,
   show_legend = TRUE,
-  min_abundance = 0.01
+  min_abundance = 0.01,
+  ...
 )
 }
 \arguments{
@@ -85,6 +86,8 @@ plot_most_abundant(
 \item{show_legend}{whether to show the legend}
 
 \item{min_abundance}{minimum abundance of celltypes to be included in the analysis}
+
+\item{...}{additional paramters passed to internal functions}
 }
 \value{
 plot of cell type fractions

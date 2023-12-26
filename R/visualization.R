@@ -28,6 +28,7 @@
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -43,7 +44,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           smooth = FALSE, smoothing_factor = 1.5, zoom = TRUE,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                          show_legend = TRUE) {
+                          show_legend = TRUE, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -74,7 +75,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       smooth = smooth, smoothing_factor = smoothing_factor,
       title_size = title_size, font_size = font_size, legend_size = legend_size,
       density = density, save = save, path = path, png_width = png_width,
-      png_height = png_height, show_legend = show_legend
+      png_height = png_height, show_legend = show_legend, ...
     )
 
     for (result in available_results(spe, method = cell_type)[-1]) {
@@ -88,7 +89,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
         smooth = smooth, smoothing_factor = smoothing_factor,
         title_size = title_size, font_size = font_size, legend_size = legend_size,
         density = density, save = save, path = path, png_width = png_width,
-        png_height = png_height, show_legend = show_legend
+        png_height = png_height, show_legend = show_legend, ...
       )
     }
 
@@ -104,7 +105,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       smooth = smooth, smoothing_factor = smoothing_factor,
       title_size = title_size, font_size = font_size, legend_size = legend_size,
       density = density, save = save, path = path, png_width = png_width,
-      png_height = png_height, show_legend = show_legend
+      png_height = png_height, show_legend = show_legend, ...
     ))
   }
 
@@ -144,6 +145,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #'
 #' @returns plot of cell type fractions
@@ -163,7 +165,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            title_size = 30, title = NULL, font_size = 15,
                            legend_size = 20, density = TRUE,
                            save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                           show_legend = TRUE) {
+                           show_legend = TRUE, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -184,7 +186,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
     smooth = smooth, smoothing_factor = smoothing_factor,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
     density = density, save = save, path = path, png_width = png_width, png_height = png_height,
-    show_legend = show_legend
+    show_legend = show_legend, ...
   ))
 }
 
@@ -222,6 +224,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
 #' @param min_abundance minimum abundance of celltypes to be included in the analysis
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -234,7 +237,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
                                title_size = 30, font_size = 15, legend_size = 20,
                                density = FALSE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
-                               show_legend = TRUE, min_abundance = 0.01) {
+                               show_legend = TRUE, min_abundance = 0.01, ...) {
   # checks
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -275,8 +278,17 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   if (min_spot > 0) {
     # compute how many spots have >0 values for each celltype
     n_above_zero <- sapply(df, function(column) {
-      sum(column != 0)
+      sum(column > 0) # !=???
     })
+
+    # which celltypes are removed?
+    removed_cell_types <- names(n_above_zero)[n_above_zero <= min_spot]
+
+    # alert user if celltype were removed
+    if (length(removed_cell_types) > 0) {
+      removed_cell_types_message <- paste("The following celltypes were removed by the min_spot parameter:", toString(removed_cell_types))
+      cli::cli_alert_warning(removed_cell_types_message)
+    }
 
     # subset df again if celltypes to sparse
     df <- df[, names(n_above_zero)[n_above_zero > min_spot]]
@@ -287,7 +299,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   res <- colnames(df)[max.col(df)]
 
   # update the rows with all zero rows to specific string
-  res[rowSums(df) == 0] <- "Not enough Data"
+  res[rowSums(df) == 0] <- "NoData"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
@@ -295,16 +307,49 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df2$pxl_col_in_fullres <- as.numeric(df2$pxl_col_in_fullres)
   df2$pxl_row_in_fullres <- as.numeric(df2$pxl_row_in_fullres)
 
+  # handle the palette
+  # use provided palette and add light-gray for "noData"
+
+  all_cell_types <- unique(c(available, "NoData")) # all colors
+  num_colors_needed <- length(all_cell_types) - 1 # Number of celltypes
+
+  # Determine the palette type and generate colors
+  if (is.character(palette) && palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+    # RColorBrewer palette
+    brewer_palette <- RColorBrewer::brewer.pal(RColorBrewer::brewer.pal.info[palette, "maxcolors"], palette)
+    color_vector <- colorRampPalette(brewer_palette)(num_colors_needed)
+  } else if (is.character(palette)) {
+    # Colorspace palette
+    if (palette_type == "sequential" || palette_type == "discrete") {
+      color_vector <- colorspace::sequential_hcl(num_colors_needed, palette)
+    } else if (palette_type == "diverging") {
+      color_vector <- colorspace::diverging_hcl(num_colors_needed, palette)
+    } else if (palette_type == "qualitative") {
+      color_vector <- colorspace::qualitative_hcl(num_colors_needed, palette)
+    } else {
+      stop("Invalid palette type.")
+    }
+  } else if (is.vector(palette) && all(sapply(palette, is.character))) {
+    # Custom color vector
+    color_vector <- palette
+  } else {
+    stop("Invalid palette input.")
+  }
+
+  # Append "lightgray" for "NoData"
+  custom_colors <- c(color_vector, "#D3D3D3")
+  names(custom_colors) <- all_cell_types
+
 
   return(make_baseplot(
-    spe = spe, df = df2, to_plot = "mostAbundant", palette = palette,
+    spe = spe, df = df2, to_plot = "mostAbundant", palette = custom_colors,
     sample_id = sample_id, image_id = image_id, background = background, zoom = zoom,
     reverse_palette = reverse_palette, show_image = show_image,
     offset_rotation = offset_rotation, spot_size = spot_size,
     title_size = title_size, palette_type = palette_type,
     font_size = font_size, legend_size = legend_size, density = density,
     save = save, path = path, png_width = png_width, png_height = png_height,
-    title = title, show_legend = show_legend,
+    title = title, show_legend = show_legend, ...
   ))
 }
 
@@ -335,6 +380,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
@@ -348,7 +394,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
                                    smooth = FALSE, smoothing_factor = 1.5,
                                    title_size = 30, title = NULL, font_size = 15,
                                    legend_size = 20, save = FALSE, path = NULL,
-                                   png_width = 1500, png_height = 750, show_legend = TRUE) {
+                                   png_width = 1500, png_height = 750, show_legend = TRUE,
+                                   ...) {
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -378,7 +425,8 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = FALSE, palette_type = "discrete", save = save, path = path,
-    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
+    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend,
+    ...
   ))
 }
 
@@ -411,6 +459,7 @@ plot_celltype_presence <- function(spe, cell_type = NULL, threshold = NULL,
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of a celltypes presence/absence using a threshold
 #'
@@ -425,7 +474,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             title_size = 30, title = NULL, font_size = 15,
                             legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750,
-                            show_legend = TRUE) {
+                            show_legend = TRUE, ...) {
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
@@ -460,7 +509,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
     smoothing_factor = smoothing_factor, title_size = title_size,
     font_size = font_size, legend_size = legend_size, background = background, zoom = zoom,
     density = density, palette_type = palette_type, save = save, path = path,
-    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend
+    png_width = png_width, png_height = png_height, title = title, show_legend = show_legend,
+    ...
   ))
 }
 
@@ -496,6 +546,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
+#' @param ... additional paramters passed to internal functions
 #'
 #' @returns plot of cell type fractions
 #'
@@ -510,7 +561,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
                       offset_rotation = FALSE, spot_size = 1, limits = NULL,
                       smooth = FALSE, smoothing_factor = 1.5, show_legend = TRUE,
                       title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
-                      save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+                      save = FALSE, path = NULL, png_width = 1500, png_height = 750, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -543,13 +594,55 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
     spot_size = spot_size, limits = limits, background = background, zoom = zoom,
     smooth = smooth, smoothing_factor = smoothing_factor, show_legend = show_legend,
     title_size = title_size, font_size = font_size, legend_size = legend_size,
-    density = density, save = save, path = path, png_width = png_width, png_height = png_height
+    density = density, save = save, path = path, png_width = png_width, png_height = png_height,
+    ...
   ))
 
   # TODO
   # add facet wrap
   # add color selection
   # confirm the requested image is available in object
+}
+
+#' Plot Overview of a SpatialExperiment
+#'
+#' This function creates an interactive scatter plot of the spatial coordinates
+#' from a SpatialExperiment object. The plot is rendered using Plotly,
+#' allowing for interactive exploration with tooltips displaying the full
+#' resolution row and column coordinates and the associated nUMI values.
+#' The y-axis is inverted for better visual representation.
+#'
+#' @param spe A SpatialExperiment object.
+#'            This is the main data object containing spatial coordinates and UMI counts.
+#' @param sample_id A character string specifying the sample ID to be used for filtering
+#'                  the SpatialExperiment object. Defaults to "sample01".
+#'
+#' @return An interactive Plotly object representing the spatial distribution
+#'         of UMI counts across the provided SpatialExperiment object.
+#'         Each point on the plot corresponds to a spatial location,
+#'         colored by the number of UMIs.
+plot_overview <- function(spe, sample_id = "sample01") {
+  if (is.null(spe)) {
+    stop("Parameter 'spe' is null or missing, but is required")
+  }
+
+  spe <- filter_sample_id(spe, sample_id)
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe),
+    nUMI = colSums(counts(spe))
+  ))
+
+  plot_ly(
+    data = df, x = ~pxl_col_in_fullres, y = ~pxl_row_in_fullres,
+    type = "scatter", mode = "markers",
+    marker = list(size = 4, color = ~nUMI, colorscale = "Viridis", colorbar = list(title = "nUMI")),
+    text = ~ paste("Row:", pxl_row_in_fullres, "Col:", pxl_col_in_fullres),
+    hoverinfo = "text"
+  ) %>%
+    layout(
+      title = "SpatialExperiment Overview",
+      xaxis = list(title = "pxl_col_in_fullres"),
+      yaxis = list(title = "pxl_row_in_fullres", autorange = "reversed", scaleanchor = "x", scaleratio = 1)
+    )
 }
 
 
@@ -586,13 +679,15 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
+#' @param nDigits Round Values, Number of Digits after the comma
 make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", reverse_palette = FALSE,
                           image_id = "lowres", show_image = FALSE, background = NULL, zoom = TRUE,
                           palette_type = NULL, offset_rotation = FALSE, spot_size = 1,
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
-                          save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE) {
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE,
+                          nDigits = NULL) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -641,6 +736,22 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     df[df[, to_plot] < limits[1], to_plot] <- limits[1] # lower limit
     df[df[, to_plot] > limits[2], to_plot] <- limits[2] # upper limit
   }
+
+  # round if requested
+  if (!is.null(nDigits)) {
+    cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
+
+    # count zeroes and round
+    original_zeroes <- sum(df[, to_plot] == 0) # n zeroes before
+    df[, to_plot] <- round(df[, to_plot], digits = as.integer(nDigits))
+    round_zeroes <- sum(df[, to_plot] == 0) # n zeroes after
+
+    # alert warning if values round to zero
+    if (round_zeroes > original_zeroes) {
+      cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
+    }
+  }
+
 
 
 
@@ -740,35 +851,61 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # choose the palette type/coloring
-  if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
-    p <- p + scale_fill_brewer(palette = palette) # reverse!
-  } else {
-    # add color scale
-    if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
-      # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
-      # manual fix !!!
-      if (palette_type == "sequential" || palette_type == "discrete") {
-        pal <- function(n) {
-          colorspace::sequential_hcl(n, palette, rev = reverse_palette)
-        }
-      } else if (palette_type == "diverging") {
-        pal <- function(n) {
-          colorspace::diverging_hcl(n, palette, rev = reverse_palette)
-        }
-      } else if (palette_type == "qualitative") {
-        pal <- function(n) {
-          colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
-        }
-      } else {
-        print("Error while adding color palette")
-      }
+  # First manual, then R Color Brewer, then colorspace
+  if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && is_hexcolor(x)))) {
+    # manual palette
+    p <- p + ggplot2::scale_fill_manual(values = palette)
+  } else if (is.character(palette)) {
+    # RColorBrewer
+    if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+      # Number of unique values to be plotted
+      num_values <- length(unique(df[[to_plot]]))
 
-      p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
-    } else if (palette_type == "sequential") {
-      p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
-    } else if (palette_type == "diverging") {
-      p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+      max_colors <- RColorBrewer::brewer.pal.info[palette, "maxcolors"]
+
+      # if not enough colors then interpolate
+      if (num_values > max_colors) {
+        cli::cli_alert_info("Palette too small, interpolating colors!")
+
+        # Interpolate the palette to get enough colors
+        brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
+        interpolated_palette <- colorRampPalette(brewer_palette)
+        palette_function <- interpolated_palette(num_values)
+        p <- p + ggplot2::scale_fill_manual(values = palette_function)
+      } else {
+        p <- p + scale_fill_brewer(palette = palette) # reverse!
+      }
+    } else {
+      # Colorspace
+
+      if (is.factor(df[[to_plot]]) || is.character(df[[to_plot]]) || is.logical(df[[to_plot]]) || palette_type == "discrete") {
+        # p <- p + colorspace::scale_fill_discrete_sequential("Inferno", rev = reverse_palette, limits = limits)
+        # manual fix !!!
+        if (palette_type == "sequential" || palette_type == "discrete") {
+          pal <- function(n) {
+            colorspace::sequential_hcl(n, palette, rev = reverse_palette)
+          }
+        } else if (palette_type == "diverging") {
+          pal <- function(n) {
+            colorspace::diverging_hcl(n, palette, rev = reverse_palette)
+          }
+        } else if (palette_type == "qualitative") {
+          pal <- function(n) {
+            colorspace::qualitative_hcl(n, palette, rev = reverse_palette)
+          }
+        } else {
+          print("Error while adding color palette")
+        }
+
+        p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
+      } else if (palette_type == "sequential") {
+        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+      } else if (palette_type == "diverging") {
+        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+      }
     }
+  } else {
+    stop("Invalid palette input. It must be either a named palette or a vector of color hex codes.")
   }
 
   # create density plot if requested
@@ -956,4 +1093,10 @@ get_palette_type <- function(palette) {
   } else {
     stop("Unknown palette. Please use a palette from colorspace or RColorBrewer.")
   }
+}
+
+
+# Check if a string is a valid hex color
+is_hexcolor <- function(color) {
+  grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", color)
 }

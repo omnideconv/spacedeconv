@@ -40,7 +40,7 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
 #' @param gpu whether to use nvidia gpu for training
 #' @param result_name token to identify deconvolution results in object, default = "card"
 #' @param values relative or absolute, default: relative
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "c2l", values = "relative") {
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "cell2location", values = "relative") {
   # init_python()
 
   # TURN INTO ANNDATA

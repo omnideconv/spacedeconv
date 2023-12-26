@@ -31,7 +31,8 @@ make_baseplot(
   path = NULL,
   png_width = 1500,
   png_height = 750,
-  show_legend = TRUE
+  show_legend = TRUE,
+  nDigits = NULL
 )
 }
 \arguments{
@@ -88,6 +89,8 @@ make_baseplot(
 \item{png_height}{when saving, png height in px}
 
 \item{show_legend}{whether to show the legend}
+
+\item{nDigits}{Round Values, Number of Digits after the comma}
 }
 \description{
 Render spatial hex plot

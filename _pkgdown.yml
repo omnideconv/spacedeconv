@@ -16,6 +16,7 @@ reference:
       - anndata_to_spatialexperiment
       - seurat_to_spatialexperiment
       - subsetSCE
+      - subsetSPE
       - spe_to_ad
   - title: Main Workflow
     contents:
@@ -40,6 +41,7 @@ reference:
       - plot_celltype_presence
       - plot_comparison
       - plot_scatter
+      - plot_overview
   - title: Sample Data
     contents:
       - starts_with("single_cell_data")

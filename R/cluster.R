@@ -63,7 +63,7 @@ cluster <- function(spe,
     spatial_coordinates <- as.matrix(SpatialExperiment::spatialCoords(spe))
 
     cli::cli_alert_info(paste("Clustering:", spmethod))
-    cli::cli_alert_info(paste("Cluster resolution:", clusres))
+    cli::cli_alert_info(paste("Cluster resolution:", toString(clusres)))
 
 
 
@@ -100,7 +100,7 @@ cluster <- function(spe,
       )
       cluster <- seurat_obj@meta.data[["seurat_clusters"]]
       names(cluster) <- rownames(seurat_obj@meta.data)
-      cname <- paste0("cluster_expression_", i)
+      cname <- paste0("cluster_expression_res_", i)
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
@@ -111,7 +111,7 @@ cluster <- function(spe,
 
     cli::cli_alert_info(paste("Clustering:", spmethod))
     cli::cli_alert_info(paste("By:", method))
-    cli::cli_alert_info(paste("Number of clusters:", nclusters))
+    cli::cli_alert_info(paste("Number of clusters:", toString(nclusters)))
     if (method == "hclust") {
       cli::cli_alert_info(paste("Distance Method:", dist_method))
       cli::cli_alert_info(paste("Hclust Method:", hclust_method))
@@ -139,7 +139,7 @@ cluster <- function(spe,
       )
 
       cluster <- as.factor(result)
-      cname <- paste("cluster", spmethod, i, sep = "_")
+      cname <- paste("cluster", spmethod, "nclusters", i, sep = "_")
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
