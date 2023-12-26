@@ -78,6 +78,30 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
     }
   }
 
+  # Identify and print duplicate row names
+  duplicated_row_names <- rownames(SummarizedExperiment::assay(object, assay))[duplicated(rownames(SummarizedExperiment::assay(object, assay)))]
+  if (length(duplicated_row_names) > 0) {
+    cli::cli_alert_warning("Duplicated genes found: ", toString(duplicated_row_names))
+  }
+
+  cli::cli_progress_step(
+    msg = "Removing duplicated genes",
+    msg_done = "Removed duplicated genes"
+  )
+
+  # Remove duplicate row names
+  unique_row_names <- !duplicated(rownames(SummarizedExperiment::assay(object, assay)))
+  object <- object[unique_row_names, ]
+
+
+  cli::cli_progress_step(msg = "Checking for ENSEMBL Identifiers",
+                         msg_done = "Finished Preprocessing")
+  # Check for Ensembl identifiers in row names
+  if (any(grepl("^ENS", rownames(SummarizedExperiment::assay(object, assay))))) {
+    cli::cli_alert_warning("Warning: ENSEMBL identifiers detected in gene names")
+    cli::cli_alert_info("Consider using Gene Names for first-generation deconvolution tools")
+  }
+
 
   cli::cli_process_done()
 
