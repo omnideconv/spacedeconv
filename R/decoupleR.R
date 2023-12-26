@@ -29,7 +29,7 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
   cli::cli_progress_done()
 
   # only use confidence when requesting dorothea
-  if (!is.null(confidence) && method=="dorothea") {
+  if (!is.null(confidence) && method == "dorothea") {
     reference <- reference[reference$confidence %in% confidence, ]
   }
 
