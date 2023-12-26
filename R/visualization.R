@@ -310,8 +310,8 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   # handle the palette
   # use provided palette and add light-gray for "noData"
 
-  all_cell_types <- unique(c(available, "NoData"))  # all colors
-  num_colors_needed <- length(all_cell_types) - 1  # Number of celltypes
+  all_cell_types <- unique(c(available, "NoData")) # all colors
+  num_colors_needed <- length(all_cell_types) - 1 # Number of celltypes
 
   # Determine the palette type and generate colors
   if (is.character(palette) && palette %in% rownames(RColorBrewer::brewer.pal.info)) {
