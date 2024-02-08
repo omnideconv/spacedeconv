@@ -72,15 +72,15 @@ cluster <- function(spe,
     # create seurat object
     seurat_obj <- SeuratObject::CreateSeuratObject(
       counts = expression_data,
-      spatial = spatial_coordinates,
-      project = "ST" # ,
-      # assay = "Spatial"
+      ##########spatial = spatial_coordinates,
+      project = "ST"#,
+      #assay = "Spatial"
     )
 
     # normalize spatial counts
     seurat_obj <- Seurat::SCTransform(seurat_obj,
       # assay = "Spatial",
-      verbose = FALSE
+      verbose = F
     )
 
     # run PCA and do the clustering

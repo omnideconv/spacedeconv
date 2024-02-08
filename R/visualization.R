@@ -299,7 +299,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   res <- colnames(df)[max.col(df)]
 
   # update the rows with all zero rows to specific string
-  res[rowSums(df) == 0] <- "NoData"
+  res[rowSums(df) == 0] <- "Undefined"
 
   # append result to df
   df2 <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), mostAbundant = res))
@@ -308,9 +308,9 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   df2$pxl_row_in_fullres <- as.numeric(df2$pxl_row_in_fullres)
 
   # handle the palette
-  # use provided palette and add light-gray for "noData"
+  # use provided palette and add light-gray for "Undefined"
 
-  all_cell_types <- unique(c(available, "NoData")) # all colors
+  all_cell_types <- unique(c(available, "Undefined")) # all colors
   num_colors_needed <- length(all_cell_types) - 1 # Number of celltypes
 
   # Determine the palette type and generate colors
@@ -336,7 +336,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     stop("Invalid palette input.")
   }
 
-  # Append "lightgray" for "NoData"
+  # Append "lightgray" for "Undefined"
   custom_colors <- c(color_vector, "#D3D3D3")
   names(custom_colors) <- all_cell_types
 
