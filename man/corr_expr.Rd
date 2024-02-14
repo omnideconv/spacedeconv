@@ -4,12 +4,7 @@
 \alias{corr_expr}
 \title{Heatmap correlation of cell types based on gene expression values}
 \usage{
-corr_expr(
-  sig,
-  log = FALSE,
-  cor_method = c("pearson", "spearman"),
-  matrix = FALSE
-)
+corr_expr(sig, log = FALSE, cor_method = "pearson", matrix = FALSE, ...)
 }
 \arguments{
 \item{sig}{signature matrix}
@@ -19,6 +14,8 @@ corr_expr(
 \item{cor_method}{correlation method "pearson" or "spearman"}
 
 \item{matrix}{return correlation and correlation probability values as matrix}
+
+\item{...}{additional parameters passed to corrplot function}
 }
 \value{
 correlation heatmap of cell types based on gene expression
