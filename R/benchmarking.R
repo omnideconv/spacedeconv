@@ -6,13 +6,12 @@
 #' @param value2 deconvolution result to plot
 #'
 #' @export
-plot_scatter <- function(spe1, value1, spe2, value2) {
+plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
   # check object class
   if (!is(spe1, "SpatialExperiment") || !is(spe2, "SpatialExperiment")) {
     cli::cli_alert_danger("Provided objects have to be SpatialExperiments")
     stop()
   }
-
 
   # check value availability
   if (!checkCol(spe1, value1)) {
@@ -25,28 +24,43 @@ plot_scatter <- function(spe1, value1, spe2, value2) {
     stop()
   }
 
+  # check that both objects have the same number of spots
+  if (ncol(spe1) != ncol(spe2)) {
+    cli::cli_alert_warning("Spatial Objects have different number of spots")
+  }
+
   # construct data frame for plotting
-  df1 <- colData(spe1)[value1]
+  df1 <- colData(spe1)[, value1, drop = FALSE]
   colnames(df1) <- "value1"
   df1$spot <- rownames(df1)
 
-  df2 <- colData(spe2)[value2]
+  df2 <- colData(spe2)[, value2, drop = FALSE]
   colnames(df2) <- "value2"
   df2$spot <- rownames(df2)
 
   df <- merge(df1, df2, by = "spot")
 
+  cor_value <- cor(df$value1, df$value2)
 
   # construct plot
-  plot <- ggplot(data.frame(df), aes(x = value1, y = value2)) +
+  plot <- ggplot(df, aes(x = value1, y = value2)) +
     geom_point() +
-    geom_abline(slope = 1) +
+    geom_abline(slope = 1, linetype = "dashed") +
     xlab(value1) +
     ylab(value2) +
-    coord_fixed()
+    coord_fixed(ratio = 1) +
+    geom_text(x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
+              hjust = 1.1, vjust = 1.1, size = 5) +
+    ggtitle(paste(value1, "vs.", value2))
+
+  # Apply log scale if log_scale is TRUE
+  if (log_scale) {
+    plot <- plot + scale_x_log10() + scale_y_log10()
+  }
 
   return(plot)
 }
+
 
 #' Compare Signatures
 #'
