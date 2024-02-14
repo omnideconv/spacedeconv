@@ -11,7 +11,7 @@ spatialcorr(spe, method, adjust = "fdr", variables = NULL, sig.level = 0.05)
 
 \item{method}{#method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"}
 
-\item{adjust}{#method used to adjust p-values for multiple testing}
+\item{adjust}{#method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details}
 
 \item{variables}{#if not provided, the function selects variables based on the specified method, it can also be a vector}
 
