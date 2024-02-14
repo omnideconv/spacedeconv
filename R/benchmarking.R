@@ -49,8 +49,10 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
     xlab(value1) +
     ylab(value2) +
     coord_fixed(ratio = 1) +
-    geom_text(x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
-              hjust = 1.1, vjust = 1.1, size = 5) +
+    geom_text(
+      x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
+      hjust = 1.1, vjust = 1.1, size = 5
+    ) +
     ggtitle(paste(value1, "vs.", value2))
 
   # Apply log scale if log_scale is TRUE
