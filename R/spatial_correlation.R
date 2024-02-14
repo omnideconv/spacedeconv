@@ -1,8 +1,8 @@
-#library(spacedeconv)
+# library(spacedeconv)
 # WARNING: the following functions were not found although spacedeconv was loaded
 # "cor.mtest"
 
-#library(corrplot)
+# library(corrplot)
 
 #' create a correlation plot
 #' @param spe #the spe object
