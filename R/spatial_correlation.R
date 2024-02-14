@@ -10,13 +10,14 @@
 #' @param adjust #method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details
 #' @param variables #if not provided, the function selects variables based on the specified method, it can also be a vector
 #' @param sig.level #it can also be a vector
+#' @param ... additional parameters passed to corrplot function
 #' @export
 
 spatialcorr <- function(spe,
                         method, # method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
                         adjust = "fdr", # method used to adjust p-values for multiple testing
                         variables = NULL, # if not provided, the function selects variables based on the specified method
-                        sig.level = 0.05) {
+                        sig.level = 0.05, ...) {
   # CHECKS
   # spe
   if (is.null(spe)) {
@@ -89,7 +90,8 @@ spatialcorr <- function(spe,
     tl.col = "black",
     mar = c(0, 0, 2, 0),
     cex.lab = 1.6,
-    cex.main = 1.5
+    cex.main = 1.5,
+    ...
   )
 
   # Return matrix of correlations and adjusted p-values

@@ -6,12 +6,13 @@
 #' @param cor_method correlation method "pearson" or "spearman"
 #' @param log logarithmic transformation of signature matrix
 #' @param matrix return correlation and correlation probability values as matrix
+#' @param ... additional parameters passed to corrplot function
 #'
 #' @returns correlation heatmap of cell types based on gene expression
 #'
 #' @export
 
-corr_expr <- function(sig, log = FALSE, cor_method = "pearson", matrix = FALSE) {
+corr_expr <- function(sig, log = FALSE, cor_method = "pearson", matrix = FALSE, ...) {
   if (!cor_method %in% c("pearson", "spearman")) {
     stop("cor_method must be either 'pearson' or 'spearman'")
   }
@@ -39,6 +40,7 @@ corr_expr <- function(sig, log = FALSE, cor_method = "pearson", matrix = FALSE) 
     cl.cex = 1.2,
     tl.cex = 1.2,
     cex.main = 1.3,
+    ...
   )
   cat(paste0("\t", c("Significance correlation:", "* <0.05", "** <0.01", "*** <0.001"), "\n"))
 
