@@ -7,7 +7,7 @@
 #' create a correlation plot
 #' @param spe #the spe object
 #' @param method #method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
-#' @param adjust #method used to adjust p-values for multiple testing
+#' @param adjust #method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details
 #' @param variables #if not provided, the function selects variables based on the specified method, it can also be a vector
 #' @param sig.level #it can also be a vector
 #' @export

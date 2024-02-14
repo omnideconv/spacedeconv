@@ -11,13 +11,9 @@
 #'
 #' @export
 
-corr_expr <- function(sig, log = FALSE, cor_method = c("pearson", "spearman"), matrix = FALSE) {
+corr_expr <- function(sig, log = FALSE, cor_method = "pearson", matrix = FALSE) {
   if (!cor_method %in% c("pearson", "spearman")) {
     stop("cor_method must be either 'pearson' or 'spearman'")
-  }
-
-  if (!is.numeric(sig) || is.factor(sig) || any(is.na(sig))) {
-    stop("Signature matrix must be numeric and not contain NA values.")
   }
 
   # option to log scale

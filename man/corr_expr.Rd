@@ -4,12 +4,7 @@
 \alias{corr_expr}
 \title{Heatmap correlation of cell types based on gene expression values}
 \usage{
-corr_expr(
-  sig,
-  log = FALSE,
-  cor_method = c("pearson", "spearman"),
-  matrix = FALSE
-)
+corr_expr(sig, log = FALSE, cor_method = "pearson", matrix = FALSE)
 }
 \arguments{
 \item{sig}{signature matrix}
