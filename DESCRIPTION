@@ -68,7 +68,10 @@ Suggests:
     EPIC,
     Seurat,
     SeuratObject, 
-    plotly
+    plotly, 
+    Orthology.eg.db, 
+    org.Mm.eg.db, 
+    org.Hs.eg.db
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

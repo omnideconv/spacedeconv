@@ -12,8 +12,10 @@ library("org.Hs.eg.db")
 convert_human_to_mouse <- function(humangenes) {
   # Function to process individual or complex gene names
   processGene <- function(gene) {
+
     # Split gene names if they are in complex form (e.g., "GENE1_GENE2")
     splitGenes <- unlist(strsplit(gene, "_"))
+
     # Process each gene symbol individually
     mappedSymbols <- sapply(splitGenes, function(x) {
       gns <- tryCatch(
@@ -43,12 +45,14 @@ convert_human_to_mouse <- function(humangenes) {
       }
       return(NA)
     })
-    # Combine the mapped symbols with underscores if there were multiple
+    # Combine the mapped symbols with underscores if they were a complex
     paste(mappedSymbols, collapse = "_")
   }
-  # Apply the processing function to each input gene symbol or complex
+
+  suppressWarnings({
   mappedGenes <- sapply(humangenes, processGene)
-  # Prepare the output data frame
+  })
+
   out <- data.frame(Human_symbol = humangenes, Mouse_symbol = mappedGenes, stringsAsFactors = FALSE)
   return(out)
 }
@@ -66,6 +70,7 @@ convert_mouse_to_human <- function(mousegenes) {
   processGene <- function(gene) {
     # Split gene names if they are in complex form (e.g., "GENE1_GENE2")
     splitGenes <- unlist(strsplit(gene, "_"))
+
     # Process each gene symbol individually
     mappedSymbols <- sapply(splitGenes, function(x) {
       gns <- tryCatch(
@@ -95,12 +100,13 @@ convert_mouse_to_human <- function(mousegenes) {
       }
       return(NA)
     })
-    # Combine the mapped symbols with underscores if there were multiple
+    # Combine the mapped symbols with underscores if they were a complex
     paste(mappedSymbols, collapse = "_")
   }
-  # Apply the processing function to each input gene symbol or complex
+
+  suppressWarnings({
   mappedGenes <- sapply(mousegenes, processGene)
-  # Prepare the output data frame
+  })
   out <- data.frame(Mouse_symbol = mousegenes, Human_symbol = mappedGenes, stringsAsFactors = FALSE)
   return(out)
 }
