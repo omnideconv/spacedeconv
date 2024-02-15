@@ -45,7 +45,10 @@ Imports:
     psych,
     ComplexHeatmap, 
     grid, 
-    grDevices
+    grDevices, 
+    Orthology.eg.db, 
+    org.Mm.eg.db, 
+    org.Hs.eg.db
 Suggests: 
     spacexr,
     SPOTlight,
@@ -68,10 +71,7 @@ Suggests:
     EPIC,
     Seurat,
     SeuratObject, 
-    plotly, 
-    Orthology.eg.db, 
-    org.Mm.eg.db, 
-    org.Hs.eg.db
+    plotly
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

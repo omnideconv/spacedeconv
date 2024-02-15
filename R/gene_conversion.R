@@ -1,7 +1,3 @@
-library("Orthology.eg.db")
-library("org.Mm.eg.db")
-library("org.Hs.eg.db")
-
 #' map human to mouse genes
 #'
 #' @param humangenes a vector containing human genes to be converted to mouse
