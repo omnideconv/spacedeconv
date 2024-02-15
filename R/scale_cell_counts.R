@@ -16,7 +16,7 @@
 #' @return SPE object with added absolute celltype counts for each spot
 #'
 #' @export
-scale_cell_densities <- function(spe, value, cell_densities, resName = NULL) {
+scale_cell_counts <- function(spe, value, cell_counts, resName = NULL) {
   # Validate inputs
   if (!value %in% colnames(colData(spe))) {
     stop("Specified value column does not exist in colData of the SPE object.")
