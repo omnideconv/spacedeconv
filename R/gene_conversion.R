@@ -12,7 +12,6 @@ library("org.Hs.eg.db")
 convert_human_to_mouse <- function(humangenes) {
   # Function to process individual or complex gene names
   processGene <- function(gene) {
-
     # Split gene names if they are in complex form (e.g., "GENE1_GENE2")
     splitGenes <- unlist(strsplit(gene, "_"))
 
@@ -50,7 +49,7 @@ convert_human_to_mouse <- function(humangenes) {
   }
 
   suppressWarnings({
-  mappedGenes <- sapply(humangenes, processGene)
+    mappedGenes <- sapply(humangenes, processGene)
   })
 
   out <- data.frame(Human_symbol = humangenes, Mouse_symbol = mappedGenes, stringsAsFactors = FALSE)
@@ -105,7 +104,7 @@ convert_mouse_to_human <- function(mousegenes) {
   }
 
   suppressWarnings({
-  mappedGenes <- sapply(mousegenes, processGene)
+    mappedGenes <- sapply(mousegenes, processGene)
   })
   out <- data.frame(Mouse_symbol = mousegenes, Human_symbol = mappedGenes, stringsAsFactors = FALSE)
   return(out)
