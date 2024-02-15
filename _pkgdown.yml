@@ -56,6 +56,9 @@ reference:
       - print_info
       - filter_sample_id
       - compare_signatures
+      - convert_human_to_mouse
+      - convert_mouse_to_human
+      - spatialcorr
   - title: Metacell
     contents:
       - clean_genes_and_cells
