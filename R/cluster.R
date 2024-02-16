@@ -72,9 +72,9 @@ cluster <- function(spe,
     # create seurat object
     seurat_obj <- SeuratObject::CreateSeuratObject(
       counts = expression_data,
-      ##########spatial = spatial_coordinates,
-      project = "ST"#,
-      #assay = "Spatial"
+      ########## spatial = spatial_coordinates,
+      project = "ST" # ,
+      # assay = "Spatial"
     )
 
     # normalize spatial counts
