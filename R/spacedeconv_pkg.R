@@ -29,10 +29,11 @@
 #' @importFrom stats median quantile cor density
 #' @importFrom graphics abline par
 #' @importFrom grDevices dev.off png
-#' @importFrom corrplot corrplot
+#' @importFrom corrplot corrplot cor.mtest
 #' @importFrom multimode locmodes
 #' @importFrom methods hasArg is
 #' @importFrom decoupleR run_wsum run_aucell run_fgsea run_gsva run_mdt run_mlm run_ora run_udt run_ulm run_viper run_wmean
+#' @importFrom psych corr.test
 #'
 #'
 #' @name spacedeconv_pkg
