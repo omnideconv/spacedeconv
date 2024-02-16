@@ -4,7 +4,7 @@
 \alias{plot_scatter}
 \title{Benchmarking scatterplot to compare two spatial objects}
 \usage{
-plot_scatter(spe1, value1, spe2, value2)
+plot_scatter(spe1, value1, spe2, value2, log_scale = FALSE)
 }
 \arguments{
 \item{spe1}{SpatialExperiment}
