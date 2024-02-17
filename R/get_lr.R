@@ -1,18 +1,3 @@
-# load packages
-# library(OmnipathR)
-# library(dplyr)
-# library(tidyverse)
-# library(SpatialExperiment)
-
-
-# Csparse_validate <- "CsparseMatrix_validate"
-
-# conversion functions
-# source("/gpfs/gpfs1/scratch/c1041165/spacedeconv-paper-mz/CCC/markdowns/gene_conversion.R")
-
-# FUNCTION TO COMPUTE L-R SCORES
-
-
 #' Get Ligand Expression
 #'
 #' @description This function computes the expression values of a specified ligand (gene or gene complex) from a given expression dataset.
@@ -27,7 +12,7 @@ get_ligand_expression <- function(gene_pair, cpm_df) {
     sub_genes <- unlist(strsplit(first_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
     if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
+      all(cpm_df[sub_genes, ] != 0)) {
       # Calculate the mean expression values for each sub-gene across spots
       expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
     } else {
@@ -55,7 +40,7 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
     sub_genes <- unlist(strsplit(second_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
     if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
+      all(cpm_df[sub_genes, ] != 0)) {
       # Calculate the mean expression values for each sub-gene across spots
       expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
     } else {
@@ -68,10 +53,6 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
   }
 }
 
-
-
-
-
 #' Compute L-R score for each spot
 #'
 #' @param spe SpatialExperiment object
@@ -80,11 +61,14 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
 #' @param organism choose the organism to be considered, default human, options: human or mouse
 #'
 #' @export
-
 get_lr <- function(spe,
                    resource = "Consensus",
                    method = "min",
                    organism = "human") {
+  startTime <- Sys.time()
+
+
+  # Checking Parameter
   if (is.null(spe)) {
     stop("Please provide a SpatialExperiment object")
   }
@@ -295,7 +279,7 @@ get_lr <- function(spe,
   cpm_ligands_subset <- cpm_ligands_clean[common_rows, ]
   cpm_receptors_subset <- cpm_receptors_clean[common_rows, ]
 
-  cli::cli_progress_step(msg = "Calculating L-R score", msg_done = "Computation completed!")
+  cli::cli_progress_step(msg = "Calculating L-R score")
   # choose the mathematical operation
   # if no method provide then the default (min) should be used
   if (is.null(method) || method == "min") {
@@ -317,6 +301,12 @@ get_lr <- function(spe,
   colData(spe) <- cbind(colData(spe), result)
 
   cli::cli_progress_done()
+
+  endTime <- Sys.time()
+  total_time <- endTime - startTime
+
+
+  cli::cli_alert_success(paste("Finished Computation in", total_time))
 
   return(spe)
 }
