@@ -71,7 +71,9 @@ Suggests:
     plotly, 
     Orthology.eg.db, 
     org.Mm.eg.db, 
-    org.Hs.eg.db
+    org.Hs.eg.db, 
+    AnnotationDbi, 
+    pbapply
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

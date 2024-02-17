@@ -44,7 +44,7 @@ convert_human_to_mouse <- function(humangenes) {
     paste(mappedSymbols, collapse = "_")
   }
 
-  suppressWarnings({
+  suppressMessages({
     mappedGenes <- sapply(humangenes, processGene)
   })
 
@@ -99,7 +99,7 @@ convert_mouse_to_human <- function(mousegenes) {
     paste(mappedSymbols, collapse = "_")
   }
 
-  suppressWarnings({
+  suppressMessages({
     mappedGenes <- sapply(mousegenes, processGene)
   })
   out <- data.frame(Mouse_symbol = mousegenes, Human_symbol = mappedGenes, stringsAsFactors = FALSE)

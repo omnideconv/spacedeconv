@@ -304,15 +304,8 @@ get_lr <- function(spe,
 
   endTime <- Sys.time()
 
-  # Calculate execution time in seconds
-  executionTimeInMinutes <- as.numeric(endTime - startTime)
-
-  # Convert execution time to minutes and seconds
-  minutes <- floor(executionTimeInMinutes)
-  seconds <- (executionTimeInMinutes - minutes) * 60
-
   # Print the execution time more clearly
-  cli::cli_alert_success(paste("Finished Computation in", minutes, "minutes and", round(seconds, 2), "seconds.\n"))
+  cli::cli_alert_success(paste("Finished computation in", format(difftime(endTime, startTime, units = "mins"), digits = 4), " minutes"))
 
   return(spe)
 }
