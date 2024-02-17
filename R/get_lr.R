@@ -228,9 +228,6 @@ get_lr <- function(spe,
   # ligands
   cpm_ligands <- data.frame(matrix(NA, nrow = nrow(resource), ncol = ncol(cpm_df)))
 
-  View(cpm_ligands)
-  View(resource)
-
   # Set row names based on the "pairs" column
   row.names(cpm_ligands) <- resource$pairs
   colnames(cpm_ligands) <- colnames(cpm_df)
