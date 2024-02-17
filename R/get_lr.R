@@ -303,10 +303,16 @@ get_lr <- function(spe,
   cli::cli_progress_done()
 
   endTime <- Sys.time()
-  total_time <- endTime - startTime
 
+  # Calculate execution time in seconds
+  executionTimeInMinutes <- as.numeric(endTime - startTime)
 
-  cli::cli_alert_success(paste("Finished Computation in", total_time))
+  # Convert execution time to minutes and seconds
+  minutes <- floor(executionTimeInSeconds)
+  seconds <- (executionTimeInMinutes - minutes )* 60
+
+  # Print the execution time more clearly
+  cli::cli_alert_success(paste("Finished Computation in", minutes, "minutes and", round(seconds, 2), "seconds.\n"))
 
   return(spe)
 }
