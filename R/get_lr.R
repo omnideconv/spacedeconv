@@ -10,8 +10,66 @@
 # conversion functions
 # source("/gpfs/gpfs1/scratch/c1041165/spacedeconv-paper-mz/CCC/markdowns/gene_conversion.R")
 
-
 # FUNCTION TO COMPUTE L-R SCORES
+
+
+#' Get Ligand Expression
+#'
+#' @description This function computes the expression values of a specified ligand (gene or gene complex) from a given expression dataset.
+#' @param gene_pair A string representing a gene or a gene complex. Gene complexes are indicated by genes separated by underscores.
+#' @param cpm_df A dataframe containing gene expression data, where row names are gene names and columns represent different samples or spots.
+#' @return A numeric vector containing the expression values of the specified ligand across the samples or spots in `cpm_df`. If the ligand is a gene complex, it returns the mean expression value of the component genes. If any component gene is missing or has zero expression, it returns a vector of zeros.
+get_ligand_expression <- function(gene_pair, cpm_df) {
+  first_gene <- sub("~.*", "", gene_pair) # Extract the first gene/gene complex before "~"
+
+  # check if its a complex or not
+  if (grepl("_", first_gene)) {
+    sub_genes <- unlist(strsplit(first_gene, "_"))
+    # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
+    if (all(sub_genes %in% rownames(cpm_df)) &&
+        all(cpm_df[sub_genes, ] != 0)) {
+      # Calculate the mean expression values for each sub-gene across spots
+      expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
+    } else {
+      # If any sub_gene does not exist or has zero expression, return a vector of zeros
+      expression_values <- rep(0, ncol(cpm_df))
+    }
+  } else {
+    expression_values <- cpm_df[first_gene, ]
+    # return(expression_values)
+  }
+}
+
+
+#' Get Receptor Expression
+#'
+#' @description This function calculates the expression values of a specified receptor (gene or gene complex) from a given expression dataset.
+#' @param gene_pair A string representing a gene or a gene complex, where gene complexes are indicated by genes separated by underscores, and the receptor gene is specified after a "~".
+#' @param cpm_df A dataframe containing gene expression data, with row names as gene names and columns as different samples or spots.
+#' @return A numeric vector of the expression values of the specified receptor across the samples or spots in `cpm_df`. If the receptor is a gene complex, the function returns the mean expression value of the component genes. If any component gene is missing or has zero expression, a vector of zeros is returned.
+get_receptor_expression <- function(gene_pair, cpm_df) {
+  second_gene <- sub(".*~", "", gene_pair) # Extract the second gene/gene complex after "~"
+
+  # check if its a complex or not
+  if (grepl("_", second_gene)) {
+    sub_genes <- unlist(strsplit(second_gene, "_"))
+    # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
+    if (all(sub_genes %in% rownames(cpm_df)) &&
+        all(cpm_df[sub_genes, ] != 0)) {
+      # Calculate the mean expression values for each sub-gene across spots
+      expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
+    } else {
+      # If any sub_gene does not exist or has zero expression, return a vector of zeros
+      expression_values <- rep(0, ncol(cpm_df))
+    }
+  } else {
+    expression_values <- cpm_df[second_gene, ]
+    # return(expression_values)
+  }
+}
+
+
+
 
 
 #' Compute L-R score for each spot
@@ -20,6 +78,8 @@
 #' @param resource "consensus" table from Omnipath as default, the user can provide a data frame containing L-R pairs. The data frame should contain at least the following two columns: source_genesymbol = ligands, target_genesymbol = receptors
 #' @param method mathematical approach to compute L-R scores. Options: min, and product L-R, default is product
 #' @param organism choose the organism to be considered, default human, options: human or mouse
+#'
+#' @export
 
 get_lr <- function(spe,
                    resource = "Consensus",
@@ -83,14 +143,14 @@ get_lr <- function(spe,
       resource <- resource[!duplicated(resource$pairs), ]
       # conversion from human to mouse
       # ligands
-      cli::cli_progress_step(msg = "Converting the human ligands to mouse", msg_done = "Convestion completed!")
+      cli::cli_progress_step(msg = "Converting the human ligands to mouse", msg_done = "Conversion completed!")
       suppressWarnings({
         mligands <- convert_human_to_mouse(humangenes = resource$source_genesymbol)
       })
       cli::cli_progress_done()
 
       # receptors
-      cli::cli_progress_step(msg = "Converting the human receptors to mouse", msg_done = "Convestion completed!")
+      cli::cli_progress_step(msg = "Converting the human receptors to mouse", msg_done = "Conversion completed!")
       suppressWarnings({
         mreceptors <- convert_human_to_mouse(humangenes = resource$target_genesymbol)
       })
@@ -178,6 +238,7 @@ get_lr <- function(spe,
     }
   }
 
+  cli::cli_progress_step("Extracting Expression Data")
 
   # prepare the ligand and receptor data frames which will contain the cpm values for each
   # ligands
@@ -191,28 +252,7 @@ get_lr <- function(spe,
 
   # fill the ligand table with the cpm values
   # Function to get expression values for the the ligands (first elementa of the L-R pairing)
-  cli::cli_alert_info("Extracting CPM values for ligands and ligand - complexes")
-
-  get_ligand_expression <- function(gene_pair, cpm_df) {
-    first_gene <- sub("~.*", "", gene_pair) # Extract the first gene/gene complex before "~"
-
-    # check if its a complex or not
-    if (grepl("_", first_gene)) {
-      sub_genes <- unlist(strsplit(first_gene, "_"))
-      # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
-      if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
-        # Calculate the mean expression values for each sub-gene across spots
-        expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
-      } else {
-        # If any sub_gene does not exist or has zero expression, return a vector of zeros
-        expression_values <- rep(0, ncol(cpm_df))
-      }
-    } else {
-      expression_values <- cpm_df[first_gene, ]
-      # return(expression_values)
-    }
-  }
+  cli::cli_progress_step("Extracting Ligand Expression")
 
   # Fill in cpm_ligands directly
   for (row_name in rownames(cpm_ligands)) {
@@ -222,27 +262,7 @@ get_lr <- function(spe,
   }
 
   # receptors
-  cli::cli_alert_info("Extracting CPM values for receptors and receptor - complexes")
-  get_receptor_expression <- function(gene_pair, cpm_df) {
-    second_gene <- sub(".*~", "", gene_pair) # Extract the second gene/gene complex after "~"
-
-    # check if its a complex or not
-    if (grepl("_", second_gene)) {
-      sub_genes <- unlist(strsplit(second_gene, "_"))
-      # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
-      if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
-        # Calculate the mean expression values for each sub-gene across spots
-        expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
-      } else {
-        # If any sub_gene does not exist or has zero expression, return a vector of zeros
-        expression_values <- rep(0, ncol(cpm_df))
-      }
-    } else {
-      expression_values <- cpm_df[second_gene, ]
-      # return(expression_values)
-    }
-  }
+  cli::cli_progress_step("Extracting Receptor Expression")
 
   # Fill in cpm_receptors directly
   for (row_name in rownames(cpm_receptors)) {
@@ -251,7 +271,8 @@ get_lr <- function(spe,
     cpm_receptors[row_name, ] <- as.numeric(expression_values)
   }
 
-  cli::cli_alert_info("Removing NA values from both tables")
+  cli::cli_progress_step("Preparing Expression Data for computing L-R score")
+
   # filtering
   # check and remove NAs
   na_rows_ligands <- cpm_ligands[!complete.cases(cpm_ligands), ]

@@ -115,3 +115,5 @@ reference:
       - get_largest_r_and_iso
       - check_datatype
       - get_palette_type
+      - get_ligand_expression
+      - get_receptor_expression
