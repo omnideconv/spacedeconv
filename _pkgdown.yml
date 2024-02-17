@@ -59,6 +59,7 @@ reference:
       - convert_human_to_mouse
       - convert_mouse_to_human
       - spatialcorr
+      - get_lr
   - title: Metacell
     contents:
       - clean_genes_and_cells
@@ -114,3 +115,5 @@ reference:
       - get_largest_r_and_iso
       - check_datatype
       - get_palette_type
+      - get_ligand_expression
+      - get_receptor_expression
