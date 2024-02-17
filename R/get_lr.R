@@ -309,7 +309,7 @@ get_lr <- function(spe,
 
   # Convert execution time to minutes and seconds
   minutes <- floor(executionTimeInMinutes)
-  seconds <- (executionTimeInMinutes - minutes )* 60
+  seconds <- (executionTimeInMinutes - minutes ) * 60
 
   # Print the execution time more clearly
   cli::cli_alert_success(paste("Finished Computation in", minutes, "minutes and", round(seconds, 2), "seconds.\n"))
