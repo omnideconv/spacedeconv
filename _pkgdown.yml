@@ -59,6 +59,7 @@ reference:
       - convert_human_to_mouse
       - convert_mouse_to_human
       - spatialcorr
+      - get_lr
   - title: Metacell
     contents:
       - clean_genes_and_cells

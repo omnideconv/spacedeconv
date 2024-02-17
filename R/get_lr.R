@@ -1,14 +1,14 @@
 # load packages
-library(OmnipathR)
-library(dplyr)
-library(tidyverse)
-library(SpatialExperiment)
+#library(OmnipathR)
+#library(dplyr)
+#library(tidyverse)
+#library(SpatialExperiment)
 
 
-Csparse_validate <- "CsparseMatrix_validate"
+#Csparse_validate <- "CsparseMatrix_validate"
 
 # conversion functions
-source("/gpfs/gpfs1/scratch/c1041165/spacedeconv-paper-mz/CCC/markdowns/gene_conversion.R")
+#source("/gpfs/gpfs1/scratch/c1041165/spacedeconv-paper-mz/CCC/markdowns/gene_conversion.R")
 
 
 # FUNCTION TO COMPUTE L-R SCORES
