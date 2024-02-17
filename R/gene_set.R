@@ -7,7 +7,7 @@
 #'
 #' @returns updated SpatialExperiment object including the gene set score
 #' @export´
-gene_set_score <- function(spe, genes=NULL, assay = "cpm", name = "geneSet"){
+gene_set_score <- function(spe, genes = NULL, assay = "cpm", name = "geneSet") {
   # Ensure spe is a SpatialExperiment object
   if (!inherits(spe, "SpatialExperiment")) {
     stop("spe must be a SpatialExperiment object.")
@@ -24,7 +24,7 @@ gene_set_score <- function(spe, genes=NULL, assay = "cpm", name = "geneSet"){
   }
 
   # Subset the SpatialExperiment object by genes
-  spe_subset = spe[rownames(spe) %in% genes, ]
+  spe_subset <- spe[rownames(spe) %in% genes, ]
 
   # Check if the subset is empty
   if (nrow(spe_subset) == 0) {
@@ -40,7 +40,7 @@ gene_set_score <- function(spe, genes=NULL, assay = "cpm", name = "geneSet"){
   }
 
   # Calculate the gene set score
-  results = colSums(log(tmp + 1))
+  results <- colSums(log(tmp + 1))
 
   # Add the results as a new column to colData
   colData(spe)[[name]] <- results
