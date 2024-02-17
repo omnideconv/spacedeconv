@@ -228,6 +228,9 @@ get_lr <- function(spe,
   # ligands
   cpm_ligands <- data.frame(matrix(NA, nrow = nrow(resource), ncol = ncol(cpm_df)))
 
+  View(cpm_ligands)
+  View(resource)
+
   # Set row names based on the "pairs" column
   row.names(cpm_ligands) <- resource$pairs
   colnames(cpm_ligands) <- colnames(cpm_df)
@@ -304,15 +307,8 @@ get_lr <- function(spe,
 
   endTime <- Sys.time()
 
-  # Calculate execution time in seconds
-  executionTimeInMinutes <- as.numeric(endTime - startTime)
-
-  # Convert execution time to minutes and seconds
-  minutes <- floor(executionTimeInMinutes)
-  seconds <- (executionTimeInMinutes - minutes) * 60
-
   # Print the execution time more clearly
-  cli::cli_alert_success(paste("Finished Computation in", minutes, "minutes and", round(seconds, 2), "seconds.\n"))
+  cli::cli_alert_success(paste("Finished computation in", difftime(endTime, startTime, units = "mins")))
 
   return(spe)
 }
