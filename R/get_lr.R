@@ -308,7 +308,7 @@ get_lr <- function(spe,
   executionTimeInMinutes <- as.numeric(endTime - startTime)
 
   # Convert execution time to minutes and seconds
-  minutes <- floor(executionTimeInSeconds)
+  minutes <- floor(executionTimeInMinutes)
   seconds <- (executionTimeInMinutes - minutes )* 60
 
   # Print the execution time more clearly
