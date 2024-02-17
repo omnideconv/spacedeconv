@@ -305,7 +305,7 @@ get_lr <- function(spe,
   endTime <- Sys.time()
 
   # Print the execution time more clearly
-  cli::cli_alert_success(paste("Finished computation in", format(difftime(endTime, startTime, units = "mins"), digits=4), " minutes"))
+  cli::cli_alert_success(paste("Finished computation in", format(difftime(endTime, startTime, units = "mins"), digits = 4), " minutes"))
 
   return(spe)
 }
