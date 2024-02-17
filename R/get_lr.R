@@ -27,7 +27,7 @@ get_ligand_expression <- function(gene_pair, cpm_df) {
     sub_genes <- unlist(strsplit(first_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
     if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
+      all(cpm_df[sub_genes, ] != 0)) {
       # Calculate the mean expression values for each sub-gene across spots
       expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
     } else {
@@ -55,7 +55,7 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
     sub_genes <- unlist(strsplit(second_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
     if (all(sub_genes %in% rownames(cpm_df)) &&
-        all(cpm_df[sub_genes, ] != 0)) {
+      all(cpm_df[sub_genes, ] != 0)) {
       # Calculate the mean expression values for each sub-gene across spots
       expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
     } else {
