@@ -60,6 +60,7 @@ reference:
       - convert_mouse_to_human
       - spatialcorr
       - get_lr
+      - gene_set_score
   - title: Metacell
     contents:
       - clean_genes_and_cells
