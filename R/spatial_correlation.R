@@ -15,7 +15,7 @@ library(corrplot)
 #' @param order #Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.
 #' @param insig # If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).
 #' @param plot_layout #represents the method parameter in the original corrplot function.The layout of the correlation plot. color is default. Choose between "circle", "square", "ellipse", "number", "shade", "color", "pie"
-#' @param addCoef.col #to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values. 
+#' @param addCoef.col #to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.
 #' @param ... additional parameters passed to corrplot function
 #' @export
 
@@ -23,12 +23,12 @@ spatialcorr <- function(spe,
                         method, # method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
                         adjust = "fdr", # method used to adjust p-values for multiple testing
                         variables = NULL, # if not provided, the function selects variables based on the specified method
-                        sig.level = 0.05, 
+                        sig.level = 0.05,
                         type = "lower",
                         diag = FALSE,
                         order = "original",
                         plot_layout = "color",
-                        insig = "label_sig", #to label or not the significant values
+                        insig = "label_sig", # to label or not the significant values
                         addCoef.col = NULL,
                         ...) {
   # CHECKS
@@ -66,36 +66,36 @@ spatialcorr <- function(spe,
   if (sig.level <= 0 || sig.level >= 1) {
     stop("'sig.level' must be between 0 and 1.")
   }
-  
+
   # check if valid type
   valid_type <- c("full", "lower", "upper")
   if (!(type %in% valid_type)) {
     stop("Invalid argument provided for the 'type' parameter. Choose one of: ", paste(valid_type, collapse = ", "))
   }
-  
+
   # Check if diag is logical
   if (!is.logical(diag)) {
     stop("Parameter 'diag' must be logical (TRUE or FALSE).")
   }
-  
+
   # check if valid order
   valid_order <- c("original", "AOE", "FPC", "hclust", "alphabet")
   if (!(order %in% valid_order)) {
     stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_order, collapse = ", "))
   }
-  
+
   # check if valid plot_layout
   valid_plot <- c("circle", "square", "ellipse", "number", "shade", "color", "pie")
   if (!(plot_layout %in% valid_plot)) {
     stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_plot, collapse = ", "))
   }
-  
+
   # check if valid plot_layout
   if (plot_layout == "number") {
     print("Consider setting the 'insig' parameter to: 'blank', otherwise the significance markers (asterisks or X) would overlap with the correlation values")
   }
-  
-  
+
+
 
   # Select variables of interests
   # If variables is not provided but method is specified, the function selects variables based on those available in the dataset that start with the specified method.
@@ -121,11 +121,11 @@ spatialcorr <- function(spe,
   p.adj[upper.tri(p.adj)] <- t(p.adj)[upper.tri(p.adj)] # symmetrical matrix
   diag(p.adj) <- 0 # diag set to 0
 
-   corrplot(r,
+  corrplot(r,
     p.mat = p.adj,
-    method = plot_layout, #default is color
-    diag = diag, #default is FALSE, or defined above
-    type = type, #default is "lower", or else defined above
+    method = plot_layout, # default is color
+    diag = diag, # default is FALSE, or defined above
+    type = type, # default is "lower", or else defined above
     sig.level = sig.level,
     insig = insig, # add significant level asterisks
     pch.cex = 0.9,
@@ -134,8 +134,8 @@ spatialcorr <- function(spe,
     mar = c(0, 0, 2, 0),
     cex.lab = 1.6,
     cex.main = 1.5,
-    order = order, #default is "original", or else defined above
-    addCoef.col = addCoef.col, #default is NULL
+    order = order, # default is "original", or else defined above
+    addCoef.col = addCoef.col, # default is NULL
     ...
   )
 
