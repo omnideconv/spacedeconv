@@ -255,21 +255,13 @@ get_lr <- function(spe,
     cpm_receptors[row_name, ] <- as.numeric(expression_values)
   }
 
-  cli::cli_progress_step("Preparing Expression Data for computing L-R score")
-
+  cli::cli_alert_info("Removing NA values from both tables")
   # filtering
-  # check and remove NAs
-  na_rows_ligands <- cpm_ligands[!complete.cases(cpm_ligands), ]
-  nrow(na_rows_ligands)
-
   # clean the ligands table
   cpm_ligands_clean <- na.omit(cpm_ligands)
 
-  # same for the receptor table
-  na_rows_receptors <- cpm_receptors[!complete.cases(cpm_receptors), ]
-  nrow(na_rows_receptors)
+  cli::cli_progress_step("Preparing Expression Data for computing L-R score")
 
-  # clean the ligands table
   cpm_receptors_clean <- na.omit(cpm_receptors)
 
   # find the common rows
@@ -294,8 +286,9 @@ get_lr <- function(spe,
 
   result <- t(result)
 
-  # replace the colnames
+  # replace the colnames and add a lr prefix
   colnames(result) <- make.names(colnames(result))
+  colnames(result) <- paste("lr_", colnames(result), sep = "")
 
   # add the result as additional columns to the colData of the spe object
   colData(spe) <- cbind(colData(spe), result)
