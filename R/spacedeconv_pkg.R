@@ -9,7 +9,7 @@
 #' @importFrom remotes install_github
 # #' @importFrom Seurat as.SingleCellExperiment
 #' @importFrom SummarizedExperiment assay assayNames colData assay<-
-#' @importFrom ggplot2 aes aes_string unit element_rect coord_fixed geom_point geom_abline xlab ylab discrete_scale element_text labs aes_ ggplot geom_density theme_classic geom_vline scale_fill_viridis_c scale_y_discrete theme annotation_raster geom_sf coord_sf element_blank scale_fill_brewer scale_fill_manual
+#' @importFrom ggplot2 aes aes_string unit element_rect ggtitle coord_fixed geom_text geom_point geom_abline xlab ylab discrete_scale element_text labs aes_ ggplot geom_density theme_classic geom_vline scale_fill_viridis_c scale_y_discrete theme annotation_raster geom_sf coord_sf element_blank scale_fill_brewer scale_fill_manual
 #' @importFrom ggridges geom_density_ridges geom_density_ridges_gradient
 #' @importFrom magrittr %>%
 #' @importFrom testit assert
@@ -37,5 +37,5 @@
 #'
 #'
 #' @name spacedeconv_pkg
-#' @docType package
+# #' @docType package
 NULL
