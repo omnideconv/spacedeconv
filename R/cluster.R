@@ -196,7 +196,7 @@ get_cluster_features <- function(spe,
   # clusters <- colData(spe)[, available_results(spe, method = "cluster"),
   #   drop = FALSE
   # ]
-  #clusters <- clusters[, clusterid]
+  # clusters <- clusters[, clusterid]
   clusters <- colData(spe)[, clusterid, drop = FALSE]
 
 
