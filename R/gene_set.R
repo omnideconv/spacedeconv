@@ -6,7 +6,7 @@
 #' @param name name of the result column
 #'
 #' @returns updated SpatialExperiment object including the gene set score
-#' @export´
+#' @export
 gene_set_score <- function(spe, genes = NULL, assay = "cpm", name = "geneSet") {
   # Ensure spe is a SpatialExperiment object
   if (!inherits(spe, "SpatialExperiment")) {

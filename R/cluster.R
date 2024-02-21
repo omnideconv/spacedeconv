@@ -193,11 +193,11 @@ get_cluster_features <- function(spe,
   }
 
   # Extract clusters
-  clusters <- colData(spe)[, available_results(spe, method = "cluster"),
-    drop = FALSE
-  ]
-  clusters <- clusters[, clusterid]
-
+  # clusters <- colData(spe)[, available_results(spe, method = "cluster"),
+  #   drop = FALSE
+  # ]
+  # clusters <- clusters[, clusterid]
+  clusters <- colData(spe)[, clusterid, drop = FALSE]
 
 
   # Scores
