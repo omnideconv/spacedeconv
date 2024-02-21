@@ -260,16 +260,8 @@ get_lr <- function(spe,
   
   cli::cli_alert_info("Removing NA values from both tables")
   #filtering
-  #check and remove NAs
-  na_rows_ligands <- cpm_ligands[!complete.cases(cpm_ligands), ]
-  nrow(na_rows_ligands)
-  
   #clean the ligands table
   cpm_ligands_clean <- na.omit(cpm_ligands)
-  
-  #same for the receptor table
-  na_rows_receptors <- cpm_receptors[!complete.cases(cpm_receptors), ]
-  nrow(na_rows_receptors)
   
   #clean the ligands table
   cpm_receptors_clean <- na.omit(cpm_receptors)
