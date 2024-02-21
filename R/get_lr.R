@@ -292,8 +292,9 @@ get_lr <- function(spe,
   
   result <- t(result)
   
-  #replace the colnames
+  #replace the colnames and add a lr prefix
   colnames(result) <- make.names(colnames(result))
+  colnames(result) <- paste("lr_", colnames(result), sep = "")
   
   #add the result as additional columns to the colData of the spe object
   colData(spe) <- cbind(colData(spe), result)
