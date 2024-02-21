@@ -12,14 +12,6 @@
 #' @returns a singleCellExperiment with
 #'
 #' @export
-#' @examples
-#' data("single_cell_data_1")
-#' sce <- subsetSCE(
-#'   single_cell_data_1,
-#'   cell_type_col = "celltype_major",
-#'   scenario = "even",
-#'   ncells = 100
-#' )
 subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis", seed = 12345) {
   cli::cli_rule(left = "spacedeconv")
 
@@ -73,6 +65,32 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
           cli::cli_alert_info(paste0("Not enough cells for ", celltype, ". Using all avialable cells"))
 
           # use all cells
+          x[locations] <- TRUE
+        } else if (notEnough == "remove") {
+          cli::cli_alert_warning(paste0("Not enough cells for ", celltype, ". Removing Celltype"))
+          x[locations] <- FALSE
+        }
+      }
+    }
+  } else if (scenario == "mirror") {
+    # Calculate total counts per cell type
+    cell_counts <- table(sce[[cell_type_col]])
+
+    # Calculate proportions
+    cell_proportions <- cell_counts / sum(cell_counts)
+
+    # Calculate the number of cells for each cell type based on proportions
+    cells_per_type <- round(cell_proportions * ncells)
+
+    for (celltype in names(cells_per_type)) {
+      locations <- which(sce[[cell_type_col]] == celltype)
+      num_cells_to_select <- cells_per_type[celltype]
+
+      if (length(locations) >= num_cells_to_select) {
+        x[sample(locations, size = num_cells_to_select, replace = FALSE)] <- TRUE
+      } else {
+        if (notEnough == "asis") {
+          cli::cli_alert_info(paste0("Not enough cells for ", celltype, ". Using all available cells"))
           x[locations] <- TRUE
         } else if (notEnough == "remove") {
           cli::cli_alert_warning(paste0("Not enough cells for ", celltype, ". Removing Celltype"))
