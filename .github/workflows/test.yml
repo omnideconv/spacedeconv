@@ -72,7 +72,7 @@ jobs:
           dependencies: '"hard"' # do not install suggests
           extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
           needs: check
-          error-on: '"error"'
+          #error-on: '"error"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
