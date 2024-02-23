@@ -14,6 +14,8 @@ plot_scatter(spe1, value1, spe2, value2, log_scale = FALSE)
 \item{spe2}{SpatialExperiment}
 
 \item{value2}{deconvolution result to plot}
+
+\item{log_scale}{whether to log scale the axes}
 }
 \description{
 Benchmarking scatterplot to compare two spatial objects

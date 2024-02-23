@@ -61,6 +61,7 @@ reference:
       - spatialcorr
       - get_lr
       - gene_set_score
+      - scale_cell_counts
   - title: Metacell
     contents:
       - clean_genes_and_cells
@@ -85,7 +86,7 @@ reference:
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
-      - compute_decoupleR_activities
+      - compute_activities
   - title: internal
     contents:
       - spacedeconv_pkg
