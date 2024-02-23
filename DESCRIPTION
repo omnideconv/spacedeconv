@@ -45,7 +45,8 @@ Imports:
     psych,
     ComplexHeatmap, 
     grid, 
-    grDevices
+    grDevices, 
+    stats
 Suggests: 
     spacexr,
     SPOTlight,
