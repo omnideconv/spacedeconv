@@ -5,11 +5,17 @@
 # library(corrplot)
 
 #' create a correlation plot
-#' @param spe #the spe object
-#' @param method #method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
-#' @param adjust #method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details
-#' @param variables #if not provided, the function selects variables based on the specified method, it can also be a vector
-#' @param sig.level #it can also be a vector
+#' @param spe the spe object
+#' @param method method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
+#' @param adjust method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details
+#' @param variables if not provided, the function selects variables based on the specified method, it can also be a vector
+#' @param sig.level it can also be a vector
+#' @param type Character, 'full' 'upper' or 'lower' (default), display full matrix, lower triangular or upper triangular matrix.
+#' @param diag Logical, whether display the correlation coefficients on the principal diagonal. default is FALSE
+#' @param order Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.
+#' @param insig If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).
+#' @param plot_layout represents the method parameter in the original corrplot function.The layout of the correlation plot. color is default. Choose between "circle", "square", "ellipse", "number", "shade", "color", "pie"
+#' @param addCoef.col to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.
 #' @param ... additional parameters passed to corrplot function
 #' @export
 
@@ -17,7 +23,14 @@ spatialcorr <- function(spe,
                         method, # method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
                         adjust = "fdr", # method used to adjust p-values for multiple testing
                         variables = NULL, # if not provided, the function selects variables based on the specified method
-                        sig.level = 0.05, ...) {
+                        sig.level = 0.05,
+                        type = "lower",
+                        diag = FALSE,
+                        order = "original",
+                        plot_layout = "color",
+                        insig = "label_sig", # to label or not the significant values
+                        addCoef.col = NULL,
+                        ...) {
   # CHECKS
   # spe
   if (is.null(spe)) {
@@ -54,6 +67,36 @@ spatialcorr <- function(spe,
     stop("'sig.level' must be between 0 and 1.")
   }
 
+  # check if valid type
+  valid_type <- c("full", "lower", "upper")
+  if (!(type %in% valid_type)) {
+    stop("Invalid argument provided for the 'type' parameter. Choose one of: ", paste(valid_type, collapse = ", "))
+  }
+
+  # Check if diag is logical
+  if (!is.logical(diag)) {
+    stop("Parameter 'diag' must be logical (TRUE or FALSE).")
+  }
+
+  # check if valid order
+  valid_order <- c("original", "AOE", "FPC", "hclust", "alphabet")
+  if (!(order %in% valid_order)) {
+    stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_order, collapse = ", "))
+  }
+
+  # check if valid plot_layout
+  valid_plot <- c("circle", "square", "ellipse", "number", "shade", "color", "pie")
+  if (!(plot_layout %in% valid_plot)) {
+    stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_plot, collapse = ", "))
+  }
+
+  # check if valid plot_layout
+  if (plot_layout == "number") {
+    print("Consider setting the 'insig' parameter to: 'blank', otherwise the significance markers (asterisks or X) would overlap with the correlation values")
+  }
+
+
+
   # Select variables of interests
   # If variables is not provided but method is specified, the function selects variables based on those available in the dataset that start with the specified method.
   if (is.null(variables) && !is.null(method)) {
@@ -80,17 +123,19 @@ spatialcorr <- function(spe,
 
   corrplot(r,
     p.mat = p.adj,
-    method = "color",
-    diag = FALSE,
-    type = "lower", # the plot contains only the lower part
+    method = plot_layout, # default is color
+    diag = diag, # default is FALSE, or defined above
+    type = type, # default is "lower", or else defined above
     sig.level = sig.level,
-    insig = "label_sig", # add significant level asterisks
+    insig = insig, # add significant level asterisks
     pch.cex = 0.9,
     pch.col = "black",
     tl.col = "black",
     mar = c(0, 0, 2, 0),
     cex.lab = 1.6,
     cex.main = 1.5,
+    order = order, # default is "original", or else defined above
+    addCoef.col = addCoef.col, # default is NULL
     ...
   )
 
