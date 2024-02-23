@@ -12,9 +12,9 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: self-hosted #${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: "ubuntu" # ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
