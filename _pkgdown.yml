@@ -85,7 +85,7 @@ reference:
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
-      - compute_decoupleR_activities
+      - compute_activities
   - title: internal
     contents:
       - spacedeconv_pkg
