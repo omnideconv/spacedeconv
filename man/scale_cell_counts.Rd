@@ -12,12 +12,12 @@ scale_cell_counts(spe, value, cell_counts, resName = NULL)
 \item{value}{A string specifying the name of the column in \code{colData(spe)} that contains
 relative cell fractions/deconvolution results to be scaled.}
 
+\item{cell_counts}{A named vector of absolute cell densities, where names correspond
+to the rownames in \code{colData(spe)}.}
+
 \item{resName}{Optional; a string specifying the name of the new column to be added
 to \code{colData(spe)} that will contain the absolute cell densities.
 If NULL, defaults to appending "_absolute" to the \code{value} parameter.}
-
-\item{cell_densities}{A named vector of absolute cell densities, where names correspond
-to the rownames in \code{colData(spe)}.}
 }
 \value{
 SPE object with added absolute celltype counts for each spot

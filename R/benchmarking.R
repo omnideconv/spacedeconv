@@ -4,6 +4,7 @@
 #' @param value1 deconvolution result to plot
 #' @param spe2 SpatialExperiment
 #' @param value2 deconvolution result to plot
+#' @param log_scale whether to log scale the axes
 #'
 #' @export
 plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {

@@ -7,7 +7,7 @@
 #' @param spe An SpatialExperiment object containing spatial transcriptomics data.
 #' @param value A string specifying the name of the column in `colData(spe)` that contains
 #'              relative cell fractions/deconvolution results to be scaled.
-#' @param cell_densities A named vector of absolute cell densities, where names correspond
+#' @param cell_counts A named vector of absolute cell densities, where names correspond
 #'                       to the rownames in `colData(spe)`.
 #' @param resName Optional; a string specifying the name of the new column to be added
 #'                to `colData(spe)` that will contain the absolute cell densities.
