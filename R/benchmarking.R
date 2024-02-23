@@ -45,7 +45,7 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
   # construct plot
   plot <- ggplot(df, aes(x = value1, y = value2)) +
     geom_point(shape = 21, color = "blue", fill = "lightblue", size = 1, stroke = 0.5) +
-    geom_abline(slope = 1, linetype = "dashed", col="red") +
+    geom_abline(slope = 1, linetype = "dashed", col = "red") +
     xlab(paste(value1)) +
     ylab(paste(value2)) +
     coord_fixed(ratio = 1) +
