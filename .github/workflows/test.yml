@@ -12,9 +12,9 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: self-hosted #${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: "ubuntu" # ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
@@ -35,7 +35,7 @@ jobs:
       CIBERSORTX_TOKEN: ${{ secrets.CIBERSORTX_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Update system dependencies
         # due to recent versions of GLIBC missing
@@ -48,15 +48,15 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
+          r-version: 4.2.2 # ${{ matrix.config.r }}
+          # http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
       - name: Install pak
         run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
 
-      - name: harmony
-        run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
+      #- name: harmony
+      #  run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
 
       # - name: BiocManager
       #   run: Rscript -e "pak::pkg_install('BiocManager')"
@@ -64,14 +64,18 @@ jobs:
       # - name: Giotto deps
       #   run: Rscript -e "BiocManager::install(c('lfa', 'SPARK', 'trendsceek'))"
 
-      - name: Giotto
-        run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
+      #- name: Giotto
+      #  run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
+
+      - name: Install SpatialExperiment
+        run: Rscript -e "pak::pkg_install(c('drighelli/SpatialExperiment', 'testthat'))"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          dependencies: '"hard"' # do not install suggests
           extra-packages: any::rcmdcheck, any::rmarkdown, any::markdown, local::.
           needs: check
-          error-on: '"error"'
+          #error-on: '"error"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:

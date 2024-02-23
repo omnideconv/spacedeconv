@@ -16,7 +16,7 @@ plot_gene(
   show_image = FALSE,
   background = NULL,
   zoom = TRUE,
-  palette_type = "sequential",
+  palette_type = NULL,
   offset_rotation = FALSE,
   spot_size = 1,
   limits = NULL,
@@ -31,7 +31,8 @@ plot_gene(
   save = FALSE,
   path = NULL,
   png_width = 1500,
-  png_height = 750
+  png_height = 750,
+  ...
 )
 }
 \arguments{
@@ -88,6 +89,8 @@ plot_gene(
 \item{png_width}{when saving, png width in px}
 
 \item{png_height}{when saving, png height in px}
+
+\item{...}{additional paramters passed to internal functions}
 }
 \value{
 plot of cell type fractions

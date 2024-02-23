@@ -1,19 +1,26 @@
 #' Obtain a decoupleR reference
-#' @param method method to use, progeny or dorothea
+#' @param method method to use, progeny, dorothea or collectri
 #' @param organism which organism
 #' @param n_genes number genes to return, for progeny
-#' @param confidence condfidence level for transcription factor reference, vector of levels to include
+#' @param confidence condfidence level for transcription factor reference, vector of levels to include, for dorothea
+#' @param ... additional parameters to pass to the methods
 #' @export
-get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL) {
+get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL, ...) {
   requireNamespace("decoupleR")
   cli::cli_rule(left = "spacedeconv")
 
   cli::cli_progress_step("Getting decoupleR reference", msg_done = "Got decoupleR reference")
 
+  if (method == "collectri" && !is.null(confidence)) {
+    warning("Collectri does not use confidence levels, will not use provided confidence vector")
+  }
+
   if (method == "progeny") {
-    reference <- decoupleR::get_progeny(organism = organism, top = n_genes)
+    reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)
   } else if (method == "dorothea") {
-    reference <- decoupleR::get_dorothea(organism = organism) ############## missing parameters!
+    reference <- decoupleR::get_dorothea(organism = organism, ...) ############## missing parameters!
+  } else if (method == "collectri") {
+    reference <- decoupleR::get_collectri(organism = organism, ...)
   } else {
     reference <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
@@ -21,7 +28,8 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 
   cli::cli_progress_done()
 
-  if (!is.null(confidence)) {
+  # only use confidence when requesting dorothea
+  if (!is.null(confidence) && method == "dorothea") {
     reference <- reference[reference$confidence %in% confidence, ]
   }
 
@@ -36,7 +44,7 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 #' @param statistic select a sub results in case methods produce mutliple ones
 #' @param ... further arguments passed to the methods
 #' @export
-compute_decoupleR_activities <- function(spe, reference, method = "wmean", assay = "cpm", statistic = NULL, ...) {
+compute_activities <- function(spe, reference, method = "wmean", assay = "cpm", statistic = NULL, ...) {
   requireNamespace("decoupleR")
   cli::cli_rule(left = "spacedeconv")
 
@@ -113,8 +121,10 @@ compute_decoupleR_activities <- function(spe, reference, method = "wmean", assay
   # check if dorothea or progeny reference, for naming
   if ("p_value" %in% names(reference)) {
     decouple_tool <- "progeny"
-  } else if ("mor" %in% names(reference)) {
+  } else if ("confidence" %in% names(reference)) {
     decouple_tool <- "dorothea"
+  } else if ("mor" %in% names(reference)) {
+    decouple_tool <- "collectri"
   } else {
     decouple_tool <- "decoupleR"
   }

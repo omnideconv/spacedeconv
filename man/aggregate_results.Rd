@@ -2,10 +2,11 @@
 % Please edit documentation in R/aggregation.R
 \name{aggregate_results}
 \alias{aggregate_results}
-\title{Aggregate Deconvolution results}
+\title{Aggregate Deconvolution Results}
 \usage{
 aggregate_results(
   spatial_obj = NULL,
+  cell_types = NULL,
   cell_type_1 = NULL,
   cell_type_2 = NULL,
   name = NULL,
@@ -13,19 +14,47 @@ aggregate_results(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment containing deconvolution results}
+\item{spatial_obj}{SpatialExperiment containing deconvolution results.}
 
-\item{cell_type_1}{cell type to aggregate, including the method "method_celltype"}
+\item{cell_types}{A list of cell types to aggregate. This is the preferred method
+for specifying cell types to aggregate. If this parameter is used, 'cell_type_1'
+and 'cell_type_2' are ignored.}
 
-\item{cell_type_2}{cell type to aggregate, including the method "method_celltype"}
+\item{cell_type_1}{(Deprecated) The first cell type to aggregate, included for
+backward compatibility. Use 'cell_types' for new code.}
 
-\item{name}{new name for aggregation}
+\item{cell_type_2}{(Deprecated) The second cell type to aggregate, included for
+backward compatibility. Use 'cell_types' for new code.}
 
-\item{remove}{logical, remove provided cell types and just keep the aggregation}
+\item{name}{Optional new name for the aggregated result. If not provided, a name
+is generated automatically by concatenating the cell type names.}
+
+\item{remove}{Logical, specifies whether to remove the provided cell types from
+the spatial object after aggregation.}
 }
 \value{
-SpatialObject containing aggregation of provided cell types
+A SpatialExperiment object containing the aggregation of the provided
+cell types.
 }
 \description{
-Aggregate deconvolution results by merging result columns in the spatial object
+Aggregates deconvolution results by merging result columns in the spatial object.
+This function now supports aggregating multiple cell types by passing a list of
+cell types. The older method of specifying two separate cell types is deprecated
+but still supported for backward compatibility.
+}
+\details{
+The function will aggregate the specified cell types by summing their
+corresponding columns in the spatial object. If the deprecated parameters
+'cell_type_1' and 'cell_type_2' are used, a warning is issued, and these types
+are added to the 'cell_types' list for aggregation.
+}
+\examples{
+\dontrun{
+# For new code, use:
+aggregate_results(spatial_data_3, cell_types = c("cell_type_A", "cell_type_B"))
+
+# For backward compatibility:
+aggregate_results(spatial_data_3, cell_type_1 = "cell_type_A", cell_type_2 = "cell_type_B")
+}
+
 }

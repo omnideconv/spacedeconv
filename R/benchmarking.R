@@ -4,15 +4,15 @@
 #' @param value1 deconvolution result to plot
 #' @param spe2 SpatialExperiment
 #' @param value2 deconvolution result to plot
+#' @param log_scale whether to log scale the axes
 #'
 #' @export
-plot_scatter <- function(spe1, value1, spe2, value2) {
+plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
   # check object class
   if (!is(spe1, "SpatialExperiment") || !is(spe2, "SpatialExperiment")) {
     cli::cli_alert_danger("Provided objects have to be SpatialExperiments")
     stop()
   }
-
 
   # check value availability
   if (!checkCol(spe1, value1)) {
@@ -25,28 +25,52 @@ plot_scatter <- function(spe1, value1, spe2, value2) {
     stop()
   }
 
+  # check that both objects have the same number of spots
+  if (ncol(spe1) != ncol(spe2)) {
+    cli::cli_alert_warning("Spatial Objects have different number of spots")
+  }
+
   # construct data frame for plotting
-  df1 <- colData(spe1)[value1]
+  df1 <- colData(spe1)[, value1, drop = FALSE]
   colnames(df1) <- "value1"
   df1$spot <- rownames(df1)
 
-  df2 <- colData(spe2)[value2]
+  df2 <- colData(spe2)[, value2, drop = FALSE]
   colnames(df2) <- "value2"
   df2$spot <- rownames(df2)
 
   df <- merge(df1, df2, by = "spot")
 
+  cor_value <- cor(df$value1, df$value2, use = "complete.obs") # handle NA values
 
   # construct plot
-  plot <- ggplot(data.frame(df), aes(x = value1, y = value2)) +
-    geom_point() +
-    geom_abline(slope = 1) +
-    xlab(value1) +
-    ylab(value2) +
-    coord_fixed()
+  plot <- ggplot(df, aes(x = value1, y = value2)) +
+    geom_point(shape = 21, color = "blue", fill = "lightblue", size = 1, stroke = 0.5) +
+    geom_abline(slope = 1, linetype = "dashed", col = "red") +
+    xlab(paste(value1)) +
+    ylab(paste(value2)) +
+    coord_fixed(ratio = 1) +
+    geom_text(
+      x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
+      hjust = 1.1, vjust = 1.1, size = 5
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12)
+    ) +
+    ggtitle(paste(value1, "vs.", value2))
+
+
+  # Apply log scale if log_scale is TRUE
+  if (log_scale) {
+    plot <- plot + scale_x_log10() + scale_y_log10()
+  }
 
   return(plot)
 }
+
 
 #' Compare Signatures
 #'

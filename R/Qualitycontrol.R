@@ -32,10 +32,10 @@ qualitycontrol <- function(spe, assay = "counts") {
   range(colSums(assay(spe, assay) > 0))
 
   # Plot UMI
-  plot_umi_count(spe, offset_rotation = T)
+  plot_umi_count(spe, offset_rotation = TRUE)
 
   # Plot number of detected genes
-  plot_ndetected_genes(spe, offset_rotation = T)
+  plot_ndetected_genes(spe, offset_rotation = TRUE)
 
   # Render html output
   rmarkdown::render(system.file("Qualitycontrol.rmd", package = "spacedeconv"), params = list(output_file = report.html))

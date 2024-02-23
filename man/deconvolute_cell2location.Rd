@@ -11,7 +11,7 @@ deconvolute_cell2location(
   n_cell = 10,
   alpha = 20,
   gpu = TRUE,
-  result_name = "c2l",
+  result_name = "cell2location",
   values = "relative"
 )
 }

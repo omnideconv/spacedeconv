@@ -13,7 +13,7 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted # ubuntu-22.04
     env:
       GITHUB_PAT: ${{ secrets.TOKEN }}
       CIBERSORTX_EMAIL: ${{ secrets.CIBERSORTX_EMAIL }}
@@ -21,7 +21,7 @@ jobs:
       CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Update system dependencies
         # due to recent versions of GLIBC missing
@@ -34,8 +34,15 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install pak
+        run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
+
+      - name: Install SpatialExperiment
+        run: Rscript -e "pak::pkg_install('drighelli/SpatialExperiment')"
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          dependencies: '"hard"' # do not install suggests
           extra-packages: any::covr, any::devtools
           needs: coverage
 

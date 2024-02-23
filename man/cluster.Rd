@@ -7,37 +7,54 @@
 cluster(
   spe,
   method = c("kmeans", "hclust"),
-  data = c("deconvolution", "expression", "pathway", "tf"),
+  spmethod = c("expression", "progeny", "dorothea", "collectri",
+    unname(deconvolution_methods)),
   dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra",
     "binary", "minkowski"),
   hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty",
     "median", "centroid"),
   nclusters = 3,
-  spmethod = NULL,
   pca_dim = seq(1, 30),
   clusres = 0.5,
   ...
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{A SpatialExperiment object containing the data to be clustered.}
 
-\item{method}{clustering method to be chosen between kmeans and hclust}
+\item{method}{A character vector specifying the clustering method to use.
+Options are "kmeans" and "hclust". Default is c("kmeans", "hclust").}
 
-\item{data}{what data to cluster}
+\item{spmethod}{A character vector indicating the type of analysis for
+clustering. Options include "expression", "progeny", "dorothea",
+"collectri", and names of deconvolution methods. Default is based on
+the available deconvolution methods.}
 
-\item{dist_method}{the distance measure to be used if method = hclust}
+\item{dist_method}{A character vector specifying the distance measure to be
+used for "hclust" method. Options include "correlation", "euclidean",
+"maximum", "manhattan", "canberra", "binary", "minkowski".}
 
-\item{hclust_method}{the agglomeration method to be used if method = hclust}
+\item{hclust_method}{A character vector indicating the agglomeration method
+to be used with "hclust". Options include "complete", "ward.D",
+"ward.D2", "single", "average", "mcquitty", "median", "centroid".}
 
-\item{nclusters}{number of clusters}
+\item{nclusters}{An integer specifying the number of clusters to create.
+Default is 3.}
 
-\item{spmethod}{spatial method used fot the clustering, must be dorothea, progeny, expression or the name of the deconvolution method used}
+\item{pca_dim}{An integer vector specifying PCA dimensions to be used for
+clustering of expression data. This is used with Seurat::FindNeighbors.
+Default is seq(1, 30).}
 
-\item{pca_dim}{PCA dimensions to be used for the clustering of expression data - Seurat::FindNeighbors}
+\item{clusres}{A numeric value for the clustering resolution to be used
+with Seurat::FindClusters. Default is 0.5.}
 
-\item{clusres}{clustering resolution to be used for the clustering of expression data - Seurat::FindClusters}
+\item{...}{Additional parameters for clustering methods.}
+}
+\value{
+A modified SpatialExperiment object with added clustering results.
 }
 \description{
-Cluster spacedeconv results
+Performs clustering on data obtained from a SpatialExperiment object using
+specified methods. This function allows for clustering based on deconvolution
+results, expression data, pathway, or transcription factors (TF) analyses.
 }

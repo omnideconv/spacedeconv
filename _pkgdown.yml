@@ -16,6 +16,7 @@ reference:
       - anndata_to_spatialexperiment
       - seurat_to_spatialexperiment
       - subsetSCE
+      - subsetSPE
       - spe_to_ad
   - title: Main Workflow
     contents:
@@ -40,6 +41,7 @@ reference:
       - plot_celltype_presence
       - plot_comparison
       - plot_scatter
+      - plot_overview
   - title: Sample Data
     contents:
       - starts_with("single_cell_data")
@@ -48,11 +50,18 @@ reference:
     contents:
       - aggregate_results
       - annotate_spots
+      - addCustomAnnotation
       - cluster
       - get_cluster_features
       - print_info
       - filter_sample_id
       - compare_signatures
+      - convert_human_to_mouse
+      - convert_mouse_to_human
+      - spatialcorr
+      - get_lr
+      - gene_set_score
+      - scale_cell_counts
   - title: Metacell
     contents:
       - clean_genes_and_cells
@@ -77,7 +86,7 @@ reference:
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
-      - compute_decoupleR_activities
+      - compute_activities
   - title: internal
     contents:
       - spacedeconv_pkg
@@ -107,3 +116,6 @@ reference:
       - spacedeconvstartup
       - get_largest_r_and_iso
       - check_datatype
+      - get_palette_type
+      - get_ligand_expression
+      - get_receptor_expression

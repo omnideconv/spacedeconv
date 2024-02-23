@@ -9,7 +9,7 @@ plot_most_abundant(
   method = NULL,
   cell_type = NULL,
   remove = NULL,
-  min_spot = 20,
+  min_spot = 0,
   palette = "Mako",
   sample_id = "sample01",
   image_id = "lowres",
@@ -17,18 +17,21 @@ plot_most_abundant(
   show_image = FALSE,
   background = NULL,
   zoom = TRUE,
+  palette_type = "discrete",
   offset_rotation = FALSE,
   spot_size = 1,
   title_size = 30,
   font_size = 15,
   legend_size = 20,
-  density = TRUE,
+  density = FALSE,
   save = FALSE,
   path = NULL,
   png_width = 1500,
   png_height = 750,
   title = NULL,
-  show_legend = TRUE
+  show_legend = TRUE,
+  min_abundance = 0.01,
+  ...
 )
 }
 \arguments{
@@ -56,6 +59,8 @@ plot_most_abundant(
 
 \item{zoom}{zoom to the available spots}
 
+\item{palette_type}{logical, whether to scale the color palette_type, default = FALSE}
+
 \item{offset_rotation}{correct hex orientation for rotated visium image}
 
 \item{spot_size}{increase (>1) or decrease (<1) the hex size}
@@ -79,6 +84,10 @@ plot_most_abundant(
 \item{title}{set a custom title}
 
 \item{show_legend}{whether to show the legend}
+
+\item{min_abundance}{minimum abundance of celltypes to be included in the analysis}
+
+\item{...}{additional paramters passed to internal functions}
 }
 \value{
 plot of cell type fractions

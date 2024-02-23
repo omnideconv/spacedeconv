@@ -17,7 +17,7 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
   ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv"))
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv"))
 
   model <- py_build_model_cell2location(ad,
     epochs = as.integer(epochs), # int!
@@ -40,14 +40,14 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
 #' @param gpu whether to use nvidia gpu for training
 #' @param result_name token to identify deconvolution results in object, default = "card"
 #' @param values relative or absolute, default: relative
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "c2l", values = "relative") {
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "cell2location", values = "relative") {
   # init_python()
 
   # TURN INTO ANNDATA
   ad <- spe_to_ad(spatial_obj)
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
 
   deconv <- py_deconvolute_cell2location(
     sp_obj = ad,

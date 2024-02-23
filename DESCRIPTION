@@ -7,7 +7,7 @@ Description: Collection of 31 deconvolution tools for spatial transcriptomics da
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
 LazyData: FALSE
 Depends: 
@@ -19,33 +19,34 @@ Imports:
     SingleCellExperiment,
     SpatialExperiment, 
     SummarizedExperiment,
-    Seurat,
-    SeuratObject,
     anndata, 
     edgeR, 
     ggplot2, 
     magrittr, 
-    testit, 
     RColorBrewer, 
     S4Vectors, 
-    Matrix (>= 1.5-4), 
+    Matrix, 
     colorspace, 
     sf, 
     ggpubr, 
-    ggridges, 
-    multimode,
     spatstat.geom, 
     spatstat.explore, 
     progress, 
     DelayedArray, 
-    ComplexHeatmap, 
     circlize, 
     cli, 
     patchwork, 
     reticulate, 
-    decoupleR, 
     corrplot, 
-    psych
+    ggridges, 
+    testit, 
+    decoupleR, 
+    multimode, 
+    psych,
+    ComplexHeatmap, 
+    grid, 
+    grDevices, 
+    stats
 Suggests: 
     spacexr,
     SPOTlight,
@@ -60,20 +61,20 @@ Suggests:
     Giotto,
     knitr,
     testthat (>= 3.0.0),
-    cli, 
-    DelayedArray, 
-    circlize, 
-    ComplexHeatmap, 
-    grid, 
-    decoupleR,
-    multimode,
     scuttle,
-    grid,
     tidyr,
     xCell, 
     MuSiC, 
     markdown, 
-    EPIC
+    EPIC,
+    Seurat,
+    SeuratObject, 
+    plotly, 
+    Orthology.eg.db, 
+    org.Mm.eg.db, 
+    org.Hs.eg.db, 
+    AnnotationDbi, 
+    pbapply
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

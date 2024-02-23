@@ -4,7 +4,7 @@
 [![docs](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml)
 [![test-coverage](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotation single-cell reference dataset is available.
+spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
@@ -14,17 +14,21 @@ spacedeconv is a unified interface to 31 deconvolution tools with focus on spati
 # install the pak package manager
 install.packages("pak")
 
+# recommended installation, deconvolution tools are installed on-demand
+pak::pkg_install("omnideconv/spacedeconv")
+
+# full installation including all deconvolution tools
 pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
 ```
 
 ## :sparkles: Features
 
-- access to 31 deconvolution tools and X
+- unified access to 31 deconvolution tools and decoupleR
 - direct deconvolution of immune cells
 - compute custom reference signatures to deconvolute any celltype
 - flexible visualization functions
-- resource optimization with metacell
-- ...
+- resource optimization, including metacell
+- colocalization analysis
 - easy integration into spatial transcriptomics workflows
 
 ## :floppy_disk: Data requirements
