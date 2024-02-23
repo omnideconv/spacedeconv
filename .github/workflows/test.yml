@@ -66,8 +66,11 @@ jobs:
 
       #- name: Giotto
       #  run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
-      - name: check SpatialExperiment
-        run: Rscript -e "install.packages('SpatialExperiment')"
+      - name: Install Remotes
+        run: Rscript -e "install.packages('remotes')"
+
+      - name: Install Remotes
+        run: Rscript -e "remotes::install_github("drighelli/SpatialExperiment")"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
