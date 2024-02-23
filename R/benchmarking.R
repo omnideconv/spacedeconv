@@ -40,20 +40,27 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
 
   df <- merge(df1, df2, by = "spot")
 
-  cor_value <- cor(df$value1, df$value2)
+  cor_value <- cor(df$value1, df$value2, use = "complete.obs") # handle NA values
 
   # construct plot
   plot <- ggplot(df, aes(x = value1, y = value2)) +
-    geom_point() +
-    geom_abline(slope = 1, linetype = "dashed") +
-    xlab(value1) +
-    ylab(value2) +
+    geom_point(shape = 21, color = "blue", fill = "lightblue", size = 1, stroke = 0.5) +
+    geom_abline(slope = 1, linetype = "dashed", col="red") +
+    xlab(paste(value1)) +
+    ylab(paste(value2)) +
     coord_fixed(ratio = 1) +
     geom_text(
       x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
       hjust = 1.1, vjust = 1.1, size = 5
     ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12)
+    ) +
     ggtitle(paste(value1, "vs.", value2))
+
 
   # Apply log scale if log_scale is TRUE
   if (log_scale) {
