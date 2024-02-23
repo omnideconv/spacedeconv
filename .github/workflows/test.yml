@@ -70,7 +70,7 @@ jobs:
         run: Rscript -e "install.packages('remotes')"
 
       - name: Install Remotes
-        run: Rscript -e "remotes::install_github("drighelli/SpatialExperiment")"
+        run: Rscript -e "remotes::install_github('drighelli/SpatialExperiment')"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
