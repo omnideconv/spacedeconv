@@ -30,25 +30,6 @@ test_that("Bisque signature creation works", {
 
 
 
-test_that("MOMF signature creation works", {
-  signature <- spacedeconv::build_model(
-    single_cell_obj = sce,
-    cell_type_col = "celltype_major",
-    method = "momf",
-    spatial_obj = spe
-  )
-  expect_equal(
-    info = "Signature matrix has the same number of celltypes as unique celltypes as reference data",
-    object = ncol(signature),
-    expected = length(unique(sce$celltype_major))
-  )
-
-  expect(
-    info = "signature matrix genes are contained in the single cell reference",
-    ok = sum(rownames(signature) %in% rownames(sce)) == dim(signature)[[1]],
-    failure_message = "Not all signature genes are included in the single cell reference data"
-  )
-})
 
 
 

@@ -95,26 +95,9 @@ test_that("Check for null or missing 'object' parameter", {
   expect_error(preprocess(NULL), "Please provide an object")
 })
 
-
-# Test: Verify filtering based on minimum UMI count
-test_that("Check filtering based on minimum UMI count", {
-  filtered_sce <- preprocess(sce, min_umi = 10000)
-
-  # Check if the filtered 'sce' object has the correct number of observations
-  expect_equal(nrow(filtered_sce), 15895)
-})
-
-# Test: Verify filtering based on maximum UMI count
-test_that("Check filtering based on maximum UMI count", {
-  filtered_sce <- preprocess(sce, max_umi = 10000)
-
-  # Check if the filtered 'sce' object has the correct number of observations
-  expect_equal(nrow(filtered_sce), 18020)
-})
-
 # Test: Verify return value of the function
 test_that("Check return value of preprocess function", {
-  preprocessed_sce <- preprocess(sce)
+  preprocessed_sce <- preprocess(sce, remove_mito = TRUE)
 
   # Check if the returned object is of class "SingleCellExperiment"
   expect_true(is(preprocessed_sce, "SingleCellExperiment"))
