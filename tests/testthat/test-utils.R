@@ -12,8 +12,3 @@ testthat::test_that("subsetSCE subsets the SingleCellExperiment correctly", {
   # Check the number of cells in the resulting object
   expect_equal(ncol(result), 250)
 })
-
-
-
-
-
