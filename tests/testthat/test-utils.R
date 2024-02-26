@@ -9,6 +9,17 @@ testthat::test_that("subsetSCE subsets the SingleCellExperiment correctly", {
   # Check if the resulting object is a SingleCellExperiment
   expect_true(inherits(result, "SingleCellExperiment"))
 
-  # Check the number of cells in the resulting object
+  # Check the number of cells in the resulting objectpak:
   expect_equal(ncol(result), 250)
 })
+
+
+
+testthat::test_that("Normalization works", {
+  normalized <- spacedeconv::normalize(sce, method = "cpm", assay = "counts")
+
+  expect_true("cpm" %in% assayNames(normalized))
+})
+
+
+
