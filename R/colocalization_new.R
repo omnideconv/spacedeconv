@@ -1,4 +1,4 @@
-#' Threshold a matrix
+#' Threshold a matrix (Beta)
 #'
 #' @param spe A SpatialExperiment containing deconvolution scores for each spot and celltype
 #' @param method deconvolution method
@@ -172,7 +172,7 @@ get_iniche <- function(df, coordinates, distance) {
   }
 }
 
-#' Calculate Colocalization
+#' Calculate Colocalization (Beta)
 #'
 #' @param spe SpatialExperiment
 #' @param method presence method

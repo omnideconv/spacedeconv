@@ -1,9 +1,16 @@
-#' Obtain a decoupleR reference
-#' @param method method to use, progeny, dorothea or collectri
-#' @param organism which organism
-#' @param n_genes number genes to return, for progeny
-#' @param confidence condfidence level for transcription factor reference, vector of levels to include, for dorothea
-#' @param ... additional parameters to pass to the methods
+#' Fetch Pathway or Transcription Factor Signatures from decoupleR
+#'
+#' This function retrieves references for Progeny, DoRothEA or CollecTRI from the `decoupleR` package.
+#'
+#' @param method The computational method to use for obtaining the reference: "progeny", "dorothea" or "collectri
+#' @param organism The target organism for the reference signatures ("human", "mouse", etc.).
+#' @param n_genes The number of top genes to return for Progeny pathways. Only applicable if `method` is "progeny".
+#' @param confidence A vector of confidence levels (A, B, C, D, E) to filter the transcription factor targets from DoRothEA.
+#' Only applicable if `method` is "dorothea".
+#' @param ... Additional parameters to fine-tune the method's execution.
+#'
+#' @return A data frame containing the requested reference
+#'
 #' @export
 get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL, ...) {
   requireNamespace("decoupleR")
@@ -36,13 +43,20 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
   return(reference)
 }
 
-#' Compute Pathway activities with decoupleR
-#' @param spe SpatialExperiment
-#' @param reference decoupleR reference
-#' @param method calculation method to use
-#' @param assay which assay to use
-#' @param statistic select a sub results in case methods produce mutliple ones
-#' @param ... further arguments passed to the methods
+#' Compute Pathway and Transcription Factor Activities and integrate into SpatialExperiment Using decoupleR
+#'
+#' This function computes pathway activities or transcription factor activities using a `SpatialExperiment` object
+#' using various computational methods provided by the `decoupleR` package.
+#'
+#' @param spe The `SpatialExperiment` object containing spatially resolved expression data.
+#' @param reference A reference dataframe, computed using `get_decoupleR_reference()`
+#' @param method The method used to compute activities, such as "wmean", "viper", "gsva", etc. see `decoupleR` documentation for details.
+#' @param assay The name of the assay within the `SpatialExperiment` to use for calculations.
+#' @param statistic In cases where the chosen method produces multiple results, this parameter allows selection of a specific statistic for inclusion in the output.
+#' @param ... Further arguments passed to the computational methods.
+#'
+#' @return The function returns the input `SpatialExperiment` object with additional metadata columns representing the computed activities.
+#'
 #' @export
 compute_activities <- function(spe, reference, method = "wmean", assay = "cpm", statistic = NULL, ...) {
   requireNamespace("decoupleR")

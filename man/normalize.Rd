@@ -2,17 +2,18 @@
 % Please edit documentation in R/normalization.R
 \name{normalize}
 \alias{normalize}
-\title{Normalize Expression Object}
+\title{Normalize Gene Expression Data in SingleCellExperiment or SpatialExperiment Objects}
 \usage{
 normalize(object, method = "cpm", assay = "counts")
 }
 \arguments{
-\item{object}{SingleCellExperiment}
+\item{object}{A \code{SingleCellExperiment} or \code{SpatialExperiment} object containing raw gene expression data.}
 
-\item{method}{normalization method, ("cpm", "logcpm")}
+\item{method}{The normalization method to apply: "cpm" for counts per million, or "logcpm" for log-transformed counts per million.}
 
-\item{assay}{assay to use}
+\item{assay}{The name of the assay to normalize, default "counts".}
 }
 \description{
-Normalize Expression Object
+This function applies normalization to the gene expression data stored within a \code{SingleCellExperiment} or \code{SpatialExperiment} object.
+It supports both counts per million (CPM) and log-transformed counts per million (logCPM) normalization methods.
 }

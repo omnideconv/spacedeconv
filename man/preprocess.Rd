@@ -2,7 +2,7 @@
 % Please edit documentation in R/preprocess.R
 \name{preprocess}
 \alias{preprocess}
-\title{Preprocess SingleCellExperiments and Spatial Experiments}
+\title{Preprocess Single Cell and Spatial Data for analysis in spacedeconv}
 \usage{
 preprocess(
   object,
@@ -13,16 +13,16 @@ preprocess(
 )
 }
 \arguments{
-\item{object}{SingleCellExperiment or SpatialExperiment, if AnnData or Seurat it will be converted}
+\item{object}{The input object, which can be a \code{SingleCellExperiment}, \code{SpatialExperiment}, AnnData, or Seurat object. The function will convert AnnData or Seurat objects to \code{SingleCellExperiment} if needed.}
 
-\item{min_umi}{minimum umi count for spots/cells}
+\item{min_umi}{The minimum UMI count threshold for cells or spots to be included in the analysis. This filter helps to remove low-quality observations that might not provide reliable data.}
 
-\item{max_umi}{maximimum umi}
+\item{max_umi}{The maximum UMI count threshold, used to exclude cells or spots with extremely high UMI counts. This parameter is optional.}
 
-\item{assay}{assay to use for calculation, you can use any assay but counts is recommended}
+\item{assay}{The name of the assay to use to compute the preprocessing Default is "counts"}
 
-\item{remove_mito}{remove mitochondria genes}
+\item{remove_mito}{A logical flag indicating whether mitochondrial genes should be removed from the dataset.}
 }
 \description{
-Preprocess SingleCellExperiments and Spatial Experiments
+This function prepares \code{SingleCellExperiment} or \code{SpatialExperiment} objects for downstream analysis by performing a series of preprocessing steps. These steps include converting non-SpatialExperiment objects to \code{SingleCellExperiment} format, filtering based on UMI counts, optionally removing mitochondrial genes, and ensuring data integrity.
 }

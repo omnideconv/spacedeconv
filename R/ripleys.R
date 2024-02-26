@@ -1,12 +1,14 @@
-#' Ripley´s K celltype distribution
+#' Ripley´s K Analysis for Cell Type Distribution (Beta)
 #'
-#' @param spe SpatialExperiment
-#' @param cell_type celltype of interest
-#' @param method deconvolution method
-#' @param threshold cutoff for cell type presence
-#' @returns ripley´s k statistics
+#' (BETA) Applies Ripley's K statistic to analyze the spatial distribution of a specified cell type within a `SpatialExperiment` object.
+#' @param spe A `SpatialExperiment` object representing spatially resolved transcriptomics data.
+#' @param cell_type The cell type of interest for which the Ripley's K statistic will be calculated.
+#' @param method The deconvolution method used to determine the presence of the cell type within the spatial data.
+#' @param threshold An optional cutoff value for determining cell type presence; if `NULL`, an antimode cutoff will be automatically determined based on the specified method.
+#'
+#' @return Returns the Ripley's K statistic for the specified cell type, providing insights into its spatial clustering within the dataset.
+#'
 #' @export
-
 ripleys_k <- function(spe, cell_type, method, threshold = NULL) {
   coords <- spatialCoords(spe)
 
@@ -55,9 +57,9 @@ get_largest_r_and_iso <- function(k_functions) {
 }
 
 
-## Use ggplot2 for the plotting function
+## Use ggplot2 for the plotting function (Beta)
 
-#' Combined Ripley´s K statistics in one plot
+#' Combined Ripley´s K statistics in one plot (Beta)
 #'
 #' @param k_functions named list of k statistics from different SpatialExperiments
 #' @returns combined Ripley´s K results in one plot

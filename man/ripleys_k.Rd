@@ -2,22 +2,22 @@
 % Please edit documentation in R/ripleys.R
 \name{ripleys_k}
 \alias{ripleys_k}
-\title{Ripley´s K celltype distribution}
+\title{Ripley´s K Analysis for Cell Type Distribution (Beta)}
 \usage{
 ripleys_k(spe, cell_type, method, threshold = NULL)
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{A \code{SpatialExperiment} object representing spatially resolved transcriptomics data.}
 
-\item{cell_type}{celltype of interest}
+\item{cell_type}{The cell type of interest for which the Ripley's K statistic will be calculated.}
 
-\item{method}{deconvolution method}
+\item{method}{The deconvolution method used to determine the presence of the cell type within the spatial data.}
 
-\item{threshold}{cutoff for cell type presence}
+\item{threshold}{An optional cutoff value for determining cell type presence; if \code{NULL}, an antimode cutoff will be automatically determined based on the specified method.}
 }
 \value{
-ripley´s k statistics
+Returns the Ripley's K statistic for the specified cell type, providing insights into its spatial clustering within the dataset.
 }
 \description{
-Ripley´s K celltype distribution
+(BETA) Applies Ripley's K statistic to analyze the spatial distribution of a specified cell type within a \code{SpatialExperiment} object.
 }

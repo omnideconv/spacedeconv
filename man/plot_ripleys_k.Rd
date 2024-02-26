@@ -2,7 +2,7 @@
 % Please edit documentation in R/ripleys.R
 \name{plot_ripleys_k}
 \alias{plot_ripleys_k}
-\title{Combined Ripley´s K statistics in one plot}
+\title{Combined Ripley´s K statistics in one plot (Beta)}
 \usage{
 plot_ripleys_k(k_functions)
 }
@@ -13,5 +13,5 @@ plot_ripleys_k(k_functions)
 combined Ripley´s K results in one plot
 }
 \description{
-Combined Ripley´s K statistics in one plot
+Combined Ripley´s K statistics in one plot (Beta)
 }
