@@ -96,7 +96,6 @@ Config/reticulate:
       list(package = "python.app", pip=TRUE),
       list(package = "scanpy", pip=TRUE), 
       list(package = "cell2location", pip=TRUE),
-      list(package = "metacells", pip=TRUE),
       list(package = "autogenes", pip = TRUE),
       list(package = "scaden", pip = TRUE)
     )
