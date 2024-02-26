@@ -1,4 +1,5 @@
 spe <- readRDS(system.file("testdata", "spe.rds", package = "spacedeconv"))
+sce <- readRDS(system.file("testdata", "sce.rds", package = "spacedeconv"))
 
 testthat::test_that("QuanTIseq deconvolution works", {
   deconv <- deconvolute(spe, method = "quantiseq")
