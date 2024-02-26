@@ -95,8 +95,3 @@ plot of cell type fractions
 \description{
 Generate Hex Plot of a SpatialExperiment containing deconvolution results
 }
-\examples{
-data("spatial_data_2")
-deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
-spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
-}

@@ -28,8 +28,6 @@
 #' @returns plot number of detected genes
 #'
 #' @export
-
-
 plot_ndetected_genes <- function(spe, palette = "Mako", transform_scale = NULL,
                                  sample_id = "sample01", image_id = "lowres",
                                  reverse_palette = FALSE,

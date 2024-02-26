@@ -33,10 +33,6 @@
 #' @returns plot of cell type fractions
 #'
 #' @export
-#' @examples
-#' data("spatial_data_2")
-#' deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
-#' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, background = NULL, palette_type = "sequential",
@@ -151,11 +147,6 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @returns plot of cell type fractions
 #'
 #' @export
-#'
-#' @examples
-#' data("spatial_data_3")
-#' deconv <- spacedeconv::deconvolute(spatial_data_3, method = "estimate")
-#' plot_umi_count(deconv)
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
                            sample_id = "sample01", image_id = "lowres",
                            reverse_palette = FALSE, zoom = TRUE,
@@ -200,7 +191,6 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param remove vector of cell types to be removed from the plot
 #' @param min_spot minimum number of spots the cell-type has to be present in
 #' @param palette colorspace palette (sequential)
-# #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
 #' @param sample_id sample id to plot, default: "sample01"
 #' @param image_id which image to plot, default: "lowres"
@@ -210,9 +200,6 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param palette_type logical, whether to scale the color palette_type, default = FALSE
 #' @param offset_rotation correct hex orientation for rotated visium image
 #' @param spot_size increase (>1) or decrease (<1) the hex size
-# #' @param limits vector of color scale limits
-# #' @param smooth whether to smooth the plot
-# #' @param smoothing_factor kernel size factor (multiples of spot distance)
 #' @param title_size font size of title
 #' @param title set a custom title
 #' @param font_size font size of legend
@@ -229,11 +216,10 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako", # transform_scale = NULL,
+plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako",
                                sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                                show_image = FALSE, background = NULL, zoom = TRUE, palette_type = "discrete",
-                               offset_rotation = FALSE, spot_size = 1, # limits = NULL,
-                               # smooth = FALSE, smoothing_factor = 1.5,
+                               offset_rotation = FALSE, spot_size = 1,
                                title_size = 30, font_size = 15, legend_size = 20,
                                density = FALSE, save = FALSE, path = NULL,
                                png_width = 1500, png_height = 750, title = NULL,
@@ -475,10 +461,6 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @returns plot of cell type fractions
 #'
 #' @export
-#' @examples
-#' data("spatial_data_2")
-#' deconv <- spacedeconv::deconvolute(spatial_data_2, method = "estimate")
-#' spacedeconv::plot_celltype(deconv, cell_type = "estimate_immune.score")
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
                       sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                       show_image = FALSE, background = NULL, zoom = TRUE, palette_type = NULL, # sequential
@@ -1020,7 +1002,8 @@ get_palette_type <- function(palette) {
 }
 
 
-# Check if a string is a valid hex color
+#' Check if a string is a valid hex color
+#' @param color color
 is_hexcolor <- function(color) {
   grepl("^#(?:[0-9a-fA-F]{3}){1,2}$", color)
 }

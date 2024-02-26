@@ -3,8 +3,6 @@
 #' @param humangenes a vector containing human genes to be converted to mouse
 #'
 #' @export
-#'
-
 convert_human_to_mouse <- function(humangenes) {
   # Function to process individual or complex gene names
   processGene <- function(gene) {
@@ -58,8 +56,6 @@ convert_human_to_mouse <- function(humangenes) {
 #' @param mousegenes a vector containing mouse genes to be converted to human
 #'
 #' @export
-#'
-
 convert_mouse_to_human <- function(mousegenes) {
   # Function to process individual or complex gene names
   processGene <- function(gene) {

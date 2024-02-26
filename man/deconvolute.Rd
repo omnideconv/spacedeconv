@@ -47,15 +47,3 @@ The deconvolution result as a table
 \description{
 Perform cell type deconvolution with spacedeconv.
 }
-\examples{
-# more examples can be found in the documentation website
-data("spatial_data_2")
-
-spatial_data_2 <- spacedeconv::preprocess(spatial_data_2)
-spatial_data_2 <- spacedeconv::normalize(spatial_data_2)
-
-deconvolution <- spacedeconv::deconvolute(
-  spatial_obj = spatial_data_2,
-  method = "estimate",
-)
-}
