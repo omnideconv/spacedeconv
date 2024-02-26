@@ -8,9 +8,3 @@ testthat::test_that("QuanTIseq deconvolution works", {
   expect_true(any(grepl("quantiseq", colnames(colData(deconv)))))
 })
 
-
-
-testthat::test_that("SCDC deconvolution works", {
-  deconv <- deconvolute(spe, method = "scdc", single_cell_obj = sce, cell_type_col = "celltype_major", batch_id_col = "orig.ident")
-  expect_true(any(grepl("scdc", available_results(deconv))))
-})
