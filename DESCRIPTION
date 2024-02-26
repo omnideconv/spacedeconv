@@ -1,6 +1,6 @@
 Package: spacedeconv
 Title: Unified Interface to spatial transcriptomics deconvolution tools
-Version: 0.0.1.0000
+Version: 0.1.0
 Authors@R: 
     person(given="Constantin", family="Zackl", email="constantin.zackl@student.uibk.ac.at", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1991-6943"))
 Description: Collection of 31 deconvolution tools for spatial transcriptomics data.
