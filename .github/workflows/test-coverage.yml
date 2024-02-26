@@ -41,7 +41,7 @@ jobs:
         run: Rscript -e "pak::pkg_install('drighelli/SpatialExperiment')"
 
       - name: Install Immunedeconv
-        run: Rscript - "pak::pkg_install('omnideconv/immunedeconv')"
+        run: Rscript -e "pak::pkg_install('omnideconv/immunedeconv')"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

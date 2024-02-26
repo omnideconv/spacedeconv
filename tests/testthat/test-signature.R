@@ -19,3 +19,8 @@ test_that("Immunedeconv models works", {
   expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "dcq"), info = "Signature is null (which it should be)")
   expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "base"), info = "Signature is null (which it should be)", )
 })
+
+
+test_that("CARD signature works", {
+  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "card"), info = "Signature is null (what it should be)")
+})
