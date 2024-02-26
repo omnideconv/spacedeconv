@@ -20,6 +20,3 @@ testthat::test_that("Normalization works", {
 
   expect_true("cpm" %in% assayNames(normalized))
 })
-
-
-
