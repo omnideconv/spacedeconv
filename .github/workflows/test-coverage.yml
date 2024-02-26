@@ -43,6 +43,9 @@ jobs:
       - name: Install Immunedeconv
         run: Rscript -e "pak::pkg_install('omnideconv/immunedeconv')"
 
+      - name: Install Omnideconv
+        run: Rscript -e "pak::pkg_install('omnideconv/omnideconv')"
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"' # do not install suggests
