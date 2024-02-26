@@ -22,4 +22,3 @@ test_that("plot_comparison executes without error", {
 test_that("plot_gene executes without error", {
   expect_silent(plot_gene(spe, gene = "MOV10"))
 })
-
