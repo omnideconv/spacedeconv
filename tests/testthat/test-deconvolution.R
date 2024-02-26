@@ -7,4 +7,3 @@ testthat::test_that("QuanTIseq deconvolution works", {
   # check that a column with "quantiseq" as token exists
   expect_true(any(grepl("quantiseq", colnames(colData(deconv)))))
 })
-
