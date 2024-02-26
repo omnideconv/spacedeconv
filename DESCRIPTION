@@ -1,4 +1,4 @@
-Package: spacedeconv
+Package: spacedeconv Beta Version
 Title: Unified Interface to spatial transcriptomics deconvolution tools
 Version: 0.0.1.0000
 Authors@R: 
