@@ -38,7 +38,6 @@ reference:
       - plot_umi_count
       - plot_ndetected_genes
       - plot_most_abundant
-      - plot_celltype_presence
       - plot_comparison
       - plot_scatter
       - plot_overview
@@ -62,6 +61,7 @@ reference:
       - get_lr
       - gene_set_score
       - scale_cell_counts
+      - corr_expr
   - title: DecoupleR
     contents:
       - get_decoupleR_reference
@@ -90,10 +90,8 @@ reference:
       - checkENSEMBL
       - topfeat
       - get_spot_coordinates
-      - get_cluster_features
       - check_path_scaden
       - spacedeconvstartup
-      - get_largest_r_and_iso
       - check_datatype
       - get_palette_type
       - get_ligand_expression
