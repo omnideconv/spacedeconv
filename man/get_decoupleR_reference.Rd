@@ -2,7 +2,7 @@
 % Please edit documentation in R/decoupleR.R
 \name{get_decoupleR_reference}
 \alias{get_decoupleR_reference}
-\title{Obtain a decoupleR reference}
+\title{Fetch Pathway or Transcription Factor Signatures from decoupleR}
 \usage{
 get_decoupleR_reference(
   method = "progeny",
@@ -13,16 +13,20 @@ get_decoupleR_reference(
 )
 }
 \arguments{
-\item{method}{method to use, progeny, dorothea or collectri}
+\item{method}{The computational method to use for obtaining the reference: "progeny", "dorothea" or "collectri}
 
-\item{organism}{which organism}
+\item{organism}{The target organism for the reference signatures ("human", "mouse", etc.).}
 
-\item{n_genes}{number genes to return, for progeny}
+\item{n_genes}{The number of top genes to return for Progeny pathways. Only applicable if \code{method} is "progeny".}
 
-\item{confidence}{condfidence level for transcription factor reference, vector of levels to include, for dorothea}
+\item{confidence}{A vector of confidence levels (A, B, C, D, E) to filter the transcription factor targets from DoRothEA.
+Only applicable if \code{method} is "dorothea".}
 
-\item{...}{additional parameters to pass to the methods}
+\item{...}{Additional parameters to fine-tune the method's execution.}
+}
+\value{
+A data frame containing the requested reference
 }
 \description{
-Obtain a decoupleR reference
+This function retrieves references for Progeny, DoRothEA or CollecTRI from the \code{decoupleR} package.
 }

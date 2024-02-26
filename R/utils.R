@@ -310,14 +310,27 @@ checkENSEMBL <- function(names) {
 
 
 
-#' Annotate spots
-#' @param spe SpatialExperiment
-#' @param spots list of spots to annotate
-#' @param value_pos positive value
-#' @param value_neg negative value
-#' @param name name of the annotation
+#' Annotate Specific Spots within a SpatialExperiment Object
 #'
-#' @returns SpatialExperiment containing annotation
+#' This function allows for the annotation of specified spots within a `SpatialExperiment` object.
+#' Users can define a list of spots to be annotated and assign positive or negative values to these spots.
+#' This is particularly useful for distinguishing or marking spots based on certain criteria or experimental results.
+#'
+#' @param spe A `SpatialExperiment` object representing the spatially resolved data.
+#' This is the target object where the annotations will be applied.
+#' @param spots A character vector or list specifying the spots within the `SpatialExperiment` object to annotate.
+#' These spots should correspond to the column names of the `SpatialExperiment` object that represent specific spatial locations or features.
+#' @param value_pos The value to assign to the spots specified in the `spots` parameter.
+#' This value denotes a positive annotation, indicating that the spots meet a certain condition or criterion.
+#' @param value_neg The value to assign to spots not specified in the `spots` parameter.
+#' This value denotes a negative annotation, indicating that the spots do not meet the specified condition or criterion.
+#' @param name A character string specifying the name of the annotation.
+#' This name will be used to label the column in the `SpatialExperiment` object that contains the annotation values.
+#'
+#' @return Returns a `SpatialExperiment` object that includes the new annotations.
+#' The function adds a column to the `colData` of the `SpatialExperiment` object, where the column name is specified by the `name` parameter.
+#' Spots specified in the `spots` parameter are annotated with the `value_pos` value, while all other spots are annotated with the `value_neg` value.
+#'
 #' @export
 annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "annotation") {
   df <- data.frame(row.names = colnames(spe))
@@ -328,17 +341,21 @@ annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name
   return(spe)
 }
 
-#' Add Custom Annotation to a SpatialExperiment
+#' Extend a SpatialExperiment with a New Annotation Column
 #'
-#' This function adds a new custom annotation column to the `colData` of a
-#' `SpatialExperiment` object.
+#' This function is designed to annotate a `SpatialExperiment` object by appending a custom annotation
+#' column to its `colData`. This feature allows users to integrate additional metadata or experimental
+#' results that can be useful for subsequent analyses or visualizations.
 #'
-#' @param spatialExp A `SpatialExperiment` object to which the annotation will be added.
-#' @param columnName A `character` string representing the name of the new annotation column.
-#' @param values A vector of values for the annotation. The length of this vector must match
-#' the number of columns in the `SpatialExperiment` object.
+#' @param spatialExp A `SpatialExperiment` object that will be extended with the new annotation.
 #'
-#' @return A `SpatialExperiment` object with the new annotation added to its `colData`.
+#' @param columnName A `character` string that names the new annotation column to be added.
+#'
+#' @param values A numeric or character vector containing the annotation values to be assigned to each spot
+#'
+#' @return The function returns an updated `SpatialExperiment` object that includes the newly added annotation
+#' column within its `colData`.
+#'
 #' @export
 addCustomAnnotation <- function(spatialExp, columnName, values) {
   # Checking if the length of values matches the number of columns in spatialExp

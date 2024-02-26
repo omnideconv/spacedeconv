@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{annotate_spots}
 \alias{annotate_spots}
-\title{Annotate spots}
+\title{Annotate Specific Spots within a SpatialExperiment Object}
 \usage{
 annotate_spots(
   spe,
@@ -13,19 +13,28 @@ annotate_spots(
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{A \code{SpatialExperiment} object representing the spatially resolved data.
+This is the target object where the annotations will be applied.}
 
-\item{spots}{list of spots to annotate}
+\item{spots}{A character vector or list specifying the spots within the \code{SpatialExperiment} object to annotate.
+These spots should correspond to the column names of the \code{SpatialExperiment} object that represent specific spatial locations or features.}
 
-\item{value_pos}{positive value}
+\item{value_pos}{The value to assign to the spots specified in the \code{spots} parameter.
+This value denotes a positive annotation, indicating that the spots meet a certain condition or criterion.}
 
-\item{value_neg}{negative value}
+\item{value_neg}{The value to assign to spots not specified in the \code{spots} parameter.
+This value denotes a negative annotation, indicating that the spots do not meet the specified condition or criterion.}
 
-\item{name}{name of the annotation}
+\item{name}{A character string specifying the name of the annotation.
+This name will be used to label the column in the \code{SpatialExperiment} object that contains the annotation values.}
 }
 \value{
-SpatialExperiment containing annotation
+Returns a \code{SpatialExperiment} object that includes the new annotations.
+The function adds a column to the \code{colData} of the \code{SpatialExperiment} object, where the column name is specified by the \code{name} parameter.
+Spots specified in the \code{spots} parameter are annotated with the \code{value_pos} value, while all other spots are annotated with the \code{value_neg} value.
 }
 \description{
-Annotate spots
+This function allows for the annotation of specified spots within a \code{SpatialExperiment} object.
+Users can define a list of spots to be annotated and assign positive or negative values to these spots.
+This is particularly useful for distinguishing or marking spots based on certain criteria or experimental results.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/colocalization_new.R
 \name{cell_pair_presence}
 \alias{cell_pair_presence}
-\title{Calculate Colocalization}
+\title{Calculate Colocalization (Beta)}
 \usage{
 cell_pair_presence(
   spe,
@@ -36,5 +36,5 @@ cell_pair_presence(
 presence/absence for each cell type
 }
 \description{
-Calculate Colocalization
+Calculate Colocalization (Beta)
 }

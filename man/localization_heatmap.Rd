@@ -2,7 +2,7 @@
 % Please edit documentation in R/colocalization_extension3.R
 \name{localization_heatmap}
 \alias{localization_heatmap}
-\title{Heatmaps cell pair localization and correlation of scores}
+\title{Heatmaps cell pair localization and correlation of scores (Beta)}
 \usage{
 localization_heatmap(
   spe,

@@ -1,15 +1,27 @@
-#' Subset Single Cell Experiment
+#' Subset a SingleCellExperiment by Cell Type
 #'
-#' Subset a SingleCellExperiment to reduce the number of cells
+#' This function facilitates the subsetting of a `SingleCellExperiment` object to a specified number of cells,
+#' with an option to maintain an even or proportional distribution across different cell types. It offers flexibility
+#' in handling scenarios where insufficient cells of a specific type are available and ensures reproducibility through
+#' the option to set a seed for random sampling.
 #'
-#' @param sce SingleCellExperiment with cell type annotation
-#' @param cell_type_col name of colData column containing cell type information
-#' @param scenario which fraction of each celltype should be present in the subsampled dataset?
-#' @param ncells number of cells in total, defaults to 1000
-#' @param notEnough what to do if not enough cells are available c("remove", "asis")
-#' @param seed set a seed, enables reproducibility of subsetting step
+#' @param sce A `SingleCellExperiment` object containing cell type annotations. The function applies subsetting
+#' operations on this object to achieve a targeted composition of cell types.
+#' @param cell_type_col A character string indicating the column name within `colData` of the `SingleCellExperiment`
+#' object that contains cell type information. This column is used to identify and categorize cells by type for subsetting.
+#' @param scenario Specifies the strategy for cell selection across types: `"even"` for equal numbers from each cell
+#' type, or `"mirror"` to reflect the proportional representation of cell types in the subset as in the original dataset.
+#' @param ncells The target total number of cells for the subsetted object. Defaults to 1000. This parameter dictates
+#' the overall size of the subsetted `SingleCellExperiment`.
+#' @param notEnough Defines the behavior when there are not enough cells of a certain type to meet the subsetting criteria:
+#' `"remove"` to exclude that cell type entirely, or `"asis"` to include all available cells of that type despite falling short
+#' of the target number.
+#' @param seed An optional numeric value to set the random seed for reproducibility of the subsetting process. This ensures
+#' that the subset selection can be replicated in future analyses.
 #'
-#' @returns a singleCellExperiment with
+#' @return Returns a subsetted `SingleCellExperiment` object. The resulting object reflects the targeted distribution and
+#' number of cells as specified by the input parameters. It enables focused analysis on a more manageable dataset while
+#' preserving the desired representation of cell types.
 #'
 #' @export
 subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis", seed = 12345) {
@@ -115,16 +127,19 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 
 
 
-#' Subset a SpatialExperiment Object
+#' Isolate Regions within a SpatialExperiment Object
 #'
-#' This function subsets a `SpatialExperiment` object based on specified x and y coordinate ranges.
-#' It is useful in spatial transcriptomics for isolating specific regions of interest.
+#' Tailor a `SpatialExperiment` object to focus on specific areas by defining ranges in the spatial coordinates.
+#' This function narrows down the dataset to include only those spots that fall within user-defined x and y coordinate
+#' boundaries.
 #'
-#' @param spe A `SpatialExperiment` object containing spatial coordinates and associated data.
-#' @param colRange A numeric vector of length 2, specifying the minimum and maximum pxl_col_in_fullres.
-#' @param rowRange A numeric vector of length 2, specifying the minimum and maximum pxl_row_in_fullres.
+#' @param spe The `SpatialExperiment` object representing spatially resolved transcriptomics data.
+#' @param colRange a numeric vector of length two specifying the minimum and maximum x-coordinates
+#' (pxl_col_in_fullres) to include in the subset. If `NULL`, the full range of x-coordinates is used.
+#' @param rowRange a numeric vector of length two specifying the minimum and maximum y-coordinates
+#' (pxl_row_in_fullres) to include in the subset. If `NULL`, the full range of y-coordinates is used.
 #'
-#' @return A subset of the `SpatialExperiment` object, including only the data within the specified coordinate ranges.
+#' @return Returns a `SpatialExperiment` object subsetted to include only spots within the defined x and y coordinate ranges.
 #'
 #' @export
 subsetSPE <- function(spe, colRange = NULL, rowRange = NULL) {

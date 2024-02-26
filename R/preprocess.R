@@ -1,10 +1,12 @@
-#' Preprocess SingleCellExperiments and Spatial Experiments
+#' Preprocess Single Cell and Spatial Data for analysis in spacedeconv
 #'
-#' @param object SingleCellExperiment or SpatialExperiment, if AnnData or Seurat it will be converted
-#' @param min_umi minimum umi count for spots/cells
-#' @param max_umi maximimum umi
-#' @param assay assay to use for calculation, you can use any assay but counts is recommended
-#' @param remove_mito remove mitochondria genes
+#' This function prepares `SingleCellExperiment` or `SpatialExperiment` objects for downstream analysis by performing a series of preprocessing steps. These steps include converting non-SpatialExperiment objects to `SingleCellExperiment` format, filtering based on UMI counts, optionally removing mitochondrial genes, and ensuring data integrity.
+#'
+#' @param object The input object, which can be a `SingleCellExperiment`, `SpatialExperiment`, AnnData, or Seurat object. The function will convert AnnData or Seurat objects to `SingleCellExperiment` if needed.
+#' @param min_umi The minimum UMI count threshold for cells or spots to be included in the analysis. This filter helps to remove low-quality observations that might not provide reliable data.
+#' @param max_umi The maximum UMI count threshold, used to exclude cells or spots with extremely high UMI counts. This parameter is optional.
+#' @param assay The name of the assay to use to compute the preprocessing Default is "counts"
+#' @param remove_mito A logical flag indicating whether mitochondrial genes should be removed from the dataset.
 #'
 #' @export
 preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", remove_mito = FALSE) {

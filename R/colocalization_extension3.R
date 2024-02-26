@@ -1,4 +1,4 @@
-#' Heatmaps cell pair localization and correlation of scores
+#' Heatmaps cell pair localization and correlation of scores (Beta)
 #'
 #' Generates a heatmap of cell pair localization ratios and p-values as asterisks as well as a correlation heatmap of scores and correlation probabilities as asterisks between all cell types found after deconvolution
 #'

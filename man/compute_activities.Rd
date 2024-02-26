@@ -2,7 +2,7 @@
 % Please edit documentation in R/decoupleR.R
 \name{compute_activities}
 \alias{compute_activities}
-\title{Compute Pathway activities with decoupleR}
+\title{Compute Pathway and Transcription Factor Activities and integrate into SpatialExperiment Using decoupleR}
 \usage{
 compute_activities(
   spe,
@@ -14,18 +14,22 @@ compute_activities(
 )
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{The \code{SpatialExperiment} object containing spatially resolved expression data.}
 
-\item{reference}{decoupleR reference}
+\item{reference}{A reference dataframe, computed using \code{get_decoupleR_reference()}}
 
-\item{method}{calculation method to use}
+\item{method}{The method used to compute activities, such as "wmean", "viper", "gsva", etc. see \code{decoupleR} documentation for details.}
 
-\item{assay}{which assay to use}
+\item{assay}{The name of the assay within the \code{SpatialExperiment} to use for calculations.}
 
-\item{statistic}{select a sub results in case methods produce mutliple ones}
+\item{statistic}{In cases where the chosen method produces multiple results, this parameter allows selection of a specific statistic for inclusion in the output.}
 
-\item{...}{further arguments passed to the methods}
+\item{...}{Further arguments passed to the computational methods.}
+}
+\value{
+The function returns the input \code{SpatialExperiment} object with additional metadata columns representing the computed activities.
 }
 \description{
-Compute Pathway activities with decoupleR
+This function computes pathway activities or transcription factor activities using a \code{SpatialExperiment} object
+using various computational methods provided by the \code{decoupleR} package.
 }
