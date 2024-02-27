@@ -84,8 +84,8 @@ spe <- addCustomAnnotation(spe, columnName = "ManualAnnotation", values = new_an
 This function is able to annotate spots with TRUE / FALSE if you want to classify a specific subgroup of spots. It takes a list of spots that should be classified as TRUE, setting all other spots to FALSE. 
 
 ```{r, eval=FALSE}
-# spots is a list of spot names. 
-spe <- annotate_spots(spe, spots, value_pos = TRUE, value_neg = FALSE, name="customAnnotation")
+# spots is a list of spot names.
+spe <- annotate_spots(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "customAnnotation")
 ```
 
 ## 8. `scale_cell_counts`
@@ -94,7 +94,7 @@ Most deconvolution tools compute relative cell fractions for spots. If you have 
 
 ```{r, eval=FALSE}
 # cell_counts_per_spot contains spot level absolute cell counts
-spe_absolute = scale_cell_counts(spe, value="dwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
+spe_absolute <- scale_cell_counts(spe, value = "dwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
 ```
 
 ## 9. `subsetSCE`
