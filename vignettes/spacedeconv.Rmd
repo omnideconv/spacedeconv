@@ -33,7 +33,7 @@ install.packages("pak")
 pak::pkg_install("omnideconv/spacedeconv")
 
 # full installation including all deconvolution tools
-pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
+pak::pkg_install("omnideconv/spacedeconv", dependencies = TRUE)
 ```
 
 # Data requirements
