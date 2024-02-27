@@ -172,7 +172,7 @@ get_lr <- function(spe,
       }
     }
   } else {
-  ######### HUMAN #############
+    ######### HUMAN #############
 
     # check if the organism is human
     if (is.null(organism) || organism == "human") {
