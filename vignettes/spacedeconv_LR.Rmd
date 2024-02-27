@@ -20,4 +20,3 @@ data("spatial_data_3")
 spe <- spacedeconv::preprocess(spatial_data_3, remove_mito = TRUE)
 spe <- spacedeconv::normalize(spe, method = "cpm")
 ```
-
