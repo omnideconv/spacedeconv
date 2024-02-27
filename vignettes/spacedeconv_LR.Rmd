@@ -7,3 +7,17 @@ date: "2024-02-27"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+```{r}
+library(spacedeconv)
+```
+
+
+```{r loadData, message=FALSE, eval = TRUE}
+data("spatial_data_3")
+
+spe = spacedeconv::preprocess(spatial_data_3, remove_mito = TRUE)
+spe = spacedeconv::normalize(spe, method = "cpm")
+```
+
