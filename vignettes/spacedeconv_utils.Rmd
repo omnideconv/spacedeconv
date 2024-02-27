@@ -112,4 +112,3 @@ When not working with the full Spatial data you can opt for using a subset of th
 ```{r, eval=FALSE}
 subset <- subsetSPE(spe, colRange = c(0, 1000), rowRange = c(0, 1000))
 ```
-
