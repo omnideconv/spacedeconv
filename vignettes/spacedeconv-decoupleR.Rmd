@@ -1,0 +1,38 @@
+---
+title: "DecoupleR integration"
+output: html_document
+date: "2024-02-27"
+vignette: >
+  %\VignetteIndexEntry{DecoupleR integration}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We provide wrapper functions to spatially quantify Pathway and Transcription Factor activities using DecoupleR.
+
+```{r}
+library(spacedeconv)
+library(decoupleR)
+```
+
+To compute activities you need to obtain a reference from OmniPathR. The `method` can be one of "progeny", "dorothea" or "collectri". 
+
+```{r, collapse=TRUE}
+ref <- get_decoupleR_reference(method = "progeny", organism = "human")
+head(ref)
+```
+
+In the next step the activities can be computed.
+
+```{r, eval=FALSE}
+data("spatial_data_3")
+spatial_data_3 = preprocess(spatial_data_3)
+spatial_data_3 = normalize(spatial_data_3)
+
+spe = compute_activities(spatial_data_3, reference = ref, method = "wmean", assay = "cpm")
+```
+
