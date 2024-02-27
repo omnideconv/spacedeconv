@@ -79,7 +79,7 @@ spacedeconv::plot_most_abundant(deconv,
   density = F,
   title_size = 25,
   legend_size = 15,
-  font_size = 10, 
+  font_size = 10,
   remove = c("dwls_Cancer.Epithelial", "dwls_CAFs")
 )
 ```
@@ -148,7 +148,7 @@ spacedeconv::plot_celltype(deconv,
   density = TRUE,
   title_size = 20,
   legend_size = 15,
-  font_size = 10, 
+  font_size = 10,
   title = "B cells smoothed"
 )
 ```
