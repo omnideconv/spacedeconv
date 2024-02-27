@@ -96,3 +96,4 @@ reference:
       - get_palette_type
       - get_ligand_expression
       - get_receptor_expression
+      - is_hexcolor

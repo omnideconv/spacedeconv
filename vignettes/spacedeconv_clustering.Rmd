@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 To gain more insights into a tissues composition the clustering function can be applied. It is possible to cluster by expression values, deconvolution results or pathway and transcription factor activities. 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(spacedeconv)
 library(SpatialExperiment)
 
@@ -29,7 +29,6 @@ spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
 single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
-deconv <- deconvolute(spe, method = "epic", assay_sc = "cpm")
 ```
 
 ```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
