@@ -8,8 +8,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# FAQ
-
 ### My SpatialExperiment contains ENSEMBL IDs. Can i still perform deconvolution? 
 It is possible to perform second-generation deconvolution algorithms when annotated scRNA-seq data containing ENSEMBL IDs is available. All first-gen deconvolution tools require HGNC symbols. You may also check your SpatialExperiment `rowData()` for available annotation to overwrite ENSEMBL IDs. In most cases this can be solved by using the following code: 
 

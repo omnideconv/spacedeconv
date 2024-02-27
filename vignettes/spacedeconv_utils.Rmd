@@ -1,0 +1,82 @@
+---
+title: "Workflow Utilities"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Workflow Utilities}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+`spacedeconv` offers a variety of workflow helper functions that streamline the overall analysis process. In the following we will give an overview over the available functions. 
+
+1. `preprocess`
+2. `normalize`
+3. `print_info`
+4. `available_results`
+5. `aggregate_results`
+6. `addCustomAnnotation`
+7. `annotate_spots`
+8. `scale_cell_counts`
+9. `subsetSCE`
+10. `subsetSPE`
+
+
+```{r}
+library(spacedeconv)
+```
+
+## 1. `preprocess`
+
+The function can be used to preprocess single-cell or spatial datasets. The cuts of low and high UMI observations, removes noisy expression and performs additional checks to streamline the deconvolution analysis. The functions takes a SingleCellExperiment, AnnData or Seurat and returns a processed SingleCellExperiment. `min_umi` or `max_umi` parameters can be set to improve data quality. The assay can be selected with the `assay` parameter. Additionally Mitochondria Genes can be removed by setting `remove_mito=TRUE`.
+
+```{r, collapse=TRUE}
+data("single_cell_data_3")
+sce <- spacedeconv::preprocess(single_cell_data_3, min_umi = 500, assay = "counts", remove_mito = TRUE)
+```
+
+## 2. `normalize`
+
+You can scale and normalize your single-cell or spatial data by calling the `normalize function`. The function takes a `method` parameter where `cpm`or `logcpm`can be selected. The normalized data is stored as an additional assay in the object. 
+
+```{r, collapse=TRUE}
+sce <- spacedeconv::normalize(sce, method = "cpm", assay = "counts")
+```
+
+## 3. `print_info`
+
+You can obtain additional info about your dataset by calling `print_info`. 
+
+```{r, collapse=TRUE}
+print_info(sce)
+```
+## 4. `available_results`
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+```
+
+You can check what deconvolution results and additional annotation is available in your data by calling `available_resutls`. You can set the `method` parameter to the name of a deconvolution tool to further filter the results if many quantifications where performed. 
+
+```{r}
+# "deconv" contains DWLS results
+available_results(deconv)
+```
+
+
+## 5. `aggregate_results`
+
+You can aggregate fine-grained deconvolution results to a single value by providing a list of deconvolution result names to the `cell_types` parameter. You can additionally set a new `name` and you have the option to `remove` the original fine-grained columns and just keep the aggregation. 
+
+```{r, collapse=TRUE}
+aggregate_results(deconv, cell_types = c("dwls_Cancer.Epithelial", "dwls_Normal.Epithelial"), name = "dwls_Epithelial", remove=TRUE)
+```
+
+## 6. `addCustomAnnotation`
+
+This function helps adding a custom annotation vector to a SpatialExperiment object. 
+
+```{r}
+new_annotation = rep("annotation", ncol(spe))
+
+spe <- addCustomAnnotation(spe, columnName = "ManualAnnotation", values = new_annotation)
+```
+

@@ -2,7 +2,7 @@
 title: "Visualization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{spacedeconv Visualization}
+  %\VignetteIndexEntry{Visualization}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
