@@ -74,9 +74,7 @@ aggregate_results(deconv, cell_types = c("dwls_Cancer.Epithelial", "dwls_Normal.
 
 This function helps adding a custom annotation vector to a SpatialExperiment object. 
 
-<<<<<<< HEAD
 ```{r, eval=FALSE}
 new_annotation = rep("annotation", ncol(spe))
-
 spe <- addCustomAnnotation(spe, columnName = "ManualAnnotation", values = new_annotation)
 ```
