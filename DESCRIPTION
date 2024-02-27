@@ -74,7 +74,8 @@ Suggests:
     org.Mm.eg.db, 
     org.Hs.eg.db, 
     AnnotationDbi, 
-    pbapply
+    pbapply, 
+    OmnipathR
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
