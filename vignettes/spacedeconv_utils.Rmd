@@ -75,6 +75,40 @@ aggregate_results(deconv, cell_types = c("dwls_Cancer.Epithelial", "dwls_Normal.
 This function helps adding a custom annotation vector to a SpatialExperiment object. 
 
 ```{r, eval=FALSE}
-new_annotation = rep("annotation", ncol(spe))
+# newAnnotation is a vector containing custom annotation for each spot
 spe <- addCustomAnnotation(spe, columnName = "ManualAnnotation", values = new_annotation)
+```
+
+## 7. `annotate_spots`
+
+This function is able to annotate spots with TRUE / FALSE if you want to classify a specific subgroup of spots. It takes a list of spots that should be classified as TRUE, setting all other spots to FALSE. 
+
+```{r, eval=FALSE}
+# spots is a list of spot names.
+spe <- annotate_spots(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "customAnnotation")
+```
+
+## 8. `scale_cell_counts`
+
+Most deconvolution tools compute relative cell fractions for spots. If you have cell counts for each spot you can scale the relative values to absolute cell counts using this function. The input parameters are the column name that should be scaled `value` and a vector of absolute cell counts for each spot `cell_counts`. You can also set a new `resName`. 
+
+```{r, eval=FALSE}
+# cell_counts_per_spot contains spot level absolute cell counts
+spe_absolute <- scale_cell_counts(spe, value = "dwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
+```
+
+## 9. `subsetSCE`
+
+To improve resource requirements for deconvolution computation you can reduce your input scRNA-seq reference size by subsetting. The functions requires your input `sce` object, the column name containing the cell-type annotation `cell_type_col`. You can specify the subsetting scenario `scenario` as one of "mirror" or "even". The mirror scenario keeps the same cell-type proportions as in the input data but reduces the overall cell number. The even scenario selects the same number of cells for each cell-type. Specify the number of cells you want after subsetting using the `ncells` parameter. In case `notEnough`cells are available for a cell-type to match the required number according to the scenario you can set this parameter to "asis" to keep all remaining cells or "remove" the cell-type completely. 
+
+```{r, collapse=TRUE}
+subset <- subsetSCE(sce, cell_type_col = "celltype_major", scenario = "mirror", ncells = 500)
+```
+
+## 10. `subsetSPE`
+
+When not working with the full Spatial data you can opt for using a subset of the spatial slide. This function take a `colRange` and `rowRange` vector containing the pixel coordinates of the fullres image to cut subsets of the provided spatial data. 
+
+```{r, eval=FALSE}
+subset <- subsetSPE(spe, colRange = c(0, 1000), rowRange = c(0, 1000))
 ```

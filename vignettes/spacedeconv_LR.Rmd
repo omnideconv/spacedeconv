@@ -71,3 +71,4 @@ spacedeconv::plot_celltype(spe,
                            density = FALSE)
 
 ```
+
