@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,13 +51,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/spacedeconv-decoupleR.html">DecoupleR integration</a>
+    <a class="dropdown-item" href="articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a>
     <a class="dropdown-item" href="articles/spacedeconv_clustering.html">Clustering</a>
-    <a class="dropdown-item" href="articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="articles/spacedeconv_faq.html">FAQ</a>
-    <a class="dropdown-item" href="articles/spacedeconv_metacell.html">Metacell</a>
-    <a class="dropdown-item" href="articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
+    <a class="dropdown-item" href="articles/spacedeconv_utils.html">Workflow Utilities</a>
+    <a class="dropdown-item" href="articles/spacedeconv_visualization.html">Visualization</a>
   </div>
 </li>
       </ul>
@@ -79,7 +80,7 @@
 <a class="anchor" aria-label="anchor" href="#rocket-spacedeconv-"></a>
 </h1>
 </div>
-<p><a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg" alt="R-CMD-check"></a> <a href="https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg" alt="docs"></a> <a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg" alt="test-coverage"></a></p>
+<p><a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test.yml/badge.svg" alt="R-CMD-check"></a> <a href="https://omnideconv.org/spacedeconv" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/pkgdown.yml/badge.svg" alt="docs"></a> <a href="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml" class="external-link"><img src="https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg" alt="test-coverage"></a> <a href="https://codecov.io/gh/omnideconv/spacedeconv" class="external-link"><img src="https://codecov.io/gh/omnideconv/spacedeconv/graph/badge.svg?token=OX9ZHSEP9L" alt="codecov"></a></p>
 <p>spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.</p>
 <div class="section level2">
 <h2 id="arrow_down-installation">
@@ -202,14 +203,12 @@
 <colgroup>
 <col width="14%">
 <col width="4%">
-<col width="3%">
 <col width="18%">
-<col width="59%">
+<col width="61%">
 </colgroup>
 <thead><tr class="header">
 <th>Method</th>
 <th align="center">signature</th>
-<th align="center">organism</th>
 <th align="center">licence</th>
 <th>citation</th>
 </tr></thead>
@@ -217,28 +216,24 @@
 <tr class="odd">
 <td><a href="https://github.com/omnideconv/omnideconv" class="external-link">omnideconv</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/omnideconv/omnideconv/blob/main/LICENSE" class="external-link">GPL-3</a></td>
 <td>Citation will follow</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/omnideconv/immunedeconv" class="external-link">immunedeconv</a></td>
 <td align="center"><span class="emoji" data-emoji="x">❌</span></td>
-<td align="center">humand and mouse</td>
 <td align="center"><a href="https://github.com/omnideconv/immunedeconv/blob/master/LICENSE" class="external-link">BSD</a></td>
 <td>Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., …, List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445.</td>
 </tr>
 <tr class="odd">
 <td><a href="https://github.com/RubD/Giotto/" class="external-link">spatialDWLS</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/RubD/Giotto/blob/master/LICENSE" class="external-link">MIT</a></td>
 <td>Dong R, Yuan GC. SpatialDWLS: accurate deconvolution of spatial transcriptomic data. Genome Biol. 2021 May 10;22(1):145. doi: 10.1186/s13059-021-02362-7</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/BayraktarLab/cell2location" class="external-link">cell2location</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/BayraktarLab/cell2location/blob/master/LICENSE" class="external-link">Apache-2.0</a></td>
 <td>Kleshchevnikov, V., Shmatko, A., Dann, E. et al. Cell2location maps fine-grained cell types in spatial transcriptomics. Nat Biotechnol (2022). <a href="https://doi.org/10.1038/s41587-021-01139-4" class="external-link uri">https://doi.org/10.1038/s41587-021-01139-4</a>
 </td>
@@ -246,14 +241,12 @@
 <tr class="odd">
 <td><a href="https://github.com/MarcElosua/SPOTlight" class="external-link">SPOTlight</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/MarcElosua/SPOTlight/blob/main/LICENSE.md" class="external-link">GPL 3.0</a></td>
 <td>Elosua-Bayes M, Nieto P, Mereu E, Gut I, Heyn H (2021): <em>SPOTlight: seeded NMF regression to deconvolute spatial transcriptomics spots with single-cell transcriptomes</em>. <strong>Nucleic Acids Res</strong> 49(9):e50. <a href="doi:10.1093/nar/gkab043" class="uri">doi:10.1093/nar/gkab043</a>.</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/dmcable/spacexr" class="external-link">RCTD</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/dmcable/spacexr/blob/master/LICENSE" class="external-link">GPL 3.0</a></td>
 <td>Cable, D.M., Murray, E., Zou, L.S. et al. Robust decomposition of cell type mixtures in spatial transcriptomics. Nat Biotechnol 40, 517–526 (2022). <a href="https://doi.org/10.1038/s41587-021-00830-w" class="external-link uri">https://doi.org/10.1038/s41587-021-00830-w</a>
 </td>
@@ -261,7 +254,6 @@
 <tr class="odd">
 <td><a href="https://github.com/YingMa0107/CARD" class="external-link">CARD</a></td>
 <td align="center"><span class="emoji" data-emoji="heavy_check_mark">✔️</span></td>
-<td align="center">human</td>
 <td align="center"><a href="https://github.com/YingMa0107/CARD/blob/master/LICENSE.md" class="external-link">GPL-3.0</a></td>
 <td>Ying Ma, and Xiang Zhou (2022). Spatially informed cell type deconvolution for spatial transcriptomics. <a href="https://doi.org/10.1038/s41587-022-01273-7" class="external-link uri">https://doi.org/10.1038/s41587-022-01273-7</a>
 </td>

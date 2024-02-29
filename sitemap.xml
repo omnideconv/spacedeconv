@@ -10,13 +10,16 @@
     <loc>https://omnideconv.github.io/spacedeconv/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv-decoupleR.html</loc>
+  </url>
+  <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_clustering.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_LR.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_colocalization.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_clustering.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_data.html</loc>
@@ -28,7 +31,7 @@
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_faq.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_metacell.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_utils.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/articles/spacedeconv_visualization.html</loc>
@@ -56,9 +59,6 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/annotate_spots.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/antimode_cutoff.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/attachToken.html</loc>
@@ -94,12 +94,6 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/build_model_spotlight.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/cell_pair_localization.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/cell_pair_presence.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/checkCol.html</loc>
   </url>
   <url>
@@ -118,25 +112,13 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/check_path_scaden.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/clean_genes_and_cells.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/cluster.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/coloc_avoid.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/compare_signatures.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/compute_activities.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_forbidden_genes.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/compute_metacells.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/convertImmunedeconvMatrix.html</loc>
@@ -187,9 +169,6 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/doGiottoWorkflow.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/extract_forbidden_from_modules.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/filter_sample_id.html</loc>
   </url>
   <url>
@@ -209,12 +188,6 @@
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_hex_polygon.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/get_iniche.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/get_largest_r_and_iso.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/get_ligand_expression.html</loc>
@@ -241,7 +214,7 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/localization_heatmap.html</loc>
+    <loc>https://omnideconv.github.io/spacedeconv/reference/is_hexcolor.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/make_baseplot.html</loc>
@@ -253,19 +226,10 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_celltype.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_celltype_presence.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_comparison.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_gene.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_metacell_abundance.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_metacell_nCells.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_most_abundant.html</loc>
@@ -277,9 +241,6 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_overview.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/plot_ripleys_k.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/plot_scatter.html</loc>
   </url>
   <url>
@@ -289,22 +250,13 @@
     <loc>https://omnideconv.github.io/spacedeconv/reference/preprocess.html</loc>
   </url>
   <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/presence.html</loc>
-  </url>
-  <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/print_info.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/qualitycontrol.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/removeZeroExpression.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/required_packages.html</loc>
-  </url>
-  <url>
-    <loc>https://omnideconv.github.io/spacedeconv/reference/ripleys_k.html</loc>
   </url>
   <url>
     <loc>https://omnideconv.github.io/spacedeconv/reference/save_plot.html</loc>

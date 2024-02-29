@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,13 +51,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv-decoupleR.html">DecoupleR integration</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a>
     <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_metacell.html">Metacell</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_utils.html">Workflow Utilities</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">Visualization</a>
   </div>
 </li>
       </ul>
@@ -114,12 +115,13 @@ time.</li>
 <code>spacedeconv</code> is available from GitHub only. We recommend
 installing trough the pak package manager:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># install the pak package manager</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># minimal installation</span></span>
+<span><span class="co"># recommended installation, deconvolution tools are installed on-demand</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># complete installation</span></span>
+<span><span class="co"># full installation including all deconvolution tools</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">

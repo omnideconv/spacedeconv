@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,13 +27,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv-decoupleR.html">DecoupleR integration</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a>
     <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_metacell.html">Metacell</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_utils.html">Workflow Utilities</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">Visualization</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -125,75 +126,6 @@
 <p>The deconvolution result as a table</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># more examples can be found in the documentation website</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_2"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">spatial_data_2</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[44ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Removing 85 observations with umi count below threshold</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Removed 85 observations with umi count below threshold <span style="color: #B2B2B2;">[659ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Removing 13418 variables with all zero expression</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There are 13 mitochondrial genes present. Consider removing them.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Removed 13418 variables with all zero expression <span style="color: #B2B2B2;">[652ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[48ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[6ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">spatial_data_2</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[1.7s]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">deconvolution</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu">deconvolute</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  spatial_obj <span class="op">=</span> <span class="va">spatial_data_2</span>,</span></span>
-<span class="r-in"><span>  method <span class="op">=</span> <span class="st">"estimate"</span>,</span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[16ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Spatial </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Assays: <span style="color: #0000BB;">"counts"</span> and <span style="color: #0000BB;">"cpm"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Genes: <span style="color: #0000BB;">23173</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → without expression: <span style="color: #0000BB;">0</span> (0%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots: <span style="color: #0000BB;">1225</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots under tissue: <span style="color: #0000BB;">1225</span> (100%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Median Genes Per Spot: <span style="color: #0000BB;">4795</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → without expression: <span style="color: #0000BB;">0</span> (0%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Umi count range: <span style="color: #0000BB;">536</span> - <span style="color: #0000BB;">64683</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots with UMI count below 500: <span style="color: #0000BB;">0</span> (0%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Rownames set</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Colnames set</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> deconvoluting</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Running estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Merged dataset includes 9317 genes (1095 mismatched)."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1 gene set: StromalSignature  overlap= 135"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2 gene set: ImmuneSignature  overlap= 140"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[6.4s]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

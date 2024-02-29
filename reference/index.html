@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,13 +27,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv-decoupleR.html">DecoupleR integration</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a>
     <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_metacell.html">Metacell</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_utils.html">Workflow Utilities</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">Visualization</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -281,11 +282,6 @@
         <dd>Function to plot deconvolution results</dd>
       </dl><dl><dt>
           
-          <code><a href="plot_celltype_presence.html">plot_celltype_presence()</a></code> 
-        </dt>
-        <dd>Plot celltype presence absence</dd>
-      </dl><dl><dt>
-          
           <code><a href="plot_comparison.html">plot_comparison()</a></code> 
         </dt>
         <dd>Plot celltype fraction comparison</dd>
@@ -431,113 +427,11 @@
           <code><a href="scale_cell_counts.html">scale_cell_counts()</a></code> 
         </dt>
         <dd>Scale relative cell fractions to absolute by providing cell densities</dd>
-      </dl></div><div class="section level2">
-      <h2 id="metacell">Metacell<a class="anchor" aria-label="anchor" href="#metacell"></a></h2>
-      
-      
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="clean_genes_and_cells.html">clean_genes_and_cells()</a></code> 
-        </dt>
-        <dd>Clean Genes and Cells with Metacell2</dd>
-      </dl><dl><dt>
-          
-          <code><a href="compute_forbidden_genes.html">compute_forbidden_genes()</a></code> 
-        </dt>
-        <dd>Compute forbidden genes</dd>
-      </dl><dl><dt>
-          
-          <code><a href="extract_forbidden_from_modules.html">extract_forbidden_from_modules()</a></code> 
-        </dt>
-        <dd>extract forbidden genes from gene modules</dd>
-      </dl><dl><dt>
-          
-          <code><a href="compute_metacells.html">compute_metacells()</a></code> 
-        </dt>
-        <dd>Compute Metacells</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_metacell_nCells.html">plot_metacell_nCells()</a></code> 
-        </dt>
-        <dd>Plot the number of genes per metacells</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_metacell_abundance.html">plot_metacell_abundance()</a></code> 
-        </dt>
-        <dd>Plot metacell abundance score</dd>
-      </dl></div><div class="section level2">
-      <h2 id="colocalization">Colocalization<a class="anchor" aria-label="anchor" href="#colocalization"></a></h2>
-      
-      
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="presence.html">presence()</a></code> 
-        </dt>
-        <dd>Threshold a matrix (Beta)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="antimode_cutoff.html">antimode_cutoff()</a></code> 
-        </dt>
-        <dd>Determine threshold for celltype presence based on antimode of celltype density</dd>
-      </dl><dl><dt>
-          
-          <code><a href="cell_pair_localization.html">cell_pair_localization()</a></code> 
-        </dt>
-        <dd>Cell pair colocalization or avoidance</dd>
-      </dl><dl><dt>
-          
-          <code><a href="cell_pair_presence.html">cell_pair_presence()</a></code> 
-        </dt>
-        <dd>Calculate Colocalization (Beta)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="coloc_avoid.html">coloc_avoid()</a></code> 
-        </dt>
-        <dd>Colocalization of two celltypes</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_iniche.html">get_iniche()</a></code> 
-        </dt>
-        <dd>Calculate Iniche recursivley</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ripleys_k.html">ripleys_k()</a></code> 
-        </dt>
-        <dd>Ripley´s K Analysis for Cell Type Distribution (Beta)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="localization_heatmap.html">localization_heatmap()</a></code> 
-        </dt>
-        <dd>Heatmaps cell pair localization and correlation of scores (Beta)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="qualitycontrol.html">qualitycontrol()</a></code> 
-        </dt>
-        <dd>Quality control function</dd>
       </dl><dl><dt>
           
           <code><a href="corr_expr.html">corr_expr()</a></code> 
         </dt>
         <dd>Heatmap correlation of cell types based on gene expression values</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_ripleys_k.html">plot_ripleys_k()</a></code> 
-        </dt>
-        <dd>Combined Ripley´s K statistics in one plot (Beta)</dd>
       </dl></div><div class="section level2">
       <h2 id="decoupler">DecoupleR<a class="anchor" aria-label="anchor" href="#decoupler"></a></h2>
       

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,13 +27,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/spacedeconv-decoupleR.html">DecoupleR integration</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a>
     <a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_colocalization.html">Colocalization</a>
     <a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a>
     <a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a>
     <a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_metacell.html">Metacell</a>
-    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">spacedeconv Visualization</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_utils.html">Workflow Utilities</a>
+    <a class="dropdown-item" href="../articles/spacedeconv_visualization.html">Visualization</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -210,40 +211,6 @@
 <p>plot of cell type fractions</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_2"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spatial_data_2</span>, method <span class="op">=</span> <span class="st">"estimate"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── spacedeconv ─────────────────────────────────────────────────────────────────</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> testing parameter</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[17ms]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Spatial </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Assays: <span style="color: #0000BB;">"counts"</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Genes: <span style="color: #0000BB;">36591</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → without expression: <span style="color: #0000BB;">13411</span> (36.65%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots: <span style="color: #0000BB;">1310</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots under tissue: <span style="color: #0000BB;">1310</span> (100%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Median Genes Per Spot: <span style="color: #0000BB;">4613.5</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → without expression: <span style="color: #0000BB;">15</span> (1.15%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Umi count range: <span style="color: #0000BB;">0</span> - <span style="color: #0000BB;">64683</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Spots with UMI count below 500: <span style="color: #0000BB;">85</span> (0.23%)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Rownames set</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Colnames set</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> deconvoluting</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt;&gt; Running estimate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Merged dataset includes 9969 genes (443 mismatched)."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1 gene set: StromalSignature  overlap= 136"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2 gene set: ImmuneSignature  overlap= 140"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[5.7s]</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="plot_celltype.html">plot_celltype</a></span><span class="op">(</span><span class="va">deconv</span>, cell_type <span class="op">=</span> <span class="st">"estimate_immune.score"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot_gene-1.png" alt="" width="700" height="433"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
