@@ -44,7 +44,7 @@ NULL
 
             reticulate::use_miniconda(condaenv = "r-omnideconv", required = TRUE)
             reticulate::py_config()
-            reticulate::configure_environment(pkgname, force = FALSE)
+            reticulate::configure_environment(pkgname, force = TRUE)
 
             if (!reticulate::py_module_available("anndata")) {
               anndata::install_anndata()
