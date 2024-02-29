@@ -14,7 +14,7 @@ NULL
   invisible({
     suppressMessages({
       suppressWarnings({
-        tmp <- reticulate::py_capture_output({
+        #tmp <- reticulate::py_capture_output({
           tmp2 <- utils::capture.output({
             # reticulate::py_capture_output({
             # Make sure miniconda is installed
@@ -64,7 +64,7 @@ NULL
             if (!reticulate::py_module_available("cell2location")) {
               reticulate::py_install("cell2location", pip = TRUE)
             }
-          })
+         #})
         })
       })
     })
