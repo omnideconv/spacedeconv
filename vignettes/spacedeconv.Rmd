@@ -26,12 +26,13 @@ There are two ways to install `spacedeconv`:
 Since not all dependencies are on CRAN or Bioconductor, `spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager: 
 
 ```{r, eval=FALSE}
+# install the pak package manager
 install.packages("pak")
 
-# minimal installation
+# recommended installation, deconvolution tools are installed on-demand
 pak::pkg_install("omnideconv/spacedeconv")
 
-# complete installation
+# full installation including all deconvolution tools
 pak::pkg_install("omnideconv/spacedeconv", dependencies = TRUE)
 ```
 

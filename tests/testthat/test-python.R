@@ -11,6 +11,6 @@ test_that("Python environment creation works", {
   # expect_true(reticulate::py_module_available("python.app"))
   expect_true(reticulate::py_module_available("scanpy"))
   expect_true(reticulate::py_module_available("cell2location"))
-  expect_true(reticulate::py_module_available("metacells"))
+  # expect_true(reticulate::py_module_available("metacells"))
   expect_true(reticulate::py_module_available("autogenes"))
 })

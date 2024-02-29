@@ -1,48 +1,55 @@
 ---
-title: "spacedeconv Visualization"
+title: "Visualization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{spacedeconv Visualization}
+  %\VignetteIndexEntry{Visualization}
   %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
-To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from internal sample data and the deconvolution method `EPIC`. Note that EPIC requires unnormalized data and is building the signature and deconvoluting in one step. Therefore only `deconvolute()` is called. 
+To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from the sample data provided and the deconvolution method `DWLS`. First we compute a reference signature based on the available scRNA-seq data with cell-type annotation. Then we quantify cell-type fractions in the 10X Visium slide using the computed reference signature. 
 
 ```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 library(spacedeconv)
 data("spatial_data_3")
+data("single_cell_data_3")
+
+sce <- preprocess(single_cell_data_3)
 
 spe <- preprocess(spatial_data_3)
 spe <- spacedeconv::normalize(spe, method = "cpm")
 
-deconv <- spacedeconv::deconvolute(
+singnature <- build_model(
+  single_cell_obj = sce,
+  method = "dwls",
+  cell_type_col = "celltype_major"
+)
+
+deconv <- deconvolute(
   spe,
-  method = "quantiseq",
+  signature = signature,
+  method = "dwls",
   assay_sp = "cpm"
 )
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-deconv <- readRDS(system.file("extdata", "deconv_quantiseq.rds", package = "spacedeconv"))
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
 ```
 
 
 # Available Visualizations
 
-At the moment spacedeconv offers two visualization functions. 
-
 1. `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
 2. `plot_gene()` plot spatial gene expression.
 3. `plot_umi_count()` Plots the number of sequenced reads per spot.
 4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot.
-5. `plot_celltype_presence()` Plot presence (thresholded) of a single cell-type.
-6. `plot_comparison()` Plot comparison of two cell-type fractions.
+5. `plot_comparison()` Plot comparison of two cell-type fractions.
 
 ## 1. `plot_celltype()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell", density = F, smooth = T)
+spacedeconv::plot_celltype(deconv, cell_type = "dwls_B.cells", density = F, smooth = T, title = "B cells")
 ```
 
 ## 2. `plot_gene()`
@@ -50,14 +57,14 @@ spacedeconv::plot_celltype(deconv, cell_type = "quantiseq_B.cell", density = F, 
 Plot gene expression on a spatial level. It may make sense to smooth the plot to simplify the detection of expression patterns. You can further select the assay using the `assay` parameter.
 
 ```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-spacedeconv::plot_gene(deconv, gene = "AKT1", density = F, smooth = T)
+spacedeconv::plot_gene(deconv, gene = "CD19", density = F, smooth = T, title = "CD19 expression")
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
 ```{r plotUMIcount, fig.height=7, fig.width=7}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T)
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T, title_size = "UMI count")
 ```
 
 ## 4. `plot_most_abundant()`
@@ -68,37 +75,26 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `remove` vector of celltypes to be removed from the plot
 ```{r plotMostAbundant}
 spacedeconv::plot_most_abundant(deconv,
-  method = "quantiseq",
+  method = "dwls",
   density = F,
   title_size = 25,
   legend_size = 15,
   font_size = 10,
-  remove = c("quantiseq_uncharacterized.cell")
+  remove = c("dwls_Cancer.Epithelial", "dwls_CAFs")
 )
 ```
 
-## 5. `plot_celltype_presence()`
-
-To access the presence of a single cell-type use the thresholded `plot_celltype_presence()` function. If the deconvolution result is larger than the provided threshold the spot is marked as detected ("TRUE"). If no threshold is provided, specific thresholds for each celltype will be calculated internally based on the antimode of the celltype density distribution.
-
-```{r plotCelltype}
-spacedeconv::plot_celltype_presence(deconv,
-  cell_type = "quantiseq_B.cell",
-  threshold = 0.05,
-  show_image = T
-)
-```
-
-##  6. `plot_comparison()`
+##  5. `plot_comparison()`
 Use this function to plot the ratio of deconvolution results from two cell-types.
 
 ```{r plotComparison}
 spacedeconv::plot_comparison(deconv,
-  cell_type_1 = "quantiseq_T.cell.CD4...non.regulatory.", # red
-  cell_type_2 = "quantiseq_T.cell.CD8.", # blue
+  cell_type_1 = "dwls_Cancer.Epithelial", # red
+  cell_type_2 = "dwls_Normal.Epithelial", # blue
   palette = "Blue-Red",
   density = F,
   smooth = T,
+  title = "Cancer vs. Normal Epithelial"
 )
 ```
 
@@ -135,7 +131,7 @@ With this parameter the expression values can be smoothed to simplify pattern re
 
 ```{r}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "quantiseq_B.cell",
+  cell_type = "dwls_B.cells",
   smooth = T,
   smoothing_factor = 1.5,
   density = FALSE
@@ -147,12 +143,13 @@ You can add a density distribution by setting `density = TRUE`. The red line cor
 
 ```{r}
 spacedeconv::plot_celltype(deconv,
-  cell_type = "quantiseq_B.cell",
+  cell_type = "dwls_B.cells",
   smooth = TRUE,
   density = TRUE,
   title_size = 20,
   legend_size = 15,
-  font_size = 10
+  font_size = 10,
+  title = "B cells smoothed"
 )
 ```
 
@@ -177,7 +174,6 @@ Aggregate cell types using the `aggregate` function. Internall the deconvolution
 ```{r aggregation, eval=FALSE}
 spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
 ```
-
 
 
 # Additional Parameters 

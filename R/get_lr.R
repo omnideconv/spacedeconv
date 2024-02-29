@@ -23,6 +23,8 @@ get_ligand_expression <- function(gene_pair, cpm_df) {
     expression_values <- cpm_df[first_gene, ]
     # return(expression_values)
   }
+
+  expression_values
 }
 
 
@@ -51,6 +53,8 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
     expression_values <- cpm_df[second_gene, ]
     # return(expression_values)
   }
+
+  expression_values
 }
 
 #' Compute L-R score for each spot
@@ -168,6 +172,8 @@ get_lr <- function(spe,
       }
     }
   } else {
+    ######### HUMAN #############
+
     # check if the organism is human
     if (is.null(organism) || organism == "human") {
       # if nothing is provided then take the LIANA consensus

@@ -1,0 +1,74 @@
+---
+title: "Ligand-Receptor Analysis"
+output: html_document
+date: "2024-02-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r}
+library(spacedeconv)
+library(OmnipathR)
+library(SpatialExperiment)
+```
+
+# Introduction
+This function provides a framework to infer Ligand-Receptor Interactions within a sample using known L-R pairs. The function extracts the expression levels of known L-R pairs from the gene expression matrix of a given spe object. 
+
+# Example Data
+We use spacedeconvs spatial data 3 for this analysis.
+We always encourage the user to preprocess and normalize the data first, but in this case, the function would also preprocess and normalize the data to CPM internally, so the following step is optional. 
+
+```{r loadData, message=FALSE, eval = TRUE}
+data("spatial_data_3")
+
+# this step is optional
+spe <- spacedeconv::preprocess(spatial_data_3, remove_mito = TRUE)
+spe <- spacedeconv::normalize(spe, method = "cpm")
+```
+
+# L-R Analysis
+The user can define a reference table with L-R pairs or use the default table, which is a filtered selection of the intercell network, as provided by Omnipath (the user can either leave the resource argument empty or input "Consensus" to use the default resource). In the case of a user-defined L-R table, this should contain the following columns: source_symbol column containing the ligands or ligand complexes and the target_symbol column with the receptors or receptor complexes. 
+
+Complexes:
+The function can also handle L or R complexes. In this case, the members of the complex are split and their expressions are extracted separately. If one of the members of either the Ligand- or the Receptor- complex is missing from the CPM expression matrix of the spe object then the L-R pair is removed. 
+
+Calculation of scores
+L-R scores can be calculated using two mathematical approaches, which can be defined using the method argument. Either the min values between Ligand and Receptors in each pair (deafult or input "min") or the product of the expression of the Ligand and the Receptor for each pair (input "product") 
+
+Organisms:
+The function can also handle mouse data. The user can input a user-defined reference table with L–R mouse pairs. The user can convert human to mouse L-R pairs with the convert_mouse_to_human function of spacedeconv. The user-defined table should have the same format as that mentioned above. Otherwise the default human reference table is converted internally to mouse data and used to calculate the L-R scores. To use the default mouse table input "mouse" in the organism argument and either leave the resource parameter empty or input "Consensus"
+
+After the calculation the scores for each L-R pair are stored in the ColData of the spe object and are marked with a "lr". 
+
+The example Data used here, is a human breast cancer slide and we will use the "min" mathematical approach with the default reference L-R table ("Consensus").
+```{r run L-R analysis, message=FALSE, eval = FALSE}
+spe <- spacedeconv::get_lr(spe,
+  resource = "Consensus",
+  method = "min",
+  organism = "human"
+)
+```
+
+# Visualization of the results. 
+The results can be visualized with the plot_celltype function of spacedeconv.
+
+```{r Visualization, message=FALSE, eval = FALSE}
+spacedeconv::plot_celltype(spe,
+  cell_type = "lr_LGALS3.LAG3",
+  smooth = TRUE,
+  density = FALSE
+)
+
+spacedeconv::plot_celltype(spe,
+  cell_type = "lr_CD274.PDCD1",
+  smooth = TRUE,
+  density = FALSE
+)
+```

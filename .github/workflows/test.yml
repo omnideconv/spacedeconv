@@ -67,8 +67,8 @@ jobs:
       #- name: Giotto
       #  run: Rscript -e "pak::pkg_install('drieslab/Giotto@master')"
 
-      - name: Install SpatialExperiment
-        run: Rscript -e "pak::pkg_install(c('drighelli/SpatialExperiment', 'testthat'))"
+      - name: Install Test Dependencies
+        run: Rscript -e "pak::pkg_install(c('drighelli/SpatialExperiment', 'testthat', 'omnideconv/immunedeconv'))"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

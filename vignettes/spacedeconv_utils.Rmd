@@ -1,0 +1,114 @@
+---
+title: "Workflow Utilities"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Workflow Utilities}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+`spacedeconv` offers a variety of workflow helper functions that streamline the overall analysis process. In the following we will give an overview over the available functions. 
+
+1. `preprocess`
+2. `normalize`
+3. `print_info`
+4. `available_results`
+5. `aggregate_results`
+6. `addCustomAnnotation`
+7. `annotate_spots`
+8. `scale_cell_counts`
+9. `subsetSCE`
+10. `subsetSPE`
+
+
+```{r}
+library(spacedeconv)
+```
+
+## 1. `preprocess`
+
+The function can be used to preprocess single-cell or spatial datasets. The cuts of low and high UMI observations, removes noisy expression and performs additional checks to streamline the deconvolution analysis. The functions takes a SingleCellExperiment, AnnData or Seurat and returns a processed SingleCellExperiment. `min_umi` or `max_umi` parameters can be set to improve data quality. The assay can be selected with the `assay` parameter. Additionally Mitochondria Genes can be removed by setting `remove_mito=TRUE`.
+
+```{r, collapse=TRUE}
+data("single_cell_data_3")
+sce <- spacedeconv::preprocess(single_cell_data_3, min_umi = 500, assay = "counts", remove_mito = TRUE)
+```
+
+## 2. `normalize`
+
+You can scale and normalize your single-cell or spatial data by calling the `normalize function`. The function takes a `method` parameter where `cpm`or `logcpm`can be selected. The normalized data is stored as an additional assay in the object. 
+
+```{r, collapse=TRUE}
+sce <- spacedeconv::normalize(sce, method = "cpm", assay = "counts")
+```
+
+## 3. `print_info`
+
+You can obtain additional info about your dataset by calling `print_info`. 
+
+```{r, collapse=TRUE}
+print_info(sce)
+```
+## 4. `available_results`
+```{r message=FALSE, warning=FALSE, include=FALSE}
+deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+```
+
+You can check what deconvolution results and additional annotation is available in your data by calling `available_resutls`. You can set the `method` parameter to the name of a deconvolution tool to further filter the results if many quantifications where performed. 
+
+```{r}
+# "deconv" contains DWLS results
+available_results(deconv)
+```
+
+
+## 5. `aggregate_results`
+
+You can aggregate fine-grained deconvolution results to a single value by providing a list of deconvolution result names to the `cell_types` parameter. You can additionally set a new `name` and you have the option to `remove` the original fine-grained columns and just keep the aggregation. 
+
+```{r, collapse=TRUE}
+aggregate_results(deconv, cell_types = c("dwls_Cancer.Epithelial", "dwls_Normal.Epithelial"), name = "dwls_Epithelial", remove = TRUE)
+```
+
+## 6. `addCustomAnnotation`
+
+This function helps adding a custom annotation vector to a SpatialExperiment object. 
+
+```{r, eval=FALSE}
+# newAnnotation is a vector containing custom annotation for each spot
+spe <- addCustomAnnotation(spe, columnName = "ManualAnnotation", values = new_annotation)
+```
+
+## 7. `annotate_spots`
+
+This function is able to annotate spots with TRUE / FALSE if you want to classify a specific subgroup of spots. It takes a list of spots that should be classified as TRUE, setting all other spots to FALSE. 
+
+```{r, eval=FALSE}
+# spots is a list of spot names.
+spe <- annotate_spots(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "customAnnotation")
+```
+
+## 8. `scale_cell_counts`
+
+Most deconvolution tools compute relative cell fractions for spots. If you have cell counts for each spot you can scale the relative values to absolute cell counts using this function. The input parameters are the column name that should be scaled `value` and a vector of absolute cell counts for each spot `cell_counts`. You can also set a new `resName`. 
+
+```{r, eval=FALSE}
+# cell_counts_per_spot contains spot level absolute cell counts
+spe_absolute <- scale_cell_counts(spe, value = "dwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
+```
+
+## 9. `subsetSCE`
+
+To improve resource requirements for deconvolution computation you can reduce your input scRNA-seq reference size by subsetting. The functions requires your input `sce` object, the column name containing the cell-type annotation `cell_type_col`. You can specify the subsetting scenario `scenario` as one of "mirror" or "even". The mirror scenario keeps the same cell-type proportions as in the input data but reduces the overall cell number. The even scenario selects the same number of cells for each cell-type. Specify the number of cells you want after subsetting using the `ncells` parameter. In case `notEnough`cells are available for a cell-type to match the required number according to the scenario you can set this parameter to "asis" to keep all remaining cells or "remove" the cell-type completely. 
+
+```{r, collapse=TRUE}
+subset <- subsetSCE(sce, cell_type_col = "celltype_major", scenario = "mirror", ncells = 500)
+```
+
+## 10. `subsetSPE`
+
+When not working with the full Spatial data you can opt for using a subset of the spatial slide. This function take a `colRange` and `rowRange` vector containing the pixel coordinates of the fullres image to cut subsets of the provided spatial data. 
+
+```{r, eval=FALSE}
+subset <- subsetSPE(spe, colRange = c(0, 1000), rowRange = c(0, 1000))
+```

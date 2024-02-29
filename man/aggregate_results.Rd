@@ -42,19 +42,3 @@ This function now supports aggregating multiple cell types by passing a list of
 cell types. The older method of specifying two separate cell types is deprecated
 but still supported for backward compatibility.
 }
-\details{
-The function will aggregate the specified cell types by summing their
-corresponding columns in the spatial object. If the deprecated parameters
-'cell_type_1' and 'cell_type_2' are used, a warning is issued, and these types
-are added to the 'cell_types' list for aggregation.
-}
-\examples{
-\dontrun{
-# For new code, use:
-aggregate_results(spatial_data_3, cell_types = c("cell_type_A", "cell_type_B"))
-
-# For backward compatibility:
-aggregate_results(spatial_data_3, cell_type_1 = "cell_type_A", cell_type_2 = "cell_type_B")
-}
-
-}

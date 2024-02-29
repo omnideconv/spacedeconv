@@ -21,20 +21,6 @@
 #' @return A SpatialExperiment object containing the aggregation of the provided
 #' cell types.
 #'
-#' @details The function will aggregate the specified cell types by summing their
-#' corresponding columns in the spatial object. If the deprecated parameters
-#' 'cell_type_1' and 'cell_type_2' are used, a warning is issued, and these types
-#' are added to the 'cell_types' list for aggregation.
-#'
-#' @examples
-#' \dontrun{
-#' # For new code, use:
-#' aggregate_results(spatial_data_3, cell_types = c("cell_type_A", "cell_type_B"))
-#'
-#' # For backward compatibility:
-#' aggregate_results(spatial_data_3, cell_type_1 = "cell_type_A", cell_type_2 = "cell_type_B")
-#' }
-#'
 #' @export
 aggregate_results <- function(spatial_obj = NULL, cell_types = NULL, cell_type_1 = NULL, cell_type_2 = NULL,
                               name = NULL, remove = FALSE) {
