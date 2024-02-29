@@ -46,7 +46,8 @@ Imports:
     ComplexHeatmap, 
     grid, 
     grDevices, 
-    stats
+    stats, 
+    OmnipathR
 Suggests: 
     spacexr,
     SPOTlight,
@@ -74,8 +75,7 @@ Suggests:
     org.Mm.eg.db, 
     org.Hs.eg.db, 
     AnnotationDbi, 
-    pbapply, 
-    OmnipathR
+    pbapply
 Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,

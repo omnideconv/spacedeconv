@@ -31,13 +31,8 @@ data("spatial_data_3")
 # Preprocessing and Normalization
 To get a first insight into the data we type the dataset name into the terminal: 
 
-```{r viewData, eval=FALSE}
+```{r viewData, eval=TRUE}
 single_cell_data_3
-
-# for performance reasons we are subsampling the data
-
-
-# single_cell_data_3 <- subsetSCE(single_cell_data_3, cell_type_col = "celltype_major", ncells = 180)
 ```
 
 
@@ -45,7 +40,7 @@ We can see that the single-cell data is available as a [SingleCellExperiment](ht
 
 As the next step we normalize the data as `cpm` ("Counts Per Million"). The normalization is stored as an additional assay in the single-cell object. 
 
-```{r normalization, warning=FALSE, eval=FALSE}
+```{r normalization, eval=TRUE, collapse=TRUE}
 single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
@@ -66,11 +61,11 @@ Next we can calculate a signature using the annotated single-data and the deconv
 signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
+  method = "dwls", verbose = TRUE, dwls_method = "mast_optimized", ncores = 10
 )
 ```
 
-```{r}
+```{r, include=FALSE}
 signature <- readRDS(system.file("extdata", "signature_dwls.rds", package = "spacedeconv"))
 ```
 
@@ -118,13 +113,7 @@ spacedeconv::plot_celltype(deconv,
   title_size = 12
 )
 ```
-
-```{r visualization2, fig.width=12, fig.height=12}
-# ... or plot a specific result
-# spacedeconv::plot_celltype(deconv,
-#   cell_type = "card_Cancer.Epithelial",
-#   density = FALSE,
-#   smooth = T,
-#   title_size = 12
-# )
+```{r}
+sessionInfo()
 ```
+
