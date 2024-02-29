@@ -116,4 +116,3 @@ spacedeconv::plot_celltype(deconv,
 ```{r}
 sessionInfo()
 ```
-
