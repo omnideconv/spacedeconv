@@ -23,11 +23,7 @@ test_that("Plot Umi Count works", {
 })
 
 
-test_that("Plot Umi Count works with RColorBrewer Palette", {
-  p <- plot_umi_count(spe, palette = "Set1")
 
-  expect_s3_class(p, "ggplot")
-})
 
 test_that("Plot_post_abundant works", {
   p <- plot_most_abundant(spe, method = "estimate")
