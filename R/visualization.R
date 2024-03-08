@@ -527,6 +527,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #'         of UMI counts across the provided SpatialExperiment object.
 #'         Each point on the plot corresponds to a spatial location,
 #'         colored by the number of UMIs.
+#' @export
 plot_overview <- function(spe, sample_id = "sample01") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
