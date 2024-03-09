@@ -649,14 +649,17 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
 
     # count zeroes and round
-    original_zeroes <- sum(df[, to_plot] == 0) # n zeroes before
-    df[, to_plot] <- round(df[, to_plot], digits = as.integer(nDigits))
-    round_zeroes <- sum(df[, to_plot] == 0) # n zeroes after
+    original_zeroes <- sum(df[[to_plot]] == 0) # n zeroes before
+    df[[to_plot]] <- round(df[[to_plot]], digits = as.integer(nDigits))
+    round_zeroes <- sum(df[[to_plot]] == 0) # n zeroes after
 
     # alert warning if values round to zero
     if (round_zeroes > original_zeroes) {
       cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
     }
+
+    # for the scales package
+    accuracy <- 10^(-nDigits)
   }
 
 
@@ -761,7 +764,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # First manual, then R Color Brewer, then colorspace
   if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && is_hexcolor(x)))) {
     # manual palette
-    p <- p + ggplot2::scale_fill_manual(values = palette)
+    p <- p + ggplot2::scale_fill_manual(values = palette, labels = label_number(accuracy = accuracy))
   } else if (is.character(palette)) {
     # RColorBrewer
     if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
@@ -778,9 +781,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
         brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
         interpolated_palette <- colorRampPalette(brewer_palette)
         palette_function <- interpolated_palette(num_values)
-        p <- p + ggplot2::scale_fill_manual(values = palette_function)
+        p <- p + ggplot2::scale_fill_manual(values = palette_function, labels = label_number(accuracy = accuracy))
       } else {
-        p <- p + scale_fill_brewer(palette = palette) # reverse!
+        p <- p + scale_fill_brewer(palette = palette, labels = label_number(accuracy = accuracy)) # reverse!
       }
     } else {
       # Colorspace
@@ -806,9 +809,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
         p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
       } else if (palette_type == "sequential") {
-        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits, labels = label_number(accuracy = accuracy))
       } else if (palette_type == "diverging") {
-        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits, labels = label_number(accuracy = accuracy))
       }
     }
   } else {
