@@ -645,6 +645,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # round if requested
+  accuracy <- NULL
   if (!is.null(nDigits)) {
     cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
 
