@@ -30,7 +30,7 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
 - flexible visualization functions
 - resource optimization
 - Pathway and Transcription Factor analysis (decoupleR integration)
-- Ligand-Receptor analysis 
+- Ligand-Receptor analysis
 - easy integration into spatial transcriptomics workflows
 
 ## :floppy_disk: Data requirements
