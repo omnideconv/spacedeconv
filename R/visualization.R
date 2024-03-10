@@ -647,7 +647,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # round if requested
   accuracy <- NULL
   if (!is.null(nDigits)) {
-    cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
+    #cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
     #
     #     # count zeroes and round
     #     original_zeroes <- sum(df[[to_plot]] == 0) # n zeroes before
@@ -782,9 +782,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
         brewer_palette <- RColorBrewer::brewer.pal(max_colors, palette)
         interpolated_palette <- colorRampPalette(brewer_palette)
         palette_function <- interpolated_palette(num_values)
-        p <- p + ggplot2::scale_fill_manual(values = palette_function, labels = label_number(accuracy = accuracy))
+        p <- p + ggplot2::scale_fill_manual(values = palette_function)
       } else {
-        p <- p + scale_fill_brewer(palette = palette, labels = label_number(accuracy = accuracy)) # reverse!
+        p <- p + scale_fill_brewer(palette = palette) # reverse!
       }
     } else {
       # Colorspace
