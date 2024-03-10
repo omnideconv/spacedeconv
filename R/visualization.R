@@ -765,7 +765,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   # First manual, then R Color Brewer, then colorspace
   if (is.vector(palette) && all(sapply(palette, function(x) is.character(x) && is_hexcolor(x)))) {
     # manual palette
-    p <- p + ggplot2::scale_fill_manual(values = palette, labels = label_number(accuracy = accuracy))
+    p <- p + ggplot2::scale_fill_manual(values = palette)
   } else if (is.character(palette)) {
     # RColorBrewer
     if (palette %in% rownames(RColorBrewer::brewer.pal.info)) {
