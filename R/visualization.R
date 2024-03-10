@@ -648,16 +648,16 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   accuracy <- NULL
   if (!is.null(nDigits)) {
     cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
-
-    # count zeroes and round
-    original_zeroes <- sum(df[[to_plot]] == 0) # n zeroes before
-    df[[to_plot]] <- round(df[[to_plot]], digits = as.integer(nDigits))
-    round_zeroes <- sum(df[[to_plot]] == 0) # n zeroes after
-
-    # alert warning if values round to zero
-    if (round_zeroes > original_zeroes) {
-      cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
-    }
+    #
+    #     # count zeroes and round
+    #     original_zeroes <- sum(df[[to_plot]] == 0) # n zeroes before
+    #     df[[to_plot]] <- round(df[[to_plot]], digits = as.integer(nDigits))
+    #     round_zeroes <- sum(df[[to_plot]] == 0) # n zeroes after
+    #
+    #     # alert warning if values round to zero
+    #     if (round_zeroes > original_zeroes) {
+    #       cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
+    #     }
 
     # for the scales package
     accuracy <- 10^(-nDigits)
