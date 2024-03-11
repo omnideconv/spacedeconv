@@ -26,12 +26,14 @@ scale_cell_counts <- function(spe, value, cell_counts, resName = NULL) {
     resName <- paste0(value, "_absolute")
   }
 
-  if (any(is.na(match(rownames(colData(spe)), names(cell_densities))))) {
-    stop("Not all rownames in colData have a matching entry in cell_densities.")
+  if (cell_counts %in% colnames(colData(spe))){
+    cell_densities = colData(spe)[, cell_counts]
+  } else {
+    stop("Cell count data not available in the object")
   }
 
   # Calculate absolute cell densities
-  absoluteValues <- colData(spe)[, value] * cell_densities[rownames(colData(spe))]
+  absoluteValues <- colData(spe)[, value] * cell_densities
 
   # Add the absolute cell densities as a new column
   colData(spe)[[resName]] <- absoluteValues
