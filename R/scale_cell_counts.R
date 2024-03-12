@@ -26,8 +26,8 @@ scale_cell_counts <- function(spe, value, cell_counts, resName = NULL) {
     resName <- paste0(value, "_absolute")
   }
 
-  if (cell_counts %in% colnames(colData(spe))){
-    cell_densities = colData(spe)[, cell_counts]
+  if (cell_counts %in% colnames(colData(spe))) {
+    cell_densities <- colData(spe)[, cell_counts]
   } else {
     stop("Cell count data not available in the object")
   }
