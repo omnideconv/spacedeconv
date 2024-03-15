@@ -221,7 +221,7 @@ single-cell object.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 5862 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(single_cell_data_3): There are 13</span></span>
 <span><span class="co">#&gt; mitochondrial genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[711ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[716ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[50ms]</span></span></span>
@@ -236,20 +236,20 @@ single-cell object.</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[25ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[93ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[97ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(spatial_data_3): There are 13 mitochondrial</span></span>
 <span><span class="co">#&gt; genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[108ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[113ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[46ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[47ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[6ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[7ms]</span></span></span>
 <span></span>
 <span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
@@ -265,10 +265,10 @@ single-cell object.</p>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[471ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[469ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span></code></pre></div>
 </div>
