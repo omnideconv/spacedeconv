@@ -527,6 +527,7 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 #'         of UMI counts across the provided SpatialExperiment object.
 #'         Each point on the plot corresponds to a spatial location,
 #'         colored by the number of UMIs.
+#' @export
 plot_overview <- function(spe, sample_id = "sample01") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
@@ -644,18 +645,22 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # round if requested
+  accuracy <- NULL
   if (!is.null(nDigits)) {
-    cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
+    # cli::cli_alert_info(paste("Rounding Values to", nDigits, "Digits"))
+    #
+    #     # count zeroes and round
+    #     original_zeroes <- sum(df[[to_plot]] == 0) # n zeroes before
+    #     df[[to_plot]] <- round(df[[to_plot]], digits = as.integer(nDigits))
+    #     round_zeroes <- sum(df[[to_plot]] == 0) # n zeroes after
+    #
+    #     # alert warning if values round to zero
+    #     if (round_zeroes > original_zeroes) {
+    #       cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
+    #     }
 
-    # count zeroes and round
-    original_zeroes <- sum(df[, to_plot] == 0) # n zeroes before
-    df[, to_plot] <- round(df[, to_plot], digits = as.integer(nDigits))
-    round_zeroes <- sum(df[, to_plot] == 0) # n zeroes after
-
-    # alert warning if values round to zero
-    if (round_zeroes > original_zeroes) {
-      cli::cli_alert_warning(paste("Rounded", round_zeroes - original_zeroes, "Values to zero"))
-    }
+    # for the scales package
+    accuracy <- 10^(-nDigits)
   }
 
 
@@ -805,9 +810,9 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
 
         p <- p + ggplot2::discrete_scale(aesthetics = "fill", "manual", pal)
       } else if (palette_type == "sequential") {
-        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits)
+        p <- p + colorspace::scale_fill_continuous_sequential(palette, rev = reverse_palette, limits = limits, labels = label_number(accuracy = accuracy))
       } else if (palette_type == "diverging") {
-        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits)
+        p <- p + colorspace::scale_fill_continuous_diverging(palette, rev = reverse_palette, limits = limits, labels = label_number(accuracy = accuracy))
       }
     }
   } else {

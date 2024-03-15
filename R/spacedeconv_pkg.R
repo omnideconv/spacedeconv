@@ -35,6 +35,7 @@
 #' @importFrom decoupleR run_wsum run_aucell run_fgsea run_gsva run_mdt run_mlm run_ora run_udt run_ulm run_viper run_wmean
 #' @importFrom psych corr.test
 #' @importFrom OmnipathR import_intercell_network
+#' @importFrom scales label_number
 #'
 #'
 #' @name spacedeconv_pkg

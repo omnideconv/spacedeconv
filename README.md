@@ -24,12 +24,13 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
 
 ## :sparkles: Features
 
-- unified access to 31 deconvolution tools and decoupleR
+- unified access to 31 deconvolution tools
 - direct deconvolution of immune cells
 - compute custom reference signatures to deconvolute any celltype
 - flexible visualization functions
-- resource optimization, including metacell
-- colocalization analysis
+- resource optimization
+- Pathway and Transcription Factor analysis (decoupleR integration)
+- Ligand-Receptor analysis
 - easy integration into spatial transcriptomics workflows
 
 ## :floppy_disk: Data requirements

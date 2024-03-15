@@ -47,7 +47,8 @@ Imports:
     grid, 
     grDevices, 
     stats, 
-    OmnipathR
+    OmnipathR, 
+    scales
 Suggests: 
     spacexr,
     SPOTlight,
