@@ -300,10 +300,15 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   num_colors_needed <- length(all_cell_types) - 1 # Number of celltypes
 
   # Determine the palette type and generate colors
-  if (is.character(palette) && palette %in% rownames(RColorBrewer::brewer.pal.info)) {
+  if (is.vector(palette) && all(sapply(palette, is.character))) { #the manual comes first
+    # Custom color vector
+    color_vector <- palette
+    
+  } else if (is.character(palette) && palette %in% rownames(RColorBrewer::brewer.pal.info)) {
     # RColorBrewer palette
     brewer_palette <- RColorBrewer::brewer.pal(RColorBrewer::brewer.pal.info[palette, "maxcolors"], palette)
     color_vector <- colorRampPalette(brewer_palette)(num_colors_needed)
+    
   } else if (is.character(palette)) {
     # Colorspace palette
     if (palette_type == "sequential" || palette_type == "discrete") {
@@ -315,9 +320,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
     } else {
       stop("Invalid palette type.")
     }
-  } else if (is.vector(palette) && all(sapply(palette, is.character))) {
-    # Custom color vector
-    color_vector <- palette
+    
   } else {
     stop("Invalid palette input.")
   }
