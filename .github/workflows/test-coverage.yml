@@ -40,7 +40,6 @@ jobs:
       # - name: Install SpatialExperiment
       # run: Rscript -e "pak::pkg_install('drighelli/SpatialExperiment')"
 
-
       - name: Install Devtools
         run: Rscript -e "pak::pkg_install('devtools')"
 
