@@ -33,8 +33,8 @@ jobs:
       - name: Install pak
         run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
 
-      - name: Install SpatialExperiment
-        run: Rscript -e "pak::pkg_install('drighelli/SpatialExperiment')"
+      #- name: Install SpatialExperiment
+       # run: Rscript -e "pak::pkg_install('drighelli/SpatialExperiment')"
 
       - name: Install dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
