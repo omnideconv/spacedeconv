@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">spacedeconv</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -213,7 +213,7 @@ single-cell object.</p>
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[52ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[54ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 8 observations with umi count below threshold</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 8 observations with umi count below threshold <span style="color: #B2B2B2;">[1.3s]</span></span></span>
@@ -221,30 +221,30 @@ single-cell object.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 5862 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(single_cell_data_3): There are 13</span></span>
 <span><span class="co">#&gt; mitochondrial genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[716ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[745ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[50ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[52ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[6ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[7ms]</span></span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[25ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[97ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[99ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(spatial_data_3): There are 13 mitochondrial</span></span>
 <span><span class="co">#&gt; genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[113ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[114ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[47ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[49ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
@@ -254,21 +254,21 @@ single-cell object.</p>
 <span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
 <span><span class="co">#&gt; Warning in asMethod(object): sparse-&gt;dense coercion: allocating vector of size</span></span>
 <span><span class="co">#&gt; 1.4 GiB</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[4.6s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[5s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[469ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[497ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span></code></pre></div>
 </div>
@@ -518,24 +518,24 @@ annotation and can be used for visualizations.</p>
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] SpatialExperiment_1.11.2    SingleCellExperiment_1.24.0</span></span>
+<span><span class="co">#&gt;  [1] SpatialExperiment_1.13.1    SingleCellExperiment_1.24.0</span></span>
 <span><span class="co">#&gt;  [3] SummarizedExperiment_1.32.0 Biobase_2.62.0             </span></span>
-<span><span class="co">#&gt;  [5] GenomicRanges_1.54.1        GenomeInfoDb_1.38.7        </span></span>
+<span><span class="co">#&gt;  [5] GenomicRanges_1.54.1        GenomeInfoDb_1.38.8        </span></span>
 <span><span class="co">#&gt;  [7] IRanges_2.36.0              S4Vectors_0.40.2           </span></span>
 <span><span class="co">#&gt;  [9] BiocGenerics_0.48.1         MatrixGenerics_1.14.0      </span></span>
-<span><span class="co">#&gt; [11] matrixStats_1.2.0           spacedeconv_0.1.0          </span></span>
+<span><span class="co">#&gt; [11] matrixStats_1.2.0           spacedeconv_0.1.1          </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] RColorBrewer_1.1-3      jsonlite_1.8.8          shape_1.4.6.1          </span></span>
 <span><span class="co">#&gt;   [4] magrittr_2.0.3          magick_2.8.3            farver_2.1.1           </span></span>
 <span><span class="co">#&gt;   [7] corrplot_0.92           rmarkdown_2.26          GlobalOptions_0.1.2    </span></span>
-<span><span class="co">#&gt;  [10] fs_1.6.3                zlibbioc_1.48.0         ragg_1.3.0             </span></span>
+<span><span class="co">#&gt;  [10] fs_1.6.3                zlibbioc_1.48.2         ragg_1.3.0             </span></span>
 <span><span class="co">#&gt;  [13] vctrs_0.6.5             memoise_2.0.1           RCurl_1.98-1.14        </span></span>
 <span><span class="co">#&gt;  [16] rstatix_0.7.2           htmltools_0.5.7         S4Arrays_1.2.1         </span></span>
 <span><span class="co">#&gt;  [19] progress_1.2.3          curl_5.2.1              decoupleR_2.8.0        </span></span>
 <span><span class="co">#&gt;  [22] broom_1.0.5             cellranger_1.1.0        SparseArray_1.2.4      </span></span>
-<span><span class="co">#&gt;  [25] sass_0.4.8              pracma_2.4.4            KernSmooth_2.23-22     </span></span>
-<span><span class="co">#&gt;  [28] bslib_0.6.1             desc_1.4.3              rootSolve_1.8.2.4      </span></span>
+<span><span class="co">#&gt;  [25] sass_0.4.9              pracma_2.4.4            KernSmooth_2.23-22     </span></span>
+<span><span class="co">#&gt;  [28] bslib_0.6.2             desc_1.4.3              rootSolve_1.8.2.4      </span></span>
 <span><span class="co">#&gt;  [31] lubridate_1.9.3         cachem_1.0.8            igraph_2.0.3           </span></span>
 <span><span class="co">#&gt;  [34] lifecycle_1.0.4         pkgconfig_2.0.3         Matrix_1.6-5           </span></span>
 <span><span class="co">#&gt;  [37] R6_2.5.1                fastmap_1.1.1           GenomeInfoDbData_1.2.11</span></span>
@@ -543,8 +543,8 @@ annotation and can be used for visualizations.</p>
 <span><span class="co">#&gt;  [43] ggpubr_0.6.0            labeling_0.4.3          testit_0.13            </span></span>
 <span><span class="co">#&gt;  [46] fansi_1.0.6             timechange_0.3.0        httr_1.4.7             </span></span>
 <span><span class="co">#&gt;  [49] abind_1.4-5             compiler_4.3.3          proxy_0.4-27           </span></span>
-<span><span class="co">#&gt;  [52] remotes_2.4.2.1         withr_3.0.0             backports_1.4.1        </span></span>
-<span><span class="co">#&gt;  [55] carData_3.0-5           DBI_1.2.2               psych_2.4.1            </span></span>
+<span><span class="co">#&gt;  [52] remotes_2.5.0           withr_3.0.0             backports_1.4.1        </span></span>
+<span><span class="co">#&gt;  [55] carData_3.0-5           DBI_1.2.2               psych_2.4.3            </span></span>
 <span><span class="co">#&gt;  [58] logger_0.3.0            highr_0.10              OmnipathR_3.10.1       </span></span>
 <span><span class="co">#&gt;  [61] ggsignif_0.6.4          rappdirs_0.3.3          DelayedArray_0.28.0    </span></span>
 <span><span class="co">#&gt;  [64] rjson_0.2.21            classInt_0.4-10         units_0.8-5            </span></span>
