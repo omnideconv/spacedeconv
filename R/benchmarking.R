@@ -48,7 +48,9 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE, dot_colo
 
   df <- merge(df1, df2, by = "spot")
 
-  cor_value <- cor(df$value1, df$value2, use = "complete.obs") # Handle NA values
+  cor_test_result <- cor.test(df$value1, df$value2, use = "complete.obs") # Handle NA values
+  cor_value <- cor_test_result$estimate
+  p_value <- cor_test_result$p.value
 
   # Set coordinate range
   max_value <- max(c(df$value1, df$value2), na.rm = TRUE)
@@ -69,8 +71,8 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE, dot_colo
     ) +
     ggtitle(title)
 
-  # Annotate with the correlation coefficient
-  plot <- plot + annotate("text", x = Inf, y = Inf, label = paste("Correlation (Pearson):", round(cor_value, 2)), hjust = 1.1, vjust = 1, color = "red", size = 5)
+  # Annotate with the correlation coefficient and p-value
+  plot <- plot + annotate("text", x = Inf, y = Inf, label = paste0("Corr: ", round(cor_value, 2), ", P val: ", format.pval(p_value, digits = 3)), hjust = 1.1, vjust = 1, color = "red", size = 5)
 
   # Apply log scale if log_scale is TRUE
   if (log_scale) {
@@ -88,6 +90,7 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE, dot_colo
 
   return(plot)
 }
+
 
 
 
