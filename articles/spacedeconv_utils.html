@@ -122,19 +122,19 @@ removed by setting <code>remove_mito=TRUE</code>.</p>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, min_umi <span class="op">=</span> <span class="fl">500</span>, assay <span class="op">=</span> <span class="st">"counts"</span>, remove_mito <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[64ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[66ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 8 observations with umi count below threshold</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 8 observations with umi count below threshold <span style="color: #B2B2B2;">[682ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 8 observations with umi count below threshold <span style="color: #B2B2B2;">[710ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 5862 variables with all zero expression</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[681ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[694ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 13 mitochondria genes</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13 mitochondria genes <span style="color: #B2B2B2;">[650ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13 mitochondria genes <span style="color: #B2B2B2;">[671ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing duplicated genes</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[49ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed duplicated genes <span style="color: #B2B2B2;">[51ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
@@ -153,12 +153,12 @@ additional assay in the object.</p>
 <code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">sce</span>, method <span class="op">=</span> <span class="st">"cpm"</span>, assay <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
 <span><span class="co">## Warning in asMethod(object): sparse-&gt;dense coercion: allocating vector of size</span></span>
 <span><span class="co">## 1.4 GiB</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[4.4s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[4.5s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span></code></pre></div>
 </div>
@@ -207,7 +207,7 @@ original fine-grained columns and just keep the aggregation.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/aggregate_results.html">aggregate_results</a></span><span class="op">(</span><span class="va">deconv</span>, cell_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dwls_Cancer.Epithelial"</span>, <span class="st">"dwls_Normal.Epithelial"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"dwls_Epithelial"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[5ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[4ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Aggregating cell types</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> Aggregated cell types <span style="color: #B2B2B2;">[6ms]</span></span></span>
@@ -280,10 +280,10 @@ cell-type completely.</p>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Set seed to 12345</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter<span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter<span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[10ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> extracting up to 500 cells</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> extracting up to 500 cells <span style="color: #B2B2B2;">[101ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> extracting up to 500 cells <span style="color: #B2B2B2;">[100ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> extracted 501 cells</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> extracted 501 cells <span style="color: #B2B2B2;">[10ms]</span></span></span></code></pre></div>
