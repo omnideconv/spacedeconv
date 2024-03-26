@@ -1,20 +1,27 @@
-#' Benchmarking scatterplot to compare two spatial objects
+#' Comparative Scatterplot of Two SpatialExperiments
 #'
-#' @param spe1 SpatialExperiment
-#' @param value1 deconvolution result to plot
-#' @param spe2 SpatialExperiment
-#' @param value2 deconvolution result to plot
-#' @param log_scale whether to log scale the axes
+#' Creates a scatterplot to compare deconvolution results between two SpatialExperiment objects.
 #'
+#' @param spe1 First SpatialExperiment object.
+#' @param value1 Deconvolution result to plot from the first object.
+#' @param spe2 Second SpatialExperiment object.
+#' @param value2 Deconvolution result to plot from the second object.
+#' @param log_scale Logical, whether to use log scale for axes.
+#' @param dot_color Color for the dots in the plot.
+#' @param point_alpha Alpha for the dots, controlling transparency.
+#' @param fix_coords Logical, whether to fix coordinate system to be equal.
+#' @param coord_range Numeric vector of length 2 to set coordinate limits.
+#' @param title Title of the plot.
+#'
+#' @return A scatterplot
 #' @export
-plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
-  # check object class
+plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot") {
   if (!is(spe1, "SpatialExperiment") || !is(spe2, "SpatialExperiment")) {
     cli::cli_alert_danger("Provided objects have to be SpatialExperiments")
     stop()
   }
 
-  # check value availability
+  # Check value availability
   if (!checkCol(spe1, value1)) {
     cli::cli_alert_danger("Provided Column for object 1 is not available")
     stop()
@@ -25,12 +32,12 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
     stop()
   }
 
-  # check that both objects have the same number of spots
+  # Check that both objects have the same number of spots
   if (ncol(spe1) != ncol(spe2)) {
     cli::cli_alert_warning("Spatial Objects have different number of spots")
   }
 
-  # construct data frame for plotting
+  # Construct data frame for plotting
   df1 <- colData(spe1)[, value1, drop = FALSE]
   colnames(df1) <- "value1"
   df1$spot <- rownames(df1)
@@ -41,35 +48,48 @@ plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE) {
 
   df <- merge(df1, df2, by = "spot")
 
-  cor_value <- cor(df$value1, df$value2, use = "complete.obs") # handle NA values
+  cor_value <- cor(df$value1, df$value2, use = "complete.obs") # Handle NA values
 
-  # construct plot
+  # Set coordinate range
+  max_value <- max(c(df$value1, df$value2), na.rm = TRUE)
+  coord_range <- c(0, max_value + max_value * 0.1)
+
+  # Construct plot
   plot <- ggplot(df, aes(x = value1, y = value2)) +
-    geom_point(shape = 21, color = "blue", fill = "lightblue", size = 1, stroke = 0.5) +
-    geom_abline(slope = 1, linetype = "dashed", col = "red") +
+    geom_point(color = dot_color, size = 2, alpha = point_alpha, shape = 16) +
+    geom_smooth(method = "lm", color = "red", se = FALSE) + # Regression line
+    geom_abline(slope = 1, linetype = "dashed", col = "gray") +
     xlab(paste(value1)) +
     ylab(paste(value2)) +
-    coord_fixed(ratio = 1) +
-    geom_text(
-      x = Inf, y = Inf, label = paste("Correlation:", round(cor_value, 2)),
-      hjust = 1.1, vjust = 1.1, size = 5
-    ) +
     theme_minimal(base_size = 14) +
     theme(
       plot.title = element_text(size = 16, face = "bold"),
       axis.title = element_text(size = 14),
       axis.text = element_text(size = 12)
     ) +
-    ggtitle(paste(value1, "vs.", value2))
+    ggtitle(title)
 
+  # Annotate with the correlation coefficient
+  plot <- plot + annotate("text", x = Inf, y = Inf, label = paste("Correlation (Pearson):", round(cor_value, 2)), hjust = 1.1, vjust = 1, color = "red", size = 5)
 
   # Apply log scale if log_scale is TRUE
   if (log_scale) {
     plot <- plot + scale_x_log10() + scale_y_log10()
   }
 
+  # If fix_coords is TRUE, apply coord_fixed or coord_cartesian based on whether coord_range is specified
+  if (fix_coords) {
+    if (!is.null(coord_range) && length(coord_range) == 2) {
+      plot <- plot + coord_cartesian(xlim = coord_range, ylim = coord_range)
+    } else {
+      plot <- plot + coord_fixed(ratio = 1)
+    }
+  }
+
   return(plot)
 }
+
+
 
 
 #' Compare Signatures
