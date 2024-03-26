@@ -2,21 +2,45 @@
 % Please edit documentation in R/benchmarking.R
 \name{plot_scatter}
 \alias{plot_scatter}
-\title{Benchmarking scatterplot to compare two spatial objects}
+\title{Comparative Scatterplot of Two SpatialExperiments}
 \usage{
-plot_scatter(spe1, value1, spe2, value2, log_scale = FALSE)
+plot_scatter(
+  spe1,
+  value1,
+  spe2,
+  value2,
+  log_scale = FALSE,
+  dot_color = "#1f77b4",
+  point_alpha = 0.8,
+  fix_coords = FALSE,
+  coord_range = NULL,
+  title = "Comparative Scatterplot"
+)
 }
 \arguments{
-\item{spe1}{SpatialExperiment}
+\item{spe1}{First SpatialExperiment object.}
 
-\item{value1}{deconvolution result to plot}
+\item{value1}{Deconvolution result to plot from the first object.}
 
-\item{spe2}{SpatialExperiment}
+\item{spe2}{Second SpatialExperiment object.}
 
-\item{value2}{deconvolution result to plot}
+\item{value2}{Deconvolution result to plot from the second object.}
 
-\item{log_scale}{whether to log scale the axes}
+\item{log_scale}{Logical, whether to use log scale for axes.}
+
+\item{dot_color}{Color for the dots in the plot.}
+
+\item{point_alpha}{Alpha for the dots, controlling transparency.}
+
+\item{fix_coords}{Logical, whether to fix coordinate system to be equal.}
+
+\item{coord_range}{Numeric vector of length 2 to set coordinate limits.}
+
+\item{title}{Title of the plot.}
+}
+\value{
+A scatterplot
 }
 \description{
-Benchmarking scatterplot to compare two spatial objects
+Creates a scatterplot to compare deconvolution results between two SpatialExperiment objects.
 }
