@@ -86,8 +86,11 @@ get_lr <- function(spe,
   }
 
   # normalize the data and extraxt the cpm values
-  spe <- spacedeconv::preprocess(spe)
-  spe <- spacedeconv::normalize(spe, method = "cpm")
+  # spe <- spacedeconv::preprocess(spe)
+  # spe <- spacedeconv::normalize(spe, method = "cpm")
+  if (!"cpm" %in% assayNames(spe)) {
+    stop("Please provide an object with cpm normalized values")
+  }
 
   # extract the cpm matrix
   # first as matrix and then as df
