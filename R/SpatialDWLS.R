@@ -13,9 +13,6 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     stop("cell_type_col not available")
   }
 
-  # init_python()
-
-  # TODO, implement instructions
   if (!exists("giotto_instructions")) {
     giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
   }
@@ -35,24 +32,18 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
 
 
   # markers
-  # NOTE the makeSignMatrix function requires a list of genes to use in the signature
-  # They just mention "e.g. markers", so i thought to use the marker gene function provided by giotto
   if (marker_method %in% c("scran", "gini", "mast")) {
     message("Calculating markers by using the method: ", marker_method)
-    # turn into giotto for markers!!
     obj <- Giotto::createGiottoObject(scExpression, instructions = giotto_instructions, ...)
 
     obj <- doGiottoWorkflow(obj, dim_method = dim_method, cluster_method = cluster_method)
 
 
     message("Calculating Markers")
-    # calculate based on selection
-    # TODO add assay to use or select default one by handling all that during Giotto object creation
 
     markers <- Giotto::findMarkers(obj, method = marker_method, cluster_column = paste0(cluster_method, "_clus"))
 
-    # markers are a complex list with marker genes for each cluster
-    # extract the top genes for each cluster and intersect
+    # extract the top genes for each cluster
     genes <- character()
     for (cluster in markers) {
       genes <- c(genes, cluster$feats[1:topNgenes])
@@ -69,7 +60,6 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   # get cell type vector from object
   cell_types <- as.vector(single_cell_obj[[cell_type_col]])
 
-  # TODO Check if markers are necessary!!!
   signature <- Giotto::makeSignMatrixDWLSfromMatrix(matrix = scExpression, sign_gene = genes, cell_type_vector = cell_types, ...)
 
   return(signature)
