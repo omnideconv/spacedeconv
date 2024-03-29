@@ -258,10 +258,6 @@ attachToken <- function(deconvolution, token = "deconv") {
     stop("Deconvolution result is missing but is required")
   }
 
-  if (is.null(token)) {
-    message("No token provided, using 'deconv' as token")
-  }
-
   # get colnames, attach token and overwrite
   celltypes <- colnames(deconvolution)
   celltypes <- paste0(token, "_", celltypes)

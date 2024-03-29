@@ -8,7 +8,11 @@ doGiottoWorkflow(
   obj,
   calculateHVG = TRUE,
   dim_method = "pca",
-  cluster_method = "leiden"
+  cluster_method = "leiden",
+  show_plot = FALSE,
+  return_plot = FALSE,
+  save_plot = FALSE,
+  ...
 )
 }
 \arguments{
@@ -19,6 +23,14 @@ doGiottoWorkflow(
 \item{dim_method}{dimension reduction method to use: pca, tsne, umap}
 
 \item{cluster_method}{cluster method to use c(leiden, kmeans, hclust, louvain)}
+
+\item{show_plot}{show plot}
+
+\item{return_plot}{return plot}
+
+\item{save_plot}{save plot}
+
+\item{...}{additional parameters}
 }
 \description{
 Perform Giotto Workflow of Normalization, HVG, Dimension Reduction and Clustering
