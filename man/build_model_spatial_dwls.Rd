@@ -30,7 +30,7 @@ build_model_spatial_dwls(
 
 \item{cluster_method}{cluster method to  use when calculating marker genes}
 
-\item{...}{additional paramters}
+\item{...}{additional paramdataters}
 }
 \description{
 Build Model Spatial DWLS
