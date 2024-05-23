@@ -85,6 +85,12 @@ get_lr <- function(spe,
     stop("The organism provided is not supported. Please provide one of the following organisms: human, mouse")
   }
 
+  # Check ENSEMBL identifiers
+  if (any(grepl("^ENS[A-Z]+[0-9]+", rownames(SummarizedExperiment::assay(object, assay))))) {
+    cli::cli_alert_warning("Warning: ENSEMBL identifiers detected in gene names")
+    stop("Please convert ENSEMBL to Gene ID")
+  }
+
   # normalize the data and extraxt the cpm values
   # spe <- spacedeconv::preprocess(spe)
   # spe <- spacedeconv::normalize(spe, method = "cpm")
