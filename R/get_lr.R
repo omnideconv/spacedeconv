@@ -86,7 +86,7 @@ get_lr <- function(spe,
   }
 
   # Check ENSEMBL identifiers
-  if (any(grepl("^ENS[A-Z]+[0-9]+", rownames(SummarizedExperiment::assay(object, assay))))) {
+  if (any(grepl("^ENS[A-Z]+[0-9]+", rownames(spe)))) {
     cli::cli_alert_warning("Warning: ENSEMBL identifiers detected in gene names")
     stop("Please convert ENSEMBL to Gene ID")
   }
