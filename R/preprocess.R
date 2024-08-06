@@ -92,6 +92,7 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
   )
 
   # Remove duplicate row names
+  # sort first!
   unique_row_names <- !duplicated(rownames(SummarizedExperiment::assay(object, assay)))
   object <- object[unique_row_names, ]
 
