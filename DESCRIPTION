@@ -100,4 +100,3 @@ Config/reticulate:
       list(package = "scaden", pip = TRUE)
     )
   )  
-
