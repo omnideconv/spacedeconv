@@ -25,6 +25,11 @@ jobs:
           # extra token required to trigger github actions again on commit
           token: ${{ secrets.TOKEN }} # BOT_GH_TOKEN
 
+      - name: Update system dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install  \
+          libcurl4-openssl-dev -y
+
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
