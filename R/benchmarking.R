@@ -2,10 +2,11 @@
 #'
 #' Creates a scatterplot to compare deconvolution results between two SpatialExperiment objects.
 #'
-#' @param spe1 First SpatialExperiment object.
+#' @param spe SpatialExperiment with quantification results
 #' @param value1 Deconvolution result to plot from the first object.
-#' @param spe2 Second SpatialExperiment object.
 #' @param value2 Deconvolution result to plot from the second object.
+#' @param spe1 First SpatialExperiment object.
+#' @param spe2 Second SpatialExperiment object.
 #' @param log_scale Logical, whether to use log scale for axes.
 #' @param dot_color Color for the dots in the plot.
 #' @param point_alpha Alpha for the dots, controlling transparency.
@@ -15,38 +16,66 @@
 #'
 #' @return A scatterplot
 #' @export
-plot_scatter <- function(spe1, value1, spe2, value2, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot") {
-  if (!is(spe1, "SpatialExperiment") || !is(spe2, "SpatialExperiment")) {
-    cli::cli_alert_danger("Provided objects have to be SpatialExperiments")
-    stop()
+plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot") {
+  if (!is.null(spe)) {
+    if (!is(spe, "SpatialExperiment")) {
+      cli::cli_alert_danger("Provided object has to be a SpatialExperiment")
+      stop()
+    }
+
+    # Check value availability
+    if (!checkCol(spe, value1)) {
+      cli::cli_alert_danger("Provided Column for value1 is not available in the provided SpatialExperiment")
+      stop()
+    }
+
+    if (!checkCol(spe, value2)) {
+      cli::cli_alert_danger("Provided Column for value2 is not available in the provided SpatialExperiment")
+      stop()
+    }
+
+    # Construct data frame for plotting
+    df <- colData(spe)[, c(value1, value2), drop = FALSE]
+    colnames(df) <- c("value1", "value2")
+    df$spot <- rownames(df)
+  } else {
+    if (is.null(spe1) || is.null(spe2)) {
+      cli::cli_alert_danger("Both spe1 and spe2 must be provided if spe is not specified")
+      stop()
+    }
+
+    if (!is(spe1, "SpatialExperiment") || !is(spe2, "SpatialExperiment")) {
+      cli::cli_alert_danger("Provided objects have to be SpatialExperiments")
+      stop()
+    }
+
+    # Check value availability
+    if (!checkCol(spe1, value1)) {
+      cli::cli_alert_danger("Provided Column for value1 is not available in spe1")
+      stop()
+    }
+
+    if (!checkCol(spe2, value2)) {
+      cli::cli_alert_danger("Provided Column for value2 is not available in spe2")
+      stop()
+    }
+
+    # Check that both objects have the same number of spots
+    if (ncol(spe1) != ncol(spe2)) {
+      cli::cli_alert_warning("Spatial Objects have different number of spots")
+    }
+
+    # Construct data frame for plotting
+    df1 <- colData(spe1)[, value1, drop = FALSE]
+    colnames(df1) <- "value1"
+    df1$spot <- rownames(df1)
+
+    df2 <- colData(spe2)[, value2, drop = FALSE]
+    colnames(df2) <- "value2"
+    df2$spot <- rownames(df2)
+
+    df <- merge(df1, df2, by = "spot")
   }
-
-  # Check value availability
-  if (!checkCol(spe1, value1)) {
-    cli::cli_alert_danger("Provided Column for object 1 is not available")
-    stop()
-  }
-
-  if (!checkCol(spe2, value2)) {
-    cli::cli_alert_danger("Provided Column for object 2 is not available")
-    stop()
-  }
-
-  # Check that both objects have the same number of spots
-  if (ncol(spe1) != ncol(spe2)) {
-    cli::cli_alert_warning("Spatial Objects have different number of spots")
-  }
-
-  # Construct data frame for plotting
-  df1 <- colData(spe1)[, value1, drop = FALSE]
-  colnames(df1) <- "value1"
-  df1$spot <- rownames(df1)
-
-  df2 <- colData(spe2)[, value2, drop = FALSE]
-  colnames(df2) <- "value2"
-  df2$spot <- rownames(df2)
-
-  df <- merge(df1, df2, by = "spot")
 
   cor_test_result <- cor.test(df$value1, df$value2, use = "complete.obs") # Handle NA values
   cor_value <- cor_test_result$estimate
