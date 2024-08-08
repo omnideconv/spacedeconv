@@ -28,11 +28,12 @@
 #' @param png_width when saving, png width in px
 #' @param png_height when saving, png height in px
 #' @param show_legend whether to show the legend
-#' @param ... additional paramters passed to internal functions
+#' @param ... additional paramters passed to internal <unctions
 #'
 #' @returns plot of cell type fractions
 #'
 #' @export
+#' @note This function is deprecated and will be removed in future versions. Please use `plot_spatial` instead.
 plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_scale = NULL,
                           sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
                           show_image = FALSE, background = NULL, palette_type = "sequential",
@@ -41,16 +42,70 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750,
                           show_legend = TRUE, ...) {
+  return(plot_spatial(
+    spe = spe, result = cell_type, palette = palette, transform_scale = transform_scale,
+    sample_id = sample_id, image_id = image_id, reverse_palette = reverse_palette, show_image = show_image,
+    background = background, palette_type = palette_type, offset_rotation = offset_rotation, spot_size = spot_size,
+    limits = limits, smooth = smooth, smoothing_factor = smoothing_factor, zoom = zoom, title_size = title_size,
+    font_size = font_size, legend_size = legend_size, density = density, save = save, path = path, png_width = png_width,
+    png_height = png_height, show_legend = show_legend, ...
+  ))
+}
+
+
+#' Function to plot deconvolution results
+#'
+#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#'
+#' @param spe deconvolution result in Form of a SpatialExperiment
+#' @param result one or more results to plot
+#' @param palette colorspace palette (sequential)
+#' @param transform_scale data transform_scaleation to use, "log"
+#' @param reverse_palette reverse color palette
+#' @param sample_id sample id to plot, default: "sample01"
+#' @param image_id which image to plot, default: "lowres"
+#' @param show_image logical, whether to display the image, default = TRUE
+#' @param background background color
+#' @param palette_type discrete, sequential or diverging
+#' @param offset_rotation correct hex orientation for rotated visium image
+#' @param spot_size increase (>1) or decrease (<1) the hex size
+#' @param limits vector of color scale limits
+#' @param smooth whether to smooth the plot
+#' @param smoothing_factor kernel size factor (multiples of spot distance)
+#' @param zoom zoom to the available spots
+#' @param title_size font size of title
+#' @param title set a custom title
+#' @param font_size font size of legend
+#' @param legend_size legend size in points
+#' @param density whether to display a density distribution next to the spatial plot
+#' @param save set TRUE to save plot
+#' @param path specify directory to save plot, if NULL: saving at ~/spacedeconv
+#' @param png_width when saving, png width in px
+#' @param png_height when saving, png height in px
+#' @param show_legend whether to show the legend
+#' @param ... additional paramters passed to internal functions
+#'
+#' @returns plot of cell type fractions
+#'
+#' @export
+plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale = NULL,
+                         sample_id = "sample01", image_id = "lowres", reverse_palette = FALSE,
+                         show_image = FALSE, background = NULL, palette_type = "sequential",
+                         offset_rotation = FALSE, spot_size = 1, limits = NULL,
+                         smooth = FALSE, smoothing_factor = 1.5, zoom = TRUE,
+                         title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
+                         save = FALSE, path = NULL, png_width = 1500, png_height = 750,
+                         show_legend = TRUE, ...) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
 
-  if (is.null(cell_type)) {
-    stop("Parameter 'cell_type' is null or missing, but is required")
+  if (is.null(result)) {
+    stop("Parameter 'result' is null or missing, but is required")
   }
 
   # check that celltypes are present in object
-  if (!all(cell_type %in% names(colData(spe))) && !cell_type %in% deconvolution_methods && !cell_type == "c2l" && !cell_type == "progeny" && !cell_type == "dorothea" && !cell_type == "cluster") {
+  if (!all(result %in% names(colData(spe))) && !result %in% deconvolution_methods && !result == "c2l" && !result == "progeny" && !result == "dorothea" && !result == "cluster") {
     stop("Provides cell types are not present in SpatialExperiment")
   }
 
@@ -60,10 +115,10 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 
 
   # if a method is passed then make grid, otherwise, only one
-  if (cell_type %in% deconvolution_methods || cell_type == "c2l" || cell_type == "progeny" || cell_type == "dorothea" || cell_type == "cluster") {
+  if (result %in% deconvolution_methods || result == "c2l" || result == "progeny" || result == "dorothea" || result == "cluster") {
     plot <- make_baseplot(spe, df,
       palette = palette,
-      to_plot = available_results(spe, method = cell_type)[1], sample_id = sample_id,
+      to_plot = available_results(spe, method = result)[1], sample_id = sample_id,
       image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,
@@ -74,7 +129,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
       png_height = png_height, show_legend = show_legend, ...
     )
 
-    for (result in available_results(spe, method = cell_type)[-1]) {
+    for (result in available_results(spe, method = result)[-1]) {
       plot <- plot + make_baseplot(spe, df,
         palette = palette,
         to_plot = result, sample_id = sample_id,
@@ -93,7 +148,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
   } else {
     return(make_baseplot(spe, df,
       palette = palette,
-      to_plot = cell_type, sample_id = sample_id,
+      to_plot = result, sample_id = sample_id,
       image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,

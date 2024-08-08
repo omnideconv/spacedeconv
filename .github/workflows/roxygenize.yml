@@ -14,7 +14,7 @@ name: Document
 
 jobs:
   document:
-    runs-on: self-hosted #ubuntu-latest
+    runs-on: ubuntu-latest # self-hosted
     env:
       GITHUB_PAT: ${{ secrets.TOKEN }}
     steps:
