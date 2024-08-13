@@ -9,7 +9,7 @@ normalize(object, method = "cpm", assay = "counts")
 \arguments{
 \item{object}{A \code{SingleCellExperiment} or \code{SpatialExperiment} object containing raw gene expression data.}
 
-\item{method}{The normalization method to apply: "cpm" for counts per million, or "logcpm" for log-transformed counts per million.}
+\item{method}{The normalization method to apply: "cpm" for counts per million, "logcpm" for log-transformed counts per million, or "logpf" for log-proportional factor.}
 
 \item{assay}{The name of the assay to normalize, default "counts".}
 }
