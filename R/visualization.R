@@ -648,7 +648,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE,
-                          nDigits = NULL) {
+                          nDigits = NULL, pseudocount = 1) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -679,16 +679,25 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     df[[to_plot]] <- smooth_celltype(df, spot_distance = spot_distance, smoothing_factor = smoothing_factor, cell_type = to_plot)
   }
 
-  # tranform scale, if NULL is provided set to none for the switch to work
+  # Transform scale, handle negative values, and apply pseudocount
   transform_scale <- tolower(ifelse(is.null(transform_scale), "none", transform_scale))
+
+  # Adjust data if there are negative values
+  if (min(df[[to_plot]]) < 0) {
+    df[[to_plot]] <- df[[to_plot]] - min(df[[to_plot]]) # Shift to non-negative values
+    print("Negative Values in data, subtracting minimum to shift distribution to > 0")
+  }
+
+  # Apply log or other transformations with pseudocount
   df[[to_plot]] <- switch(transform_scale,
-    "ln" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
-    "log10" = log10((df[[to_plot]] - min(df[[to_plot]])) + 1),
-    "log2" = log2((df[[to_plot]] - min(df[[to_plot]])) + 1),
-    "sqrt" = sqrt(df[[to_plot]]),
-    "log" = log((df[[to_plot]] - min(df[[to_plot]])) + 1),
-    df[[to_plot]]
-  ) # Default case: no transformation
+    "ln" = log(df[[to_plot]] + pseudocount), # Natural log with pseudocount
+    "log10" = log10(df[[to_plot]] + pseudocount), # Log10 with pseudocount
+    "log2" = log2(df[[to_plot]] + pseudocount), # Log2 with pseudocount
+    "sqrt" = sqrt(df[[to_plot]]), # Square root
+    "log" = log(df[[to_plot]] + pseudocount), # Generic log with pseudocount
+    df[[to_plot]] # Default case: no transformation
+  )
+
   transform_suffix <- if (transform_scale %in% c("ln", "log10", "log2", "sqrt", "log")) transform_scale else ""
 
 
