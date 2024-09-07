@@ -648,7 +648,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE,
-                          nDigits = NULL, pseudocount = 1, shift_positive=TRUE) {
+                          nDigits = NULL, pseudocount = 1, shift_positive = TRUE) {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
