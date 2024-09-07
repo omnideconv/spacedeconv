@@ -117,7 +117,7 @@ doGiottoWorkflow <- function(obj, calculateHVG = TRUE, dim_method = "pca", clust
     message("Starting Giotto Workflow")
   }
 
-  obj <- Giotto::normalizeGiotto(obj)
+  obj <- normalizeGiotto(obj)
 
   # HVF
   if (calculateHVG) {
