@@ -32,7 +32,9 @@ make_baseplot(
   png_width = 1500,
   png_height = 750,
   show_legend = TRUE,
-  nDigits = NULL
+  nDigits = NULL,
+  pseudocount = 1,
+  shift_positive = TRUE
 )
 }
 \arguments{
