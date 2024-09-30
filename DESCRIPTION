@@ -48,7 +48,8 @@ Imports:
     grDevices, 
     stats, 
     OmnipathR, 
-    scales
+    scales, 
+    Giotto
 Suggests: 
     spacexr,
     SPOTlight,
@@ -60,7 +61,6 @@ Suggests:
     uuid,
     scran,
     CARD,
-    Giotto,
     knitr,
     testthat (>= 3.0.0),
     scuttle,
