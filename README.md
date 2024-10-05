@@ -99,7 +99,7 @@ need to obtain a license to use the individual methods. See the table
 below for more information. If you use this package in your work, please
 cite both our package and the method(s) you are using.
 
-> Constantin Zackl, Maria Zopoglou, Francesca Finotello et al. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1
+> Constantin Zackl, Maria Zopoglou, Reto Stauffer, Markus Ausserhofer, Marieke E. Ijsselsteijn, Gregor Sturm, Noel Filipe da Cunha Carvalho de Miranda, Francesca Finotello. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1
 
 
 | First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (omnideconv + spatial Methods)                                                                                                                                                                                                                                                           |
