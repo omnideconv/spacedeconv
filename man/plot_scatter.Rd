@@ -5,10 +5,11 @@
 \title{Comparative Scatterplot of Two SpatialExperiments}
 \usage{
 plot_scatter(
-  spe1,
+  spe = NULL,
   value1,
-  spe2,
   value2,
+  spe1 = NULL,
+  spe2 = NULL,
   log_scale = FALSE,
   dot_color = "#1f77b4",
   point_alpha = 0.8,
@@ -18,13 +19,15 @@ plot_scatter(
 )
 }
 \arguments{
-\item{spe1}{First SpatialExperiment object.}
+\item{spe}{SpatialExperiment with quantification results}
 
 \item{value1}{Deconvolution result to plot from the first object.}
 
-\item{spe2}{Second SpatialExperiment object.}
-
 \item{value2}{Deconvolution result to plot from the second object.}
+
+\item{spe1}{First SpatialExperiment object.}
+
+\item{spe2}{Second SpatialExperiment object.}
 
 \item{log_scale}{Logical, whether to use log scale for axes.}
 

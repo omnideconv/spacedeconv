@@ -80,20 +80,31 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
     }
   }
 
-  # Identify and print duplicate row names
+  # Identify and process duplicate row names
   duplicated_row_names <- rownames(SummarizedExperiment::assay(object, assay))[duplicated(rownames(SummarizedExperiment::assay(object, assay)))]
+
   if (length(duplicated_row_names) > 0) {
     cli::cli_alert_warning("Duplicated genes found: ", toString(duplicated_row_names))
+
+    cli::cli_progress_step(
+      msg = "Selecting gene with highest mean expression for duplicated genes",
+      msg_done = "Selected gene with highest mean expression for duplicated genes"
+    )
+
+    # For each duplicated gene, keep the one with the highest mean expression
+    unique_genes <- lapply(duplicated_row_names, function(gene) {
+      gene_rows <- which(rownames(SummarizedExperiment::assay(object, assay)) == gene)
+      mean_expressions <- Matrix::rowMeans(SummarizedExperiment::assay(object, assay)[gene_rows, , drop = FALSE])
+      gene_rows[which.max(mean_expressions)]
+    })
+
+    # Get all unique gene rows (non-duplicates + highest mean duplicates)
+    all_gene_rows <- unique(c(which(!rownames(SummarizedExperiment::assay(object, assay)) %in% duplicated_row_names), unlist(unique_genes)))
+
+    # Subset the object to keep only the selected rows
+    object <- object[all_gene_rows, ]
   }
 
-  cli::cli_progress_step(
-    msg = "Removing duplicated genes",
-    msg_done = "Removed duplicated genes"
-  )
-
-  # Remove duplicate row names
-  unique_row_names <- !duplicated(rownames(SummarizedExperiment::assay(object, assay)))
-  object <- object[unique_row_names, ]
 
 
   cli::cli_progress_step(

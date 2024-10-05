@@ -36,6 +36,7 @@
 #' @importFrom psych corr.test
 #' @importFrom OmnipathR import_intercell_network
 #' @importFrom scales label_number
+#' @importFrom Giotto normalizeGiotto
 #'
 #'
 #' @name spacedeconv_pkg

@@ -4,7 +4,7 @@
 #' It supports both counts per million (CPM) and log-transformed counts per million (logCPM) normalization methods.
 #'
 #' @param object A `SingleCellExperiment` or `SpatialExperiment` object containing raw gene expression data.
-#' @param method The normalization method to apply: "cpm" for counts per million, or "logcpm" for log-transformed counts per million.
+#' @param method The normalization method to apply: "cpm" for counts per million, "logcpm" for log-transformed counts per million, or "logpf" for log-proportional factor.
 #' @param assay The name of the assay to normalize, default "counts".
 #'
 #' @export
@@ -33,6 +33,10 @@ normalize <- function(object, method = "cpm", assay = "counts") {
       SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(SummarizedExperiment::assay(object, assay)), "dgCMatrix")
     } else if (method == "logcpm") {
       SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(SummarizedExperiment::assay(object, assay)) + 1), "dgCMatrix") # log(cpm+1)
+    } else if (method == "logpf") {
+      assay_data <- SummarizedExperiment::assay(object, assay) + 1
+      mean_read_count <- Matrix::rowMeans(assay_data)
+      SummarizedExperiment::assay(object, "logpf") <- as(log(assay_data / (mean_read_count + 1)), "dgCMatrix")
     }
   } else {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")
