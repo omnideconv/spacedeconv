@@ -74,7 +74,7 @@ jobs:
         run: Rscript -e "devtools::install_github('drighelli/SpatialExperiment')"
 
       - name: Install Test Dependencies
-        run: Rscript -e "pak::pkg_install(c('testthat', 'omnideconv/immunedeconv', 'omnideconv/omnideconv', 'satijalab/seurat'))" # drighelli/SpatialExperiment'
+        run: Rscript -e "pak::pkg_install(c('testthat', 'omnideconv/immunedeconv', 'omnideconv/omnideconv', 'satijalab/seurat@4.4.0'))" # drighelli/SpatialExperiment'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
