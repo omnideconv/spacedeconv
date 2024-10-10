@@ -34,6 +34,7 @@ reference:
   - title: Visualization
     contents:
       - plot_gene
+      - plot_spatial
       - plot_celltype
       - plot_umi_count
       - plot_ndetected_genes

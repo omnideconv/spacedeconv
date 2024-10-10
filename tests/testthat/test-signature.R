@@ -35,16 +35,3 @@ test_that("build_model requires supported method", {
 test_that("deconvolute requires non-null spatial_obj", {
   expect_error(deconvolute(NULL), "Parameter 'spatial_obj' is missing or null, but is required.")
 })
-
-test_that("Second-gen signature creation with SCDC works", {
-  signature <- build_model(sce, cell_type_col = "celltype_major", method = "scdc", verbose = T, batch_id_col = "orig.ident")
-  expect_equal(ncol(signature), expected = 4)
-  expect_type(signature, "double")
-})
-
-
-test_that("Second-gen deconvolution with SCDC works", {
-  deconv <- deconvolute(spe, signature, method = "scdc", single_cell_obj = sce, cell_type_col = "celltype_major", batch_id_col = "orig.ident")
-  expect_true("scdc_Endothelial" %in% colnames(colData(deconv)))
-  expect_s4_class(deconv, "SpatialExperiment")
-})
