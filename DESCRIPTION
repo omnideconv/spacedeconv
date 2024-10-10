@@ -70,8 +70,6 @@ Suggests:
     MuSiC, 
     markdown, 
     EPIC,
-    Seurat,
-    SeuratObject, 
     plotly, 
     Orthology.eg.db, 
     org.Mm.eg.db, 
