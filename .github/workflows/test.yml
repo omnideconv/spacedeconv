@@ -73,6 +73,9 @@ jobs:
       - name: Install SpatialExperiment
         run: Rscript -e "devtools::install_github('drighelli/SpatialExperiment')"
 
+      - name: Install Seurat
+        run: Rscript -e "devtools::install_github('satijalab/seurat')"
+
       - name: Install Test Dependencies
         run: Rscript -e "pak::pkg_install(c('testthat', 'omnideconv/immunedeconv', 'omnideconv/omnideconv'))" # drighelli/SpatialExperiment'
 
