@@ -1,18 +1,17 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  spacedeconv-decoupleR: spacedeconv-decoupleR.html
-  spacedeconv: spacedeconv.html
-  spacedeconv_LR: spacedeconv_LR.html
   spacedeconv_clustering: spacedeconv_clustering.html
   spacedeconv_data: spacedeconv_data.html
   spacedeconv_example: spacedeconv_example.html
   spacedeconv_faq: spacedeconv_faq.html
+  spacedeconv_LR: spacedeconv_LR.html
   spacedeconv_utils: spacedeconv_utils.html
   spacedeconv_visualization: spacedeconv_visualization.html
-last_built: 2024-04-09T14:37Z
+  spacedeconv-decoupleR: spacedeconv-decoupleR.html
+  spacedeconv: spacedeconv.html
+last_built: 2024-10-12T08:01Z
 urls:
   reference: https://omnideconv.github.io/spacedeconv/reference
   article: https://omnideconv.github.io/spacedeconv/articles
-
