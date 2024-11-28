@@ -10,7 +10,6 @@ deconvolute_dot(
   cell_type_col = "cell_ontology_class",
   assay_sc = "counts",
   assay_sp = "counts",
-  batch_id_col = "orig.ident",
   result_name = "dot"
 )
 }
@@ -24,8 +23,6 @@ deconvolute_dot(
 \item{assay_sc}{assay of single_cell_obj to use}
 
 \item{assay_sp}{assay of spatial_obj to use}
-
-\item{batch_id_col}{batch id column in spatialExperiment}
 
 \item{result_name}{token to identify deconvolution results in object, default = "dot"}
 }
