@@ -19,8 +19,7 @@ deconvolute_dot <- function(single_cell_obj,
                             cell_type_col = "cell_ontology_class",
                             assay_sc = "counts", assay_sp = "counts",
                             batch_id_col = "orig.ident",
-                            result_name = "dot"){
-
+                            result_name = "dot") {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is missing or null, but is required!")
   }
@@ -57,10 +56,10 @@ deconvolute_dot <- function(single_cell_obj,
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj) %>% as.data.frame()
   colnames(spCoords) <- c("x", "y")
 
-  #single cell expression
+  # single cell expression
   scExpression <- SummarizedExperiment::assay(single_cell_obj, assay_sc) %>% as("dgCMatrix")
 
-  cellTypes = SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]]
+  cellTypes <- SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]]
 
 
 
@@ -72,16 +71,17 @@ deconvolute_dot <- function(single_cell_obj,
 
 
 
-  dot.ref = setup.ref(ref_data = sce_count_matrix, ref_annotations = sce_labels, 10, verbose = T)
+  dot.ref <- setup.ref(ref_data = sce_count_matrix, ref_annotations = sce_labels, 10, verbose = T)
 
   # create DOT
   dot <- create.DOT(dot.srt, dot.ref)
 
   # DECONVOLUTION
-  dot <- run.DOT.lowresolution(dot,  # The DOT object created above
-                               ratios_weight = 0,       # Abundance weight; a larger value more closely matches the abundance of cell types in the spatial data to those in the reference data
-                               max_spot_size = 20, # Maximum size of spots (20 is usually sufficiently large for Visium slides)
-                               verbose = T)
+  dot <- run.DOT.lowresolution(dot, # The DOT object created above
+    ratios_weight = 0, # Abundance weight; a larger value more closely matches the abundance of cell types in the spatial data to those in the reference data
+    max_spot_size = 20, # Maximum size of spots (20 is usually sufficiently large for Visium slides)
+    verbose = T
+  )
 
 
 
