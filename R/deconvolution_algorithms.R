@@ -156,7 +156,6 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     cell2location = {
       build_model_cell2location(single_cell_obj, assay_sc = assay_sc, cell_type_col = cell_type_col, batch_id_col = batch_id_col, ...)
     },
-
     dot = {
       build_model_dot()
     },
@@ -354,9 +353,8 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     cell2location = {
       deconvolute_cell2location(spatial_obj, signature, ...)
     },
-
     dot = {
-      deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc  = assay_sc, assay_sp = assay_sp, ...)
+      deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
 
     ##############
