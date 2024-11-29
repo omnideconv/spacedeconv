@@ -10,7 +10,8 @@ deconvolute_dot(
   cell_type_col = "cell_ontology_class",
   assay_sc = "counts",
   assay_sp = "counts",
-  result_name = "dot"
+  result_name = "dot",
+  ...
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ deconvolute_dot(
 \item{assay_sp}{assay of spatial_obj to use}
 
 \item{result_name}{token to identify deconvolution results in object, default = "dot"}
+
+\item{...}{additional parameters passed to DOTr methods}
 }
 \description{
 Deconvolute DOT

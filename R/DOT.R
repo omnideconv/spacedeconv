@@ -1,3 +1,5 @@
+#' No signature calculated, just call the deconvolute method
+#' @returns NULL
 build_model_dot <- function() {
   message("This method does not build a signature, just call the deconvolute method")
   return(NULL)
@@ -13,11 +15,12 @@ build_model_dot <- function() {
 #' @param assay_sc assay of single_cell_obj to use
 #' @param assay_sp assay of spatial_obj to use
 #' @param result_name token to identify deconvolution results in object, default = "dot"
+#' @param ... additional parameters passed to DOTr methods
 deconvolute_dot <- function(single_cell_obj,
                             spatial_obj,
                             cell_type_col = "cell_ontology_class",
                             assay_sc = "counts", assay_sp = "counts",
-                            result_name = "dot") {
+                            result_name = "dot", ...) {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is missing or null, but is required!")
   }
@@ -26,7 +29,7 @@ deconvolute_dot <- function(single_cell_obj,
     stop("Parameter 'spatial_obj' is missing or null, but is required")
   }
 
-  # check if requested assay exists
+  # check if requested SC assay exists
   if (!assay_sc %in% names(SummarizedExperiment::assays(single_cell_obj))) {
     message(
       "requested assay ",
@@ -36,6 +39,7 @@ deconvolute_dot <- function(single_cell_obj,
     assay_sc <- names(SummarizedExperiment::assays(single_cell_obj))[1] # change to first available assay request not available
   }
 
+  # check if requested SP assay exists
   if (!assay_sp %in% names(SummarizedExperiment::assays(spatial_obj))) {
     message(
       "requested assay ",
@@ -54,37 +58,21 @@ deconvolute_dot <- function(single_cell_obj,
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj) %>% as.data.frame()
   colnames(spCoords) <- c("x", "y")
 
-  # single cell expression
+  # single cell expression and cell type labels
   scExpression <- SummarizedExperiment::assay(single_cell_obj, assay_sc) %>% as("dgCMatrix")
-
   cellTypes <- SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]]
 
+  # create DOT objects
+  dot.srt <- setup.srt(srt_data = spExpression, srt_coords = spCoords, ...) # additional parameters passed as ...
+  dot.ref <- setup.ref(ref_data = sce_count_matrix, ref_annotations = sce_labels, ...)
 
+  dot <- create.DOT(dot.srt, dot.ref, ...)
 
-
-
-  # build dot objects
-
-  dot.srt <- setup.srt(spExpression, spCoords)
-
-
-
-  dot.ref <- setup.ref(ref_data = sce_count_matrix, ref_annotations = sce_labels, 10, verbose = T)
-
-  # create DOT
-  dot <- create.DOT(dot.srt, dot.ref)
-
-  # DECONVOLUTION
-  dot <- run.DOT.lowresolution(dot, # The DOT object created above
-    ratios_weight = 0, # Abundance weight; a larger value more closely matches the abundance of cell types in the spatial data to those in the reference data
-    max_spot_size = 20, # Maximum size of spots (20 is usually sufficiently large for Visium slides)
-    verbose = T
-  )
-
-
+  # Run Deconvolution
+  dot <- run.DOT.lowresolution(dot, ...) # additional parameters passed as ...
 
   # attach token
-  deconvolution <- attachToken(dot@weights, result_name)
+  deconvolution_result <- attachToken(dot@weights, result_name) # add dot_ to column names
 
-  return(deconvolution)
+  return(deconvolution_result)
 }
