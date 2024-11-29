@@ -64,7 +64,7 @@ deconvolute_dot <- function(single_cell_obj,
 
   # create DOT objects
   dot.srt <- setup.srt(srt_data = spExpression, srt_coords = spCoords, ...) # additional parameters passed as ...
-  dot.ref <- setup.ref(ref_data = sce_count_matrix, ref_annotations = sce_labels, ...)
+  dot.ref <- setup.ref(ref_data = scExpression, ref_annotations = cellTypes, ...)
 
   dot <- create.DOT(dot.srt, dot.ref, ...)
 

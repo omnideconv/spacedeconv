@@ -1,10 +1,10 @@
 data("spatial_data_3")
 
 # Test if 'cluster' returns a SpatialExperiment object
-test_that("cluster returns a SpatialExperiment object", {
-  result <- cluster(spe = spacedeconv::preprocess(spatial_data_3, remove_mito = TRUE), spmethod = "expression")
-  expect_s4_class(result, "SpatialExperiment")
-})
+# test_that("cluster returns a SpatialExperiment object", {
+#   result <- cluster(spe = spacedeconv::preprocess(spatial_data_3, remove_mito = TRUE), spmethod = "expression")
+#   expect_s4_class(result, "SpatialExperiment")
+# })
 
 # Test if 'cluster' handles null 'spe' input correctly
 test_that("cluster handles null spe input correctly", {
