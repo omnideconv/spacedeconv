@@ -1,7 +1,7 @@
 #' List of supported deconvolution methods
 #'
 #' @details Spatial Algorithms \cr
-#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`
+#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`, `DOT`
 #'
 #' @details Second-generation Algorithms (Omnideconv) \cr
 #' `AutoGeneS`, `BayesPrism`, `Bisque`, `BSeq-sc`, `CIBERSORTx`, `CDSeq`, `CPM`, `DWLS`, `MOMF`,
@@ -26,6 +26,7 @@ deconvolution_methods <- c(
   "CARD" = "card",
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
+  "DOT" = "dot",
   # omnideconv
   "AutoGeneS" = "autogenes",
   "BayesPrism" = "bayesprism",
@@ -154,6 +155,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     },
     cell2location = {
       build_model_cell2location(single_cell_obj, assay_sc = assay_sc, cell_type_col = cell_type_col, batch_id_col = batch_id_col, ...)
+    },
+    dot = {
+      build_model_dot()
     },
 
     ##############
@@ -348,6 +352,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     },
     cell2location = {
       deconvolute_cell2location(spatial_obj, signature, ...)
+    },
+    dot = {
+      deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
 
     ##############
