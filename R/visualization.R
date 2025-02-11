@@ -394,6 +394,154 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 }
 
 
+#' Function to plot selected cell types with transparency scaling + ggplot2 standard legend
+#'
+#' Generates a hex plot where each selected cell type is visualized independently,
+#' with color intensity proportional to its abundance.
+#'
+#' @param spe A SpatialExperiment object containing deconvolution results
+#' @param cell_types A vector of manually selected cell types to plot (max 6)
+#' @param colors A vector of colors for the selected cell types (optional; default colors used if NULL)
+#' @param transform Data transformation to apply ("none", "log", "log10", "log2", "sqrt")
+#' @param sample_id The sample ID to plot, default: "sample01"
+#' @param image_id Which image to plot, default: "lowres"
+#' @param show_image Logical, whether to display the image, default = TRUE
+#' @param background Background color
+#' @param spot_size Increase (>1) or decrease (<1) the hex size
+#' @param limits Vector of color scale limits
+#' @param save Set TRUE to save plot
+#' @param path Directory to save plot, default: ~/spacedeconv
+#' @param png_width PNG width in pixels when saving
+#' @param png_height PNG height in pixels when saving
+#' @return A ggplot2 object containing the overlayed transparency-based hex plot
+#' @export
+plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
+                          sample_id = "sample01", image_id = "lowres",
+                          show_image = TRUE, background = NULL, spot_size = 1, limits = NULL,
+                          save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
+
+  # Default color palette (max 6 colors)
+  default_colors <- c("#FF0000", "#00FF00", "#0000FF", "#FFA500", "#800080", "#008080")  # Red, Green, Blue, Orange, Purple, Teal
+
+  # Validate input
+  if (is.null(spe)) stop("Parameter 'spe' is required")
+  if (length(cell_types) > 6) stop("You can only select a maximum of SIX cell types.")
+  if (length(cell_types) < 1) stop("You must provide at least ONE manually selected cell type.")
+
+  # Assign default colors if not provided
+  if (is.null(colors)) {
+    colors <- default_colors[seq_along(cell_types)]  # Select colors based on number of cell types
+  }
+
+  # Validate that the number of colors matches the number of cell types
+  if (length(colors) != length(cell_types)) stop("Number of colors must match the number of selected cell types.")
+
+  # Filter dataset for the selected sample
+  spe <- filter_sample_id(spe, sample_id)
+
+  # Extract spatial coordinates and cell type data
+  df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
+
+  # Ensure selected cell types exist in the dataset
+  missing_types <- setdiff(cell_types, colnames(df))
+  if (length(missing_types) > 0) stop(paste("The following cell types are missing from the dataset:", paste(missing_types, collapse = ", ")))
+
+  # Scale coordinates using spatial scaling factors
+  df$pxl_col_in_fullres <- df$pxl_col_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
+  df$pxl_row_in_fullres <- df$pxl_row_in_fullres * SpatialExperiment::scaleFactors(spe, sample_id = sample_id, image_id = image_id)
+
+  # Flip Y-axis
+  df$pxl_row_in_fullres <- df$pxl_row_in_fullres * -1
+
+  # Compute spot distance for hex size adjustment
+  scaling_offset <- 1.165
+  spot_distance <- min(sqrt((df$pxl_col_in_fullres[1] - df$pxl_col_in_fullres[-1])^2 + (df$pxl_row_in_fullres[1] - df$pxl_row_in_fullres[-1])^2)) * spot_size * scaling_offset
+
+  # Generate hexagon geometry
+  df$geometry <- get_polygon_geometry(df, spot_distance, offset_rotation = FALSE)
+  sf_poly <- sf::st_set_geometry(sf::st_as_sf(df), df$geometry)
+
+  # Identify most abundant cell type per spot
+  df$max_celltype <- apply(df[, cell_types], 1, function(x) {
+    if (all(is.na(x))) return(NA)
+    cell_types[which.max(x)]
+  })
+
+  df$max_abundance <- apply(df[, cell_types], 1, max, na.rm = TRUE)
+
+  # Apply transformation to max abundance
+  transform <- tolower(transform)
+  if (transform == "log") {
+    df$max_abundance <- log(df$max_abundance + 1)
+  } else if (transform == "log10") {
+    df$max_abundance <- log10(df$max_abundance + 1)
+  } else if (transform == "log2") {
+    df$max_abundance <- log2(df$max_abundance + 1)
+  } else if (transform == "sqrt") {
+    df$max_abundance <- sqrt(df$max_abundance)
+  }
+
+  # Normalize abundance to create opacity scale
+  df$opacity <- df$max_abundance / max(df$max_abundance, na.rm = TRUE)
+
+  # Assign colors based on the most abundant cell type
+  color_map <- setNames(colors, cell_types)
+  df$color <- mapply(scales::alpha, color_map[df$max_celltype], df$opacity)
+
+  # Convert to spatial format
+  sf_poly$max_celltype <- df$max_celltype
+  sf_poly$color <- df$color
+  sf_poly$opacity <- df$opacity  # **Ensure opacity is in sf_poly!**
+
+  # Create base plot
+  p <- ggplot()
+
+  # Add spatial image if requested
+  if (show_image) {
+    img <- SpatialExperiment::imgRaster(spe, image_id = image_id)
+    width <- dim(img)[2]
+    height <- dim(img)[1]
+    p <- p + annotation_raster(img, xmin = 0, xmax = width, ymin = 0, ymax = -height)
+  }
+
+  # Add hexagons with correct color + opacity mapping
+  p <- p + geom_sf(data = sf_poly, aes(fill = max_celltype, alpha = opacity), color = NA)
+
+  # Adjust fill and alpha scales separately
+  p <- p + scale_fill_manual(values = color_map, name = "Cell Types") +
+    scale_alpha(range = c(0, 1), guide = "none")
+
+  # Configure plot theme
+  p <- p + theme_void() +
+    theme(
+      legend.position = "right",
+      legend.title = element_text(size = 12, face = "bold"),
+      legend.text = element_text(size = 10)
+    )
+
+  # Zoom if requested
+  p <- p + coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)),
+                    ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres)))
+
+  # Save plot if requested
+  if (save) {
+    if (is.null(path)) path <- "~/spacedeconvResults"
+    if (!file.exists(path)) dir.create(path, recursive = TRUE)
+    ggsave(filename = file.path(path, "fade_map.png"), plot = p, width = png_width / 100, height = png_height / 100, dpi = 100)
+  }
+
+  return(p)
+}
+
+
+
+
+
+
+
+
+
+
 #' Plot celltype fraction comparison
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
