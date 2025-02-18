@@ -797,13 +797,15 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     p <- p + geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly)
   } else if (spot_shape == "square") {
     p <- p + geom_tile(aes_string(x = "pxl_col_in_fullres", y = "pxl_row_in_fullres", fill = to_plot),
-                       data = df, width = spot_distance, height = spot_distance)
+      data = df, width = spot_distance, height = spot_distance
+    )
   } else if (spot_shape == "circle") {
     # For circles, we use geom_point with shape 21.
     # Here we approximate the circle size using spot_distance. The conversion factor may be adjusted.
-    circle_size <- spot_distance / 5  # Adjust this constant as needed.
+    circle_size <- spot_distance / 5 # Adjust this constant as needed.
     p <- p + geom_point(aes_string(x = "pxl_col_in_fullres", y = "pxl_row_in_fullres", fill = to_plot),
-                        data = df, shape = 21, size = circle_size, stroke = 0)
+      data = df, shape = 21, size = circle_size, stroke = 0
+    )
   } else {
     stop("Invalid spot_shape. Allowed values are 'hexagon', 'square', or 'circle'.")
   }
