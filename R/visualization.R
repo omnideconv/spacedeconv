@@ -421,7 +421,7 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
 
   # Default color palette (max 6 colors)
-  default_colors <- c("#FF0000", "#00FF00", "#0000FF", "#FFA500", "#800080", "#008080")  # Red, Green, Blue, Orange, Purple, Teal
+  default_colors <- c("#7FC97F", "#BEAED4", "#FDC086", "#FFFF99", "#386CB0", "#F0027F")  # Red, Green, Blue, Orange, Purple, Teal
 
   # Validate input
   if (is.null(spe)) stop("Parameter 'spe' is required")
