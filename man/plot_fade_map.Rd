@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_fade_map}
 \alias{plot_fade_map}
-\title{Function to plot selected cell types with transparency scaling + color legend}
+\title{Function to plot selected cell types with transparency scaling + ggplot2 standard legend}
 \usage{
 plot_fade_map(
   spe,
