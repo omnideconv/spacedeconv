@@ -419,9 +419,8 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
                           sample_id = "sample01", image_id = "lowres",
                           show_image = TRUE, background = NULL, spot_size = 1, limits = NULL,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750) {
-
   # Default color palette (max 6 colors)
-  default_colors <- c("#7FC97F", "#BEAED4", "#FDC086", "#FFFF99", "#386CB0", "#F0027F")  # Red, Green, Blue, Orange, Purple, Teal
+  default_colors <- c("#7FC97F", "#BEAED4", "#FDC086", "#FFFF99", "#386CB0", "#F0027F") # Red, Green, Blue, Orange, Purple, Teal
 
   # Validate input
   if (is.null(spe)) stop("Parameter 'spe' is required")
@@ -430,7 +429,7 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
 
   # Assign default colors if not provided
   if (is.null(colors)) {
-    colors <- default_colors[seq_along(cell_types)]  # Select colors based on number of cell types
+    colors <- default_colors[seq_along(cell_types)] # Select colors based on number of cell types
   }
 
   # Validate that the number of colors matches the number of cell types
@@ -463,7 +462,9 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
 
   # Identify most abundant cell type per spot
   df$max_celltype <- apply(df[, cell_types], 1, function(x) {
-    if (all(is.na(x))) return(NA)
+    if (all(is.na(x))) {
+      return(NA)
+    }
     cell_types[which.max(x)]
   })
 
@@ -491,7 +492,7 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
   # Convert to spatial format
   sf_poly$max_celltype <- df$max_celltype
   sf_poly$color <- df$color
-  sf_poly$opacity <- df$opacity  # **Ensure opacity is in sf_poly!**
+  sf_poly$opacity <- df$opacity # **Ensure opacity is in sf_poly!**
 
   # Create base plot
   p <- ggplot()
@@ -520,8 +521,10 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
     )
 
   # Zoom if requested
-  p <- p + coord_sf(xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)),
-                    ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres)))
+  p <- p + coord_sf(
+    xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)),
+    ylim = c(max(df$pxl_row_in_fullres), min(df$pxl_row_in_fullres))
+  )
 
   # Save plot if requested
   if (save) {
