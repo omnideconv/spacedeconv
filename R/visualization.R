@@ -479,6 +479,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 }
 
 
+
 #' Function to plot gene expression
 #'
 #' Generate Hex Plot of a SpatialExperiment containing deconvolution results
