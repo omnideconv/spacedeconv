@@ -25,6 +25,7 @@
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_card.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_cell2location.html</loc></url>
+<url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_dot.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_immunedeconv.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_omnideconv.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/build_model_rctd.html</loc></url>
@@ -47,6 +48,7 @@
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_card.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_cell2location.html</loc></url>
+<url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_dot.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_immunedeconv.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_immunedeconv_mouse.html</loc></url>
 <url><loc>https://omnideconv.github.io/spacedeconv/reference/deconvolute_omnideconv.html</loc></url>
