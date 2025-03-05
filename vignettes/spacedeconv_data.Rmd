@@ -69,6 +69,21 @@ Spatial data available as a Seurat Object can be converted into a SpatialExperim
 spe <- seurat_to_spatialexperiment(seurat_object)
 ```
 
+# VisiumHD Data
+
+For high-resolution VisiumHD data, the `VisiumIO` package provides functions to load and convert your data into a `SpatialExperiment` object. For additional information please check the VisiumIO [Documentation](https://github.com/waldronlab/VisiumIO).
+
+Below is an example of how to load VisiumHD data:
+
+```{r visiumHDData, eval=FALSE}
+library(VisiumIO)
+tenxData <- TENxVisiumHD(
+  spacerangerOut = "path/to/VisiumHD/data",
+  bin_size = "016"
+)
+spe <- import(tenxData)
+```
+
 # Normalization
 SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`. As normalization method `cpm` and `logcpm` are available. 
 

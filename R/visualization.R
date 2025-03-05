@@ -649,7 +649,8 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
                           limits = NULL, smooth = FALSE, smoothing_factor = 1.5,
                           title_size = 30, title = NULL, font_size = 15, legend_size = 20, density = TRUE,
                           save = FALSE, path = NULL, png_width = 1500, png_height = 750, show_legend = TRUE,
-                          nDigits = NULL, pseudocount = 1, shift_positive = TRUE) {
+                          nDigits = NULL, pseudocount = 1, shift_positive = TRUE,
+                          spot_shape = "hexagon") {
   if (is.null(spe)) {
     stop("Parameter 'spe' is null or missing, but is required")
   }
@@ -752,14 +753,17 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     legend_title <- title
   }
 
-  # preparing the dataframe with sf, inserting points
-  sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
+  # Branch based on the spot_shape parameter:
+  if (spot_shape == "hexagon") {
+    # Prepare an sf object with spot centers
+    sf_points <- sf::st_as_sf(df, coords = c("pxl_col_in_fullres", "pxl_row_in_fullres"))
 
-  # generate hexagons
-  new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
+    # Generate hexagon polygons using the existing function
+    new_geom <- get_polygon_geometry(df, spot_distance, offset_rotation = offset_rotation)
 
-  # now overwrite the points with hex polygons
-  sf_poly <- sf::st_set_geometry(sf_points, new_geom)
+    # Overwrite the points with hexagon geometries
+    sf_poly <- sf::st_set_geometry(sf_points, new_geom)
+  }
 
   # Determine the palette type based on the palette name
   if (is.null(palette_type)) {
@@ -789,19 +793,34 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # p <- p + annotation_raster(img, xmin = min(df$pxl_col_in_fullres), xmax = max(df$pxl_col_in_fullres), ymin = max(df$pxl_row_in_fullres), ymax = min(df$pxl_row_in_fullres))
   }
 
-  # add hexagons
-  p <- p +
-    geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly) +
-    # coord_sf(xlim = c(0, width), ylim = c(0, -height)) +
-    theme(
-      axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      panel.grid = element_blank(),
-      panel.background = element_blank(),
-      plot.title = element_text(size = title_size, hjust = 0.5),
-      legend.text = element_text(size = font_size),
-      legend.key.size = unit(legend_size, "points")
-    ) +
+  # add SPOTS
+  if (spot_shape == "hexagon") {
+    p <- p + geom_sf(aes_string(fill = to_plot), lwd = 0, color = NA, data = sf_poly)
+  } else if (spot_shape == "square") {
+    p <- p + geom_tile(aes_string(x = "pxl_col_in_fullres", y = "pxl_row_in_fullres", fill = to_plot),
+      data = df, width = spot_distance, height = spot_distance
+    )
+  } else if (spot_shape == "circle") {
+    # For circles, we use geom_point with shape 21.
+    # Here we approximate the circle size using spot_distance. The conversion factor may be adjusted.
+    circle_size <- spot_distance / 5 # Adjust this constant as needed.
+    p <- p + geom_point(aes_string(x = "pxl_col_in_fullres", y = "pxl_row_in_fullres", fill = to_plot),
+      data = df, shape = 21, size = circle_size, stroke = 0
+    )
+  } else {
+    stop("Invalid spot_shape. Allowed values are 'hexagon', 'square', or 'circle'.")
+  }
+
+
+  p <- p + theme(
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    panel.background = element_blank(),
+    plot.title = element_text(size = title_size, hjust = 0.5),
+    legend.text = element_text(size = font_size),
+    legend.key.size = unit(legend_size, "points")
+  ) +
     ggplot2::labs(title = legend_title, fill = element_blank())
 
   # zoom if requested
@@ -884,13 +903,20 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   }
 
   # create density plot if requested
-  suppressMessages(
+  suppressMessages({
     if (density && palette_type != "discrete") {
-      data <- data.frame(values = sf_poly[[to_plot]], id = rep(to_plot, nrow(sf_poly)))
-      density <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) + # fill... see ggridges docs
-        # ggplot2::geom_density() +
-        ggridges::geom_density_ridges() + # _gradient()
-        # ggplot2::scale_fill_viridis_c() +
+      # Determine which vector of values to use:
+      # For hexagons, use the values from sf_poly; for square/circle, use df.
+      values_data <- if (spot_shape == "hexagon" && exists("sf_poly")) {
+        sf_poly[[to_plot]]
+      } else {
+        df[[to_plot]]
+      }
+
+      data <- data.frame(values = values_data, id = rep(to_plot, length(values_data)))
+
+      density_plot <- ggplot2::ggplot(data, mapping = ggplot2::aes_string(x = "values", y = "id")) +
+        ggridges::geom_density_ridges() +
         ggplot2::scale_y_discrete(expand = c(0, 0)) +
         ggplot2::geom_vline(
           ggplot2::aes(xintercept = mean(unlist(data["values"]))),
@@ -899,7 +925,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           size = 1
         ) +
         ggplot2::theme_classic() +
-        # ggplot2::ylim(c(0, 1000)) +
         ggplot2::theme(
           legend.position = "none",
           axis.text.y = ggplot2::element_blank(),
@@ -908,15 +933,13 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
           axis.title = ggplot2::element_blank(),
           axis.text.x = ggplot2::element_text(size = 14)
         )
-      # ggplot2::ylim(0, max(data["values"]))
 
-      # cowplot::plot_grid(spatial, density)
-      plot <- ggpubr::ggarrange(p, density, ncol = 2, widths = c(2, 1)) # add functions to pkg.R
-      # plot <- grid::grid.draw(plot) # add functions to pkg.R
+      plot <- ggpubr::ggarrange(p, density_plot, ncol = 2, widths = c(2, 1))
     } else {
       plot <- p
     }
-  )
+  })
+
 
   if (save) {
     # check if provided path works
