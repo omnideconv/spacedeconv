@@ -520,6 +520,15 @@ plot_fade_map <- function(spe, cell_types, colors = NULL, transform = "none",
       legend.text = element_text(size = 10)
     )
 
+  # dark background
+  p <- p + theme(
+    plot.background = element_rect(fill = "black", color = NA),
+    panel.background = element_rect(fill = "black", color = NA),
+    legend.background = element_rect(fill = "black", color = NA),
+    legend.key = element_rect(fill = "black", color = NA)
+  )
+
+
   # Zoom if requested
   p <- p + coord_sf(
     xlim = c(min(df$pxl_col_in_fullres), max(df$pxl_col_in_fullres)),
