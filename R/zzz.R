@@ -4,7 +4,7 @@
 #' @name spacedeconvstartup
 NULL
 
-.__required_python_version__ <- "3.10"  # Pin exact version (can also use ">=3.10" if needed)
+.__required_python_version__ <- "3.10"
 
 .required_python_modules <- list(
   list(pypi = "python-igraph",   import = "igraph"),
@@ -26,13 +26,7 @@ NULL
   check_wrong_python_version()
 
   if (reticulate::py_available(initialize = FALSE)) {
-    for (mod in .required_python_modules) {
-      if (!check_python_module(mod$import)) {
-        cli::cli_alert_danger("Python module missing: {mod$import}")
-      } else {
-        cli::cli_alert_success("Python module available: {mod$import}")
-      }
-    }
+    check_required_python_modules()
   } else {
     cli::cli_alert_warning("Python not yet initialized; skipping module check.")
   }
@@ -46,6 +40,8 @@ setup_python_environment <- function() {
     packages = pkgs,
     python_version = .__required_python_version__
   )
+  reticulate::py_config()
+  check_required_python_modules()
 }
 
 check_python_module <- function(module) {
@@ -65,6 +61,16 @@ check_wrong_python_version <- function() {
         "Python >= %s is required, but reticulate was already initialized with Python version %s.",
         .__required_python_version__, py_ver
       ))
+    }
+  }
+}
+
+check_required_python_modules <- function() {
+  for (mod in .required_python_modules) {
+    if (!check_python_module(mod$import)) {
+      cli::cli_alert_danger("Python module missing: {mod$import}")
+    } else {
+      cli::cli_alert_success("Python module available: {mod$import}")
     }
   }
 }
