@@ -19,33 +19,30 @@ NULL
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
     "This package uses Python via the 'reticulate' package.\n",
-    "To install Python dependencies in your reticulate environment, run:\n",
+    "To setup (and install if needed) Python dependencies in your reticulate environment, run:\n",
     "    spacedeconv::setup_python_environment()\n"
   )
 
-  if (!reticulate::py_available(initialize = TRUE)) {
-    cli::cli_alert_warning("Python not yet initialized; skipping module check.")
-    return()
-  }
+  check_wrong_python_version()
 
-  py_ver <- as.character(reticulate::py_config()$version)
-  if (utils::compareVersion(py_ver, "3.10") < 0) {
-    cli::cli_alert_danger("Python >= 3.10 is required, but version {py_ver} was found.")
-    return()
-  }
-
-  for (mod in .required_python_modules) {
-    if (!check_python_module(mod$import)) {
-      cli::cli_alert_danger("Python module missing: {mod$import}")
-    } else {
-      cli::cli_alert_success("Python module available: {mod$import}")
+  if (reticulate::py_available(initialize = FALSE)) {
+    for (mod in .required_python_modules) {
+      if (!check_python_module(mod$import)) {
+        cli::cli_alert_danger("Python module missing: {mod$import}")
+      } else {
+        cli::cli_alert_success("Python module available: {mod$import}")
+      }
     }
+  }
+  else{
+    cli::cli_alert_warning("Python not yet initialized; skipping module check.")
   }
 }
 
 
 #' @export
 setup_python_environment <- function() {
+  check_wrong_python_version()
   pkgs <- unique(vapply(.required_python_modules, function(x) x$pypi, character(1)))
   reticulate::py_require(
     packages = pkgs,
@@ -61,4 +58,13 @@ result = importlib.util.find_spec('%s') is not None
 ", module)
   reticulate::py_run_string(code)
   reticulate::py$result
+}
+
+check_wrong_python_version <- function() {
+  if (reticulate::py_available(initialize = FALSE)) {
+    py_ver <- as.character(reticulate::py_config()$version)
+    if (utils::compareVersion(py_ver, "3.10") < 0) {
+      stop(sprintf("Python >= 3.10 is required, but reticulate was already initialized with Python version %s.", py_ver))
+    }
+  }
 }
