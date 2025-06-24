@@ -36,8 +36,10 @@ NULL
 
 #' @export
 setup_python_environment <- function() {
-  
-  reticulate::install_miniconda()
+
+  if (!dir.exists(reticulate::miniconda_path())) {
+    reticulate::install_miniconda()
+  }
 
   envname <- .__conda_env_default_name__
   if (!reticulate::py_available(initialize = FALSE)) {
@@ -52,17 +54,18 @@ setup_python_environment <- function() {
   # Separate packages by install method
   conda_pkgs <- vapply(
     .required_python_modules, 
-    function(x) if (x$install == "conda") x$pypi else NULL, 
-    character(1)
-  )
-  pip_pkgs <- vapply(
-    .required_python_modules, 
-    function(x) if (x$install == "pip") x$pypi else NULL, 
+    function(x) if (x$install == "conda") x$pypi else NA_character_, 
     character(1)
   )
 
-  conda_pkgs <- conda_pkgs[nzchar(conda_pkgs)]
-  pip_pkgs <- pip_pkgs[nzchar(pip_pkgs)]
+  pip_pkgs <- vapply(
+    .required_python_modules, 
+    function(x) if (x$install == "pip") x$pypi else NA_character_, 
+    character(1)
+  )
+
+  conda_pkgs <- conda_pkgs[!is.na(conda_pkgs)]
+  pip_pkgs <- pip_pkgs[!is.na(conda_pkgs)]
 
   # Install conda packages
   if (length(conda_pkgs) > 0) {
