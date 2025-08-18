@@ -4,148 +4,75 @@
 #' @name spacedeconvstartup
 NULL
 
-.__conda_env_default_name__ <- "r-omnideconv_test"
+.onLoad <- function(libname, pkgname) {
+  cli::cli_alert("checking spacedeconv environment and dependencies")
 
-.__required_python_version__ <- "3.10"
 
-.required_python_modules <- list(
-  list(pypi = "python-igraph",   import = "igraph",        install = "conda"),
-  list(pypi = "leidenalg",       import = "leidenalg",     install = "conda"),
-  list(pypi = "python-louvain",  import = "community",     install = "conda"),
-  list(pypi = "scikit-learn",    import = "sklearn",       install = "conda"),
-  list(pypi = "scanpy",          import = "scanpy",        install = "conda"),
-  list(pypi = "cell2location",   import = "cell2location", install = "pip"),
-  list(pypi = "scaden",          import = "scaden",        install = "pip")
-)
+  temp_file <- tempfile()
+  sink(temp_file)
 
-.onAttach <- function(libname, pkgname) {
+  invisible({
+    suppressMessages({
+      suppressWarnings({
+        # tmp <- reticulate::py_capture_output({
+        tmp2 <- utils::capture.output({
+          # reticulate::py_capture_output({
+          # Make sure miniconda is installed
+          if (!dir.exists(reticulate::miniconda_path())) {
+            message("Setting python version in miniconda to be 3.8")
+            Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = 3.8)
+            message("Setting up miniconda environment..")
+            suppressMessages(reticulate::install_miniconda())
+          }
 
-  check_reticulate_env()
 
-  if(!all_py_modules_available()){
-    packageStartupMessage(
-      "This package uses Python via the 'reticulate' package.\n",
-      "To setup (and install if needed) Python dependencies in your reticulate environment, run:\n",
-      "    spacedeconv::setup_python_environment()\n",
-      "Choose the right reticulate environment if you have already done this step."
-    )
-    display_py_modules_status()
-  }
+          # We ensure to have the r-spacedeconv env
+          # if (!file.exists(reticulate::conda_python("r-reticulate"))) {
+          if (!("r-omnideconv" %in% reticulate::conda_list()$name)) {
+            reticulate::conda_create(envname = "r-omnideconv")
+          }
 
-}
+          paths <- reticulate::conda_list()
+          path <- paths[paths$name == "r-omnideconv", 2]
+          if (.Platform$OS.type == "windows") {
+            path <- gsub("\\\\", "/", path)
+          }
+          path.bin <- gsub("/envs/r-omnideconv/python.exe", "/library/bin", path)
+          Sys.setenv(PATH = paste(path.bin, Sys.getenv()["PATH"], sep = ";"))
+          Sys.setenv(RETICULATE_PYTHON = path)
 
-#' @export
-setup_python_environment <- function() {
 
-  if (!dir.exists(reticulate::miniconda_path())) {
-    reticulate::install_miniconda()
-  }
+          reticulate::use_miniconda(condaenv = "r-omnideconv", required = FALSE)
+          reticulate::py_config()
+          reticulate::configure_environment(pkgname, force = TRUE)
 
-  envname <- .__conda_env_default_name__
-  if (!reticulate::py_available(initialize = FALSE)) {
-    if(!(envname %in% reticulate::conda_list()$name)){
-      reticulate::conda_create(envname, python_version = .__required_python_version__)
-    }
-    reticulate::use_condaenv(envname, required = TRUE)
-  }
+          if (!reticulate::py_module_available("anndata")) {
+            anndata::install_anndata()
+          }
 
-  check_reticulate_env()
+          # if (!reticulate::py_module_available("python.app")) { # only MAC!
+          #   reticulate::py_install("python.app", pip=TRUE)
+          # }
 
-  # Separate packages by install method
-  conda_pkgs <- vapply(
-    .required_python_modules, 
-    function(x) if (x$install == "conda") x$pypi else NA_character_, 
-    character(1)
-  )
+          if (!reticulate::py_module_available("sklearn")) {
+            reticulate::py_install("scikit-learn")
+          }
 
-  pip_pkgs <- vapply(
-    .required_python_modules, 
-    function(x) if (x$install == "pip") x$pypi else NA_character_, 
-    character(1)
-  )
+          if (!reticulate::py_module_available("community")) {
+            reticulate::py_install("python-louvain", pip = TRUE)
+          }
+          if (!reticulate::py_module_available("cell2location")) {
+            reticulate::py_install("cell2location", pip = TRUE)
+          }
+          # })
+        })
+      })
+    })
+  })
 
-  conda_pkgs <- conda_pkgs[!is.na(conda_pkgs)]
-  pip_pkgs <- pip_pkgs[!is.na(conda_pkgs)]
+  # bug fix
+  Csparse_validate <- "CsparseMatrix_validate"
 
-  # Install conda packages
-  if (length(conda_pkgs) > 0) {
-    reticulate::conda_install(
-      envname = NULL,
-      packages = conda_pkgs,
-      channel = "conda-forge"
-    )
-  }
-
-  # Install pip packages
-  if (length(pip_pkgs) > 0) {
-    reticulate::py_install(
-      packages = pip_pkgs,
-      envname = NULL,
-      pip = TRUE
-    )
-  }
-
-  reticulate::py_config()
-  display_py_modules_status()
-}
-
-check_python_module <- function(module) {
-  code <- sprintf("
-import importlib.util
-result = importlib.util.find_spec('%s') is not None
-", module)
-  reticulate::py_run_string(code)
-  reticulate::py$result
-}
-
-check_reticulate_env <- function() {
-  if (reticulate::py_available(initialize = FALSE)) {
-    cfg <- reticulate::py_config()
-    py_ver <- as.character(cfg$version)
-    envname <- if (is.null(cfg$condaenv)) "<unknown>" else cfg$condaenv
-
-    if (is.null(cfg$conda)) {
-      stop(sprintf(
-        "Reticulate is using a Python environment that is NOT managed by Conda.\nThis package requires a conda environment for reticulate."
-      ))
-    }
-
-    if (utils::compareVersion(py_ver, .__required_python_version__) != 0) {
-      stop(sprintf(
-        "python=%s is required, but reticulate was already initialized with Python version %s (conda env: %s).",
-        .__required_python_version__, py_ver, envname
-      ))
-    }
-  }
-}
-
-display_py_modules_status <- function() {
-  if (reticulate::py_available(initialize = FALSE)) {
-    for (mod in .required_python_modules) {
-      if (!check_python_module(mod$import)) {
-        cli::cli_alert_danger("Python module missing: {mod$import}")
-      } else {
-        cli::cli_alert_success("Python module available: {mod$import}")
-      }
-    }  
-  } else {
-    cli::cli_alert_warning("Python not yet initialized; skipping module check.")
-  }
-}
-
-all_py_modules_available <- function() {
-  if (!reticulate::py_available(initialize = FALSE)) {
-    return(FALSE)
-  }
-
-  all_available <- TRUE
-
-  for (mod in .required_python_modules) {
-    if (!check_python_module(mod$import)) {
-      all_available <- FALSE
-      break
-    }
-  }
-
-  return(all_available)
+  sink(NULL)
+  unlink(temp_file)
 }
