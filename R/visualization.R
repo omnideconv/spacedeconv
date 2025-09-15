@@ -399,6 +399,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type_1 celltype to plot
 #' @param cell_type_2 celltype to plot
+#' @param comparison_type method to calculate comparison, logfc (default) or zscore
 #' @param palette colorspace palette (sequential)
 #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
@@ -429,6 +430,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #'
 #' @export
 plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
+                            comparison_type = c("logfc", "zscore"),
                             palette = "Blue-Red", transform_scale = NULL,
                             sample_id = "sample01", image_id = "lowres",
                             reverse_palette = FALSE, background = NULL, zoom = TRUE,
@@ -439,23 +441,25 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750,
                             show_legend = TRUE, ...) {
+
+  comparison_type <- match.arg(comparison_type)
+
   spe <- filter_sample_id(spe, sample_id)
 
   df <- as.data.frame(cbind(SpatialExperiment::spatialCoords(spe), colData(spe)))
 
-  # comparison <-df[, cell_type_1] - df[, cell_type_2]
-  #
-  # cmean <- mean(comparison)
-  # csd <- sd(comparison)
-  #
-  # zcomparison <- (comparison-cmean)/csd
-  # comparison <- zcomparison
-
-
-  comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
-  # comparison <- comparison - 1
-  comparison <- log(comparison)
-  comparison[is.infinite(comparison)] <- NA # ?
+  if (comparison_type == "logfc") {
+    # log fold change
+    comparison <- (df[, cell_type_1] + 1) / (df[, cell_type_2] + 1)
+    comparison <- log(comparison)
+    comparison[is.infinite(comparison)] <- NA
+  } else if (comparison_type == "zscore") {
+    # z-score of difference
+    comparison <- df[, cell_type_1] - df[, cell_type_2]
+    cmean <- mean(comparison, na.rm = TRUE)
+    csd <- sd(comparison, na.rm = TRUE)
+    comparison <- (comparison - cmean) / csd
+  }
 
   df <- cbind(df, comparison = comparison)
 
