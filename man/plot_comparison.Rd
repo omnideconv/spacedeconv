@@ -8,6 +8,7 @@ plot_comparison(
   spe,
   cell_type_1 = NULL,
   cell_type_2 = NULL,
+  comparison_type = c("logfc", "zscore"),
   palette = "Blue-Red",
   transform_scale = NULL,
   sample_id = "sample01",
@@ -41,6 +42,8 @@ plot_comparison(
 \item{cell_type_1}{celltype to plot}
 
 \item{cell_type_2}{celltype to plot}
+
+\item{comparison_type}{method to calculate comparison, logfc (default) or zscore}
 
 \item{palette}{colorspace palette (sequential)}
 
