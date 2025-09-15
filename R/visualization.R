@@ -441,7 +441,6 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
                             legend_size = 20, palette_type = "diverging", density = TRUE,
                             save = FALSE, path = NULL, png_width = 1500, png_height = 750,
                             show_legend = TRUE, ...) {
-
   comparison_type <- match.arg(comparison_type)
 
   spe <- filter_sample_id(spe, sample_id)
