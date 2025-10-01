@@ -5,7 +5,7 @@
 [![test-coverage](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/omnideconv/spacedeconv/graph/badge.svg?token=OX9ZHSEP9L)](https://codecov.io/gh/omnideconv/spacedeconv)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
+spacedeconv is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
@@ -24,7 +24,7 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
 
 ## :sparkles: Features
 
-- unified access to 31 deconvolution tools
+- unified access to first- and second-generation deconvolution tools
 - direct deconvolution of immune cells
 - compute custom reference signatures to deconvolute any celltype
 - flexible visualization functions
