@@ -684,7 +684,7 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
   transform_scale <- tolower(ifelse(is.null(transform_scale), "none", transform_scale))
 
   # Adjust data if there are negative values
-  if (shift_positive & min(df[[to_plot]]) < 0) {
+  if (shift_positive && min(df[[to_plot]]) < 0) {
     df[[to_plot]] <- df[[to_plot]] - min(df[[to_plot]]) # Shift to non-negative values
     print("Negative Values in data, subtracting minimum to shift distribution to > 0")
   }
