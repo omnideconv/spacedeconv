@@ -98,6 +98,7 @@ Config/reticulate:
       list(package = "scikit-learn"), 
       list(package = "scanpy", pip=TRUE), 
       list(package = "cell2location", pip=TRUE),
-      list(package = "scaden", pip = TRUE)
+      list(package = "scaden", pip = TRUE),
+      list(package = "anndata", pip = TRUE)
     )
   )  

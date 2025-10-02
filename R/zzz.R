@@ -47,27 +47,7 @@ NULL
 
           reticulate::use_miniconda(condaenv = envname, required = FALSE)
           reticulate::py_config()
-          reticulate::configure_environment(pkgname, force = TRUE)
-
-          if (!reticulate::py_module_available("anndata")) {
-            anndata::install_anndata()
-          }
-
-          # if (!reticulate::py_module_available("python.app")) { # only MAC!
-          #   reticulate::py_install("python.app", pip=TRUE)
-          # }
-
-          if (!reticulate::py_module_available("sklearn")) {
-            reticulate::py_install("scikit-learn")
-          }
-
-          if (!reticulate::py_module_available("community")) {
-            reticulate::py_install("python-louvain", pip = TRUE)
-          }
-          if (!reticulate::py_module_available("cell2location")) {
-            reticulate::py_install("cell2location", pip = TRUE)
-          }
-          # })
+          reticulate::configure_environment(pkgname, force = FALSE)
         })
       })
     })
