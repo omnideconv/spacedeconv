@@ -9,6 +9,8 @@ NULL
 
   envname <- getOption("omnideconv.conda_env", default = "r-omnideconv")
 
+  cli::cli_alert("Using conda environment '{env_name}'")
+
   temp_file <- tempfile()
   sink(temp_file)
 
@@ -70,6 +72,8 @@ NULL
       })
     })
   })
+
+
 
   # bug fix
   Csparse_validate <- "CsparseMatrix_validate"
