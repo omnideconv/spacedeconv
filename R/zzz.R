@@ -22,8 +22,8 @@ NULL
           # reticulate::py_capture_output({
           # Make sure miniconda is installed
           if (!dir.exists(reticulate::miniconda_path())) {
-            message("Setting python version in miniconda to be 3.8")
-            Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = 3.8)
+            message("Setting python version in miniconda to be 3.10")
+            Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = 3.10)
             message("Setting up miniconda environment..")
             suppressMessages(reticulate::install_miniconda())
           }
