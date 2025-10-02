@@ -82,7 +82,7 @@ Remotes:
     omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
-    drieslab/Giotto,
+    drieslab/Giotto@v3.3.2,
     MarcElosua/SPOTlight,
     YingMa0107/CARD,
     drighelli/SpatialExperiment, 
