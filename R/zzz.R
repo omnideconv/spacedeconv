@@ -53,8 +53,6 @@ NULL
     })
   })
 
-
-
   # bug fix
   Csparse_validate <- "CsparseMatrix_validate"
 
