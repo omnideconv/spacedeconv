@@ -92,7 +92,7 @@ Config/testthat/edition: 3
 Config/reticulate: 
   list(
     packages = list(
-      list(package = "python-igraph, pip=TRUE"), 
+      list(package = "python-igraph", pip=TRUE), 
       list(package = "leidenalg", pip=TRUE),
       list(package = "python-louvain", pip=TRUE), 
       list(package = "scikit-learn", pip=TRUE), 
