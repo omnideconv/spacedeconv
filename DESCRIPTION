@@ -92,10 +92,10 @@ Config/testthat/edition: 3
 Config/reticulate: 
   list(
     packages = list(
-      list(package = "python-igraph"), 
-      list(package = "leidenalg"),
-      list(package = "python-louvain"), 
-      list(package = "scikit-learn"), 
+      list(package = "python-igraph, pip=TRUE"), 
+      list(package = "leidenalg", pip=TRUE),
+      list(package = "python-louvain", pip=TRUE), 
+      list(package = "scikit-learn", pip=TRUE), 
       list(package = "scanpy", pip=TRUE), 
       list(package = "cell2location", pip=TRUE),
       list(package = "scaden", pip = TRUE),
