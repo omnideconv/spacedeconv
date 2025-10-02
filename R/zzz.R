@@ -9,7 +9,7 @@ NULL
 
   envname <- getOption("omnideconv.conda_env", default = "r-omnideconv")
 
-  cli::cli_alert("Using conda environment '{env_name}'")
+  cli::cli_alert("Using conda environment '{envname}'")
 
   temp_file <- tempfile()
   sink(temp_file)
