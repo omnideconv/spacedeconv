@@ -55,7 +55,6 @@ Suggests:
     spacexr,
     SPOTlight,
     immunedeconv,
-    omnideconv,
     devtools,
     pkgdown,
     rmarkdown,
@@ -79,7 +78,6 @@ Suggests:
     AnnotationDbi, 
     pbapply
 Remotes:
-    omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
     drieslab/Giotto@v3.3.2,
@@ -87,7 +85,6 @@ Remotes:
     YingMa0107/CARD,
     drighelli/SpatialExperiment, 
     dviraran/xCell, 
-    omnideconv/MuSiC
 Config/testthat/edition: 3
 Config/reticulate: 
   list(

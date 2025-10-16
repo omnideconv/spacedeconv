@@ -55,9 +55,6 @@ jobs:
       - name: Install pak
         run: Rscript -e "install.packages('pak', repos='https://cran.rstudio.com/')"
 
-      #- name: harmony
-      #  run: Rscript -e "pak::pkg_install('omnideconv/harmony')"
-
       # - name: BiocManager
       #   run: Rscript -e "pak::pkg_install('BiocManager')"
       #
@@ -77,7 +74,7 @@ jobs:
         run: Rscript -e "install.packages('Matrix')"
 
       - name: Install Test Dependencies
-        run: Rscript -e "pak::pkg_install(c('testthat', 'omnideconv/immunedeconv', 'omnideconv/omnideconv'))" # drighelli/SpatialExperiment'
+        run: Rscript -e "pak::pkg_install(c('testthat', 'omnideconv/immunedeconv'))" # drighelli/SpatialExperiment'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

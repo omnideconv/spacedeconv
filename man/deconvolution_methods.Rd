@@ -17,10 +17,6 @@ List of supported deconvolution methods
 Spatial Algorithms \cr
 \code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS}, \code{Cell2Location}, \code{DOT}
 
-Second-generation Algorithms (Omnideconv) \cr
-\code{AutoGeneS}, \code{BayesPrism}, \code{Bisque}, \code{BSeq-sc}, \code{CIBERSORTx}, \code{CDSeq}, \code{CPM}, \code{DWLS}, \code{MOMF},
-\code{MuSiC}, \code{Scaden}, \code{SCDC}
-
 First-generation Methods (Immunedeconv) \cr
 \code{MCPcounter}, \code{EPIC}, \code{quanTIseq}, \code{xCell}, \code{CIBERSORT}, \code{CIBERSORT (abs.)},
 \code{TIMER}, \code{ConsensusTME}, \code{ABIS}, \code{ESTIMATE}

@@ -49,9 +49,6 @@ jobs:
       - name: Install Immunedeconv
         run: Rscript -e "pak::pkg_install('omnideconv/immunedeconv')"
 
-      - name: Install Omnideconv
-        run: Rscript -e "pak::pkg_install('omnideconv/omnideconv')"
-
       - name: Install OmnipathR
         run: Rscript -e "pak::pkg_install('OmnipathR')"
 
