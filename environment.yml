@@ -1,0 +1,113 @@
+# This environment requires Linux
+# macOS and Windows are not supported
+
+name: r-omnideconv
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - bioconda
+  
+dependencies:
+  - r-base = 4.3.3
+  - r-essentials
+  - python = 3.10
+  - compilers
+  - r-devtools
+
+ # conda-forge R packages
+  - r-pak
+  - r-anndata
+  - r-sf
+  - r-ggpubr
+  - r-spatstat.geom
+  - r-spatstat.explore
+  - r-progress
+  - r-circlize
+  - r-patchwork
+  - r-reticulate
+  - r-corrplot
+  - r-ggridges
+  - r-testit
+  - r-multimode
+  - r-psych
+  - r-immunedeconv
+  - r-seurat = 4.4.0
+  - r-spacexr
+  - r-cli
+  - r-pkgdown
+  - r-rmarkdown
+  - r-uuid
+  - bioconductor-scran
+  - r-knitr
+  - r-testthat
+  - r-tidyr
+  - r-xcell
+  - r-markdown
+  - r-epic
+  - r-seuratobject
+  - r-plotly
+  - r-pbapply
+  - r-terra
+  - r-magick
+  - r-igraph
+
+  # Bioconductor R packages
+  - bioconductor-singlecellexperiment
+  - bioconductor-spatialexperiment
+  - bioconductor-summarizedexperiment
+  - bioconductor-edger
+  - bioconductor-s4vectors
+  - bioconductor-delayedarray
+  - bioconductor-decoupler
+  - bioconductor-complexheatmap
+  - bioconductor-omnipathr # currently not available for R 4.4 at bioconda
+  - bioconductor-dropletutils
+  - bioconductor-spotlight
+  - bioconductor-scuttle
+  - bioconductor-orthology.eg.db
+  - bioconductor-org.mm.eg.db
+  - bioconductor-org.hs.eg.db
+  - bioconductor-annotationdbi
+
+  # Python packages
+  - python-igraph
+  - leidenalg
+  - python-louvain
+  - scikit-learn
+  - scanpy
+  - scaden
+
+  # cell2location packages
+  - pytest >= 6.2.2
+  - numpy >= 1.18.5
+  - pandas >= 1.0.4
+  - jupyter >= 1.0.0
+  - ipykernel >= 5.3.4
+  - leidenalg >= 0.8.0
+  - python-igraph >= 0.8.2
+  - nose >= 1.3.7
+  - scanpy >= 1.5.1
+  - scipy >= 1.4.1
+  - louvain >= 0.6.1
+  - hyperopt >= 0.2.4
+  - loompy >= 2.0.16
+  - cmake >= 3.17.0
+  - dill >= 0.3.1
+  - ipython >= 7.15.0
+  - bbknn >= 1.3.9
+  - seaborn >= 0.10.1
+  - matplotlib >= 3.2.1
+  - request >= 2.83.1
+  - cython >= 0.29.17
+
+  - scvi-tools = 0.20.3
+  - pytorch = 2.2.2
+  - pytorch-cuda = 11.8
+  - pyro-ppl = 1.9.1
+
+  - pip
+  - pip:
+      - cell2location==0.1.3
+  

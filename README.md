@@ -9,18 +9,26 @@ spacedeconv is a unified interface to first- and second-generation deconvolution
 
 ## :arrow_down: Installation
 
-`spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager:
+We highly recommend to install `spacedeconv` in a new conda environment, since many different packages need to be included.
+
+First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba:
 
 ```r
-# install the pak package manager
-install.packages("pak")
-
-# recommended installation, deconvolution tools are installed on-demand
-pak::pkg_install("omnideconv/spacedeconv")
-
-# full installation including all deconvolution tools
-pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
+conda install -n base -c conda-forge mamba
 ```
+
+The, create a new environment called "r-omnideconv" with mamba:
+```r
+mamba env create -f environment.yml
+```
+
+Finally, start R inside the r-omnideconv conda environment and install the missing packages that are not available via conda and spacedeconv:
+```r
+pak::pkg_install("drieslab/Giotto@v3.3.2")
+devtools::install_github('YingMa0107/CARD', upgrade = "never")
+pak::pkg_install("felixpetschko/spacedeconv", dependencies = FALSE, upgrade = FALSE)
+```
+
 
 ## :sparkles: Features
 
