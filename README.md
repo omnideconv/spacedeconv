@@ -23,12 +23,13 @@ in this github repo:
 mamba env create -f https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml
 ```
 
-Finally, start R inside the r-omnideconv conda environment and install the missing packages that are not available via conda and spacedeconv:
+Start R inside the r-omnideconv conda environment: 
 ```r
 conda activate r-omnideconv
 R
 ```
 
+Install the missing packages that are not available via conda and spacedeconv:
 ```r
 pak::pkg_install("drieslab/Giotto@v3.3.2")
 devtools::install_github('YingMa0107/CARD', upgrade = "never")
