@@ -17,12 +17,12 @@ First, a tool for fast dependency resolution is needed, therefore we recommend i
 conda install -c conda-forge mamba
 ```
 
-Download the environment.yml file in this github repo:
+Download the environment.yml file of this github repo:
 ```r
 wget https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml -O environment.yml
-```r
+```
 
-Then, create a new environment called "r-omnideconv" via mamba with the environment.yml file:
+Create a new environment called "r-omnideconv" via mamba with the environment.yml file:
 ```r
 mamba env create -f https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml
 ```
