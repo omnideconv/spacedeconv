@@ -24,7 +24,7 @@ wget https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environmen
 
 Create a new environment called "r-omnideconv" via mamba with the environment.yml file:
 ```r
-mamba env create -f https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml
+mamba env create -f environment.yml
 ```
 
 Start R inside the r-omnideconv conda environment: 
