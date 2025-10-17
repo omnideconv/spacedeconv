@@ -20,7 +20,7 @@ conda install -c conda-forge mamba
 Then, create a new environment called "r-omnideconv" via mamba with the environment.yml file
 in this github repo:
 ```r
-mamba env create -f environment.yml
+mamba env create -f https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml
 ```
 
 Finally, start R inside the r-omnideconv conda environment and install the missing packages that are not available via conda and spacedeconv:
