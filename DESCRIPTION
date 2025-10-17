@@ -13,7 +13,10 @@ VignetteBuilder: knitr
 LazyData: FALSE
 Depends: 
     R (>= 4.1.0)
-Imports: 
+Imports:
+    Giotto,
+    CARD
+Suggests: 
     utils,
     methods,
     remotes,
@@ -50,8 +53,6 @@ Imports:
     stats, 
     OmnipathR, 
     scales, 
-    Giotto
-Suggests: 
     spacexr,
     SPOTlight,
     immunedeconv,
@@ -60,7 +61,6 @@ Suggests:
     rmarkdown,
     uuid,
     scran,
-    CARD,
     knitr,
     testthat (>= 3.0.0),
     scuttle,
