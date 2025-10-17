@@ -14,7 +14,7 @@ NULL
 
   if (!dir.exists(reticulate::miniconda_path())) {
     message("Setting python version in miniconda to be 3.10")
-    Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = 3.10)
+    Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = "3.10")
     message("Installing miniconda..")
     suppressMessages(reticulate::install_miniconda())
   }
