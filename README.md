@@ -9,7 +9,7 @@ spacedeconv is a unified interface to first- and second-generation deconvolution
 
 ## :arrow_down: Installation
 
-We highly recommend to install `spacedeconv` in a new Conda environment, since many different packages need to be included.
+Since many different packages need to be included, we highly recommend to install `spacedeconv` in a new Conda environment with the following commands.
 
 First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
 
