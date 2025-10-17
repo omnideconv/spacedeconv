@@ -126,7 +126,7 @@ required_packages <- list(
   "bseqsc" = c("shenorrlab/bseqsc"),
   "cibersortx" = c("uuid"),
   "cpm" = c("amitfrish/scBio"),
-  "scaden" = c("reticulate"),
+  "scaden" = c("reticulate")
 )
 
 
