@@ -39,7 +39,6 @@ dependencies:
   - r-pkgdown
   - r-rmarkdown
   - r-uuid
-  - bioconductor-scran
   - r-knitr
   - r-testthat
   - r-tidyr
@@ -70,6 +69,7 @@ dependencies:
   - bioconductor-org.mm.eg.db
   - bioconductor-org.hs.eg.db
   - bioconductor-annotationdbi
+  - bioconductor-scran
 
   # Python packages
   - python-igraph
