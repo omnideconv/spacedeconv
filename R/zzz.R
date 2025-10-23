@@ -6,7 +6,7 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
 
-  cli::cli_alert("checking spacedeconv environment and dependencies")
+  cli::cli_alert("Setting up spacedeconv environment..")
 
   Sys.setenv(RETICULATE_AUTOCONFIGURE = "FALSE")
   options(Seurat.object.assay.version = "v3")
