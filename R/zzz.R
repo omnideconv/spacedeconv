@@ -16,11 +16,11 @@ NULL
   cli::cli_alert("Using conda environment '{envname}'")
 
   if (!dir.exists(reticulate::miniconda_path())) {
-    message("Setting python version in miniconda to be 3.10")
+    cli::cli_alert("Setting python version in miniconda to be 3.10")
     Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = "3.10")
-    message("Installing miniconda..")
+    cli::cli_alert("Installing miniconda..")
     reticulate::install_miniconda()
-    message("Miniconda installation complete")
+    cli::cli_alert("Miniconda installation complete")
   }
 
   if (!(envname %in% reticulate::conda_list()$name)) {
