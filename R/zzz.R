@@ -8,6 +8,9 @@ NULL
 
   cli::cli_alert("checking spacedeconv environment and dependencies")
 
+  Sys.setenv(RETICULATE_AUTOCONFIGURE = "FALSE")
+  options(Seurat.object.assay.version = "v3")
+
   envname <- getOption("omnideconv.conda_env", default = "r-omnideconv")
 
   cli::cli_alert("Using conda environment '{envname}'")
