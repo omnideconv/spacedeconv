@@ -80,7 +80,7 @@ Remotes:
     dmcable/spacexr,
     drieslab/Giotto@v3.3.2,
     MarcElosua/SPOTlight,
-    YingMa0107/CARD,
+    YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0,
     drighelli/SpatialExperiment, 
     dviraran/xCell, 
 Config/testthat/edition: 3
