@@ -9,6 +9,8 @@ spacedeconv is a unified interface to first- and second-generation deconvolution
 
 ## :arrow_down: Installation
 
+The current `spacedeconv` installation is only available for the **linux-64** platform.
+
 Since many different packages need to be included, we highly recommend to install `spacedeconv` in a new Conda environment with the following commands.
 
 First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
