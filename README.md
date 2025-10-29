@@ -33,7 +33,7 @@ conda activate r-omnideconv
 R
 ```
 
-Install the missing packages that are not available via conda and spacedeconv:
+Install the missing packages that are not available via conda as well as spacedeconv:
 ```r
 pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
 devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
