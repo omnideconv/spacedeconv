@@ -122,35 +122,9 @@ cite both our package and the method(s) you are using.
 
 > Constantin Zackl, Maria Zopoglou, Reto Stauffer, Markus Ausserhofer, Marieke E. Ijsselsteijn, Gregor Sturm, Noel Filipe da Cunha Carvalho de Miranda, Francesca Finotello. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1
 
-| **First-gen (immunedeconv)** | **First-gen mouse (immunedeconv)** | **Second-gen (OmniDeconv + spatial methods)** |
-|-------------------------------|------------------------------------|-----------------------------------------------|
-| <ul>                         |
-|   <li>MCPcounter</li>        |
-|   <li>EPIC</li>              |
-|   <li>quanTIseq</li>         |
-|   <li>xCell</li>             |
-|   <li>CIBERSORT</li>         |
-|   <li>CIBERSORT (abs.)</li>  |
-|   <li>TIMER</li>             |
-|   <li>ConsensusTME</li>      |
-|   <li>ABIS</li>              |
-|   <li>ESTIMATE</li>          |
-| </ul>                        |
-| <ul>                         |
-|   <li>mMCPcounter</li>       |
-|   <li>seqImmuCC</li>         |
-|   <li>DCQ</li>               |
-|   <li>BASE</li>              |
-| </ul>                        |
-| <ul>                         |
-|   <li>RCTD</li>              |
-|   <li>SPOTlight</li>         |
-|   <li>CARD</li>              |
-|   <li>spatialDWLS</li>       |
-|   <li>Cell2location</li>     |
-|   <li>DOT</li>               |
-| </ul>                        |
-
+| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (omnideconv + spatial Methods)                                                                                                                                                                                                                                                           |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>DOT</li></ul> |
 
 # References
 
