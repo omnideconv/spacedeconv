@@ -21,7 +21,7 @@ conda install -c conda-forge mamba
 
 Download the environment.yml file of this github repo:
 ```r
-wget https://raw.githubusercontent.com/felixpetschko/spacedeconv/main/environment.yml -O environment.yml
+wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
 ```
 
 Create a new environment called "r-omnideconv" via mamba with the environment.yml file:
@@ -39,7 +39,7 @@ Install the missing packages that are not available via conda as well as *spaced
 ```r
 pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
 devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
-pak::pkg_install("felixpetschko/spacedeconv", dependencies = FALSE, upgrade = FALSE)
+pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
 ```
 
 
