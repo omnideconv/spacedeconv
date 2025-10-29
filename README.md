@@ -5,13 +5,13 @@
 [![test-coverage](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/omnideconv/spacedeconv/graph/badge.svg?token=OX9ZHSEP9L)](https://codecov.io/gh/omnideconv/spacedeconv)
 
-spacedeconv is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
+*spacedeconv* is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
-The current `spacedeconv` installation is only available for the **linux-64** platform.
+**Note:** The current *spacedeconv* installation is only available for the **linux-64** platform.
 
-Since many different packages need to be included, we highly recommend to install `spacedeconv` in a new Conda environment with the following commands.
+Since many different packages need to be included, we highly recommend to install *spacedeconv* in a new Conda environment with the following commands.
 
 First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
 
@@ -35,7 +35,7 @@ conda activate r-omnideconv
 R
 ```
 
-Install the missing packages that are not available via conda as well as spacedeconv:
+Install the missing packages that are not available via conda as well as *spacedeconv*:
 ```r
 pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
 devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
@@ -95,7 +95,7 @@ result <- spacedeconv::deconvolute(
 
 ### 3. Visualization
 
-spacedeconv includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
+*spacedeconv* includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
 plot_celltype(spe, cell_type="spotlight_B.cells")
@@ -114,7 +114,7 @@ Most methods do not require additional software/tokens, but there are a few exce
 
 ## Available methods, Licenses, Citations
 
-Note that, while _spacedeconv_ itself is free ([GPL
+Note that, while *spacedeconv* itself is free ([GPL
 3.0](https://github.com/omnideconv/omnideconv/blob/main/LICENSE)), you may
 need to obtain a license to use the individual methods. See the table
 below for more information. If you use this package in your work, please
