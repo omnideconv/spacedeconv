@@ -101,17 +101,6 @@ result <- spacedeconv::deconvolute(
 plot_celltype(spe, cell_type="spotlight_B.cells")
 ```
 
-## :bulb: Additional Requirements
-
-Most methods do not require additional software/tokens, but there are a few exceptions:
-
-- A working version of Docker is required for CIBERSORTx
-- A token for CIBERSORTx is required from this website:
-  <https://cibersortx.stanford.edu/>
-- The CIBERSORT source code is required for BSeq-sc (see tutorial in
-  ?omnideconv::bseqsc_config)
-- SpatialExperiment requires `magick` to be installed: `sudo apt-get install libmagick++-dev`
-
 ## Available methods, Licenses, Citations
 
 Note that, while *spacedeconv* itself is free ([GPL
