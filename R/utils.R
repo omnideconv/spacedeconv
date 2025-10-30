@@ -121,7 +121,7 @@ get_results_from_object <- function(spatial_obj) {
 #' The dependencies for each method
 #'
 required_packages <- list(
-  "cpm" = c("amitfrish/scBio"),
+  "cpm" = c("amitfrish/scBio")
 )
 
 
