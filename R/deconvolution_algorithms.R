@@ -23,7 +23,6 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
-  "SCDC" = "scdc",
   # immunedeconv
   "MCPcounter" = "mcp_counter",
   "EPIC" = "epic",
