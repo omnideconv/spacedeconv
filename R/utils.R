@@ -165,11 +165,6 @@ check_and_install <- function(method) {
   })
   sapply(github_pkgs, function(pkgname) {
     bare_pkgname <- sub(".*?/", "", pkgname)
-    if (bare_pkgname == "CDSeq_R_Package") {
-      bare_pkgname <- "CDSeq"
-    } else if (bare_pkgname == "dwls") {
-      bare_pkgname <- "DWLS"
-    }
     if (!requireNamespace(bare_pkgname, quietly = TRUE)) {
       if (!repositories_set) {
         utils::setRepositories(graphics = FALSE, ind = c(1, 2, 3, 4, 5))

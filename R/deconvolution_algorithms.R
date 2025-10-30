@@ -24,7 +24,6 @@ deconvolution_methods <- c(
   "cell2location" = "cell2location",
   "DOT" = "dot",
   "CIBERSORTx" = "cibersortx",
-  "CDSeq" = "cdseq",
   "CPM" = "cpm",
   "DWLS" = "dwls",
   "MOMF" = "momf",
