@@ -121,7 +121,6 @@ get_results_from_object <- function(spatial_obj) {
 #' The dependencies for each method
 #'
 required_packages <- list(
-  "cibersortx" = c("uuid"),
   "cpm" = c("amitfrish/scBio"),
   "scaden" = c("reticulate")
 )

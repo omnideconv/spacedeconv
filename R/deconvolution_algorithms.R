@@ -23,7 +23,6 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
-  "CIBERSORTx" = "cibersortx",
   "CPM" = "cpm",
   "DWLS" = "dwls",
   "MOMF" = "momf",
