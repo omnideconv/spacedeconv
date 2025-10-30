@@ -23,7 +23,6 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
-  "AutoGeneS" = "autogenes",
   "BayesPrism" = "bayesprism",
   "Bisque" = "bisque",
   "BSeq-sc" = "bseqsc",
