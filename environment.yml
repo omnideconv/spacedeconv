@@ -34,7 +34,6 @@ dependencies:
   - r-psych
   - r-immunedeconv
   - r-seurat = 4.4.0
-  - r-spacexr
   - r-cli
   - r-pkgdown
   - r-rmarkdown
@@ -70,6 +69,7 @@ dependencies:
   - bioconductor-org.hs.eg.db
   - bioconductor-annotationdbi
   - bioconductor-scran
+  - r-spacexr
 
   # Python packages
   - python-igraph
