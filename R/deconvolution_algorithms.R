@@ -24,7 +24,6 @@ deconvolution_methods <- c(
   "cell2location" = "cell2location",
   "DOT" = "dot",
   "BayesPrism" = "bayesprism",
-  "Bisque" = "bisque",
   "BSeq-sc" = "bseqsc",
   "CIBERSORTx" = "cibersortx",
   "CDSeq" = "cdseq",
