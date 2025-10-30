@@ -39,7 +39,7 @@ To build cell-type specific signatures for second-generation deconvolution space
 * [AnnData](https://anndata.dynverse.org/)
 * [Seurat](https://satijalab.org/seurat/)
 
-Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for MuSiC, SCDC, BSeq-sc, CDSeq and CARD with the parameter `batch_id_col`.
+Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for CARD with the parameter `batch_id_col`.
 
 ```{r annotationParameters, eval=FALSE}
 signature <- build_model(single_cell_data_1,
