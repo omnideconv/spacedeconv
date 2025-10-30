@@ -122,7 +122,6 @@ get_results_from_object <- function(spatial_obj) {
 #'
 required_packages <- list(
   "cpm" = c("amitfrish/scBio"),
-  "scaden" = c("reticulate")
 )
 
 
@@ -342,13 +341,6 @@ addCustomAnnotation <- function(spatialExp, columnName, values) {
 get_spot_coordinates <- function(df, spotid) {
   df <- as.data.frame(df)
   return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
-}
-
-
-#' check if scaden can be found in the path variable
-check_path_scaden <- function() {
-  path <- paste0(reticulate::miniconda_path(), "/envs/r-omnideconv/bin/") # scaden is in there
-  Sys.setenv(PATH = paste0(Sys.getenv("PATH"), ":", path))
 }
 
 #' Convert assays to sparse Matrices

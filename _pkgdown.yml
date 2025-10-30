@@ -91,7 +91,6 @@ reference:
       - checkENSEMBL
       - topfeat
       - get_spot_coordinates
-      - check_path_scaden
       - spacedeconvstartup
       - check_datatype
       - get_palette_type

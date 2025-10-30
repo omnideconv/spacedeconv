@@ -77,7 +77,6 @@ dependencies:
   - python-louvain
   - scikit-learn
   - scanpy
-  - scaden
 
   # cell2location packages
   - pytest >= 6.2.2
