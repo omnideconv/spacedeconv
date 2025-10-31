@@ -88,7 +88,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
 
   deconvolution <- Giotto::runDWLSDeconv(obj, sign_matrix = signature, n_cell = 10, return_gobject = TRUE)
 
-  df <- data.frame(getSpatialEnrichment(deconvolution, output = "data.table"))
+  df <- data.frame(Giotto::getSpatialEnrichment(deconvolution, output = "data.table"))
 
   df$cell_ID <- NULL
 
