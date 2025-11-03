@@ -106,7 +106,6 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
   }
 
 
-
   cli::cli_progress_step(
     msg = "Checking for ENSEMBL Identifiers",
     msg_done = "Finished Preprocessing"

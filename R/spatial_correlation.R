@@ -96,7 +96,6 @@ spatialcorr <- function(spe,
   }
 
 
-
   # Select variables of interests
   # If variables is not provided but method is specified, the function selects variables based on those available in the dataset that start with the specified method.
   if (is.null(variables) && !is.null(method)) {
