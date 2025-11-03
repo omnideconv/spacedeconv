@@ -68,13 +68,32 @@ The main workflow consists of:
 2. Deconvolution
 3. Visualization
 
+### Optional: Load example dataset
+
+To explore the package, start by loading some of the built-in example dataset.
+
+```r
+library(spacedeconv)
+
+data("single_cell_data_1")
+# data("single_cell_data_2")
+# data("single_cell_data_3")
+# data("single_cell_data_4")
+
+data("spatial_data_1")
+# data("spatial_data_2")
+# data("spatial_data_3")
+# data("spatial_data_4")
+```
+
+
 ### 1. Build a Signature Matrix
 
 Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
 signature <- spacedeconv::build_model(
-  single_cell_object,
+  single_cell_data_1,
   cell_type_col = "celltype_major",
   method = "spotlight",
   assay_sc="cpm"
@@ -87,7 +106,7 @@ While some methods are able to directly estimate immune cell abundances other to
 
 ```r
 result <- spacedeconv::deconvolute(
-  spatial_object,
+  spatial_data_1,
   signature,
   method = "spotlight"
 )
