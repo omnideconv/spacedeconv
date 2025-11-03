@@ -14,7 +14,6 @@ testthat::test_that("subsetSCE subsets the SingleCellExperiment correctly", {
 })
 
 
-
 testthat::test_that("Normalization works", {
   normalized <- spacedeconv::normalize(sce, method = "cpm", assay = "counts")
 

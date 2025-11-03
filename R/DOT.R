@@ -6,7 +6,6 @@ build_model_dot <- function() {
 }
 
 
-
 #' Deconvolute DOT
 #'
 #' @param single_cell_obj Single Cell Experiment

@@ -124,10 +124,6 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 }
 
 
-
-
-
-
 #' Isolate Regions within a SpatialExperiment Object
 #'
 #' Tailor a `SpatialExperiment` object to focus on specific areas by defining ranges in the spatial coordinates.

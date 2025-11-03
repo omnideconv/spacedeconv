@@ -305,7 +305,6 @@ checkENSEMBL <- function(names) {
 }
 
 
-
 #' Annotate Specific Spots within a SpatialExperiment Object
 #'
 #' This function allows for the annotation of specified spots within a `SpatialExperiment` object.

@@ -479,7 +479,6 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 }
 
 
-
 #' Function to plot gene expression
 #'
 #' Generate Hex Plot of a SpatialExperiment containing deconvolution results
@@ -726,8 +725,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # for the scales package
     accuracy <- 10^(-nDigits)
   }
-
-
 
 
   # Check if plot is smoothed

@@ -285,8 +285,6 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
 
-
-
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is missing or null, but is required.")
   }
