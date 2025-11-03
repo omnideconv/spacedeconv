@@ -68,9 +68,9 @@ The main workflow consists of:
 2. Deconvolution
 3. Visualization
 
-### Optional: Load example dataset
+### Optional: Load example datasets
 
-To explore the package, start by loading some of the built-in example dataset.
+To explore the package, start by loading some of the built-in example datasets.
 
 ```r
 library(spacedeconv)
