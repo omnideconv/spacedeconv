@@ -62,13 +62,9 @@ Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioc
 
 ## :technologist: Usage
 
-The main workflow consists of:
+The main workflow consists of the following steps:
 
-1. Reference signature computation using annotated single-cell data
-2. Deconvolution
-3. Visualization
-
-### 1. Load example datasets
+### 1. Load datasets
 
 To explore the package, start by loading some of the built-in example datasets.
 
