@@ -125,7 +125,7 @@ deconv <- spacedeconv::deconvolute(
 
 ### 5. Visualization
 
-_spacedeconv_ includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
+_spacedeconv_ includes highly-flexible visualization functions.
 
 ```r
 plot_spatial(
