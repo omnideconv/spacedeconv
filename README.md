@@ -5,13 +5,13 @@
 [![test-coverage](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/omnideconv/spacedeconv/graph/badge.svg?token=OX9ZHSEP9L)](https://codecov.io/gh/omnideconv/spacedeconv)
 
-*spacedeconv* is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
+_spacedeconv_ is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
-**Note:** The current *spacedeconv* installation is only available for the **linux-64** platform.
+**Note:** The current _spacedeconv_ installation is only available for the **linux-64** platform.
 
-Since many different packages need to be included, we highly recommend to install *spacedeconv* in a new Conda environment with the following commands.
+Since many different packages need to be included, we highly recommend to install _spacedeconv_ in a new Conda environment with the following commands.
 
 First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
 
@@ -20,28 +20,31 @@ conda install -c conda-forge mamba
 ```
 
 Download the environment.yml file of this github repo:
+
 ```r
 wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
 ```
 
 Create a new environment called "r-omnideconv" via mamba with the environment.yml file:
+
 ```r
 mamba env create -f environment.yml
 ```
 
-Start R inside the r-omnideconv conda environment: 
+Start R inside the r-omnideconv conda environment:
+
 ```r
 conda activate r-omnideconv
 R
 ```
 
-Install the missing packages that are not available via conda as well as *spacedeconv*:
+Install the missing packages that are not available via conda as well as _spacedeconv_:
+
 ```r
 pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
 devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
 pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
 ```
-
 
 ## :sparkles: Features
 
@@ -93,7 +96,6 @@ spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 ```
 
-
 ### 3. Build a Signature Matrix
 
 Build a cell type specific signature matrix from annotated single-cell reference data.
@@ -123,7 +125,7 @@ deconv <- spacedeconv::deconvolute(
 
 ### 5. Visualization
 
-*spacedeconv* includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
+_spacedeconv_ includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
 plot_spatial(
@@ -136,7 +138,7 @@ plot_spatial(
 
 ## Available methods, Licenses, Citations
 
-Note that, while *spacedeconv* itself is free ([GPL
+Note that, while _spacedeconv_ itself is free ([GPL
 3.0](https://github.com/omnideconv/omnideconv/blob/main/LICENSE)), you may
 need to obtain a license to use the individual methods. See the table
 below for more information. If you use this package in your work, please
@@ -144,8 +146,8 @@ cite both our package and the method(s) you are using.
 
 > Constantin Zackl, Maria Zopoglou, Reto Stauffer, Markus Ausserhofer, Marieke E. Ijsselsteijn, Gregor Sturm, Noel Filipe da Cunha Carvalho de Miranda, Francesca Finotello. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1
 
-| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (spatial methods)                                                                                                                                                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (spatial methods)                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>DOT</li></ul> |
 
 # References
