@@ -5,7 +5,6 @@
 NULL
 
 .onLoad <- function(libname, pkgname) {
-
   cli::cli_alert("Setting up spacedeconv environment..")
 
   Sys.setenv(RETICULATE_AUTOCONFIGURE = "FALSE")
