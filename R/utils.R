@@ -121,18 +121,7 @@ get_results_from_object <- function(spatial_obj) {
 #' The dependencies for each method
 #'
 required_packages <- list(
-  "autogenes" = c("reticulate"),
-  "bisque" = c("BisqueRNA"),
-  "bseqsc" = c("shenorrlab/bseqsc"),
-  "cdseq" = c("omnideconv/CDSeq"),
-  "cibersortx" = c("uuid"),
-  "cpm" = c("amitfrish/scBio"),
-  "dwls" = c("omnideconv/DWLS"),
-  "momf" = c("omnideconv/MOMF"),
-  "music" = c("omnideconv/MuSiC"),
-  "scaden" = c("reticulate"),
-  "scdc" = c("omnideconv/SCDC"),
-  "bayesprism" = c("omnideconv/BayesPrism")
+  "cpm" = c("amitfrish/scBio")
 )
 
 
@@ -166,11 +155,6 @@ check_and_install <- function(method) {
             "to install the packages required for it: ", packages
           )
         )
-        message(
-          "To install the dependencies for all methods at once, run ",
-          "devtools::install_github(\"omnideconv/omnideconv\", ",
-          "dependencies = c(\"Imports\", \"Suggests\"))"
-        )
       }
       if (package_download_allowed) {
         utils::install.packages(pkgname)
@@ -179,11 +163,6 @@ check_and_install <- function(method) {
   })
   sapply(github_pkgs, function(pkgname) {
     bare_pkgname <- sub(".*?/", "", pkgname)
-    if (bare_pkgname == "CDSeq_R_Package") {
-      bare_pkgname <- "CDSeq"
-    } else if (bare_pkgname == "dwls") {
-      bare_pkgname <- "DWLS"
-    }
     if (!requireNamespace(bare_pkgname, quietly = TRUE)) {
       if (!repositories_set) {
         utils::setRepositories(graphics = FALSE, ind = c(1, 2, 3, 4, 5))
@@ -195,11 +174,6 @@ check_and_install <- function(method) {
             "to install the packages required for it: ", packages
           )
         )
-        message(
-          "To install the dependencies for all methods at once, run ",
-          "devtools::install_github(\"omnideconv/omnideconv\", ",
-          "dependencies = c(\"Imports\", \"Suggests\"))"
-        )
       }
       if (package_download_allowed) {
         remotes::install_github(pkgname)
@@ -207,11 +181,6 @@ check_and_install <- function(method) {
     }
   })
   if (repositories_set && !package_download_allowed) {
-    message(
-      "To install the dependencies for all methods at once, run ",
-      "devtools::install_github(\"omnideconv/omnideconv\", ",
-      "dependencies = c(\"Imports\", \"Suggests\"))"
-    )
     stop(paste0(method, " can not be run without installing the required packages: ", packages))
   }
 }
@@ -372,13 +341,6 @@ addCustomAnnotation <- function(spatialExp, columnName, values) {
 get_spot_coordinates <- function(df, spotid) {
   df <- as.data.frame(df)
   return(c(df[spotid, "array_row"], df[spotid, "array_col"]))
-}
-
-
-#' check if scaden can be found in the path variable
-check_path_scaden <- function() {
-  path <- paste0(reticulate::miniconda_path(), "/envs/r-omnideconv/bin/") # scaden is in there
-  Sys.setenv(PATH = paste0(Sys.getenv("PATH"), ":", path))
 }
 
 #' Convert assays to sparse Matrices

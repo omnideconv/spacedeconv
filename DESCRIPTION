@@ -13,7 +13,9 @@ VignetteBuilder: knitr
 LazyData: FALSE
 Depends: 
     R (>= 4.1.0)
-Imports: 
+Imports:
+    Giotto,
+    CARD,
     utils,
     methods,
     remotes,
@@ -50,24 +52,19 @@ Imports:
     stats, 
     OmnipathR, 
     scales, 
-    Giotto
-Suggests: 
     spacexr,
     SPOTlight,
     immunedeconv,
-    omnideconv,
     devtools,
     pkgdown,
     rmarkdown,
     uuid,
     scran,
-    CARD,
     knitr,
     testthat (>= 3.0.0),
     scuttle,
     tidyr,
-    xCell, 
-    MuSiC, 
+    xCell,
     markdown, 
     EPIC,
     Seurat (<= 4.4.0),
@@ -79,15 +76,13 @@ Suggests:
     AnnotationDbi, 
     pbapply
 Remotes:
-    omnideconv/omnideconv, 
     omnideconv/immunedeconv,
     dmcable/spacexr,
-    drieslab/Giotto,
+    drieslab/Giotto@v3.3.2,
     MarcElosua/SPOTlight,
-    YingMa0107/CARD,
+    YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0,
     drighelli/SpatialExperiment, 
     dviraran/xCell, 
-    omnideconv/MuSiC
 Config/testthat/edition: 3
 Config/reticulate: 
   list(
@@ -98,6 +93,6 @@ Config/reticulate:
       list(package = "scikit-learn"), 
       list(package = "scanpy", pip=TRUE), 
       list(package = "cell2location", pip=TRUE),
-      list(package = "scaden", pip = TRUE)
+      list(package = "anndata", pip = TRUE)
     )
   )  

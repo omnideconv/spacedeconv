@@ -5,26 +5,50 @@
 [![test-coverage](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml/badge.svg)](https://github.com/omnideconv/spacedeconv/actions/workflows/test-coverage.yml)
 [![codecov](https://codecov.io/gh/omnideconv/spacedeconv/graph/badge.svg?token=OX9ZHSEP9L)](https://codecov.io/gh/omnideconv/spacedeconv)
 
-spacedeconv is a unified interface to 31 deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
+_spacedeconv_ is a unified interface to first- and second-generation deconvolution tools with focus on spatial transcriptomics datasets. The package is able to directly estimate celltype proportions of immune cells and can deconvolute any celltype if an annotated single-cell reference dataset is available.
 
 ## :arrow_down: Installation
 
-`spacedeconv` is available from GitHub only. We recommend installing trough the pak package manager:
+**Note:** The current _spacedeconv_ installation is only available for the **linux-64** platform.
+
+Since many different packages need to be included, we highly recommend to install _spacedeconv_ in a new Conda environment with the following commands.
+
+First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
 
 ```r
-# install the pak package manager
-install.packages("pak")
+conda install -c conda-forge mamba
+```
 
-# recommended installation, deconvolution tools are installed on-demand
-pak::pkg_install("omnideconv/spacedeconv")
+Download the environment.yml file of this github repo:
 
-# full installation including all deconvolution tools
-pak::pkg_install("omnideconv/spacedeconv", dependencies=TRUE)
+```r
+wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
+```
+
+Create a new environment called "r-omnideconv" via mamba with the environment.yml file:
+
+```r
+mamba env create -f environment.yml
+```
+
+Start R inside the r-omnideconv conda environment:
+
+```r
+conda activate r-omnideconv
+R
+```
+
+Install the missing packages that are not available via conda as well as _spacedeconv_:
+
+```r
+pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
+devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
+pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
 ```
 
 ## :sparkles: Features
 
-- unified access to 31 deconvolution tools
+- unified access to first- and second-generation deconvolution tools
 - direct deconvolution of immune cells
 - compute custom reference signatures to deconvolute any celltype
 - flexible visualization functions
@@ -41,55 +65,76 @@ Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioc
 
 ## :technologist: Usage
 
-The main workflow consists of:
+The main workflow consists of the following steps:
 
-1. Reference signature computation using annotated single-cell data
-2. Deconvolution
-3. Visualization
+### 1. Load datasets
 
-### 1. Build a Signature Matrix
+To explore the package, start by loading some of the built-in example datasets.
+
+```r
+library(spacedeconv)
+
+# data("single_cell_data_1")
+# data("single_cell_data_2")
+data("single_cell_data_3")
+# data("single_cell_data_4")
+
+# data("spatial_data_1")
+# data("spatial_data_2")
+data("spatial_data_3")
+# data("spatial_data_4")
+```
+
+### 2. Preprocessing
+
+Depending on the use case, certain preprocessing steps might be necessary.
+
+```r
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+```
+
+### 3. Build a Signature Matrix
 
 Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
 signature <- spacedeconv::build_model(
-  single_cell_object,
+  single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "spotlight",
-  assay_sc="cpm"
+  method = "spatialdwls", verbose = T
 )
 ```
 
-### 2. Deconvolution
+### 4. Deconvolution
 
-While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature computed in step 1).
+While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature.
 
 ```r
-result <- spacedeconv::deconvolute(
-  spatial_object,
-  signature,
-  method = "spotlight"
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls",
+  signature = signature,
+  assay_sp = "cpm"
 )
 ```
 
-### 3. Visualization
+### 5. Visualization
 
-spacedeconv includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
+_spacedeconv_ includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
-plot_celltype(spe, cell_type="spotlight_B.cells")
+plot_spatial(
+  spe = deconv,
+  result = "spatialdwls_B.cells",
+  title = "B cells",
+  density=F
+)
 ```
-
-## :bulb: Additional Requirements
-
-Most methods do not require additional software/tokens, but there are a few exceptions:
-
-- A working version of Docker is required for CIBERSORTx
-- A token for CIBERSORTx is required from this website:
-  <https://cibersortx.stanford.edu/>
-- The CIBERSORT source code is required for BSeq-sc (see tutorial in
-  ?omnideconv::bseqsc_config)
-- SpatialExperiment requires `magick` to be installed: `sudo apt-get install libmagick++-dev`
 
 ## Available methods, Licenses, Citations
 
@@ -101,15 +146,14 @@ cite both our package and the method(s) you are using.
 
 > Constantin Zackl, Maria Zopoglou, Reto Stauffer, Markus Ausserhofer, Marieke E. Ijsselsteijn, Gregor Sturm, Noel Filipe da Cunha Carvalho de Miranda, Francesca Finotello. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1
 
-| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (omnideconv + spatial Methods)                                                                                                                                                                                                                                                           |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>AutoGeneS</li><li>BayesPrism</li><li>Bisque</li><li>Bisque</li><li>Bseq-sc</li><li>CIBERSORTx</li><li>CDseq</li><li>CPM</li><li>DWLS</li><li>MOMF</li><li>MuSiC</li><li>Scaden</li><li>SCDC</li></ul> |
+| First-gen (immunedeconv)                                                                                                                                                               | First-gen mouse (immunedeconv)                                            | Second-gen (spatial methods)                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| <ul><li>MPCcounter</li><li>EPIC</li><li>quanTIseq</li><li>xCell</li><li>CIBERSORT</li><li>CIBERSORT (abs.)</li><li>TIMER</li><li>ConsensusTME</li><li>ABIS</li><li>ESTIMATE</li> </ul> | <ul> <li>mMCPcounter</li><li>seqImmuCC</li><li>DCP</li><li>BASE</li></ul> | <ul><li>RCTD</li><li>SPOTlight</li><li>CARD</li><li>spatialDWLS</li><li>Cell2location</li><li>DOT</li></ul> |
 
 # References
 
 | Method                                                         |     signature      |                                     licence                                     | citation                                                                                                                                                                                                                                                          |
 | -------------------------------------------------------------- | :----------------: | :-----------------------------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [omnideconv](https://github.com/omnideconv/omnideconv)         | :heavy_check_mark: |       [GPL-3](https://github.com/omnideconv/omnideconv/blob/main/LICENSE)       | Citation will follow                                                                                                                                                                                                                                              |
 | [immunedeconv](https://github.com/omnideconv/immunedeconv)     |        :x:         |      [BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE)      | Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. |
 | [spatialDWLS](https://github.com/RubD/Giotto/)                 | :heavy_check_mark: |            [MIT](https://github.com/RubD/Giotto/blob/master/LICENSE)            | Dong R, Yuan GC. SpatialDWLS: accurate deconvolution of spatial transcriptomic data. Genome Biol. 2021 May 10;22(1):145. doi: 10.1186/s13059-021-02362-7                                                                                                          |
 | [cell2location](https://github.com/BayraktarLab/cell2location) | :heavy_check_mark: | [Apache-2.0](https://github.com/BayraktarLab/cell2location/blob/master/LICENSE) | Kleshchevnikov, V., Shmatko, A., Dann, E. et al. Cell2location maps fine-grained cell types in spatial transcriptomics. Nat Biotechnol (2022). <https://doi.org/10.1038/s41587-021-01139-4>                                                                       |
