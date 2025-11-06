@@ -68,56 +68,74 @@ The main workflow consists of:
 2. Deconvolution
 3. Visualization
 
-### Optional: Load example datasets
+### 1. Load example datasets
 
 To explore the package, start by loading some of the built-in example datasets.
 
 ```r
 library(spacedeconv)
 
-data("single_cell_data_1")
+# data("single_cell_data_1")
 # data("single_cell_data_2")
-# data("single_cell_data_3")
+data("single_cell_data_3")
 # data("single_cell_data_4")
 
-data("spatial_data_1")
+# data("spatial_data_1")
 # data("spatial_data_2")
-# data("spatial_data_3")
+data("spatial_data_3")
 # data("spatial_data_4")
 ```
 
+### 2. Preprocessing
 
-### 1. Build a Signature Matrix
+Depending on the use case, certain preprocessing steps might be necessary.
+
+```r
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+```
+
+
+### 3. Build a Signature Matrix
 
 Build a cell type specific signature matrix from annotated single-cell reference data.
 
 ```r
 signature <- spacedeconv::build_model(
-  single_cell_data_1,
+  single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "spotlight",
-  assay_sc="cpm"
+  method = "spatialdwls", verbose = T
 )
 ```
 
-### 2. Deconvolution
+### 4. Deconvolution
 
-While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature computed in step 1).
+While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature.
 
 ```r
-result <- spacedeconv::deconvolute(
-  spatial_data_1,
-  signature,
-  method = "spotlight"
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls",
+  signature = signature,
+  assay_sp = "cpm"
 )
 ```
 
-### 3. Visualization
+### 5. Visualization
 
 *spacedeconv* includes highly-flexible visualization functions. A full explanation of all visualization options can be found in the visualization [vignette](articles/spacedeconv_visualization.html).
 
 ```r
-plot_celltype(spe, cell_type="spotlight_B.cells")
+plot_spatial(
+  spe = deconv,
+  result = "spatialdwls_B.cells",
+  title = "B cells",
+  density=F
+)
 ```
 
 ## Available methods, Licenses, Citations
