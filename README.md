@@ -61,7 +61,7 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE
 
 Spatial transcriptomics data: _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_
 
-Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended), _[anndata](https://anndata.dynverse.org/)_ or _[Seurat](https://satijalab.org/seurat/)_
+Single-cell data with cell-type annotation: _[SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html)_ (recommended) or _[Seurat](https://satijalab.org/seurat/)_
 
 ## :technologist: Usage
 
