@@ -72,7 +72,7 @@ plot_spatial(
   spe = cluster, # plot the clustering stored in this object
   result = "cluster_expression_res_0.5",
   title = "Clustering",
-  density=F
+  density = F
 )
 ```
 
