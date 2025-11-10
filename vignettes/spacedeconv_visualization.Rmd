@@ -46,7 +46,7 @@ deconv <- spacedeconv::deconvolute(
 ## 1. `plot_spatial()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_spatial(deconv, result = "spatialdwls_B.cells", density = F, smooth = T, title = "B cells")
+spacedeconv::plot_spatial(deconv, result = "spatialdwls_B.cells", density = F, smooth = T, title="B cells")
 ```
 
 ## 2. `plot_gene()`
@@ -54,14 +54,14 @@ spacedeconv::plot_spatial(deconv, result = "spatialdwls_B.cells", density = F, s
 Plot gene expression on a spatial level. It may make sense to smooth the plot to simplify the detection of expression patterns. You can further select the assay using the `assay` parameter.
 
 ```{r, warning=FALSE, message=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_gene(deconv, gene = "CD19", density = F, smooth = T, title_size = 12)
+spacedeconv::plot_gene(deconv, gene = "CD19", density = F, smooth = T, title_size=12)
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
-```{r plotUMIcount, fig.width=7, fig.height=7}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T, title_size = 12)
+```{r plotUMIcount, fig.width=7, fig.height=7, message=FALSE, warning=FALSE}
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T, title_size=12)
 ```
 
 ## 4. `plot_most_abundant()`
@@ -70,7 +70,7 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `cell_type` vector of celltypes to plot 
 * `method` plotting all cell types of the provided method
 * `remove` vector of celltypes to be removed from the plot
-```{r plotMostAbundant, fig.width=7, fig.height=7}
+```{r plotMostAbundant, fig.width=7, fig.height=7, message=FALSE, warning=FALSE}
 spacedeconv::plot_most_abundant(deconv,
   method = "spatialdwls",
   density = F,
@@ -84,21 +84,21 @@ spacedeconv::plot_most_abundant(deconv,
 ##  5. `plot_comparison()`
 Use this function to plot the ratio of deconvolution results from two cell-types.
 
-```{r plotComparison, fig.width=7, fig.height=7}
+```{r plotComparison, fig.width=7, fig.height=7, message=FALSE, warning=FALSE}
 spacedeconv::plot_comparison(deconv,
   cell_type_1 = "spatialdwls_Cancer.Epithelial", # red
   cell_type_2 = "spatialdwls_Normal.Epithelial", # blue
   palette = "Blue-Red",
   density = F,
   smooth = T,
-  title_size = 12
+  title_size=12
 )
 ```
 
 
 # Color Palette 
 All palettes from the [colorspace](https://colorspace.r-forge.r-project.org/) R Package can be used. 
-```{r availablePalettes, fig.width=12, fig.height=9, out.width="100%", fig.retina=2, fig.align='center'}
+```{r availablePalettes, fig.width=12, fig.height=9, out.width="95%", fig.retina=2, fig.align='center'}
 colorspace::hcl_palettes(plot = TRUE)
 ```
 
@@ -107,15 +107,16 @@ colorspace::hcl_palettes(plot = TRUE)
 ### Image Alignment Offset
 spacedeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
-```{r offset_rotation, eval = TRUE, fig.width=7, fig.height=7}
-plot_umi_count(deconv, offset_rotation = T, title_size = 12) # rotate hexagons
+```{r offset_rotation, eval = TRUE, fig.width=14, fig.height=7, out.width="95%", fig.retina=2, fig.align='center', message=FALSE, warning=FALSE}
+plot_umi_count(deconv, offset_rotation = T, title_size=12) # rotate hexagons
 ```
+
 ### Transform Scale 
 
 With the `transform_scale` parameter the colorspace scale can be modified. Available options are: "ln", "log10", "log2" and "sqrt". Scaling the color range differently can aid with interpreting the plot. Please have in mind that the plot does not show valid deconvolution results anymore and should be handled with caution. 
 
-```{r, fig.width=7, fig.height=7}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE, title_size = 12)
+```{r, fig.width=7, fig.height=7, message=FALSE, warning=FALSE}
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE, title_size=12)
 ```
 
 
@@ -126,25 +127,25 @@ With this parameter the expression values can be smoothed to simplify pattern re
 * `smooth=T` enable smoothing 
 * `smoothing_factor` choose kernel size (factor of spot distance)
 
-```{r, fig.width=7, fig.height=7}
+```{r, fig.width=7, fig.height=7, message=FALSE, warning=FALSE}
 spacedeconv::plot_spatial(deconv,
   result = "spatialdwls_B.cells",
   smooth = T,
   smoothing_factor = 1.5,
   density = FALSE,
-  title = "B cells smoothed"
+  title="B cells smoothed"
 )
 ```
 
 ### Density Distribution 
 You can add a density distribution by setting `density = TRUE`. The red line corresponds to the mean of the distribution. 
 
-```{r, fig.width=7, fig.height=7}
+```{r, fig.width=14, fig.height=7, out.width="95%", fig.retina=2, fig.align='center', message=FALSE, warning=FALSE}
 spacedeconv::plot_spatial(deconv,
   result = "spatialdwls_B.cells",
   smooth = TRUE,
   density = TRUE,
-  title = "B cells with density"
+  title="B cells with density"
 )
 ```
 
