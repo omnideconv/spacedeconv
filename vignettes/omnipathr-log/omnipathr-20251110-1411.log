@@ -1,0 +1,42 @@
+[2025-11-10 14:11:34] [INFO]    [OmnipathR] Welcome to OmnipathR!
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/cache.json` (encoding: UTF-8).
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:34] [INFO]    [OmnipathR] Initialized cache: `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR`.
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/db/db_def.json` (encoding: UTF-8).
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/magic_bytes.json` (encoding: UTF-8).
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/urls.json` (encoding: UTF-8).
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/id_types.json` (encoding: UTF-8).
+[2025-11-10 14:11:34] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:53] [INFO]    [OmnipathR] Welcome to OmnipathR!
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/cache.json` (encoding: UTF-8).
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:53] [INFO]    [OmnipathR] Initialized cache: `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR`.
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/db/db_def.json` (encoding: UTF-8).
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/magic_bytes.json` (encoding: UTF-8).
+[2025-11-10 14:11:53] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:54] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/urls.json` (encoding: UTF-8).
+[2025-11-10 14:11:54] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:11:54] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/id_types.json` (encoding: UTF-8).
+[2025-11-10 14:11:54] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 14:12:09] [INFO]    [OmnipathR] Loading database `Ensembl and OMA organism names`.
+[2025-11-10 14:12:09] [INFO]    [OmnipathR] Looking up in cache `https://www.ensembl.org/info/about/species.html`: key=7332486db7400730697234bad76ca0c8e4d00799, latest version=1.
+[2025-11-10 14:12:09] [TRACE]   [OmnipathR] Cache file path: /gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/7332486db7400730697234bad76ca0c8e4d00799-1.html
+[2025-11-10 14:12:09] [TRACE]   [OmnipathR] Looking up in cache: `https://omabrowser.org/All/oma-species.txt`.
+[2025-11-10 14:12:09] [TRACE]   [OmnipathR] Loaded data from RDS `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/30e690cbb55dfc63b5903ab337f34ffc2f4be397-1.rds`.
+[2025-11-10 14:12:09] [INFO]    [OmnipathR] Loaded database `Ensembl and OMA organism names`.
+[2025-11-10 14:12:09] [TRACE]   [OmnipathR] Looking up in cache: `https://omnipathdb.org/interactions?genesymbols=yes&datasets=omnipath,pathwayextra,kinaseextra,ligrecextra&organisms=9606&fields=datasets,sources,references,curation_effort&license=academic`
+[2025-11-10 14:12:10] [TRACE]   [OmnipathR] Loaded data from RDS `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/3098404926bc0cf155d043ff0c6efe64e3424b74-1.rds`.
+[2025-11-10 14:12:10] [INFO]    [OmnipathR] Loaded from cache: `https://omnipathdb.org/interactions?genesymbols=yes&datasets=omnipath,pathwayextra,kinaseextra,ligrecextra&organisms=9606&fields=datasets,sources,references,curation_effort&license=academic`
+[2025-11-10 14:12:13] [SUCCESS] [OmnipathR] Loaded 139054 interactions from cache.
+[2025-11-10 14:12:13] [TRACE]   [OmnipathR] Looking up in cache: `https://omnipathdb.org/intercell?scope=generic&causality=trans&license=academic`
+[2025-11-10 14:12:13] [TRACE]   [OmnipathR] Loaded data from RDS `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/1ac430724a20c137fc374a8499adabb468a12835-1.rds`.
+[2025-11-10 14:12:13] [INFO]    [OmnipathR] Loaded from cache: `https://omnipathdb.org/intercell?scope=generic&causality=trans&license=academic`
+[2025-11-10 14:12:13] [SUCCESS] [OmnipathR] Loaded 39981 intercellular communication role records from cache.
+[2025-11-10 14:12:13] [TRACE]   [OmnipathR] Looking up in cache: `https://omnipathdb.org/intercell?scope=generic&causality=rec&license=academic`
+[2025-11-10 14:12:13] [TRACE]   [OmnipathR] Loaded data from RDS `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/552757063f9934c7b745a9c4247c3b5282a66c88-1.rds`.
+[2025-11-10 14:12:13] [INFO]    [OmnipathR] Loaded from cache: `https://omnipathdb.org/intercell?scope=generic&causality=rec&license=academic`
+[2025-11-10 14:12:13] [SUCCESS] [OmnipathR] Loaded 48774 intercellular communication role records from cache.

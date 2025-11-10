@@ -34,7 +34,7 @@ make_baseplot(
   show_legend = TRUE,
   nDigits = NULL,
   pseudocount = 1,
-  shift_positive = TRUE
+  shift_positive = FALSE
 )
 }
 \arguments{

@@ -5,7 +5,7 @@
 \alias{deconvolution_methods}
 \title{List of supported deconvolution methods}
 \format{
-An object of class \code{character} of length 32.
+An object of class \code{character} of length 20.
 }
 \usage{
 deconvolution_methods
