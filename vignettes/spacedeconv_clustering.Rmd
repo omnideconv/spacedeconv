@@ -23,7 +23,7 @@ data("single_cell_data_3")
 data("spatial_data_3")
 ```
 
-```{r deconv, eval=FALSE}
+```{r deconv, eval=TRUE}
 single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
 spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
@@ -31,20 +31,20 @@ single_cell_data_3 <- spacedeconv::normalize(single_cell_data_3, method = "cpm")
 spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 ```
 
-```{r build_model, message=FALSE, warning=FALSE, eval=FALSE}
+```{r build_model, message=FALSE, warning=FALSE, eval=TRUE}
 signature <- spacedeconv::build_model(
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "dwls", verbose = T, dwls_method = "mast_optimized", ncores = 10
+  method = "spatialdwls", verbose = T
 )
 ```
 
-```{r deconvolution, eval=FALSE, message=FALSE, warning=FALSE}
+```{r deconvolution, eval=TRUE, message=FALSE, warning=FALSE}
 deconv <- spacedeconv::deconvolute(
   spatial_obj = spatial_data_3,
   single_cell_obj = single_cell_data_3,
   cell_type_col = "celltype_major",
-  method = "dwls",
+  method = "spatialdwls",
   signature = signature,
   assay_sp = "cpm"
 )
@@ -63,21 +63,22 @@ This function applies the Seurat clustering approach in the background. Set data
 * clusres: Cluster resolution, check the [Seurat Vignette](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) for details.
 * pca_dim: Number of PCA dimensions to use
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 cluster <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
 ```
 
-```{r}
-cluster <- readRDS(system.file("extdata", "cluster.rds", package = "spacedeconv"))
+```{r clusterExpression, eval=TRUE}
+plot_spatial(
+  spe = cluster, # plot the clustering stored in this object
+  result = "cluster_expression_res_0.5",
+  title = "Clustering",
+  density = F
+)
 ```
 
-```{r clusterExpression, eval=FALSE}
-plot_celltype(cluster, "cluster", density = F) # plot the clustering stored in this object
-```
 
-
-With an available clustering you can exract the top features for each cluster. Here we extract the top features for each cluster based on expression, but we want the top features from the deconvolution results from this area. See the associated clusters in the plot above. 
+With an available clustering you can extract the top features for each cluster. Here we extract the top features for each cluster based on expression, but we want the top features from the deconvolution results from this area. See the associated clusters in the plot above. 
 
 ```{r topFeatures}
-get_cluster_features(cluster, clusterid = "cluster_expression_0.5", spmethod = "dwls")
+get_cluster_features(cluster, clusterid = "cluster_expression_res_0.5", spmethod = "spatialdwls")
 ```

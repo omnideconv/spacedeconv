@@ -7,64 +7,61 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from the sample data provided and the deconvolution method `DWLS`. First we compute a reference signature based on the available scRNA-seq data with cell-type annotation. Then we quantify cell-type fractions in the 10X Visium slide using the computed reference signature. 
+To introduce spacedeconvs visualization functions we will utilize a deconvolution result obtained from the sample data provided and the deconvolution method `spatialdwls`. First we compute a reference signature based on the available scRNA-seq data with cell-type annotation. Then we quantify cell-type fractions in the 10X Visium slide using the computed reference signature. 
 
-```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r deconvolute, error=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 library(spacedeconv)
 data("spatial_data_3")
 data("single_cell_data_3")
 
-sce <- preprocess(single_cell_data_3)
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
 
-spe <- preprocess(spatial_data_3)
-spe <- spacedeconv::normalize(spe, method = "cpm")
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
 
-singnature <- build_model(
-  single_cell_obj = sce,
-  method = "dwls",
-  cell_type_col = "celltype_major"
+signature <- spacedeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls", verbose = T
 )
 
-deconv <- deconvolute(
-  spe,
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls",
   signature = signature,
-  method = "dwls",
   assay_sp = "cpm"
 )
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
-```
-
-
 # Available Visualizations
 
-1. `plot_celltype()` visualizes the spatial image with color coded cell type fractions for one cell type. 
+1. `plot_spatial()` generates a Hex Plot of a SpatialExperiment containing deconvolution results. 
 2. `plot_gene()` plot spatial gene expression.
 3. `plot_umi_count()` Plots the number of sequenced reads per spot.
 4. `plot_most_abundant()` Render a plot containing the most abundant cell-type for each spot.
 5. `plot_comparison()` Plot comparison of two cell-type fractions.
 
-## 1. `plot_celltype()`
+## 1. `plot_spatial()`
 Plot any spot annotation with a continuous or discrete scale. The spot annotation needs to be of `colData(spe)`, so manual annotation can be added to the SpatialExperiment object for visualization. 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=7}
-spacedeconv::plot_celltype(deconv, cell_type = "dwls_B.cells", density = F, smooth = T, title = "B cells")
+spacedeconv::plot_spatial(deconv, result = "spatialdwls_B.cells", density = F, smooth = T, title = "B cells")
 ```
 
 ## 2. `plot_gene()`
 
 Plot gene expression on a spatial level. It may make sense to smooth the plot to simplify the detection of expression patterns. You can further select the assay using the `assay` parameter.
 
-```{r, warning=FALSE, message=FALSE, fig.height=7, fig.width=7}
-spacedeconv::plot_gene(deconv, gene = "CD19", density = F, smooth = T, title = "CD19 expression")
+```{r, warning=FALSE, message=FALSE, fig.width=7, fig.height=7}
+spacedeconv::plot_gene(deconv, gene = "CD19", density = F, smooth = T, title_size = 12)
 ```
 
 ## 3. `plot_umi_count()`
 This plot shows the number of detected UMIs for each spot. We recommend rendering this plot with `transform_scale = "sqrt"` due to the large range of UMI count values. 
 
-```{r plotUMIcount, fig.height=7, fig.width=7}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T, title_size = "UMI count")
+```{r plotUMIcount, fig.width=7, fig.height=7}
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = F, smooth = T, title_size = 12)
 ```
 
 ## 4. `plot_most_abundant()`
@@ -73,35 +70,35 @@ This plots displays the most abundant cell-type for each spot. You can specify w
 * `cell_type` vector of celltypes to plot 
 * `method` plotting all cell types of the provided method
 * `remove` vector of celltypes to be removed from the plot
-```{r plotMostAbundant}
+```{r plotMostAbundant, fig.width=7, fig.height=7}
 spacedeconv::plot_most_abundant(deconv,
-  method = "dwls",
+  method = "spatialdwls",
   density = F,
-  title_size = 25,
+  title_size = 12,
   legend_size = 15,
   font_size = 10,
-  remove = c("dwls_Cancer.Epithelial", "dwls_CAFs")
+  remove = c("spatialdwls_Cancer.Epithelial", "spatialdwls_CAFs")
 )
 ```
 
 ##  5. `plot_comparison()`
 Use this function to plot the ratio of deconvolution results from two cell-types.
 
-```{r plotComparison}
+```{r plotComparison, fig.width=7, fig.height=7}
 spacedeconv::plot_comparison(deconv,
-  cell_type_1 = "dwls_Cancer.Epithelial", # red
-  cell_type_2 = "dwls_Normal.Epithelial", # blue
+  cell_type_1 = "spatialdwls_Cancer.Epithelial", # red
+  cell_type_2 = "spatialdwls_Normal.Epithelial", # blue
   palette = "Blue-Red",
   density = F,
   smooth = T,
-  title = "Cancer vs. Normal Epithelial"
+  title_size = 12
 )
 ```
 
 
 # Color Palette 
 All palettes from the [colorspace](https://colorspace.r-forge.r-project.org/) R Package can be used. 
-```{r availablePalettes, fig.width=10}
+```{r availablePalettes, fig.width=12, fig.height=9, out.width="100%", fig.retina=2, fig.align='center'}
 colorspace::hcl_palettes(plot = TRUE)
 ```
 
@@ -110,15 +107,15 @@ colorspace::hcl_palettes(plot = TRUE)
 ### Image Alignment Offset
 spacedeconvs Visualization function is designed to work with data by SpaceRanger >= V2.0. Since this Version the image is rotated by default that the hourglass fiducial is in the upper left corner. Previous SpaceRanger results can be rotated differently. The rotation additionally reflects in the angle of the spots on the slide. Uncorrectly rotated images result in hexagons being rotated by 30 degrees. To compensate for this you can use the `offset_rotation` parameter to correct the hexagon alignment. This is only necessary for Visium slides where the hourglass fiducial is in the bottom left or upper right corner. 
 
-```{r offset_rotation, eval = FALSE}
-plot_umi_count(deconv, offset_rotation = T) # rotate hexagons
+```{r offset_rotation, eval = TRUE, fig.width=7, fig.height=7}
+plot_umi_count(deconv, offset_rotation = T, title_size = 12) # rotate hexagons
 ```
 ### Transform Scale 
 
 With the `transform_scale` parameter the colorspace scale can be modified. Available options are: "ln", "log10", "log2" and "sqrt". Scaling the color range differently can aid with interpreting the plot. Please have in mind that the plot does not show valid deconvolution results anymore and should be handled with caution. 
 
-```{r}
-spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE)
+```{r, fig.width=7, fig.height=7}
+spacedeconv::plot_umi_count(deconv, transform_scale = "sqrt", density = FALSE, title_size = 12)
 ```
 
 
@@ -129,27 +126,25 @@ With this parameter the expression values can be smoothed to simplify pattern re
 * `smooth=T` enable smoothing 
 * `smoothing_factor` choose kernel size (factor of spot distance)
 
-```{r}
-spacedeconv::plot_celltype(deconv,
-  cell_type = "dwls_B.cells",
+```{r, fig.width=7, fig.height=7}
+spacedeconv::plot_spatial(deconv,
+  result = "spatialdwls_B.cells",
   smooth = T,
   smoothing_factor = 1.5,
-  density = FALSE
+  density = FALSE,
+  title = "B cells smoothed"
 )
 ```
 
 ### Density Distribution 
 You can add a density distribution by setting `density = TRUE`. The red line corresponds to the mean of the distribution. 
 
-```{r}
-spacedeconv::plot_celltype(deconv,
-  cell_type = "dwls_B.cells",
+```{r, fig.width=7, fig.height=7}
+spacedeconv::plot_spatial(deconv,
+  result = "spatialdwls_B.cells",
   smooth = TRUE,
   density = TRUE,
-  title_size = 20,
-  legend_size = 15,
-  font_size = 10,
-  title = "B cells smoothed"
+  title = "B cells with density"
 )
 ```
 
@@ -157,8 +152,8 @@ spacedeconv::plot_celltype(deconv,
 You can save a plot by setting `save=TRUE`. Specify a file path with the `path` parameter. If no path is provided your plots will be stored at `~/spacedeconvResults/`. To change the size of the rendered plot use `png_width` and `png_height` to set the plot size in pixels. Plots are saved as a png. 
 
 ```{r, eval= FALSE}
-spacedeconv::plot_celltype(deconv,
-  cell_type = "quantiseq_B.cell",
+spacedeconv::plot_spatial(deconv,
+  result = "quantiseq_B.cell",
   smooth = TRUE,
   density = TRUE,
   save = TRUE,

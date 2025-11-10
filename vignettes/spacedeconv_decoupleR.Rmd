@@ -28,7 +28,7 @@ head(ref)
 
 In the next step the activities can be computed.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE, collapse=TRUE}
 data("spatial_data_3")
 spatial_data_3 <- preprocess(spatial_data_3)
 spatial_data_3 <- normalize(spatial_data_3)

@@ -19,7 +19,7 @@ spacedeconv integrates first- and second-generation deconvolution algorithms for
 # Example Data
 spacedeconv contains 4 different spatial datasets obtained with the 10XVisium platform. Additionally there are 4 matching scRNA-seq datasets available which can be used to calculate custom expression signatures. The data can be loaded like this:
 
-```{r loadingData, eval=FALSE}
+```{r loadingData, eval=TRUE}
 library(spacedeconv)
 data("single_cell_data_1")
 data("single_cell_data_2")
@@ -36,20 +36,19 @@ data("spatial_data_4")
 To build cell-type specific signatures for second-generation deconvolution spacedeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats: 
 
 * [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure) (recommended)
-* [AnnData](https://anndata.dynverse.org/)
 * [Seurat](https://satijalab.org/seurat/)
 
 Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for CARD with the parameter `batch_id_col`.
 
 ```{r annotationParameters, eval=FALSE}
 signature <- build_model(single_cell_data_1,
-  method = "dwls",
+  method = "spatialdwls",
   cell_type_col = "celltype_major",
 )
 
 # some methods require batch_id information as well
 sigature <- build_model(single_cell_data_1,
-  method = "scdc",
+  method = "cell2location",
   cell_type_col = "celltype_major",
   batch_id_col = "orig.ident"
 )
@@ -72,7 +71,8 @@ spe <- seurat_to_spatialexperiment(seurat_object)
 # Normalization
 SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`. As normalization method `cpm` and `logcpm` are available. 
 
-```{r deconvolution, eval = FALSE}
+```{r deconvolution, eval = TRUE}
+spe <- spacedeconv::preprocess(spatial_data_1)
 spe <- normalize(spe, method = "cpm")
 
 # make sure to use cpm assay in deconvolution step

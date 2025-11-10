@@ -31,7 +31,10 @@ The function can be used to preprocess single-cell or spatial datasets. The cuts
 
 ```{r, collapse=TRUE}
 data("single_cell_data_3")
+data("spatial_data_3")
+
 sce <- spacedeconv::preprocess(single_cell_data_3, min_umi = 500, assay = "counts", remove_mito = TRUE)
+spe <- spacedeconv::preprocess(spatial_data_3, min_umi = 500, assay = "counts", remove_mito = TRUE)
 ```
 
 ## 2. `normalize`
@@ -40,6 +43,7 @@ You can scale and normalize your single-cell or spatial data by calling the `nor
 
 ```{r, collapse=TRUE}
 sce <- spacedeconv::normalize(sce, method = "cpm", assay = "counts")
+spe <- spacedeconv::normalize(spe, method = "cpm", assay = "counts")
 ```
 
 ## 3. `print_info`
@@ -51,7 +55,20 @@ print_info(sce)
 ```
 ## 4. `available_results`
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-deconv <- readRDS(system.file("extdata", "deconv_dwls.rds", package = "spacedeconv"))
+signature <- spacedeconv::build_model(
+  single_cell_obj = sce,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls", verbose = TRUE
+)
+
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = spe,
+  single_cell_obj = sce,
+  cell_type_col = "celltype_major",
+  method = "spatialdwls",
+  signature = signature,
+  assay_sp = "cpm"
+)
 ```
 
 You can check what deconvolution results and additional annotation is available in your data by calling `available_resutls`. You can set the `method` parameter to the name of a deconvolution tool to further filter the results if many quantifications where performed. 
@@ -67,7 +84,7 @@ available_results(deconv)
 You can aggregate fine-grained deconvolution results to a single value by providing a list of deconvolution result names to the `cell_types` parameter. You can additionally set a new `name` and you have the option to `remove` the original fine-grained columns and just keep the aggregation. 
 
 ```{r, collapse=TRUE}
-aggregate_results(deconv, cell_types = c("dwls_Cancer.Epithelial", "dwls_Normal.Epithelial"), name = "dwls_Epithelial", remove = TRUE)
+aggregate_results(deconv, cell_types = c("spatialdwls_Cancer.Epithelial", "spatialdwls_Normal.Epithelial"), name = "spatialdwls_Epithelial", remove = TRUE)
 ```
 
 ## 6. `addCustomAnnotation`
@@ -94,7 +111,7 @@ Most deconvolution tools compute relative cell fractions for spots. If you have 
 
 ```{r, eval=FALSE}
 # cell_counts_per_spot contains spot level absolute cell counts
-spe_absolute <- scale_cell_counts(spe, value = "dwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
+spe_absolute <- scale_cell_counts(spe, value = "spatialdwls_B.cells", cell_counts = cell_counts_per_spot, resName = "BCellsAbsolute")
 ```
 
 ## 9. `subsetSCE`
@@ -109,6 +126,6 @@ subset <- subsetSCE(sce, cell_type_col = "celltype_major", scenario = "mirror", 
 
 When not working with the full Spatial data you can opt for using a subset of the spatial slide. This function take a `colRange` and `rowRange` vector containing the pixel coordinates of the fullres image to cut subsets of the provided spatial data. 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 subset <- subsetSPE(spe, colRange = c(0, 1000), rowRange = c(0, 1000))
 ```
