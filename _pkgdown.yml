@@ -3,7 +3,7 @@ template:
   bootstrap: 5
 navbar:
   structure:
-    left: [intro, reference, articles]
+    left: [reference, articles]
     right: [search, github]
 reference:
   - title: Setup

@@ -1,0 +1,12 @@
+[2025-11-10 16:10:37] [INFO]    [OmnipathR] Welcome to OmnipathR!
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR/cache.json` (encoding: UTF-8).
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 16:10:37] [INFO]    [OmnipathR] Initialized cache: `/gpfs/gpfs1/scratch/c9881013/.cache/OmnipathR`.
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/db/db_def.json` (encoding: UTF-8).
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/magic_bytes.json` (encoding: UTF-8).
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/urls.json` (encoding: UTF-8).
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] JSON validation successful: TRUE
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] Reading JSON from `/gpfs/gpfs1/scratch/c9881013/.conda_envs/r-omnideconv/lib/R/library/OmnipathR/internal/id_types.json` (encoding: UTF-8).
+[2025-11-10 16:10:37] [TRACE]   [OmnipathR] JSON validation successful: TRUE
