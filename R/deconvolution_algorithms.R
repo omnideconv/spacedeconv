@@ -1,7 +1,7 @@
 #' List of supported deconvolution methods
 #'
 #' @details Spatial Algorithms \cr
-#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`, `DOT`
+#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`, `DOT`, `FlashDeconv`
 #'
 #' @details First-generation Methods (Immunedeconv) \cr
 #' `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`, `CIBERSORT`, `CIBERSORT (abs.)`,
@@ -23,6 +23,7 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
+  "FlashDeconv" = "flashdeconv",
   # immunedeconv
   "MCPcounter" = "mcp_counter",
   "EPIC" = "epic",
@@ -141,6 +142,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     },
     dot = {
       build_model_dot()
+    },
+    flashdeconv = {
+      build_model_flashdeconv()
     },
 
     ################
@@ -297,6 +301,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     },
     dot = {
       deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
+    },
+    flashdeconv = {
+      deconvolute_flashdeconv(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
 
     ################
