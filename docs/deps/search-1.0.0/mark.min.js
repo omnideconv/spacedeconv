@@ -301,7 +301,6 @@
                     (o = a.getIteratorNode(s)),
                     (h = o.prevNode),
                     (l = o.node);
-
                 )
                   (this.iframes &&
                     this.forEachIframe(
@@ -845,7 +844,6 @@
                   for (
                     var i = void 0;
                     null !== (i = e.exec(t.textContent)) && "" !== i[a];
-
                   )
                     if (n(i[a], t)) {
                       var s = i.index;
@@ -868,7 +866,6 @@
                 for (
                   var s = void 0;
                   null !== (s = e.exec(t.value)) && "" !== s[a];
-
                 ) {
                   var c = s.index;
                   if (0 !== a) for (var u = 1; u < a; u++) c += s[u].length;
@@ -922,7 +919,6 @@
               for (
                 var t = e.parentNode, n = document.createDocumentFragment();
                 e.firstChild;
-
               )
                 n.appendChild(e.removeChild(e.firstChild));
               (t.replaceChild(n, e),
