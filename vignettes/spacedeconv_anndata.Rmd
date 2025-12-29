@@ -1,5 +1,5 @@
 ---
-title: "spacedeconv anndata tutorial"
+title: "AnnData Import"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{spacedeconv anndata tutorial}
@@ -52,7 +52,7 @@ single_cell_data_3 <- readH5AD("single_cell_data_3.h5ad", use_hdf5 = FALSE)
 ```
 
 Now we can continue with the spacedeconv pipeline as usual. In this case we will perform
-the clustering procedure.
+the clustering procedure as an example.
 
 ```{r preprocess_normalize, message=FALSE, warning=FALSE}
 single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
