@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-This document shows how to use `H5AD` `anndata` files as input for the spacedeconv pipeline.
+# Setup
+This vignette shows how to use `H5AD` `anndata` files as input for the spacedeconv pipeline.
 For this, we use the `zellkonverter` package which is also available via `conda`.
 
 Here, we set up `reticulate` before loading the `spacedeconv` and `zellkonverter` libraries to avoid
@@ -29,6 +30,8 @@ library(spacedeconv)
 library(zellkonverter)
 ```
 
+
+# Load Example Data
 First, we load the included example datasets.
 
 ```{r data, message=FALSE, warning=FALSE}
@@ -36,6 +39,8 @@ data("single_cell_data_3")
 data("spatial_data_3")
 ```
 
+
+# Convert SingleCellExperiment to anndata
 `zellkonverter` allows us to convert `SingleCellExperiment` objects to `anndata`
 and store them as `H5AD` files.
 
@@ -43,6 +48,8 @@ and store them as `H5AD` files.
 writeH5AD(single_cell_data_3, "single_cell_data_3.h5ad")
 ```
 
+
+# Load anndata as SingleCellExperiment
 In case we have the single-cell data only as `H5AD` `anndata` file, we can use `zellkonverter` to 
 read it into R as `SingleCellExperiment` object. That way it can be used as input for
 the `spacedeconv` pipeline. In this case we read back example data file we just wrote to `H5AD`.
@@ -51,6 +58,8 @@ the `spacedeconv` pipeline. In this case we read back example data file we just 
 single_cell_data_3 <- readH5AD("single_cell_data_3.h5ad", use_hdf5 = FALSE)
 ```
 
+
+# Spacedeconv Clustering Pipeline
 Now we can continue with the spacedeconv pipeline as usual. In this case we will perform
 the clustering procedure as an example.
 
