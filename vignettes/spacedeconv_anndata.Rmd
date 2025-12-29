@@ -1,0 +1,95 @@
+---
+title: "spacedeconv anndata tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{spacedeconv anndata tutorial}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document shows how to use `H5AD` `anndata` files as input for the spacedeconv pipeline.
+For this, we use the `zellkonverter` package which is also available via `conda`.
+
+Here, we set up `reticulate` before loading the `spacedeconv` and `zellkonverter` libraries to avoid
+`reticulate` conflicts between the two packages.
+
+```{r message=FALSE, warning=FALSE}
+library(reticulate)
+use_condaenv("r-omnideconv", required = TRUE)
+invisible(py_config())
+
+library(spacedeconv)
+library(zellkonverter)
+```
+
+First, we load the included example datasets.
+
+```{r data, message=FALSE, warning=FALSE}
+data("single_cell_data_3")
+data("spatial_data_3")
+```
+
+`zellkonverter` allows us to convert `SingleCellExperiment` objects to `anndata`
+and store them as `H5AD` files.
+
+```{r write_h5ad, message=FALSE, warning=FALSE}
+writeH5AD(single_cell_data_3, "single_cell_data_3.h5ad")
+```
+
+In case we have the single-cell data only as `H5AD` `anndata` file, we can use `zellkonverter` to 
+read it into R as `SingleCellExperiment` object. That way it can be used as input for
+the `spacedeconv` pipeline. In this case we read back example data file we just wrote to `H5AD`.
+
+```{r read_h5ad, message=FALSE, warning=FALSE}
+single_cell_data_3 <- readH5AD("single_cell_data_3.h5ad", use_hdf5 = FALSE)
+```
+
+Now we can continue with the spacedeconv pipeline as usual. In this case we will perform
+the clustering procedure.
+
+```{r preprocess_normalize, message=FALSE, warning=FALSE}
+single_cell_data_3 <- spacedeconv::preprocess(single_cell_data_3)
+spatial_data_3 <- spacedeconv::preprocess(spatial_data_3)
+
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3, method = "cpm")
+```
+
+```{r build_model, message=FALSE, warning=FALSE}
+signature <- spacedeconv::build_model(
+  single_cell_obj = single_cell_data_3,
+  cell_type_col   = "celltype_major",
+  method          = "spatialdwls",
+  verbose         = TRUE
+)
+```
+
+```{r deconvolute, message=FALSE, warning=FALSE}
+deconv <- spacedeconv::deconvolute(
+  spatial_obj     = spatial_data_3,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col   = "celltype_major",
+  method          = "spatialdwls",
+  signature       = signature,
+  assay_sp        = "cpm"
+)
+```
+
+```{r cluster, message=FALSE, warning=FALSE}
+clustered <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
+```
+
+```{r plot, message=FALSE, warning=FALSE}
+spacedeconv::plot_spatial(
+  spe     = clustered,
+  result  = "cluster_expression_res_0.5",
+  title   = "Clustering",
+  density = FALSE
+)
+```
