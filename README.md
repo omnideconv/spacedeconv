@@ -57,6 +57,10 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE
 - Ligand-Receptor analysis
 - easy integration into spatial transcriptomics workflows
 
+<div align="center">
+  <img src="man/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"/>
+</div>
+
 ## :floppy_disk: Data requirements
 
 Spatial transcriptomics data: _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_
