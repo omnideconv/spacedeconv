@@ -108,6 +108,8 @@ signature <- spacedeconv::build_model(
 )
 ```
 
+You can see all supported deconvolution methods with `spacedeconv::deconvolution_methods`.
+
 ### 4. Deconvolution
 
 While some methods are able to directly estimate immune cell abundances other tools require a custom reference signature.
