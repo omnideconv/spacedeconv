@@ -68,7 +68,7 @@ first_gen <- c(
 #'
 #' @param single_cell_obj Single-cell Object
 #' @param cell_type_col Name of the annotation column containing cell type information
-#' @param method Signature calculation Algorithm
+#' @param method Signature calculation Algorithm; choose one of `spacedeconv::deconvolution_methods`
 #' @param verbose Display more information on console
 #' @param spatial_obj SpatialExperiment, required for SPOTlight
 #' @param batch_id_col column of singleCellExperiment containing batch ids
@@ -208,7 +208,7 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' @param signature Gene Expression Signature
 #' @param single_cell_obj A SingleCellExperiment
 #' @param cell_type_col Column name of the single_cell_obj where the cell type can be found
-#' @param method Deconvolution Method to use, see deconvolution_methods() for a full list of available methods
+#' @param method Deconvolution Method to use; choose one of `spacedeconv::deconvolution_methods`
 #' @param batch_id_col column name of batch ids in single cell object
 #' @param assay_sc which single cell assay to use for computation
 #' @param assay_sp which spatial assay to use for computation
@@ -372,7 +372,7 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
 #'
 #' @param single_cell_obj Single Cell Object containing reference data to build the model
 #' @param spatial_obj SpatialExperiment to be deconvoluted
-#' @param method deconvolution method
+#' @param method deconvolution method; choose one of `spacedeconv::deconvolution_methods`
 #' @param cell_type_col column of single_cell_obj containing cell type information
 #' @param batch_id_col column of SpatialObject containing batch_id information
 #' @param assay_sc the assay of the single cell object to use, default = "counts"
