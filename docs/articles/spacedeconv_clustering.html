@@ -38,12 +38,12 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/spacedeconv_anndata.html">AnnData Import</a></li>
-    <li><a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a></li>
+<li><a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_decoupleR.html">DecoupleR integration</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_example.html">Example</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_faq.html">FAQ</a></li>
+    <li><a class="dropdown-item" href="../articles/spacedeconv_import.html">AnnData/Seurat Import</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_utils.html">Workflow Utilities</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_visualization.html">Visualization</a></li>
@@ -89,7 +89,7 @@ activities.</p>
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[78ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[80ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 8 observations with umi count below threshold</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 8 observations with umi count below threshold <span style="color: #B2B2B2;">[1.3s]</span></span></span>
@@ -97,7 +97,7 @@ activities.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 5862 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(single_cell_data_3): There are 13</span></span>
 <span><span class="co">#&gt; mitochondrial genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[751ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[770ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
@@ -106,20 +106,20 @@ activities.</p>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[30ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[31ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[119ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[120ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(spatial_data_3): There are 13 mitochondrial</span></span>
 <span><span class="co">#&gt; genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[152ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[154ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[10ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[11ms]</span></span></span>
 <span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
@@ -176,12 +176,12 @@ Vignette</a> for details.</li>
 <code class="sourceCode R"><span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cluster.html">cluster</a></span><span class="op">(</span><span class="va">deconv</span>, data <span class="op">=</span> <span class="st">"expression"</span>, clusres <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[7ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[6ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Clustering: expression</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data<span style="color: #00BBBB;">ℹ</span> Cluster resolution: 0.5</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data<span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[25ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data<span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[24ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data</span></span>
 <span><span class="co">#&gt; Warning: The `slot` argument of `GetAssayData()` is deprecated as of SeuratObject 5.0.0.</span></span>
@@ -201,7 +201,7 @@ Vignette</a> for details.</li>
 <span><span class="co">#&gt; Computing nearest neighbor graph</span></span>
 <span><span class="co">#&gt; Computing SNN</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[22.2s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[21.6s]</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_spatial.html">plot_spatial</a></span><span class="op">(</span></span>
 <span>  spe <span class="op">=</span> <span class="va">cluster</span>, <span class="co"># plot the clustering stored in this object</span></span>
