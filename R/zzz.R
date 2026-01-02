@@ -18,7 +18,7 @@ NULL
     cli::cli_alert("Miniconda installation complete")
   }
 
-  default_envname <- "spacedeconv"
+  default_envname <- "spacedeconv-env"
   envname <- getOption("omnideconv.conda_env", default = default_envname)
 
   conda_envs <- reticulate::conda_list()

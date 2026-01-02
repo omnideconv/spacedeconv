@@ -27,7 +27,7 @@ Here, we set up `reticulate` before loading the `spacedeconv` and `zellkonverter
 
 ```{r message=FALSE, warning=FALSE}
 library(reticulate)
-use_condaenv("spacedeconv", required = TRUE)
+use_condaenv("spacedeconv-env", required = TRUE)
 invisible(py_config())
 
 library(spacedeconv)
