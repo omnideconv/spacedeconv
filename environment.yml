@@ -1,7 +1,7 @@
 # This environment requires Linux
 # macOS and Windows are not supported
 
-name: r-omnideconv
+name: spacedeconv
 
 channels:
   - pytorch

@@ -14,7 +14,13 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   }
 
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
+    envname <- getOption("omnideconv.conda_env", default = "spacedeconv")
+    conda_envs <- reticulate::conda_list()
+    python_path <- conda_envs$python[match(envname, conda_envs$name)]
+    if (is.na(python_path)) {
+      stop("Conda environment '", envname, "' not found.", call. = FALSE)
+    }
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
   # check if requested assay exists
@@ -78,7 +84,13 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
+    envname <- getOption("omnideconv.conda_env", default = "spacedeconv")
+    conda_envs <- reticulate::conda_list()
+    python_path <- conda_envs$python[match(envname, conda_envs$name)]
+    if (is.na(python_path)) {
+      stop("Conda environment '", envname, "' not found.", call. = FALSE)
+    }
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
 
