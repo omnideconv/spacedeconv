@@ -41,12 +41,12 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/spacedeconv_anndata.html">AnnData Import</a></li>
-    <li><a class="dropdown-item" href="articles/spacedeconv_clustering.html">Clustering</a></li>
+<li><a class="dropdown-item" href="articles/spacedeconv_clustering.html">Clustering</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_data.html">Data Input</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_decoupleR.html">DecoupleR integration</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_example.html">Example</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_faq.html">FAQ</a></li>
+    <li><a class="dropdown-item" href="articles/spacedeconv_import.html">AnnData/Seurat Import</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_LR.html">Ligand-Receptor Analysis</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_utils.html">Workflow Utilities</a></li>
     <li><a class="dropdown-item" href="articles/spacedeconv_visualization.html">Visualization</a></li>
@@ -108,6 +108,9 @@
 <li>Ligand-Receptor analysis</li>
 <li>easy integration into spatial transcriptomics workflows</li>
 </ul>
+<div align="center">
+<p><img src="reference/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="floppy_disk-data-requirements">
@@ -158,6 +161,7 @@
 <span>  cell_type_col <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"spatialdwls"</span>, verbose <span class="op">=</span> <span class="cn">T</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>You can see all supported deconvolution methods with <code><a href="reference/deconvolution_methods.html">spacedeconv::deconvolution_methods</a></code>.</p>
 </div>
 <div class="section level3">
 <h3 id="id_4-deconvolution">4. Deconvolution<a class="anchor" aria-label="anchor" href="#id_4-deconvolution"></a>
