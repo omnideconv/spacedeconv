@@ -28,6 +28,8 @@ invisible(py_config())
 
 library(spacedeconv)
 library(zellkonverter)
+library(Seurat)
+library(SingleCellExperiment)
 ```
 
 
@@ -40,24 +42,38 @@ data("spatial_data_3")
 ```
 
 
-# Convert SingleCellExperiment to anndata
+# SingleCellExperiment <-> AnnData Conversion
 `zellkonverter` allows us to convert `SingleCellExperiment` objects to `anndata`
-and store them as `H5AD` files.
+and store them as `H5AD` files: [writeH5AD(...)](https://theislab.github.io/zellkonverter/reference/writeH5AD.html)
 
 ```{r write_h5ad, message=FALSE, warning=FALSE}
 writeH5AD(single_cell_data_3, "single_cell_data_3.h5ad")
 ```
 
-
-# Load anndata as SingleCellExperiment
 In case we have the single-cell data only as `H5AD` `anndata` file, we can use `zellkonverter` to 
-read it into R as `SingleCellExperiment` object. That way it can be used as input for
+read it into R as `SingleCellExperiment` object: [readH5AD(...)](https://theislab.github.io/zellkonverter/reference/readH5AD.html)
+
+That way it can be used as input for
 the `spacedeconv` pipeline. In this case we read back example data file we just wrote to `H5AD`.
 
 ```{r read_h5ad, message=FALSE, warning=FALSE}
 single_cell_data_3 <- readH5AD("single_cell_data_3.h5ad", use_hdf5 = FALSE)
 ```
 
+# SingleCellExperiment <-> Seurat Conversion
+
+`Seurat` allows us to convert `SingleCellExperiment` to `Seurat` objects.
+
+```{r sce_to_seurat, message=FALSE, warning=FALSE}
+single_cell_data_3 <- as.Seurat(single_cell_data_3, counts = "counts", data = NULL)
+```
+
+If you have single-cell data as `Seurat` object, you can convert it to a `SingleCellExperiment`
+to use it as input for `spacedeconv`.
+
+```{r seurat_to_sce, message=FALSE, warning=FALSE}
+single_cell_data_3 <- as.SingleCellExperiment(single_cell_data_3, assay = "originalexp")
+```
 
 # Spacedeconv Clustering Pipeline
 Now we can continue with the spacedeconv pipeline as usual. In this case we will perform
