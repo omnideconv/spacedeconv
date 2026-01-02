@@ -25,16 +25,16 @@ Download the environment.yml file of this github repo:
 wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
 ```
 
-Create a new environment called "r-omnideconv" via mamba with the environment.yml file and flexible channel priority:
+Create a new environment called "spacedeconv" via mamba with the environment.yml file and flexible channel priority:
 
 ```r
 CONDA_CHANNEL_PRIORITY=flexible mamba env create -f environment.yml
 ```
 
-Start R inside the r-omnideconv conda environment:
+Start R inside the spacedeconv conda environment:
 
 ```r
-conda activate r-omnideconv
+conda activate spacedeconv
 R
 ```
 
