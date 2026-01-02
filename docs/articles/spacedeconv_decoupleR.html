@@ -81,7 +81,7 @@ Transcription Factor activities using DecoupleR.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv">spacedeconv</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## → Setting up spacedeconv environment..</span></span></code></pre>
-<pre><code><span><span class="co">## → Using conda environment 'r-omnideconv'</span></span></code></pre>
+<pre><code><span><span class="co">## → Using conda environment 'spacedeconv-env'</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saezlab.github.io/decoupleR/" class="external-link">decoupleR</a></span><span class="op">)</span></span></code></pre></div>
 <p>To compute activities you need to obtain a reference from OmniPathR.
@@ -91,7 +91,7 @@ The <code>method</code> can be one of “progeny”, “dorothea” or
 <code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_decoupleR_reference.html">get_decoupleR_reference</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"progeny"</span>, organism <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Getting decoupleR reference</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[3.6s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[3.4s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
@@ -112,7 +112,7 @@ The <code>method</code> can be one of “progeny”, “dorothea” or
 <span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[48ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[739ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[729ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">## Warning in preprocess(spatial_data_3): There are 13 mitochondrial genes</span></span>
@@ -140,7 +140,7 @@ The <code>method</code> can be one of “progeny”, “dorothea” or
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR</span></span>
 <span><span class="co">## → Calculated multiple results, using corr_wmean  , other available results:  norm_wmeanCalculated multiple results, using corr_wmean  , other available results:  wmean</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[28.6s]</span></span></span></code></pre></div>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[29.7s]</span></span></span></code></pre></div>
   </main>
 </div>
 
