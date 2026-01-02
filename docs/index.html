@@ -83,10 +83,10 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>conda install <span class="sc">-</span>c conda<span class="sc">-</span>forge mamba</span></code></pre></div>
 <p>Download the environment.yml file of this github repo:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>wget https<span class="sc">:</span><span class="er">//</span>raw.githubusercontent.com<span class="sc">/</span>omnideconv<span class="sc">/</span>spacedeconv<span class="sc">/</span>main<span class="sc">/</span>environment.yml <span class="sc">-</span>O environment.yml</span></code></pre></div>
-<p>Create a new environment called “r-omnideconv” via mamba with the environment.yml file and flexible channel priority:</p>
+<p>Create a new environment called “spacedeconv-env” via mamba with the environment.yml file and flexible channel priority:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>CONDA_CHANNEL_PRIORITY<span class="ot">=</span>flexible mamba env create <span class="sc">-</span>f environment.yml</span></code></pre></div>
-<p>Start R inside the r-omnideconv conda environment:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>conda activate r<span class="sc">-</span>omnideconv</span>
+<p>Start R inside the spacedeconv-env conda environment:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>conda activate spacedeconv<span class="sc">-</span>env</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>R</span></code></pre></div>
 <p>Install the missing packages that are not available via conda as well as <em>spacedeconv</em>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
