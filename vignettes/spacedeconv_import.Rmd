@@ -15,8 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 # Setup
-This vignette shows how to use `H5AD` `anndata` files as input for the spacedeconv pipeline.
-For this, we use the `zellkonverter` package which is also available via `conda`.
+The preferred single-cell reference data input format of `spacedeconv` is `SingleCellExperiment`.
+Other common single-cell formats are `anndata` and `Seurat`.
+This vignette shows how to use `H5AD` `anndata` files and `Seurat` objects
+as input for the spacedeconv pipeline.
+
+For `anndata`, we use the `zellkonverter` package which is also available via `conda`.
 
 Here, we set up `reticulate` before loading the `spacedeconv` and `zellkonverter` libraries to avoid
 `reticulate` conflicts between the two packages.
@@ -53,8 +57,8 @@ writeH5AD(single_cell_data_3, "single_cell_data_3.h5ad")
 In case we have the single-cell data only as `H5AD` `anndata` file, we can use `zellkonverter` to 
 read it into R as `SingleCellExperiment` object: [zellkonverter::readH5AD()](https://theislab.github.io/zellkonverter/reference/readH5AD.html)
 
-That way it can be used as input for
-the `spacedeconv` pipeline. In this case we read back example data file we just wrote to `H5AD`.
+That way it can be used as input for the `spacedeconv` pipeline.
+In this case we read back the example data file we just wrote to `H5AD`.
 
 ```{r read_h5ad, message=FALSE, warning=FALSE}
 single_cell_data_3 <- readH5AD("single_cell_data_3.h5ad", use_hdf5 = FALSE)
