@@ -19,7 +19,7 @@ NULL
   }
 
   default_envname <- "spacedeconv-env"
-  envname <- getOption("omnideconv.conda_env", default = default_envname)
+  envname <- getOption("spacedeconv.conda_env", default = default_envname)
 
   conda_envs <- reticulate::conda_list()
   if (!(envname %in% conda_envs$name)) {

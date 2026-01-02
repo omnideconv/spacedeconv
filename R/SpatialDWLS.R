@@ -14,7 +14,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   }
 
   if (!exists("giotto_instructions")) {
-    envname <- getOption("omnideconv.conda_env", default = "spacedeconv-env")
+    envname <- getOption("spacedeconv.conda_env", default = "spacedeconv-env")
     conda_envs <- reticulate::conda_list()
     python_path <- conda_envs$python[match(envname, conda_envs$name)]
     if (is.na(python_path)) {
@@ -84,7 +84,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   if (!exists("giotto_instructions")) {
-    envname <- getOption("omnideconv.conda_env", default = "spacedeconv-env")
+    envname <- getOption("spacedeconv.conda_env", default = "spacedeconv-env")
     conda_envs <- reticulate::conda_list()
     python_path <- conda_envs$python[match(envname, conda_envs$name)]
     if (is.na(python_path)) {
