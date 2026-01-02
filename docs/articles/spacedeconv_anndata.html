@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>AnnData Import • spacedeconv</title>
+<title>AnnData/Seurat Import • spacedeconv</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="AnnData Import">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="AnnData/Seurat Import">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -38,7 +38,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/spacedeconv_anndata.html">AnnData Import</a></li>
+<li><a class="dropdown-item" href="../articles/spacedeconv_anndata.html">AnnData/Seurat Import</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_data.html">Data Input</a></li>
     <li><a class="dropdown-item" href="../articles/spacedeconv_decoupleR.html">DecoupleR integration</a></li>
@@ -66,7 +66,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>AnnData Import</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>AnnData/Seurat Import</h1>
             
       
 
@@ -91,7 +91,9 @@ avoid <code>reticulate</code> conflicts between the two packages.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">py_config</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv">spacedeconv</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/theislab/zellkonverter" class="external-link">zellkonverter</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/theislab/zellkonverter" class="external-link">zellkonverter</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="load-example-data">Load Example Data<a class="anchor" aria-label="anchor" href="#load-example-data"></a>
@@ -102,36 +104,46 @@ avoid <code>reticulate</code> conflicts between the two packages.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="convert-singlecellexperiment-to-anndata">Convert SingleCellExperiment to anndata<a class="anchor" aria-label="anchor" href="#convert-singlecellexperiment-to-anndata"></a>
+<h2 id="singlecellexperiment---anndata-conversion">SingleCellExperiment &lt;-&gt; AnnData Conversion<a class="anchor" aria-label="anchor" href="#singlecellexperiment---anndata-conversion"></a>
 </h2>
 <p><code>zellkonverter</code> allows us to convert
 <code>SingleCellExperiment</code> objects to <code>anndata</code> and
-store them as <code>H5AD</code> files.</p>
+store them as <code>H5AD</code> files: <a href="https://theislab.github.io/zellkonverter/reference/writeH5AD.html" class="external-link">zellkonverter::writeH5AD()</a></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/zellkonverter/man/writeH5AD.html" class="external-link">writeH5AD</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, <span class="st">"single_cell_data_3.h5ad"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="load-anndata-as-singlecellexperiment">Load anndata as SingleCellExperiment<a class="anchor" aria-label="anchor" href="#load-anndata-as-singlecellexperiment"></a>
-</h2>
 <p>In case we have the single-cell data only as <code>H5AD</code>
 <code>anndata</code> file, we can use <code>zellkonverter</code> to read
-it into R as <code>SingleCellExperiment</code> object. That way it can
-be used as input for the <code>spacedeconv</code> pipeline. In this case
-we read back example data file we just wrote to <code>H5AD</code>.</p>
+it into R as <code>SingleCellExperiment</code> object: <a href="https://theislab.github.io/zellkonverter/reference/readH5AD.html" class="external-link">zellkonverter::readH5AD()</a></p>
+<p>That way it can be used as input for the <code>spacedeconv</code>
+pipeline. In this case we read back example data file we just wrote to
+<code>H5AD</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zellkonverter/man/readH5AD.html" class="external-link">readH5AD</a></span><span class="op">(</span><span class="st">"single_cell_data_3.h5ad"</span>, use_hdf5 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="singlecellexperiment---seurat-conversion">SingleCellExperiment &lt;-&gt; Seurat Conversion<a class="anchor" aria-label="anchor" href="#singlecellexperiment---seurat-conversion"></a>
+</h2>
+<p><code>Seurat</code> allows us to convert
+<code>SingleCellExperiment</code> to <code>Seurat</code> objects: <a href="https://satijalab.org/seurat/reference/as.Seurat.html" class="external-link">Seurat::as.Seurat()</a></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/as.Seurat.html" class="external-link">as.Seurat</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, counts <span class="op">=</span> <span class="st">"counts"</span>, data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<p>If you have single-cell data as <code>Seurat</code> object, you can
+convert it to a <code>SingleCellExperiment</code> to use it as input for
+<code>spacedeconv</code>: <a href="https://satijalab.org/seurat/reference/as.SingleCellExperiment.html" class="external-link">Seurat::as.SingleCellExperiment()</a></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/as.SingleCellExperiment.html" class="external-link">as.SingleCellExperiment</a></span><span class="op">(</span><span class="va">single_cell_data_3</span>, assay <span class="op">=</span> <span class="st">"originalexp"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="spacedeconv-clustering-pipeline">Spacedeconv Clustering Pipeline<a class="anchor" aria-label="anchor" href="#spacedeconv-clustering-pipeline"></a>
 </h2>
 <p>Now we can continue with the spacedeconv pipeline as usual. In this
 case we will perform the clustering procedure as an example.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_cell_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">single_cell_data_3</span><span class="op">)</span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">signature</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/build_model.html">build_model</a></span><span class="op">(</span></span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
 <span>  cell_type_col   <span class="op">=</span> <span class="st">"celltype_major"</span>,</span>
@@ -140,7 +152,7 @@ case we will perform the clustering procedure as an example.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; class of selected matrix:  dgCMatrix </span></span>
 <span><span class="co">#&gt; [1] "finished runPCA_factominer, method == factominer"</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">deconv</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span></span>
 <span>  spatial_obj     <span class="op">=</span> <span class="va">spatial_data_3</span>,</span>
 <span>  single_cell_obj <span class="op">=</span> <span class="va">single_cell_data_3</span>,</span>
@@ -151,9 +163,9 @@ case we will perform the clustering procedure as an example.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; class of selected matrix:  dgCMatrix </span></span>
 <span><span class="co">#&gt; [1] "finished runPCA_factominer, method == factominer"</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clustered</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/cluster.html">cluster</a></span><span class="op">(</span><span class="va">deconv</span>, data <span class="op">=</span> <span class="st">"expression"</span>, clusres <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_spatial.html">plot_spatial</a></span><span class="op">(</span></span>
 <span>  spe     <span class="op">=</span> <span class="va">clustered</span>,</span>
 <span>  result  <span class="op">=</span> <span class="st">"cluster_expression_res_0.5"</span>,</span>
