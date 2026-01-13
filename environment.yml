@@ -73,6 +73,20 @@ dependencies:
   - r-nmf
   - r-spatstat.random
   - r-gtools
+  - r-checkmate
+  - r-cowplot >= 0.9.4
+  - r-data.table >= 1.12.2
+  - r-dbscan >= 1.1-3
+  - r-deldir >= 1.0.6
+  - r-future.apply
+  - r-ggrepel
+  - r-jsonlite
+  - r-magrittr
+  - r-matrixstats >= 0.55.0
+  - r-progressr
+  - r-rtsne
+  - r-scales >= 1.0.0
+  - r-uwot
 
   # Bioconductor R packages
   - bioconductor-singlecellexperiment
@@ -91,6 +105,10 @@ dependencies:
   - bioconductor-org.mm.eg.db
   - bioconductor-org.hs.eg.db
   - bioconductor-annotationdbi
+  - bioconductor-biocsingular
+  - bioconductor-matrixgenerics
+  - bioconductor-sparsematrixstats
+  - bioconductor-limma
   - bioconductor-scran
   - bioconductor-zellkonverter
   - r-spacexr
