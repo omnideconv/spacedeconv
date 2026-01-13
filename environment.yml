@@ -30,7 +30,7 @@ dependencies:
   - r-progress
   - r-circlize
   - r-patchwork
-  - r-reticulate
+  - r-reticulate >= 1.25
   - r-corrplot
   - r-ggridges
   - r-testit
@@ -51,9 +51,9 @@ dependencies:
   - r-seuratobject
   - r-plotly
   - r-pbapply
-  - r-terra
+  - r-terra >= 1.5-12
   - r-magick
-  - r-igraph
+  - r-igraph >= 1.2.4.1
   - r-rcpp >= 1.0.7
   - r-rcpparmadillo
   - r-mcmcpack
@@ -62,7 +62,7 @@ dependencies:
   - r-sp
   - r-dplyr
   - r-rann
-  - r-ggplot2
+  - r-ggplot2 >= 3.1.1
   - r-reshape2
   - r-rcolorbrewer
   - r-scatterpie
