@@ -8,6 +8,7 @@ channels:
   - nvidia
   - conda-forge
   - bioconda
+  - r
 
 dependencies:
   - r-base = 4.3.3
@@ -15,6 +16,9 @@ dependencies:
   - python = 3.10
   - compilers
   - r-devtools
+
+  # R packages from r channel
+  - r-wrmisc
 
   # conda-forge R packages
   - r-pak
@@ -50,6 +54,25 @@ dependencies:
   - r-terra
   - r-magick
   - r-igraph
+  - r-rcpp >= 1.0.7
+  - r-rcpparmadillo
+  - r-mcmcpack
+  - r-fields
+  - r-concaveman
+  - r-sp
+  - r-dplyr
+  - r-rann
+  - r-ggplot2
+  - r-reshape2
+  - r-rcolorbrewer
+  - r-scatterpie
+  - r-ggcorrplot
+  - r-nnls
+  - r-pbmcapply
+  - r-rcppml
+  - r-nmf
+  - r-spatstat.random
+  - r-gtools
 
   # Bioconductor R packages
   - bioconductor-singlecellexperiment
