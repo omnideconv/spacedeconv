@@ -13,10 +13,10 @@ _spacedeconv_ is a unified interface to first- and second-generation deconvoluti
 
 Since many different packages need to be included, we highly recommend to install _spacedeconv_ in a new Conda environment with the following commands.
 
-First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
+First, a tool for fast dependency resolution is needed, therefore we recommend installing [micromamba]("https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html") (or mamba / conda with libmamba solver) if not already available:
 
 ```r
-conda install -c conda-forge mamba
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
 ```
 
 Download the environment.yml file of this github repo:
@@ -25,10 +25,10 @@ Download the environment.yml file of this github repo:
 wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
 ```
 
-Create a new environment called "spacedeconv-env" via mamba with the environment.yml file and flexible channel priority:
+Create a new environment called "spacedeconv-env" via micromamba with the environment.yml file and flexible channel priority:
 
 ```r
-CONDA_CHANNEL_PRIORITY=flexible mamba env create -f environment.yml
+CONDA_CHANNEL_PRIORITY=flexible micromamba env create -f environment.yml
 ```
 
 Start R inside the spacedeconv-env conda environment:
