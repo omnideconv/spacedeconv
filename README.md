@@ -28,7 +28,7 @@ wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.y
 Create a new environment called "spacedeconv-env" via micromamba with the environment.yml file and flexible channel priority:
 
 ```r
-CONDA_CHANNEL_PRIORITY=flexible micromamba env create -f environment.yml
+micromamba env create -f environment.yml --channel-priority flexible
 ```
 
 Start R inside the spacedeconv-env conda environment:
