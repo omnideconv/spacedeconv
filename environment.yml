@@ -92,6 +92,7 @@ dependencies:
   - bioconductor-org.hs.eg.db
   - bioconductor-annotationdbi
   - bioconductor-scran
+  - bioconductor-zellkonverter
   - r-spacexr
 
   # Python packages
