@@ -41,9 +41,15 @@ R
 Install the missing packages that are not available via conda as well as _spacedeconv_:
 
 ```r
-pak::pkg_install("drieslab/Giotto@v3.3.2", dependencies = FALSE, upgrade = FALSE)
-devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", dependencies = FALSE, upgrade = "never")
-pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
+pak::pkg_install(
+  c(
+    "drieslab/Giotto@v3.3.2",
+    "YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0",
+    "omnideconv/spacedeconv"
+  ),
+  dependencies = FALSE,
+  upgrade = FALSE
+)
 ```
 
 ## :sparkles: Features
