@@ -31,7 +31,7 @@ In the next step the activities can be computed.
 ```{r, eval=TRUE, collapse=TRUE}
 data("spatial_data_3")
 spatial_data_3 <- preprocess(spatial_data_3)
-spatial_data_3 <- normalize(spatial_data_3)
+spatial_data_3 <- spacedeconv::normalize(spatial_data_3)
 
 spe <- compute_activities(spatial_data_3, reference = ref, method = "wmean", assay = "cpm")
 ```
