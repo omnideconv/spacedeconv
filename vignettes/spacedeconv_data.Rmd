@@ -65,7 +65,7 @@ SpaceDeconv offers an additional function for convenient normalization of Spatia
 
 ```{r deconvolution, eval = TRUE}
 spe <- spacedeconv::preprocess(spatial_data_1)
-spe <- normalize(spe, method = "cpm")
+spe <- spacedeconv::normalize(spe, method = "cpm")
 
 # make sure to use cpm assay in deconvolution step
 deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")
