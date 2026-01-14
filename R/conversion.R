@@ -85,10 +85,13 @@ seurat_to_spatialexperiment <- function(seurat) {
   )
 
 
+  coords <- as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")])
+  colnames(coords) <- c("pxl_row_in_fullres", "pxl_col_in_fullres")
+
   spe <- SpatialExperiment::SpatialExperiment(
     assays = list(counts = Seurat::GetAssayData(seurat, "Spatial", slot = "counts")),
     # spatialCoords = as.matrix(Seurat::GetTissueCoordinates(seurat)) ,
-    spatialCoords = as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")]),
+    spatialCoords = coords,
     imgData = img
   )
 
