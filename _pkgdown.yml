@@ -10,7 +10,7 @@ reference:
     contents:
       - set_cibersort_binary
       - set_cibersort_mat
-  - title: Datatype conversion
+  - title: Preprocessing
     contents:
       - anndata_to_singlecellexperiment
       - anndata_to_spatialexperiment
