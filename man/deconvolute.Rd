@@ -27,7 +27,7 @@ deconvolute(
 
 \item{cell_type_col}{Column name of the single_cell_obj where the cell type can be found}
 
-\item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
+\item{method}{Deconvolution Method to use; choose one of \code{spacedeconv::deconvolution_methods}}
 
 \item{batch_id_col}{column name of batch ids in single cell object}
 

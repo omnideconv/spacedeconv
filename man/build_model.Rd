@@ -21,7 +21,7 @@ build_model(
 
 \item{cell_type_col}{Name of the annotation column containing cell type information}
 
-\item{method}{Signature calculation Algorithm}
+\item{method}{Signature calculation Algorithm; choose one of \code{spacedeconv::deconvolution_methods}}
 
 \item{verbose}{Display more information on console}
 

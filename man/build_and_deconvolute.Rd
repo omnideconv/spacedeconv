@@ -22,7 +22,7 @@ build_and_deconvolute(
 
 \item{spatial_obj}{SpatialExperiment to be deconvoluted}
 
-\item{method}{deconvolution method}
+\item{method}{deconvolution method; choose one of \code{spacedeconv::deconvolution_methods}}
 
 \item{cell_type_col}{column of single_cell_obj containing cell type information}
 
