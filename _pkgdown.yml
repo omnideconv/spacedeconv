@@ -70,7 +70,6 @@ reference:
       - checkCol
       - check_and_install
       - convertImmunedeconvMatrix
-      - convert_to_sce
       - doGiottoWorkflow
       - getMarkersSPOTlight
       - getMatricesFromSCE
