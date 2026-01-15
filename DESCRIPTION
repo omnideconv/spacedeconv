@@ -3,8 +3,10 @@ Title: Unified Interface to spatial transcriptomics deconvolution tools
 Version: 1.0.0
 URL: https://omnideconv.github.io/spacedeconv
 Authors@R: 
-    person(given="Constantin", family="Zackl", email="constantin.zackl@student.uibk.ac.at", role = c("aut"), comment = c(ORCID = "0000-0003-1991-6943"))
-    person(given="Felix", family="Petschko", email="felix.petschko@uibk.ac.at", role = c("cre", "ctb"), comment = c(ORCID = "0009-0009-5561-0600"))
+    c(
+      person(given="Constantin", family="Zackl", email="constantin.zackl@student.uibk.ac.at", role = c("aut"), comment = c(ORCID = "0000-0003-1991-6943")),
+      person(given="Felix", family="Petschko", email="felix.petschko@uibk.ac.at", role = c("cre", "ctb"), comment = c(ORCID = "0009-0009-5561-0600"))
+    )
 Description: Collection of 31 deconvolution tools for spatial transcriptomics data.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
