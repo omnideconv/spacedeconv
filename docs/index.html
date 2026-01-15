@@ -79,20 +79,26 @@
 </h2>
 <p><strong>Note:</strong> The current <em>spacedeconv</em> installation is only available for the <strong>linux-64</strong> platform.</p>
 <p>Since many different packages need to be included, we highly recommend to install <em>spacedeconv</em> in a new Conda environment with the following commands.</p>
-<p>First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>conda install <span class="sc">-</span>c conda<span class="sc">-</span>forge mamba</span></code></pre></div>
+<p>First, a tool for fast dependency resolution is needed, therefore we recommend installing <a href="%22https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html%22" class="external-link">micromamba</a> (or mamba / conda with libmamba solver) if not already available:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="st">"${SHELL}"</span> <span class="sc">&lt;</span>(curl <span class="sc">-</span>L micro.mamba.pm<span class="sc">/</span>install.sh)</span></code></pre></div>
 <p>Download the environment.yml file of this github repo:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>wget https<span class="sc">:</span><span class="er">//</span>raw.githubusercontent.com<span class="sc">/</span>omnideconv<span class="sc">/</span>spacedeconv<span class="sc">/</span>main<span class="sc">/</span>environment.yml <span class="sc">-</span>O environment.yml</span></code></pre></div>
-<p>Create a new environment called “spacedeconv-env” via mamba with the environment.yml file and flexible channel priority:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>CONDA_CHANNEL_PRIORITY<span class="ot">=</span>flexible mamba env create <span class="sc">-</span>f environment.yml</span></code></pre></div>
+<p>Create a new environment called “spacedeconv-env” via micromamba with the environment.yml file and flexible channel priority:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>micromamba env create <span class="sc">-</span>f environment.yml <span class="sc">--</span>channel<span class="sc">-</span>priority flexible</span></code></pre></div>
 <p>Start R inside the spacedeconv-env conda environment:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>conda activate spacedeconv<span class="sc">-</span>env</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>R</span></code></pre></div>
 <p>Install the missing packages that are not available via conda as well as <em>spacedeconv</em>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"drieslab/Giotto@v3.3.2"</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"YingMa0107/CARD"</span>, ref <span class="op">=</span> <span class="st">"2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"drieslab/Giotto@v3.3.2"</span>,</span>
+<span>    <span class="st">"YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0"</span>,</span>
+<span>    <span class="st">"omnideconv/spacedeconv"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  dependencies <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  upgrade <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="sparkles-features">
