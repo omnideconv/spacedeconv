@@ -97,7 +97,7 @@ activities.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 5862 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(single_cell_data_3): There are 13</span></span>
 <span><span class="co">#&gt; mitochondrial genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[758ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 5862 variables with all zero expression <span style="color: #B2B2B2;">[756ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
@@ -106,15 +106,15 @@ activities.</p>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[31ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[30ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[120ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[119ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(spatial_data_3): There are 13 mitochondrial</span></span>
 <span><span class="co">#&gt; genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[154ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[152ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
@@ -127,7 +127,7 @@ activities.</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[18ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[1.9s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -201,7 +201,7 @@ Vignette</a> for details.</li>
 <span><span class="co">#&gt; Computing nearest neighbor graph</span></span>
 <span><span class="co">#&gt; Computing SNN</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Extracting data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[23.1s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Extracted data for clustering <span style="color: #B2B2B2;">[25s]</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_spatial.html">plot_spatial</a></span><span class="op">(</span></span>
 <span>  spe <span class="op">=</span> <span class="va">cluster</span>, <span class="co"># plot the clustering stored in this object</span></span>
@@ -262,7 +262,7 @@ from this area. See the associated clusters in the plot above.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Felix Petschko.</p>
+  <p>Developed by Constantin Zackl, Felix Petschko.</p>
 </div>
 
 <div class="pkgdown-footer-right">
