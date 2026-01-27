@@ -132,7 +132,7 @@ plot_spatial(
   spe = deconv,
   result = "spatialdwls_B.cells",
   title = "B cells",
-  density=F
+  density = FALSE
 )
 ```
 
