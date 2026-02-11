@@ -244,9 +244,10 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
   ))
 }
 
-#' Function to plot deconvolution results
+#' Plot Most Abundant Cell Type per Spot
 #'
-#' Generate Hex Plot of a SpatialExperiment containing the most abundant cell types
+#' Generates a spatial hex plot showing the most abundant cell type for each
+#' spot, based on deconvolution results in a `SpatialExperiment`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param method select which results should be displayed
@@ -276,7 +277,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param min_abundance minimum abundance of celltypes to be included in the analysis
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of most abundant cell types.
 #'
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako",
