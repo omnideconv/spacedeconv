@@ -200,20 +200,23 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 
 #' Deconvolution with spacedeconv
 #'
-#' Perform cell type deconvolution with spacedeconv.
+#' Runs the selected deconvolution method on a `SpatialExperiment`. Methods may
+#' use a precomputed `signature` (from `build_model()`) or build internally.
+#' See `spacedeconv::deconvolution_methods` for the full list of methods.
 #'
-#' @param spatial_obj A SpatialExperiment
-#' @param signature Gene Expression Signature
-#' @param single_cell_obj A SingleCellExperiment
-#' @param cell_type_col Column name of the single_cell_obj where the cell type can be found
-#' @param method Deconvolution Method to use; choose one of `spacedeconv::deconvolution_methods`
-#' @param batch_id_col column name of batch ids in single cell object
-#' @param assay_sc which single cell assay to use for computation
-#' @param assay_sp which spatial assay to use for computation
-#' @param return_object Return an Object or result Table, TRUE = Object
-#' @param verbose display more detailed information
-#' @param ... Further parameters passed to the selected deconvolution method
-#' @returns The deconvolution result as a table
+#' @param spatial_obj A `SpatialExperiment` to deconvolute.
+#' @param signature Gene expression signature matrix (if required by the method).
+#' @param single_cell_obj A `SingleCellExperiment` with reference cells (if required).
+#' @param cell_type_col Column name in `single_cell_obj` containing cell types.
+#' @param method Deconvolution method; one of `spacedeconv::deconvolution_methods`.
+#' @param batch_id_col Batch ID column in `single_cell_obj` (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param return_object If `TRUE`, return the input `SpatialExperiment` with
+#' results added to `colData`; otherwise return the result matrix.
+#' @param verbose Print extra progress information.
+#' @param ... Further parameters passed to the selected method.
+#' @return Deconvolution results as a matrix or a `SpatialExperiment`.
 #' @export
 deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
                         cell_type_col = "cell_ontology_class", method = NULL,
