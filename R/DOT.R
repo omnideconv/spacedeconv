@@ -1,5 +1,10 @@
-#' No signature calculated, just call the deconvolute method
-#' @returns NULL
+#' No Signature for DOT
+#'
+#' DOT builds its model internally, so this function returns `NULL` and you
+#' should call `deconvolute()` with the DOT method (see
+#' `spacedeconv::deconvolution_methods`).
+#'
+#' @return NULL
 build_model_dot <- function() {
   message("This method does not build a signature, just call the deconvolute method")
   return(NULL)
