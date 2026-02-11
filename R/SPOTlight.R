@@ -1,11 +1,15 @@
-#' Build Model SPOTlight
+#' Build a SPOTlight Model
 #'
-#' @param single_cell_obj SingleCellExperiment
-#' @param cell_type_col Column where cell type information can be found
-#' @param spatial_obj SpatialExperiment
-#' @param assay_sc single cell assay to use
-#' @param assay_sp spatial assay to use
-#' @param markers (Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'single_cell_obj' based on the authors suggestion
+#' Trains the SPOTlight model using single-cell and spatial data. Marker
+#' genes can be supplied or computed from the single-cell object.
+#'
+#' @param single_cell_obj `SingleCellExperiment`.
+#' @param cell_type_col Column with cell type labels.
+#' @param spatial_obj `SpatialExperiment`.
+#' @param assay_sc Single-cell assay to use.
+#' @param assay_sp Spatial assay to use.
+#' @param markers Optional marker-gene data frame. If `NULL`, markers are
+#' computed from `single_cell_obj` using the authors' suggested approach.
 build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class", spatial_obj, assay_sc = "counts", assay_sp = "counts", markers = NULL) {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is null or missing, but is required")
