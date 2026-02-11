@@ -490,7 +490,8 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' Plot Gene Expression
 #'
 #' Generate a spatial hex plot for a single gene from a `SpatialExperiment`.
-#' Supports optional image overlay, smoothing, and flexible color palettes.
+#' The gene is taken from the selected assay (default: `counts`) and must be
+#' present in `rownames(spe)`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param gene gene to plot
