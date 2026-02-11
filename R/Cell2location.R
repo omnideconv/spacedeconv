@@ -1,14 +1,17 @@
-#' Build Model Cell2location
+#' Build a cell2location Model
 #'
-#' @param single_cell_obj SingleCellExperiment containing reference expression
-#' @param epochs number of epochs to train the network
-#' @param assay_sc assay to extract
-#' @param batch_id_col batch_id_col column
-#' @param cell_type_col column of single_cell_obj containing cell type labels
-#' @param cell_count_cutoff cell2location parameter
-#' @param cell_percentage_cutoff cell2location parameter
-#' @param nonz_mean_cutoff cell2location parameter
-#' @param gpu whether to train on GPU
+#' Wraps the cell2location Python workflow via reticulate to train a reference
+#' model from single-cell data. Returns the trained model object.
+#'
+#' @param single_cell_obj `SingleCellExperiment` containing reference expression.
+#' @param epochs Number of training epochs.
+#' @param assay_sc Single-cell assay to use.
+#' @param batch_id_col Batch ID column name.
+#' @param cell_type_col Column with cell type labels.
+#' @param cell_count_cutoff cell2location parameter.
+#' @param cell_percentage_cutoff cell2location parameter.
+#' @param nonz_mean_cutoff cell2location parameter.
+#' @param gpu Logical; whether to train on GPU.
 build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = "counts", batch_id_col = "sample_id", cell_type_col = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = TRUE) {
   # build anndata, gene names as rownames
 
