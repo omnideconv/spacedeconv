@@ -243,10 +243,15 @@ attachToken <- function(deconvolution, token = "deconv") {
   return(deconvolution)
 }
 
-#' Check wich deconvolutionr results are available in a SpatialExperiment object
+#' List Available Deconvolution Results in a SpatialExperiment
 #'
-#' @param deconv SpatialExperiment
-#' @param method deconvolution method (optional)
+#' Returns column names in `colData` that correspond to deconvolution results.
+#' Optionally filters by a method prefix (e.g., "spatialdwls").
+#'
+#' @param deconv A `SpatialExperiment` containing deconvolution results.
+#' @param method Optional prefix used to filter result columns (typically the
+#' internal method token from `spacedeconv::deconvolution_methods`, or a custom
+#' `result_name` used when running a method).
 #'
 #' @export
 available_results <- function(deconv, method = NULL) {
