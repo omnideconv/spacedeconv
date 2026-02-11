@@ -1,6 +1,10 @@
-#' Function to plot deconvolution results
+#' Plot Spatial Results
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Deprecated wrapper around `plot_spatial()` that forwards `cell_type` to the
+#' `result` argument. Generate spatial hex plots for one or more result columns in a
+#' `SpatialExperiment`. Can also plot all results for a given method prefix,
+#' overlay the tissue image, apply smoothing, control zoom/spot size, and
+#' customize color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type one or more celltype to plot
@@ -30,7 +34,7 @@
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal <unctions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot (or combined plot) of the requested results.
 #'
 #' @export
 #' @note This function is deprecated and will be removed in future versions. Please use `plot_spatial` instead.
@@ -480,9 +484,10 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
 
 
-#' Function to plot gene expression
+#' Plot Gene Expression
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Generate a spatial hex plot for a single gene from a `SpatialExperiment`.
+#' Supports optional image overlay, smoothing, and flexible color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param gene gene to plot
@@ -513,7 +518,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param png_height when saving, png height in px
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of gene expression.
 #'
 #' @export
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
