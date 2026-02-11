@@ -1,20 +1,16 @@
-#' List of supported deconvolution methods
+#' Supported Deconvolution Methods
 #'
-#' @details Spatial Algorithms \cr
-#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`, `DOT`
+#' Named character vector of supported methods. Names are the display labels and
+#' values are the internal method tokens used by the API.
 #'
-#' @details First-generation Methods (Immunedeconv) \cr
-#' `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`, `CIBERSORT`, `CIBERSORT (abs.)`,
-#' `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`
-#'
-#' @details First-generation Mouse Methods (Immunedeconv) \cr
-#' `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`
-#'
-#' This object is a named vector. The names correspond to the display name of the method,
-#' the values to the internal name.
+#' @details
+#' Second-generation spatial methods: `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`,
+#' `cell2location`, `DOT`.\cr
+#' First-generation immunedeconv methods: `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`,
+#' `CIBERSORT`, `CIBERSORT (abs.)`, `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`.\cr
+#' First-generation immunedeconv mouse methods: `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`.
 #'
 #' @export
-#'
 deconvolution_methods <- c(
   # spatial
   "RCTD" = "rctd",
