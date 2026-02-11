@@ -33,16 +33,20 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
   )
 }
 
-#' Deconvolute Cell2location
+#' Deconvolute with cell2location
 #'
-#' @param spatial_obj SpatialExperiment
-#' @param signature signature
-#' @param epochs training epochs for model
-#' @param n_cell cell2location hyperparameter
-#' @param alpha cell2location hyperparameter
-#' @param gpu whether to use nvidia gpu for training
-#' @param result_name token to identify deconvolution results in object, default = "card"
-#' @param values relative or absolute, default: relative
+#' Runs the cell2location model (via Python/reticulate) and returns a
+#' deconvolution matrix, optionally rescaled to relative values.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param signature Signature/model input expected by cell2location.
+#' @param epochs Training epochs for the model.
+#' @param n_cell cell2location hyperparameter.
+#' @param alpha cell2location hyperparameter.
+#' @param gpu Logical; whether to use GPU for training.
+#' @param result_name Prefix used to label result columns (default: "cell2location").
+#' @param values `"relative"` to rescale to fractions, or `"absolute"` to keep
+#' raw outputs.
 deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "cell2location", values = "relative") {
   # init_python()
 
