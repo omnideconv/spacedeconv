@@ -57,22 +57,24 @@ first_gen <- c(
 )
 
 
-#' Build a reference signature
+#' Build a Reference Signature
 #'
-#' @description
-#' Build_model calculates a reference signature from annotated scRNA-seq expression data
+#' Computes a cell-type signature from annotated scRNA-seq data or dispatches to
+#' a method-specific builder. The resulting signature can be passed to
+#' `deconvolute()` as the `signature` argument. Some methods (e.g., CARD, DOT,
+#' immunedeconv) do not produce a signature and return `NULL`.
 #'
-#' @param single_cell_obj Single-cell Object
-#' @param cell_type_col Name of the annotation column containing cell type information
-#' @param method Signature calculation Algorithm; choose one of `spacedeconv::deconvolution_methods`
-#' @param verbose Display more information on console
-#' @param spatial_obj SpatialExperiment, required for SPOTlight
-#' @param batch_id_col column of singleCellExperiment containing batch ids
-#' @param assay_sc assay of single cell object to use
-#' @param assay_sp assay of spatial object to use
-#' @param ... additional parameters passed to the functions
+#' @param single_cell_obj Single-cell object with cell type annotations.
+#' @param cell_type_col Column name containing cell type labels.
+#' @param method Signature method; one of `spacedeconv::deconvolution_methods`.
+#' @param verbose Print extra progress information.
+#' @param spatial_obj SpatialExperiment; required for SPOTlight.
+#' @param batch_id_col Batch ID column in the single-cell object (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param ... Additional parameters passed to the selected method.
 #'
-#' @returns cell-type specific expression signature
+#' @return A cell-type signature matrix, or `NULL` for methods that build internally.
 #'
 #' @export
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
