@@ -79,13 +79,16 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   return(signature)
 }
 
-#' Deconvolute Spatial DWLS
+#' Deconvolute with SpatialDWLS
 #'
-#' @param spatial_obj Spatial Experiment
-#' @param signature Signature
-#' @param assay_sp Assay of SpatialExperiment to use
-#' @param result_name token to identify deconvolution results in object, default = "spatialdwls"
-#' @param ... additional parameters
+#' Runs the SpatialDWLS workflow and returns a deconvolution matrix with column
+#' names prefixed by `result_name`.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param signature Signature matrix from `build_model_spatial_dwls()`.
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (default: "spatialdwls").
+#' @param ... Additional parameters passed to Giotto.
 deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts", result_name = "spatialdwls", ...) {
   # create Giotto Object
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
