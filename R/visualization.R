@@ -1,4 +1,4 @@
-#' Plot Spatial Results
+#' Plot Cell Types (Deprecated)
 #'
 #' Deprecated wrapper around `plot_spatial()` that forwards `cell_type` to the
 #' `result` argument. Generate spatial hex plots for one or more result columns in a
@@ -57,9 +57,12 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 }
 
 
-#' Function to plot deconvolution results
+#' Plot Spatial Results
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Generate spatial hex plots for one or more result columns in a
+#' `SpatialExperiment`. Can also plot all results for a given method prefix,
+#' overlay the tissue image, apply smoothing, control zoom/spot size, and
+#' customize color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param result one or more results to plot
@@ -89,7 +92,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot (or combined plot) of the requested results.
 #'
 #' @export
 plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale = NULL,
