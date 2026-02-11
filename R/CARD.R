@@ -1,5 +1,10 @@
-#' No signature calculated, just call the deconvolute method
-#' @returns NULL
+#' No Signature for CARD
+#'
+#' CARD builds its model internally, so this function returns `NULL` and you
+#' should call `deconvolute()` with the CARD method (see
+#' `spacedeconv::deconvolution_methods`).
+#'
+#' @return NULL
 
 build_model_card <- function() {
   message("This method does not build a signature, just call the deconvolute method")
