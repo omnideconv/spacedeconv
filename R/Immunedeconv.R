@@ -1,5 +1,10 @@
-#' No signature calculated, just call the deconvolute method
-#' @returns NULL
+#' No Signature for Immunedeconv
+#'
+#' First-generation immunedeconv methods do not require a custom signature, so
+#' this function returns `NULL` and you should call `deconvolute()` with the
+#' desired immunedeconv method (see `spacedeconv::deconvolution_methods`).
+#'
+#' @return NULL
 
 build_model_immunedeconv <- function() {
   message("This method does not build a signature, just call the deconvolute method")
