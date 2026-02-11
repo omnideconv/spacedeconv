@@ -1,12 +1,20 @@
-#' Build Model Spatial DWLS
-#' @param single_cell_obj SingleCellExperiment
-#' @param assay_sc Single Cell Object assay to use
-#' @param marker_method provide list of marker genes or method to calculate markers (scran, gini, mast)
-#' @param topNgenes Number of top ranked marker genes to use from each cluster
-#' @param cell_type_col column of single_cell_obj containing cell type information
-#' @param dim_method dimension reduction method
-#' @param cluster_method cluster method to  use when calculating marker genes
-#' @param ... additional paramdataters
+#' Build a SpatialDWLS Signature
+#'
+#' Constructs a DWLS signature matrix from single-cell data using Giotto and a
+#' marker-selection strategy: either compute markers with a supported method
+#' (`scran`, `gini`, `mast`) or pass a custom vector of marker genes directly.
+#'
+#' @param single_cell_obj `SingleCellExperiment` with cell type annotations.
+#' @param assay_sc Single-cell assay to use.
+#' @param marker_method Marker genes or method to compute markers (`scran`,
+#' `gini`, or `mast`).
+#' @param topNgenes Number of top-ranked marker genes per cluster.
+#' @param cell_type_col Column containing cell type labels.
+#' @param dim_method Dimension reduction method for Giotto workflow:
+#' `pca`, `tsne`, or `umap`.
+#' @param cluster_method Clustering method for Giotto workflow:
+#' `leiden`, `louvain`, `kmeans`, or `hclust`.
+#' @param ... Additional parameters passed to Giotto helpers.
 build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method = "leiden", ...) {
   # TODO Checks
   if (!checkCol(single_cell_obj, cell_type_col)) {
