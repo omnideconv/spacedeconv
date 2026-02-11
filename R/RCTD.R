@@ -11,16 +11,20 @@ build_model_rctd <- function() {
 }
 
 
-#' RCTD Deconvolution
-#' @param single_cell_obj SingleCellExperiment
-#' @param cell_type_col Column containting cell type annotation
-#' @param spatial_obj SpatialExperiment
-#' @param assay_sc single cell assay to use
-#' @param assay_sp spatial assay to use
-#' @param n_umi_sc (optional) named list of umi counts for each cell
-#' @param n_umi_sp (optional) named list of umi counts for each spot
-#' @param n_cores Number of CPU cores to use for the calculation, NULL = use all cores
-#' @param result_name token to identify deconvolution results in object, default = "rctd"
+#' Deconvolute with RCTD
+#'
+#' Runs the RCTD workflow and returns a deconvolution matrix with column names
+#' prefixed by `result_name`.
+#'
+#' @param single_cell_obj `SingleCellExperiment`.
+#' @param cell_type_col Column containing cell type labels.
+#' @param spatial_obj `SpatialExperiment`.
+#' @param assay_sc Single-cell assay to use.
+#' @param assay_sp Spatial assay to use.
+#' @param n_umi_sc Optional named vector of UMI counts per cell.
+#' @param n_umi_sp Optional named vector of UMI counts per spot.
+#' @param n_cores Number of CPU cores to use; `NULL` uses all cores.
+#' @param result_name Prefix used to label result columns (default: "rctd").
 deconvolute_rctd <- function(single_cell_obj, cell_type_col, spatial_obj, assay_sc = "counts", assay_sp = "counts", n_umi_sc = NULL, n_umi_sp = NULL, n_cores = NULL, result_name = "rctd") {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is missing or null, but is required.")
