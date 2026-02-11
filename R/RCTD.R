@@ -1,4 +1,8 @@
-#' RCTD builds the model internally, please just use the deconvolute method
+#' No Signature for RCTD
+#'
+#' RCTD builds its model internally, so this function returns `NULL` and you
+#' should call `deconvolute()` with the RCTD method (see
+#' `spacedeconv::deconvolution_methods`).
 #'
 #' @return NULL
 build_model_rctd <- function() {
