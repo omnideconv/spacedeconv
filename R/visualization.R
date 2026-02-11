@@ -403,7 +403,10 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 }
 
 
-#' Plot celltype fraction comparison
+#' Plot Cell Type Comparison
+#'
+#' Computes a log ratio between two result columns and renders the spatial
+#' distribution of that comparison.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type_1 celltype to plot
@@ -434,7 +437,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of a celltypes presence/absence using a threshold
+#' @returns A spatial plot of the log-ratio comparison between two cell types.
 #'
 #' @export
 plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
