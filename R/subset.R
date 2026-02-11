@@ -1,27 +1,20 @@
 #' Subset a SingleCellExperiment by Cell Type
 #'
-#' This function facilitates the subsetting of a `SingleCellExperiment` object to a specified number of cells,
-#' with an option to maintain an even or proportional distribution across different cell types. It offers flexibility
-#' in handling scenarios where insufficient cells of a specific type are available and ensures reproducibility through
-#' the option to set a seed for random sampling.
+#' Randomly subsamples cells from a `SingleCellExperiment` either evenly across
+#' cell types or proportionally to their original abundance. If a cell type has
+#' fewer cells than requested, you can keep all of them (`"asis"`) or drop that
+#' cell type (`"remove"`).
 #'
-#' @param sce A `SingleCellExperiment` object containing cell type annotations. The function applies subsetting
-#' operations on this object to achieve a targeted composition of cell types.
-#' @param cell_type_col A character string indicating the column name within `colData` of the `SingleCellExperiment`
-#' object that contains cell type information. This column is used to identify and categorize cells by type for subsetting.
-#' @param scenario Specifies the strategy for cell selection across types: `"even"` for equal numbers from each cell
-#' type, or `"mirror"` to reflect the proportional representation of cell types in the subset as in the original dataset.
-#' @param ncells The target total number of cells for the subsetted object. Defaults to 1000. This parameter dictates
-#' the overall size of the subsetted `SingleCellExperiment`.
-#' @param notEnough Defines the behavior when there are not enough cells of a certain type to meet the subsetting criteria:
-#' `"remove"` to exclude that cell type entirely, or `"asis"` to include all available cells of that type despite falling short
-#' of the target number.
-#' @param seed An optional numeric value to set the random seed for reproducibility of the subsetting process. This ensures
-#' that the subset selection can be replicated in future analyses.
+#' @param sce A `SingleCellExperiment` with cell type annotations in `colData`.
+#' @param cell_type_col Column name in `colData` containing cell type labels.
+#' @param scenario Subsampling strategy: `"even"` selects equal counts per type,
+#' `"mirror"` preserves original proportions.
+#' @param ncells Target total number of cells to keep (default: 1000).
+#' @param notEnough Behavior when a cell type has too few cells: `"asis"` keeps all,
+#' `"remove"` drops that cell type.
+#' @param seed Random seed for reproducible sampling.
 #'
-#' @return Returns a subsetted `SingleCellExperiment` object. The resulting object reflects the targeted distribution and
-#' number of cells as specified by the input parameters. It enables focused analysis on a more manageable dataset while
-#' preserving the desired representation of cell types.
+#' @return A subsetted `SingleCellExperiment`.
 #'
 #' @export
 subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", ncells = 1000, notEnough = "asis", seed = 12345) {
