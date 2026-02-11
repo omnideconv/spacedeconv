@@ -66,12 +66,15 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
 }
 
 
-#' Deconvolute SPOTlight
+#' Deconvolute with SPOTlight
 #'
-#' @param spatial_obj SpatialExperiment
-#' @param model SPOTlight Model
-#' @param assay_sp spatial assay to use for the computation
-#' @param result_name token to identify deconvolution results in object, default = "spotlight"
+#' Runs SPOTlight deconvolution and returns a deconvolution matrix with column
+#' names prefixed by `result_name`.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param model SPOTlight model from `build_model_spotlight()`.
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (default: "spotlight").
 deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts", result_name = "spotlight") {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' missing or null, but is required")
