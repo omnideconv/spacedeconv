@@ -121,19 +121,18 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 
 
 
-#' Isolate Regions within a SpatialExperiment Object
+#' Subset a SpatialExperiment by Spatial Coordinates
 #'
-#' Tailor a `SpatialExperiment` object to focus on specific areas by defining ranges in the spatial coordinates.
-#' This function narrows down the dataset to include only those spots that fall within user-defined x and y coordinate
-#' boundaries.
+#' Filters a `SpatialExperiment` to spots that fall within the provided x/y ranges
+#' of the spatial coordinates. If a range is `NULL`, the full range is used.
 #'
-#' @param spe The `SpatialExperiment` object representing spatially resolved transcriptomics data.
-#' @param colRange a numeric vector of length two specifying the minimum and maximum x-coordinates
-#' (pxl_col_in_fullres) to include in the subset. If `NULL`, the full range of x-coordinates is used.
-#' @param rowRange a numeric vector of length two specifying the minimum and maximum y-coordinates
-#' (pxl_row_in_fullres) to include in the subset. If `NULL`, the full range of y-coordinates is used.
+#' @param spe A `SpatialExperiment` object.
+#' @param colRange Numeric vector of length 2 giving min/max x-coordinates
+#' (`pxl_col_in_fullres`).
+#' @param rowRange Numeric vector of length 2 giving min/max y-coordinates
+#' (`pxl_row_in_fullres`).
 #'
-#' @return Returns a `SpatialExperiment` object subsetted to include only spots within the defined x and y coordinate ranges.
+#' @return A `SpatialExperiment` subsetted to the specified coordinate window.
 #'
 #' @export
 subsetSPE <- function(spe, colRange = NULL, rowRange = NULL) {
