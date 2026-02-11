@@ -15,12 +15,16 @@ set_cibersort_binary <- function(path) {
   assign("cibersort_binary", path, envir = config_env)
 }
 
-#' Set Path to CIBERSORT matrix file (`LM22.txt`)
+#' Register the Path to the CIBERSORT Signature Matrix
 #'
-#' CIBERSORT is only freely available to academic users.
-#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#' Stores the path to the `LM22.txt` signature matrix in the spacedeconv configuration
+#' and forwards it to `immunedeconv::set_cibersort_mat()` so CIBERSORT-based methods
+#' can access the signature from this R session.
 #'
-#' @param path path to cibersort matrix.
+#' CIBERSORT is only freely available to academic users. A license and matrix can
+#' be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path Path to the `LM22.txt` signature matrix file.
 #'
 #' @export
 set_cibersort_mat <- function(path) {
