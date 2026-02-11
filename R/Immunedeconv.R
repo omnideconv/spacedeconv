@@ -11,12 +11,16 @@ build_model_immunedeconv <- function() {
   return(NULL)
 }
 
-#' Deconvolute Immundeconv
-#' @param spatial_obj SpatialExperiment
-#' @param method deconvolution algorithm
-#' @param assay_sp assay of spatial object to use
-#' @param result_name token to identify deconvolution results in object, default = deconvolution method
-#' @param ... further parameters passed to the selected method
+#' Deconvolute with immunedeconv
+#'
+#' Runs a first-generation immunedeconv method on the spatial expression matrix
+#' and returns a deconvolution matrix with prefixed column names.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param method Immunedeconv method token (see `spacedeconv::deconvolution_methods`).
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (defaults to `method`).
+#' @param ... Further parameters passed to the selected immunedeconv method.
 deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "counts", result_name = NULL, ...) {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' is null or missing, but is required")
