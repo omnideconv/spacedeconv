@@ -13,7 +13,7 @@ build_model_immunedeconv <- function() {
 
 #' Deconvolute with immunedeconv
 #'
-#' Runs a first-generation immunedeconv method on the spatial expression matrix
+#' Runs a first-generation immunedeconv method on the expression matrix
 #' and returns a deconvolution matrix with prefixed column names.
 #'
 #' @param spatial_obj `SpatialExperiment`.
@@ -93,14 +93,18 @@ deconvolute_immunedeconv <- function(spatial_obj, method = NULL, assay_sp = "cou
   return(deconv)
 }
 
-#' Deconvolute Immunedeconv mouse
-#' @param spatial_obj SpatialExperiment
-#' @param method deconvolution algorithm
-#' @param rmgenes genes to remove from the analysis
-#' @param algorithm statistical algorithm for SeqImmuCC (ignored by all other methods)
-#' @param assay_sp assay of spatial object to use
-#' @param result_name token to identify deconvolution results in object, default = deconvolution method
-#' @param ... additional parameters passed to function
+#' Deconvolute with immunedeconv (mouse)
+#'
+#' Runs a mouse-specific immunedeconv method on the expression matrix
+#' and returns a deconvolution matrix with prefixed column names.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param method Mouse immunedeconv method token (see `spacedeconv::deconvolution_methods`).
+#' @param rmgenes Genes to remove from the analysis.
+#' @param algorithm Statistical algorithm for `seqImmuCC` (ignored by other methods).
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (defaults to `method`).
+#' @param ... Additional parameters passed to the selected method.
 #'
 deconvolute_immunedeconv_mouse <- function(spatial_obj, method = NULL, rmgenes = NULL, algorithm = NULL, assay_sp = "counts", result_name = NULL, ...) {
   if (is.null(spatial_obj)) {
