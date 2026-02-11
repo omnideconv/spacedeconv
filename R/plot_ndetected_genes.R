@@ -1,6 +1,7 @@
-#' Plot number of detected genes
+#' Plot Detected Genes per Spot
 #'
-#' Generating a spatial plot of the number of detected genes of the SpatialExperiment
+#' Generate a spatial plot showing the number of genes detected per spot in a
+#' `SpatialExperiment`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param palette colorspace palette (sequential)
@@ -25,7 +26,7 @@
 #' @param png_height when saving, png height in px
 #' @param assay assay
 #'
-#' @returns plot number of detected genes
+#' @returns A spatial plot of detected gene counts.
 #'
 #' @export
 plot_ndetected_genes <- function(spe, palette = "Mako", transform_scale = NULL,
