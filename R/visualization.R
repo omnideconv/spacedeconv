@@ -175,9 +175,10 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
 }
 
 
-#' Function to plot deconvolution results
+#' Plot UMI Counts
 #'
-#' Generate Hex Plot of a SpatialExperiment containing UMI counts
+#' Generate a spatial hex plot of total UMI counts per spot from a
+#' `SpatialExperiment`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param palette colorspace palette (sequential)
@@ -206,7 +207,7 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
 #' @param ... additional paramters passed to internal functions
 #'
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of UMI counts.
 #'
 #' @export
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
