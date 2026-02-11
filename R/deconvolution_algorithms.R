@@ -369,18 +369,22 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
   cli::cli_progress_done()
 }
 
-#' Build Model and Deconvolute in one step
+#' Build Model and Deconvolute in One Step
 #'
-#' @param single_cell_obj Single Cell Object containing reference data to build the model
-#' @param spatial_obj SpatialExperiment to be deconvoluted
-#' @param method deconvolution method; choose one of `spacedeconv::deconvolution_methods`
-#' @param cell_type_col column of single_cell_obj containing cell type information
-#' @param batch_id_col column of SpatialObject containing batch_id information
-#' @param assay_sc the assay of the single cell object to use, default = "counts"
-#' @param assay_sp the assay of the spatialExperiment to use, default = "counts"
-#' @param return_object if true return anotation spatialExperiment, if false return table
-#' @param verbose output more information
-#' @param ... further parameters passed to the selected function
+#' Convenience wrapper that builds a signature with `build_model()` and then
+#' calls `deconvolute()` using the same inputs.
+#'
+#' @param single_cell_obj Single-cell object used to build the signature.
+#' @param spatial_obj `SpatialExperiment` to deconvolute.
+#' @param method Deconvolution method; one of `spacedeconv::deconvolution_methods`.
+#' @param cell_type_col Column in `single_cell_obj` with cell type labels.
+#' @param batch_id_col Batch ID column (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param return_object If `TRUE`, return an annotated `SpatialExperiment`;
+#' otherwise return the result matrix.
+#' @param verbose Print extra progress information.
+#' @param ... Additional parameters passed to the selected methods.
 #' @export
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL,
                                   cell_type_col = "cell_ontology_class",
