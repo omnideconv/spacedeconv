@@ -11,15 +11,18 @@ build_model_card <- function() {
   return(NULL)
 }
 
-#' Deconvolute CARD
+#' Deconvolute with CARD
 #'
-#' @param single_cell_obj Single Cell Experiment
-#' @param spatial_obj Spatial Experiment
-#' @param cell_type_col column of SCE containing cell type information
-#' @param assay_sc assay of single_cell_obj to use
-#' @param assay_sp assay of spatial_obj to use
-#' @param batch_id_col batch id column in spatialExperiment
-#' @param result_name token to identify deconvolution results in object, default = "card"
+#' Runs CARD deconvolution and returns a cell-type proportion matrix, with
+#' column names prefixed by `result_name`.
+#'
+#' @param single_cell_obj `SingleCellExperiment`.
+#' @param spatial_obj `SpatialExperiment`.
+#' @param cell_type_col Column in `single_cell_obj` containing cell type labels.
+#' @param assay_sc Single-cell assay to use.
+#' @param assay_sp Spatial assay to use.
+#' @param batch_id_col Batch ID column in `single_cell_obj`.
+#' @param result_name Prefix used to label result columns (default: "card").
 deconvolute_card <- function(single_cell_obj,
                              spatial_obj,
                              cell_type_col = "cell_ontology_class",
