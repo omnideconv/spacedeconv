@@ -1,9 +1,13 @@
-#' Set Path to CIBERSORT R script (`CIBERSORT.R`)
+#' Register the Path to the CIBERSORT Script
 #'
-#' CIBERSORT is only freely available to academic users.
-#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#' Stores the path to the `CIBERSORT.R` script in the spacedeconv configuration and
+#' forwards it to `immunedeconv::set_cibersort_binary()` so CIBERSORT-based methods
+#' can run from this R session.
 #'
-#' @param path path to cibersort R script.
+#' CIBERSORT is only freely available to academic users. A license and script can
+#' be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path Path to the `CIBERSORT.R` script.
 #'
 #' @export
 set_cibersort_binary <- function(path) {
