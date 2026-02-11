@@ -581,21 +581,15 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 
 #' Plot Overview of a SpatialExperiment
 #'
-#' This function creates an interactive scatter plot of the spatial coordinates
-#' from a SpatialExperiment object. The plot is rendered using Plotly,
-#' allowing for interactive exploration with tooltips displaying the full
-#' resolution row and column coordinates and the associated nUMI values.
-#' The y-axis is inverted for better visual representation.
+#' Creates an interactive Plotly scatter plot of spatial coordinates from a
+#' `SpatialExperiment`. Points are colored by total UMI counts and include
+#' tooltips showing full-resolution row/column coordinates. The y-axis is
+#' inverted for easier visual interpretation.
 #'
-#' @param spe A SpatialExperiment object.
-#'            This is the main data object containing spatial coordinates and UMI counts.
-#' @param sample_id A character string specifying the sample ID to be used for filtering
-#'                  the SpatialExperiment object. Defaults to "sample01".
+#' @param spe A `SpatialExperiment` containing spatial coordinates and counts.
+#' @param sample_id Sample ID to filter (default: "sample01").
 #'
-#' @return An interactive Plotly object representing the spatial distribution
-#'         of UMI counts across the provided SpatialExperiment object.
-#'         Each point on the plot corresponds to a spatial location,
-#'         colored by the number of UMIs.
+#' @return An interactive Plotly object with spots colored by nUMI.
 #' @export
 plot_overview <- function(spe, sample_id = "sample01") {
   if (is.null(spe)) {
