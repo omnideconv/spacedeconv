@@ -1,11 +1,14 @@
 #' Calculate Gene Set Score
 #'
-#' @param spe SpatialExperiment object
-#' @param genes vectors of genes to calculate gene set score
-#' @param assay name of the assay to use, default is "cpm"
-#' @param name name of the result column
+#' Computes a per-spot gene set score (sum of log expression) and stores it in
+#' `colData`.
 #'
-#' @returns updated SpatialExperiment object including the gene set score
+#' @param spe `SpatialExperiment`.
+#' @param genes Vector of gene symbols for the gene set.
+#' @param assay Assay to use (default: "cpm").
+#' @param name Name of the result column.
+#'
+#' @return Updated `SpatialExperiment` with the gene set score.
 #' @export
 gene_set_score <- function(spe, genes = NULL, assay = "cpm", name = "geneSet") {
   # Ensure spe is a SpatialExperiment object
