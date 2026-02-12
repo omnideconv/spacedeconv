@@ -4,19 +4,25 @@
 
 # library(corrplot)
 
-#' create a correlation plot
-#' @param spe the spe object
-#' @param method method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
-#' @param adjust method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details
-#' @param variables if not provided, the function selects variables based on the specified method, it can also be a vector
-#' @param sig.level it can also be a vector
+#' Create a Correlation Plot
+#'
+#' Computes a correlation matrix across selected result columns and visualizes
+#' it with `corrplot`, including adjusted p-values.
+#' @param spe `SpatialExperiment`.
+#' @param method Method prefix to select result columns (e.g., a deconvolution
+#' token or decoupleR output such as "cell2location").
+#' @param adjust Method to adjust p-values for multiple testing (see
+#' `stats::p.adjust.methods`).
+#' @param variables Optional vector of column names to use instead of `method`.
+#' @param sig.level Significance level(s) for marking correlations.
 #' @param type Character, 'full' 'upper' or 'lower' (default), display full matrix, lower triangular or upper triangular matrix.
 #' @param diag Logical, whether display the correlation coefficients on the principal diagonal. default is FALSE
 #' @param order Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.
 #' @param insig If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).
-#' @param plot_layout represents the method parameter in the original corrplot function.The layout of the correlation plot. color is default. Choose between "circle", "square", "ellipse", "number", "shade", "color", "pie"
+#' @param plot_layout Corrplot layout: "circle", "square", "ellipse", "number",
+#' "shade", "color", or "pie".
 #' @param addCoef.col to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.
-#' @param ... additional parameters passed to corrplot function
+#' @param ... Additional parameters passed to `corrplot()`.
 #' @export
 
 spatialcorr <- function(spe,
