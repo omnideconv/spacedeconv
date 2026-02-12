@@ -128,8 +128,10 @@ plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, l
 
 #' Compare Signatures
 #'
-#' @param signature1 signature
-#' @param signature2 signature
+#' Creates a scatterplot comparing two signature matrices across shared genes.
+#'
+#' @param signature1 Signature matrix.
+#' @param signature2 Signature matrix.
 #' @export
 compare_signatures <- function(signature1, signature2) {
   df1 <- data.frame(signature1)
