@@ -311,20 +311,16 @@ annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name
   return(spe)
 }
 
-#' Extend a SpatialExperiment with a New Annotation Column
+#' Add a Custom Annotation Column
 #'
-#' This function is designed to annotate a `SpatialExperiment` object by appending a custom annotation
-#' column to its `colData`. This feature allows users to integrate additional metadata or experimental
-#' results that can be useful for subsequent analyses or visualizations.
+#' Appends a new column to `colData` with user-provided values. This can be
+#' used to add metadata for downstream analyses or visualization.
 #'
-#' @param spatialExp A `SpatialExperiment` object that will be extended with the new annotation.
+#' @param spatialExp A `SpatialExperiment` to annotate.
+#' @param columnName Name of the new annotation column.
+#' @param values Vector of annotation values (length must match `ncol(spatialExp)`).
 #'
-#' @param columnName A `character` string that names the new annotation column to be added.
-#'
-#' @param values A numeric or character vector containing the annotation values to be assigned to each spot
-#'
-#' @return The function returns an updated `SpatialExperiment` object that includes the newly added annotation
-#' column within its `colData`.
+#' @return The updated `SpatialExperiment` with the new annotation column.
 #'
 #' @export
 addCustomAnnotation <- function(spatialExp, columnName, values) {
