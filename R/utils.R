@@ -288,26 +288,18 @@ checkENSEMBL <- function(names) {
 
 
 
-#' Annotate Specific Spots within a SpatialExperiment Object
+#' Annotate Specific Spots in a SpatialExperiment
 #'
-#' This function allows for the annotation of specified spots within a `SpatialExperiment` object.
-#' Users can define a list of spots to be annotated and assign positive or negative values to these spots.
-#' This is particularly useful for distinguishing or marking spots based on certain criteria or experimental results.
+#' Adds a new `colData` column that marks selected spots with `value_pos` and all
+#' other spots with `value_neg`.
 #'
-#' @param spe A `SpatialExperiment` object representing the spatially resolved data.
-#' This is the target object where the annotations will be applied.
-#' @param spots A character vector or list specifying the spots within the `SpatialExperiment` object to annotate.
-#' These spots should correspond to the column names of the `SpatialExperiment` object that represent specific spatial locations or features.
-#' @param value_pos The value to assign to the spots specified in the `spots` parameter.
-#' This value denotes a positive annotation, indicating that the spots meet a certain condition or criterion.
-#' @param value_neg The value to assign to spots not specified in the `spots` parameter.
-#' This value denotes a negative annotation, indicating that the spots do not meet the specified condition or criterion.
-#' @param name A character string specifying the name of the annotation.
-#' This name will be used to label the column in the `SpatialExperiment` object that contains the annotation values.
+#' @param spe A `SpatialExperiment` to annotate.
+#' @param spots Character vector of spot IDs (column names) to mark.
+#' @param value_pos Value assigned to selected spots.
+#' @param value_neg Value assigned to all other spots.
+#' @param name Name of the new annotation column.
 #'
-#' @return Returns a `SpatialExperiment` object that includes the new annotations.
-#' The function adds a column to the `colData` of the `SpatialExperiment` object, where the column name is specified by the `name` parameter.
-#' Spots specified in the `spots` parameter are annotated with the `value_pos` value, while all other spots are annotated with the `value_neg` value.
+#' @return The updated `SpatialExperiment` with the new annotation column.
 #'
 #' @export
 annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "annotation") {
