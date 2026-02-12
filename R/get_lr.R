@@ -57,12 +57,16 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
   expression_values
 }
 
-#' Compute L-R score for each spot
+#' Compute Ligand-Receptor Scores per Spot
 #'
-#' @param spe SpatialExperiment object
-#' @param resource "consensus" table from Omnipath as default, the user can provide a data frame containing L-R pairs. The data frame should contain at least the following two columns: source_genesymbol = ligands, target_genesymbol = receptors
-#' @param method mathematical approach to compute L-R scores. Options: min, and product L-R, default is product
-#' @param organism choose the organism to be considered, default human, options: human or mouse
+#' Calculates ligand-receptor scores for each spot using CPM-normalized
+#' expression and a ligand-receptor reference.
+#'
+#' @param spe `SpatialExperiment` with a `cpm` assay.
+#' @param resource L-R reference. Defaults to the Omnipath consensus; a custom
+#' data frame must include `source_genesymbol` and `target_genesymbol`.
+#' @param method Scoring method: `"min"` or `"product"`.
+#' @param organism Organism: `"human"` or `"mouse"`.
 #'
 #' @export
 get_lr <- function(spe,
