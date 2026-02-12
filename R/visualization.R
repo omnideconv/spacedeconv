@@ -1021,9 +1021,12 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
   dev.off()
 }
 
-#' Filter SPE to contain only one sample ID
-#' @param spe SpatialExperiment
-#' @param sample_id sample_id
+#' Filter by Sample ID
+#'
+#' Subsets a `SpatialExperiment` to a single `sample_id`.
+#'
+#' @param spe `SpatialExperiment`.
+#' @param sample_id Sample ID to keep.
 #' @export
 filter_sample_id <- function(spe, sample_id) {
   if (is.null(spe)) {
