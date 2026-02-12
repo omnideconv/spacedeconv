@@ -1,6 +1,9 @@
-#' map human to mouse genes
+#' Map Human to Mouse Gene Symbols
 #'
-#' @param humangenes a vector containing human genes to be converted to mouse
+#' Converts human gene symbols to mouse gene symbols using
+#' `Orthology.eg.db` mappings.
+#'
+#' @param humangenes Vector of human gene symbols to convert.
 #'
 #' @export
 convert_human_to_mouse <- function(humangenes) {
