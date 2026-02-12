@@ -1,15 +1,16 @@
-#' Fetch Pathway or Transcription Factor Signatures from decoupleR
+#' Fetch decoupleR Reference Networks
 #'
-#' This function retrieves references for Progeny, DoRothEA or CollecTRI from the `decoupleR` package.
+#' Retrieves pathway or transcription factor target networks from `decoupleR` (Progeny, DoRothEA,
+#' or CollecTRI).
 #'
-#' @param method The computational method to use for obtaining the reference: "progeny", "dorothea" or "collectri
-#' @param organism The target organism for the reference signatures ("human", "mouse", etc.).
-#' @param n_genes The number of top genes to return for Progeny pathways. Only applicable if `method` is "progeny".
-#' @param confidence A vector of confidence levels (A, B, C, D, E) to filter the transcription factor targets from DoRothEA.
-#' Only applicable if `method` is "dorothea".
-#' @param ... Additional parameters to fine-tune the method's execution.
+#' @param method Reference to retrieve: `"progeny"`, `"dorothea"`, or `"collectri"`.
+#' @param organism Target organism (e.g., `"human"` or `"mouse"`).
+#' @param n_genes Number of top genes for Progeny (only used with `"progeny"`).
+#' @param confidence Confidence levels (A-E) to filter DoRothEA targets (only
+#' used with `"dorothea"`).
+#' @param ... Additional parameters passed to `decoupleR`.
 #'
-#' @return A data frame containing the requested reference
+#' @return A data frame containing the requested reference.
 #'
 #' @export
 get_decoupleR_reference <- function(method = "progeny", organism = "human", n_genes = 500, confidence = NULL, ...) {
