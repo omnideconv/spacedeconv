@@ -157,12 +157,18 @@ topfeat <- function(idx, scores, topn) {
   }
 }
 
-#' Get cluster features
-#' @param spe spatialExperiment with cluster results
-#' @param clusterid = name of the column with the clustering results
-#' @param topn number of top features to be shown
-#' @param spmethod spatial method used for the clustering, must be dorothea, collectri, progeny, expression or the name of the deconvolution method used
-#' @param zscore = if the results should be z-score scaled or not
+#' Get Cluster Features
+#'
+#' Summarizes top features per cluster from expression data or selected result
+#' columns, with optional z-score scaling. Features are ranked by their mean
+#' (or z-scored mean) within each cluster, and the top `topn` are returned.
+#'
+#' @param spe `SpatialExperiment` with clustering results.
+#' @param clusterid Name of the column containing cluster labels.
+#' @param topn Number of top features to return per cluster.
+#' @param spmethod Method used for clustering (e.g., `dorothea`, `collectri`,
+#' `progeny`, `expression`, or a deconvolution method token).
+#' @param zscore Logical; z-score scale features before ranking.
 #' @export
 get_cluster_features <- function(spe,
                                  clusterid = NULL,
