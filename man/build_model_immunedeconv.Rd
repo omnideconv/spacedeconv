@@ -2,10 +2,12 @@
 % Please edit documentation in R/Immunedeconv.R
 \name{build_model_immunedeconv}
 \alias{build_model_immunedeconv}
-\title{No signature calculated, just call the deconvolute method}
+\title{No Signature for Immunedeconv}
 \usage{
 build_model_immunedeconv()
 }
 \description{
-No signature calculated, just call the deconvolute method
+First-generation immunedeconv methods do not require a custom signature, so
+this function returns \code{NULL} and you should call \code{deconvolute()} with the
+desired immunedeconv method (see \code{spacedeconv::deconvolution_methods}).
 }

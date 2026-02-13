@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_umi_count}
 \alias{plot_umi_count}
-\title{Function to plot deconvolution results}
+\title{Plot UMI Counts}
 \usage{
 plot_umi_count(
   spe,
@@ -84,8 +84,9 @@ plot_umi_count(
 \item{...}{additional paramters passed to internal functions}
 }
 \value{
-plot of cell type fractions
+A spatial plot of UMI counts.
 }
 \description{
-Generate Hex Plot of a SpatialExperiment containing UMI counts
+Generate a spatial hex plot of total UMI counts per spot from a
+\code{SpatialExperiment}.
 }

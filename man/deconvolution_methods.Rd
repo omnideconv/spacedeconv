@@ -3,7 +3,7 @@
 \docType{data}
 \name{deconvolution_methods}
 \alias{deconvolution_methods}
-\title{List of supported deconvolution methods}
+\title{Supported Deconvolution Methods}
 \format{
 An object of class \code{character} of length 20.
 }
@@ -11,20 +11,14 @@ An object of class \code{character} of length 20.
 deconvolution_methods
 }
 \description{
-List of supported deconvolution methods
+Named character vector of supported methods. Names are the display labels and
+values are the internal method tokens used by the API.
 }
 \details{
-Spatial Algorithms \cr
-\code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS}, \code{Cell2Location}, \code{DOT}
-
-First-generation Methods (Immunedeconv) \cr
-\code{MCPcounter}, \code{EPIC}, \code{quanTIseq}, \code{xCell}, \code{CIBERSORT}, \code{CIBERSORT (abs.)},
-\code{TIMER}, \code{ConsensusTME}, \code{ABIS}, \code{ESTIMATE}
-
-First-generation Mouse Methods (Immunedeconv) \cr
-\code{mMCPcounter}, \code{seqImmuCC}, \code{DCQ}, \code{BASE}
-
-This object is a named vector. The names correspond to the display name of the method,
-the values to the internal name.
+Second-generation spatial methods: \code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS},
+\code{cell2location}, \code{DOT}.\cr
+First-generation immunedeconv methods: \code{MCPcounter}, \code{EPIC}, \code{quanTIseq}, \code{xCell},
+\code{CIBERSORT}, \code{CIBERSORT (abs.)}, \code{TIMER}, \code{ConsensusTME}, \code{ABIS}, \code{ESTIMATE}.\cr
+First-generation immunedeconv mouse methods: \code{mMCPcounter}, \code{seqImmuCC}, \code{DCQ}, \code{BASE}.
 }
 \keyword{datasets}

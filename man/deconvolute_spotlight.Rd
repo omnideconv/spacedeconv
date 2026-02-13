@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPOTlight.R
 \name{deconvolute_spotlight}
 \alias{deconvolute_spotlight}
-\title{Deconvolute SPOTlight}
+\title{Deconvolute with SPOTlight}
 \usage{
 deconvolute_spotlight(
   spatial_obj,
@@ -12,14 +12,15 @@ deconvolute_spotlight(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{model}{SPOTlight Model}
+\item{model}{SPOTlight model from \code{build_model_spotlight()}.}
 
-\item{assay_sp}{spatial assay to use for the computation}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{result_name}{token to identify deconvolution results in object, default = "spotlight"}
+\item{result_name}{Prefix used to label result columns (default: "spotlight").}
 }
 \description{
-Deconvolute SPOTlight
+Runs SPOTlight deconvolution and returns a deconvolution matrix with column
+names prefixed by \code{result_name}.
 }

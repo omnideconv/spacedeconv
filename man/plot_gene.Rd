@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_gene}
 \alias{plot_gene}
-\title{Function to plot gene expression}
+\title{Plot Gene Expression}
 \usage{
 plot_gene(
   spe,
@@ -93,8 +93,10 @@ plot_gene(
 \item{...}{additional paramters passed to internal functions}
 }
 \value{
-plot of cell type fractions
+A spatial plot of gene expression.
 }
 \description{
-Generate Hex Plot of a SpatialExperiment containing deconvolution results
+Generate a spatial hex plot for a single gene from a \code{SpatialExperiment}.
+The gene is taken from the selected assay (default: \code{counts}) and must be
+present in \code{rownames(spe)}.
 }

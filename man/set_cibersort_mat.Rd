@@ -2,14 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{set_cibersort_mat}
 \alias{set_cibersort_mat}
-\title{Set Path to CIBERSORT matrix file (\code{LM22.txt})}
+\title{Register the Path to the CIBERSORT Signature Matrix}
 \usage{
 set_cibersort_mat(path)
 }
 \arguments{
-\item{path}{path to cibersort matrix.}
+\item{path}{Path to the \code{LM22.txt} signature matrix file.}
 }
 \description{
-CIBERSORT is only freely available to academic users.
-A license an the binary can be obtained from https://cibersort.stanford.edu.
+Stores the path to the \code{LM22.txt} signature matrix in the spacedeconv configuration
+and forwards it to \code{immunedeconv::set_cibersort_mat()} so CIBERSORT-based methods
+can access the signature from this R session.
+}
+\details{
+CIBERSORT is only freely available to academic users. A license and matrix can
+be obtained from https://cibersort.stanford.edu.
 }

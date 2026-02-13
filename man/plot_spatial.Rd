@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_spatial}
 \alias{plot_spatial}
-\title{Function to plot deconvolution results}
+\title{Plot Spatial Results}
 \usage{
 plot_spatial(
   spe,
@@ -90,8 +90,11 @@ plot_spatial(
 \item{...}{additional paramters passed to internal functions}
 }
 \value{
-plot of cell type fractions
+A spatial plot (or combined plot) of the requested results.
 }
 \description{
-Generate Hex Plot of a SpatialExperiment containing deconvolution results
+Generate spatial hex plots for one or more result columns in a
+\code{SpatialExperiment}. Can also plot all results for a given method prefix,
+overlay the tissue image, apply smoothing, control zoom/spot size, and
+customize color palettes.
 }

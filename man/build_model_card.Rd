@@ -2,10 +2,12 @@
 % Please edit documentation in R/CARD.R
 \name{build_model_card}
 \alias{build_model_card}
-\title{No signature calculated, just call the deconvolute method}
+\title{No Signature for CARD}
 \usage{
 build_model_card()
 }
 \description{
-No signature calculated, just call the deconvolute method
+CARD builds its model internally, so this function returns \code{NULL} and you
+should call \code{deconvolute()} with the CARD method (see
+\code{spacedeconv::deconvolution_methods}).
 }

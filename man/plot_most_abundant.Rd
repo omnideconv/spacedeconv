@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_most_abundant}
 \alias{plot_most_abundant}
-\title{Function to plot deconvolution results}
+\title{Plot Most Abundant Cell Type per Spot}
 \usage{
 plot_most_abundant(
   spe,
@@ -90,8 +90,9 @@ plot_most_abundant(
 \item{...}{additional paramters passed to internal functions}
 }
 \value{
-plot of cell type fractions
+A spatial plot of most abundant cell types.
 }
 \description{
-Generate Hex Plot of a SpatialExperiment containing the most abundant cell types
+Generates a spatial hex plot showing the most abundant cell type for each
+spot, based on deconvolution results in a \code{SpatialExperiment}.
 }

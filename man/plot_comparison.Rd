@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_comparison}
 \alias{plot_comparison}
-\title{Plot celltype fraction comparison}
+\title{Plot Cell Type Comparison}
 \usage{
 plot_comparison(
   spe,
@@ -93,8 +93,9 @@ plot_comparison(
 \item{...}{additional paramters passed to internal functions}
 }
 \value{
-plot of a celltypes presence/absence using a threshold
+A spatial plot of the log-ratio comparison between two cell types.
 }
 \description{
-Plot celltype fraction comparison
+Computes a log ratio between two result columns and renders the spatial
+distribution of that comparison.
 }

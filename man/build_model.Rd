@@ -2,7 +2,7 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{build_model}
 \alias{build_model}
-\title{Build a reference signature}
+\title{Build a Reference Signature}
 \usage{
 build_model(
   single_cell_obj,
@@ -17,27 +17,30 @@ build_model(
 )
 }
 \arguments{
-\item{single_cell_obj}{Single-cell Object}
+\item{single_cell_obj}{Single-cell object with cell type annotations.}
 
-\item{cell_type_col}{Name of the annotation column containing cell type information}
+\item{cell_type_col}{Column name containing cell type labels.}
 
-\item{method}{Signature calculation Algorithm; choose one of \code{spacedeconv::deconvolution_methods}}
+\item{method}{Signature method; one of \code{spacedeconv::deconvolution_methods}.}
 
-\item{verbose}{Display more information on console}
+\item{verbose}{Print extra progress information.}
 
-\item{spatial_obj}{SpatialExperiment, required for SPOTlight}
+\item{spatial_obj}{SpatialExperiment; required for SPOTlight.}
 
-\item{batch_id_col}{column of singleCellExperiment containing batch ids}
+\item{batch_id_col}{Batch ID column in the single-cell object (used by some methods).}
 
-\item{assay_sc}{assay of single cell object to use}
+\item{assay_sc}{Single-cell assay to use (default: "counts").}
 
-\item{assay_sp}{assay of spatial object to use}
+\item{assay_sp}{Spatial assay to use (default: "counts").}
 
-\item{...}{additional parameters passed to the functions}
+\item{...}{Additional parameters passed to the selected method.}
 }
 \value{
-cell-type specific expression signature
+A cell-type signature matrix, or \code{NULL} for methods that build internally.
 }
 \description{
-Build_model calculates a reference signature from annotated scRNA-seq expression data
+Computes a cell-type signature from annotated scRNA-seq data or dispatches to
+a method-specific builder. The resulting signature can be passed to
+\code{deconvolute()} as the \code{signature} argument. Some methods (e.g., CARD, DOT,
+immunedeconv) do not produce a signature and return \code{NULL}.
 }

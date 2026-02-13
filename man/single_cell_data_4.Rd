@@ -3,7 +3,7 @@
 \docType{data}
 \name{single_cell_data_4}
 \alias{single_cell_data_4}
-\title{Example single cell dataset 4 from Wu et al.}
+\title{Example single-cell dataset 4 (Wu et al.)}
 \format{
 A SingleCellExperiment with 29733 rows and 3961 columns
 }
@@ -16,7 +16,7 @@ PMID: 34493872
 data("single_cell_data_4")
 }
 \description{
-A single cell expression subset of 3961 cells from sample CID4535 Cell type annotation is
-available in three different resolutions.
+Single-cell expression subset of 3961 cells from sample CID4535. Cell type
+annotation is available at three different resolutions.
 }
 \keyword{datasets}

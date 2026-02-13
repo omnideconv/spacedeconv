@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cell2location.R
 \name{build_model_cell2location}
 \alias{build_model_cell2location}
-\title{Build Model Cell2location}
+\title{Build a cell2location Model}
 \usage{
 build_model_cell2location(
   single_cell_obj,
@@ -17,24 +17,25 @@ build_model_cell2location(
 )
 }
 \arguments{
-\item{single_cell_obj}{SingleCellExperiment containing reference expression}
+\item{single_cell_obj}{\code{SingleCellExperiment} containing reference expression.}
 
-\item{epochs}{number of epochs to train the network}
+\item{epochs}{Number of training epochs.}
 
-\item{assay_sc}{assay to extract}
+\item{assay_sc}{Single-cell assay to use.}
 
-\item{batch_id_col}{batch_id_col column}
+\item{batch_id_col}{Batch ID column name.}
 
-\item{cell_type_col}{column of single_cell_obj containing cell type labels}
+\item{cell_type_col}{Column with cell type labels.}
 
-\item{cell_count_cutoff}{cell2location parameter}
+\item{cell_count_cutoff}{cell2location parameter.}
 
-\item{cell_percentage_cutoff}{cell2location parameter}
+\item{cell_percentage_cutoff}{cell2location parameter.}
 
-\item{nonz_mean_cutoff}{cell2location parameter}
+\item{nonz_mean_cutoff}{cell2location parameter.}
 
-\item{gpu}{whether to train on GPU}
+\item{gpu}{Logical; whether to train on GPU.}
 }
 \description{
-Build Model Cell2location
+Wraps the cell2location Python workflow via reticulate to train a reference
+model from single-cell data. Returns the trained model object.
 }
