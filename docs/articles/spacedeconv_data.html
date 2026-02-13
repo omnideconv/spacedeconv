@@ -155,27 +155,27 @@ and <code>assay_sp</code>. As normalization method <code>cpm</code> and
 <code class="sourceCode R"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[62ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[68ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 247 observations with umi count below threshold</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 247 observations with umi count below threshold <span style="color: #B2B2B2;">[186ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 247 observations with umi count below threshold <span style="color: #B2B2B2;">[207ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removing 13479 variables with all zero expression</span></span>
 <span><span class="co">#&gt; Warning in spacedeconv::preprocess(spatial_data_1): There are 13 mitochondrial</span></span>
 <span><span class="co">#&gt; genes present. Consider removing them.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13479 variables with all zero expression <span style="color: #B2B2B2;">[774ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed 13479 variables with all zero expression <span style="color: #B2B2B2;">[1s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[9ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[10ms]</span></span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[15ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[18ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2s]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.4s]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
 <span></span>
@@ -183,7 +183,7 @@ and <code>assay_sp</code>. As normalization method <code>cpm</code> and
 <span><span class="va">deconvolution</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">spe</span>, method <span class="op">=</span> <span class="st">"quantiseq"</span>, assay_sp <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[21ms]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[24ms]</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -216,7 +216,7 @@ and <code>assay_sp</code>. As normalization method <code>cpm</code> and
 <span><span class="co">#&gt; Mixture deconvolution (method: lsei)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Deconvolution successful!</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[27.5s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> finished <span style="color: #B2B2B2;">[29.3s]</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="image-alignment">Image Alignment<a class="anchor" aria-label="anchor" href="#image-alignment"></a>
