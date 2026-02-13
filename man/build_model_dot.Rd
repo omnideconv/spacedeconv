@@ -2,10 +2,12 @@
 % Please edit documentation in R/DOT.R
 \name{build_model_dot}
 \alias{build_model_dot}
-\title{No signature calculated, just call the deconvolute method}
+\title{No Signature for DOT}
 \usage{
 build_model_dot()
 }
 \description{
-No signature calculated, just call the deconvolute method
+DOT builds its model internally, so this function returns \code{NULL} and you
+should call \code{deconvolute()} with the DOT method (see
+\code{spacedeconv::deconvolution_methods}).
 }

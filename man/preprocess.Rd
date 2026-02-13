@@ -2,7 +2,7 @@
 % Please edit documentation in R/preprocess.R
 \name{preprocess}
 \alias{preprocess}
-\title{Preprocess Single Cell and Spatial Data for analysis in spacedeconv}
+\title{Preprocess Single Cell and Spatial Data for spacedeconv}
 \usage{
 preprocess(
   object,
@@ -13,16 +13,20 @@ preprocess(
 )
 }
 \arguments{
-\item{object}{The input object, which can be a \code{SingleCellExperiment}, \code{SpatialExperiment}, AnnData, or Seurat object. The function will convert AnnData or Seurat objects to \code{SingleCellExperiment} if needed.}
+\item{object}{Input object (\code{SingleCellExperiment}, \code{SpatialExperiment}, AnnData,
+or Seurat). AnnData/Seurat are converted to \code{SingleCellExperiment}.}
 
-\item{min_umi}{The minimum UMI count threshold for cells or spots to be included in the analysis. This filter helps to remove low-quality observations that might not provide reliable data.}
+\item{min_umi}{Minimum UMI count per cell/spot to keep.}
 
-\item{max_umi}{The maximum UMI count threshold, used to exclude cells or spots with extremely high UMI counts. This parameter is optional.}
+\item{max_umi}{Maximum UMI count per cell/spot to keep (optional).}
 
-\item{assay}{The name of the assay to use to compute the preprocessing Default is "counts"}
+\item{assay}{Assay to use for filtering (default: "counts").}
 
-\item{remove_mito}{A logical flag indicating whether mitochondrial genes should be removed from the dataset.}
+\item{remove_mito}{Logical; drop genes with \verb{MT-} prefix.}
 }
 \description{
-This function prepares \code{SingleCellExperiment} or \code{SpatialExperiment} objects for downstream analysis by performing a series of preprocessing steps. These steps include converting non-SpatialExperiment objects to \code{SingleCellExperiment} format, filtering based on UMI counts, optionally removing mitochondrial genes, and ensuring data integrity.
+Converts input to \code{SingleCellExperiment} when needed and applies common QC
+filters: UMI thresholds, removal of all-zero genes, optional mitochondrial
+gene removal, and duplicate-gene handling. Also emits a warning if Ensembl
+identifiers are detected.
 }

@@ -2,23 +2,21 @@
 % Please edit documentation in R/utils.R
 \name{addCustomAnnotation}
 \alias{addCustomAnnotation}
-\title{Extend a SpatialExperiment with a New Annotation Column}
+\title{Add a Custom Annotation Column}
 \usage{
 addCustomAnnotation(spatialExp, columnName, values)
 }
 \arguments{
-\item{spatialExp}{A \code{SpatialExperiment} object that will be extended with the new annotation.}
+\item{spatialExp}{A \code{SpatialExperiment} to annotate.}
 
-\item{columnName}{A \code{character} string that names the new annotation column to be added.}
+\item{columnName}{Name of the new annotation column.}
 
-\item{values}{A numeric or character vector containing the annotation values to be assigned to each spot}
+\item{values}{Vector of annotation values (length must match \code{ncol(spatialExp)}).}
 }
 \value{
-The function returns an updated \code{SpatialExperiment} object that includes the newly added annotation
-column within its \code{colData}.
+The updated \code{SpatialExperiment} with the new annotation column.
 }
 \description{
-This function is designed to annotate a \code{SpatialExperiment} object by appending a custom annotation
-column to its \code{colData}. This feature allows users to integrate additional metadata or experimental
-results that can be useful for subsequent analyses or visualizations.
+Appends a new column to \code{colData} with user-provided values. This can be
+used to add metadata for downstream analyses or visualization.
 }

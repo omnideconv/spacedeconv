@@ -2,7 +2,7 @@
 % Please edit documentation in R/Immunedeconv.R
 \name{deconvolute_immunedeconv_mouse}
 \alias{deconvolute_immunedeconv_mouse}
-\title{Deconvolute Immunedeconv mouse}
+\title{Deconvolute with immunedeconv (mouse)}
 \usage{
 deconvolute_immunedeconv_mouse(
   spatial_obj,
@@ -15,20 +15,21 @@ deconvolute_immunedeconv_mouse(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{method}{deconvolution algorithm}
+\item{method}{Mouse immunedeconv method token (see \code{spacedeconv::deconvolution_methods}).}
 
-\item{rmgenes}{genes to remove from the analysis}
+\item{rmgenes}{Genes to remove from the analysis.}
 
-\item{algorithm}{statistical algorithm for SeqImmuCC (ignored by all other methods)}
+\item{algorithm}{Statistical algorithm for \code{seqImmuCC} (ignored by other methods).}
 
-\item{assay_sp}{assay of spatial object to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{result_name}{token to identify deconvolution results in object, default = deconvolution method}
+\item{result_name}{Prefix used to label result columns (defaults to \code{method}).}
 
-\item{...}{additional parameters passed to function}
+\item{...}{Additional parameters passed to the selected method.}
 }
 \description{
-Deconvolute Immunedeconv mouse
+Runs a mouse-specific immunedeconv method on the expression matrix
+and returns a deconvolution matrix with prefixed column names.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{plot_celltype}
 \alias{plot_celltype}
-\title{Function to plot deconvolution results}
+\title{Plot Cell Types (Deprecated)}
 \usage{
 plot_celltype(
   spe,
@@ -90,10 +90,14 @@ plot_celltype(
 \item{...}{additional paramters passed to internal <unctions}
 }
 \value{
-plot of cell type fractions
+A spatial plot (or combined plot) of the requested results.
 }
 \description{
-Generate Hex Plot of a SpatialExperiment containing deconvolution results
+Deprecated wrapper around \code{plot_spatial()} that forwards \code{cell_type} to the
+\code{result} argument. Generate spatial hex plots for one or more result columns in a
+\code{SpatialExperiment}. Can also plot all results for a given method prefix,
+overlay the tissue image, apply smoothing, control zoom/spot size, and
+customize color palettes.
 }
 \note{
 This function is deprecated and will be removed in future versions. Please use \code{plot_spatial} instead.

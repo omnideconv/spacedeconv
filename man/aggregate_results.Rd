@@ -14,31 +14,26 @@ aggregate_results(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment containing deconvolution results.}
+\item{spatial_obj}{\code{SpatialExperiment} containing deconvolution results.}
 
-\item{cell_types}{A list of cell types to aggregate. This is the preferred method
-for specifying cell types to aggregate. If this parameter is used, 'cell_type_1'
-and 'cell_type_2' are ignored.}
+\item{cell_types}{List of cell types to aggregate (preferred). If provided,
+\code{cell_type_1} and \code{cell_type_2} are ignored.}
 
-\item{cell_type_1}{(Deprecated) The first cell type to aggregate, included for
-backward compatibility. Use 'cell_types' for new code.}
+\item{cell_type_1}{(Deprecated) First cell type to aggregate.}
 
-\item{cell_type_2}{(Deprecated) The second cell type to aggregate, included for
-backward compatibility. Use 'cell_types' for new code.}
+\item{cell_type_2}{(Deprecated) Second cell type to aggregate.}
 
-\item{name}{Optional new name for the aggregated result. If not provided, a name
-is generated automatically by concatenating the cell type names.}
+\item{name}{Optional name for the aggregated result. Defaults to concatenated
+cell type names.}
 
-\item{remove}{Logical, specifies whether to remove the provided cell types from
-the spatial object after aggregation.}
+\item{remove}{Logical; remove the original cell type columns after aggregation.}
 }
 \value{
-A SpatialExperiment object containing the aggregation of the provided
-cell types.
+\code{SpatialExperiment} with the aggregated result added to \code{colData}.
 }
 \description{
-Aggregates deconvolution results by merging result columns in the spatial object.
-This function now supports aggregating multiple cell types by passing a list of
-cell types. The older method of specifying two separate cell types is deprecated
-but still supported for backward compatibility.
+Combines multiple result columns into a single aggregated column in a
+\code{SpatialExperiment}. You can pass a list of cell types (\code{cell_types}) or use
+the deprecated two-parameter form (\code{cell_type_1}, \code{cell_type_2}) for backward
+compatibility.
 }

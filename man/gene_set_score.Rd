@@ -7,17 +7,18 @@
 gene_set_score(spe, genes = NULL, assay = "cpm", name = "geneSet")
 }
 \arguments{
-\item{spe}{SpatialExperiment object}
+\item{spe}{\code{SpatialExperiment}.}
 
-\item{genes}{vectors of genes to calculate gene set score}
+\item{genes}{Vector of gene symbols for the gene set.}
 
-\item{assay}{name of the assay to use, default is "cpm"}
+\item{assay}{Assay to use (default: "cpm").}
 
-\item{name}{name of the result column}
+\item{name}{Name of the result column.}
 }
 \value{
-updated SpatialExperiment object including the gene set score
+Updated \code{SpatialExperiment} with the gene set score.
 }
 \description{
-Calculate Gene Set Score
+Computes a per-spot gene set score (sum of log expression) and stores it in
+\code{colData}.
 }

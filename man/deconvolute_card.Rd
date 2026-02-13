@@ -2,7 +2,7 @@
 % Please edit documentation in R/CARD.R
 \name{deconvolute_card}
 \alias{deconvolute_card}
-\title{Deconvolute CARD}
+\title{Deconvolute with CARD}
 \usage{
 deconvolute_card(
   single_cell_obj,
@@ -15,20 +15,21 @@ deconvolute_card(
 )
 }
 \arguments{
-\item{single_cell_obj}{Single Cell Experiment}
+\item{single_cell_obj}{\code{SingleCellExperiment}.}
 
-\item{spatial_obj}{Spatial Experiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{cell_type_col}{column of SCE containing cell type information}
+\item{cell_type_col}{Column in \code{single_cell_obj} containing cell type labels.}
 
-\item{assay_sc}{assay of single_cell_obj to use}
+\item{assay_sc}{Single-cell assay to use.}
 
-\item{assay_sp}{assay of spatial_obj to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{batch_id_col}{batch id column in spatialExperiment}
+\item{batch_id_col}{Batch ID column in \code{single_cell_obj}.}
 
-\item{result_name}{token to identify deconvolution results in object, default = "card"}
+\item{result_name}{Prefix used to label result columns (default: "card").}
 }
 \description{
-Deconvolute CARD
+Runs CARD deconvolution and returns a cell-type proportion matrix, with
+column names prefixed by \code{result_name}.
 }

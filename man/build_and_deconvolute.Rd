@@ -2,7 +2,7 @@
 % Please edit documentation in R/deconvolution_algorithms.R
 \name{build_and_deconvolute}
 \alias{build_and_deconvolute}
-\title{Build Model and Deconvolute in one step}
+\title{Build Model and Deconvolute in One Step}
 \usage{
 build_and_deconvolute(
   single_cell_obj,
@@ -18,26 +18,28 @@ build_and_deconvolute(
 )
 }
 \arguments{
-\item{single_cell_obj}{Single Cell Object containing reference data to build the model}
+\item{single_cell_obj}{Single-cell object used to build the signature.}
 
-\item{spatial_obj}{SpatialExperiment to be deconvoluted}
+\item{spatial_obj}{\code{SpatialExperiment} to deconvolute.}
 
-\item{method}{deconvolution method; choose one of \code{spacedeconv::deconvolution_methods}}
+\item{method}{Deconvolution method; one of \code{spacedeconv::deconvolution_methods}.}
 
-\item{cell_type_col}{column of single_cell_obj containing cell type information}
+\item{cell_type_col}{Column in \code{single_cell_obj} with cell type labels.}
 
-\item{batch_id_col}{column of SpatialObject containing batch_id information}
+\item{batch_id_col}{Batch ID column (used by some methods).}
 
-\item{assay_sc}{the assay of the single cell object to use, default = "counts"}
+\item{assay_sc}{Single-cell assay to use (default: "counts").}
 
-\item{assay_sp}{the assay of the spatialExperiment to use, default = "counts"}
+\item{assay_sp}{Spatial assay to use (default: "counts").}
 
-\item{return_object}{if true return anotation spatialExperiment, if false return table}
+\item{return_object}{If \code{TRUE}, return an annotated \code{SpatialExperiment};
+otherwise return the result matrix.}
 
-\item{verbose}{output more information}
+\item{verbose}{Print extra progress information.}
 
-\item{...}{further parameters passed to the selected function}
+\item{...}{Additional parameters passed to the selected methods.}
 }
 \description{
-Build Model and Deconvolute in one step
+Convenience wrapper that builds a signature with \code{build_model()} and then
+calls \code{deconvolute()} using the same inputs.
 }

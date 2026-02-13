@@ -2,7 +2,7 @@
 % Please edit documentation in R/decoupleR.R
 \name{compute_activities}
 \alias{compute_activities}
-\title{Compute Pathway and Transcription Factor Activities and integrate into SpatialExperiment Using decoupleR}
+\title{Compute Pathway and Transcription Factor Activities with decoupleR}
 \usage{
 compute_activities(
   spe,
@@ -14,22 +14,23 @@ compute_activities(
 )
 }
 \arguments{
-\item{spe}{The \code{SpatialExperiment} object containing spatially resolved expression data.}
+\item{spe}{\code{SpatialExperiment} containing expression data.}
 
-\item{reference}{A reference dataframe, computed using \code{get_decoupleR_reference()}}
+\item{reference}{Reference data frame from \code{get_decoupleR_reference()}.}
 
-\item{method}{The method used to compute activities, such as "wmean", "viper", "gsva", etc. see \code{decoupleR} documentation for details.}
+\item{method}{Activity method (e.g., \code{"wmean"}, \code{"viper"}, \code{"gsva"}); see
+\code{decoupleR} docs for options.}
 
-\item{assay}{The name of the assay within the \code{SpatialExperiment} to use for calculations.}
+\item{assay}{Assay to use for calculations.}
 
-\item{statistic}{In cases where the chosen method produces multiple results, this parameter allows selection of a specific statistic for inclusion in the output.}
+\item{statistic}{If multiple statistics are produced, select one to store.}
 
-\item{...}{Further arguments passed to the computational methods.}
+\item{...}{Further arguments passed to the selected method.}
 }
 \value{
-The function returns the input \code{SpatialExperiment} object with additional metadata columns representing the computed activities.
+\code{SpatialExperiment} with activity scores added to \code{colData}.
 }
 \description{
-This function computes pathway activities or transcription factor activities using a \code{SpatialExperiment} object
-using various computational methods provided by the \code{decoupleR} package.
+Computes pathway or transcription factor activities from a \code{SpatialExperiment}
+using methods provided by the \code{decoupleR} package.
 }

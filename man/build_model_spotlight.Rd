@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPOTlight.R
 \name{build_model_spotlight}
 \alias{build_model_spotlight}
-\title{Build Model SPOTlight}
+\title{Build a SPOTlight Model}
 \usage{
 build_model_spotlight(
   single_cell_obj,
@@ -14,18 +14,20 @@ build_model_spotlight(
 )
 }
 \arguments{
-\item{single_cell_obj}{SingleCellExperiment}
+\item{single_cell_obj}{\code{SingleCellExperiment}.}
 
-\item{cell_type_col}{Column where cell type information can be found}
+\item{cell_type_col}{Column with cell type labels.}
 
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{assay_sc}{single cell assay to use}
+\item{assay_sc}{Single-cell assay to use.}
 
-\item{assay_sp}{spatial assay to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{markers}{(Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'single_cell_obj' based on the authors suggestion}
+\item{markers}{Optional marker-gene data frame. If \code{NULL}, markers are
+computed from \code{single_cell_obj} using the authors' suggested approach.}
 }
 \description{
-Build Model SPOTlight
+Trains the SPOTlight model using single-cell and spatial data. Marker
+genes can be supplied or computed from the single-cell object.
 }

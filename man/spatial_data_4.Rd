@@ -3,7 +3,7 @@
 \docType{data}
 \name{spatial_data_4}
 \alias{spatial_data_4}
-\title{Example spatial dataset 4 from Wu et al.}
+\title{Example spatial dataset 4 (Wu et al.)}
 \format{
 A SpatialExperiment with 36601 genes and 1431 spots
 }
@@ -16,6 +16,6 @@ PMID: 34493872
 data("spatial_data_4")
 }
 \description{
-A SpatialExperiment containing a total of 1431 spots from sample CID4535
+\code{SpatialExperiment} containing 1431 spots from sample CID4535.
 }
 \keyword{datasets}

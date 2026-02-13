@@ -7,10 +7,10 @@
 compare_signatures(signature1, signature2)
 }
 \arguments{
-\item{signature1}{signature}
+\item{signature1}{Signature matrix.}
 
-\item{signature2}{signature}
+\item{signature2}{Signature matrix.}
 }
 \description{
-Compare Signatures
+Creates a scatterplot comparing two signature matrices across shared genes.
 }

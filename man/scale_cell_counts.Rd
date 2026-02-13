@@ -2,28 +2,24 @@
 % Please edit documentation in R/scale_cell_counts.R
 \name{scale_cell_counts}
 \alias{scale_cell_counts}
-\title{Scale relative cell fractions to absolute by providing cell densities}
+\title{Scale Relative Cell Fractions to Absolute Counts}
 \usage{
 scale_cell_counts(spe, value, cell_counts, resName = NULL)
 }
 \arguments{
-\item{spe}{An SpatialExperiment object containing spatial transcriptomics data.}
+\item{spe}{A \code{SpatialExperiment}.}
 
-\item{value}{A string specifying the name of the column in \code{colData(spe)} that contains
-relative cell fractions/deconvolution results to be scaled.}
+\item{value}{Column name in \code{colData(spe)} with relative fractions.}
 
-\item{cell_counts}{A named vector of absolute cell densities, where names correspond
-to the rownames in \code{colData(spe)}.}
+\item{cell_counts}{Column name in \code{colData(spe)} with absolute cell counts.}
 
-\item{resName}{Optional; a string specifying the name of the new column to be added
-to \code{colData(spe)} that will contain the absolute cell densities.
-If NULL, defaults to appending "_absolute" to the \code{value} parameter.}
+\item{resName}{Optional name for the output column. Defaults to
+\code{paste0(value, "_absolute")}.}
 }
 \value{
-SPE object with added absolute celltype counts for each spot
+\code{SpatialExperiment} with the scaled counts added to \code{colData}.
 }
 \description{
-This function calculates absolute cell densities for a SpatialExperiment object
-by scaling a specified column of relative cell fractions with provided absolute cell densities.
-The result is added as a new column in the \code{colData} of the SPE object.
+Multiplies a relative fraction column by a cell-count column and stores the
+result in \code{colData}.
 }

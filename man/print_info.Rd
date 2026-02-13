@@ -2,19 +2,20 @@
 % Please edit documentation in R/print_info.R
 \name{print_info}
 \alias{print_info}
-\title{Print info about dataset}
+\title{Print Dataset Summary}
 \usage{
 print_info(sce = NULL, spe = NULL, signature = NULL, assay = "counts")
 }
 \arguments{
-\item{sce}{singleCellExperiment}
+\item{sce}{\code{SingleCellExperiment} (optional).}
 
-\item{spe}{SpatialExperiment}
+\item{spe}{\code{SpatialExperiment} (optional).}
 
-\item{signature}{signature matrix}
+\item{signature}{Signature matrix (optional).}
 
-\item{assay}{assay to use for computation}
+\item{assay}{Assay to use for computations (default: "counts").}
 }
 \description{
-Print info about dataset
+Prints basic QC summaries for \code{SingleCellExperiment}, \code{SpatialExperiment},
+and optional signature matrices (counts, zeros, UMI range, overlap).
 }
