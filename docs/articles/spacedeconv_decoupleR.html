@@ -91,7 +91,7 @@ The <code>method</code> can be one of “progeny”, “dorothea” or
 <code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_decoupleR_reference.html">get_decoupleR_reference</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"progeny"</span>, organism <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Getting decoupleR reference</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[8s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[5.1s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
@@ -109,38 +109,38 @@ The <code>method</code> can be one of “progeny”, “dorothea” or
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[99ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[51ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[1.8s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[928ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">## Warning in preprocess(spatial_data_3): There are 13 mitochondrial genes</span></span>
 <span><span class="co">## present. Consider removing them.</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[443ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[190ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[24ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[9ms]</span></span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[47ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[17ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.9s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.7s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
 <span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_activities.html">compute_activities</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, reference <span class="op">=</span> <span class="va">ref</span>, method <span class="op">=</span> <span class="st">"wmean"</span>, assay <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[12ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR</span></span>
 <span><span class="co">## → Calculated multiple results, using corr_wmean  , other available results:  norm_wmeanCalculated multiple results, using corr_wmean  , other available results:  wmean</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[30.2s]</span></span></span></code></pre></div>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[33.5s]</span></span></span></code></pre></div>
   </main>
 </div>
 
