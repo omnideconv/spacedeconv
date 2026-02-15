@@ -27,13 +27,13 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
 
   # Filtering
   # min UMI Count per Observation
-  nObservation <- sum(colSums(SummarizedExperiment::assay(object, assay)) < min_umi)
+  nObservation <- sum(colSums(as.matrix(SummarizedExperiment::assay(object, assay))) < min_umi)
   cli::cli_progress_step(
     msg = paste0("Removing ", nObservation, " observations with umi count below threshold"),
     msg_done = paste0("Removed ", nObservation, " observations with umi count below threshold")
   )
 
-  object <- object[, colSums(SummarizedExperiment::assay(object, assay)) >= min_umi]
+  object <- object[, colSums(as.matrix(SummarizedExperiment::assay(object, assay))) >= min_umi]
 
 
   # max UMI Count per Observation, only if value is provided
@@ -48,13 +48,13 @@ preprocess <- function(object, min_umi = 500, max_umi = NULL, assay = "counts", 
   }
 
   # remove all zero genes
-  nVariable <- sum(rowSums(SummarizedExperiment::assay(object, assay)) == 0)
+  nVariable <- sum(rowSums(as.matrix(SummarizedExperiment::assay(object, assay))) == 0)
   cli::cli_progress_step(
     msg = paste0("Removing ", nVariable, " variables with all zero expression"),
     msg_done = paste0("Removed ", nVariable, " variables with all zero expression")
   )
 
-  object <- object[rowSums(SummarizedExperiment::assay(object, assay)) > 0, ]
+  object <- object[rowSums(as.matrix(SummarizedExperiment::assay(object, assay))) > 0, ]
 
   # Check if mitochondrial genes removal is requested
   if (remove_mito) {
