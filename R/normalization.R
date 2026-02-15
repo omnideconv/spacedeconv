@@ -1,11 +1,14 @@
-#' Normalize Gene Expression Data in SingleCellExperiment or SpatialExperiment Objects
+#' Normalize Expression Data in SCE/SPE Objects
 #'
-#' This function applies normalization to the gene expression data stored within a `SingleCellExperiment` or `SpatialExperiment` object.
-#' It supports both counts per million (CPM) and log-transformed counts per million (logCPM) normalization methods.
+#' Adds a normalized assay (`cpm`, `logcpm`, or `logpf`) to a
+#' `SingleCellExperiment` or `SpatialExperiment`. The original assay
+#' is left unchanged. `cpm` computes counts per million, `logcpm` is
+#' `log(cpm + 1)`, and `logpf` is `log((counts + 1) / (gene_mean + 1))`
+#' with gene-wise means computed from `counts + 1`.
 #'
-#' @param object A `SingleCellExperiment` or `SpatialExperiment` object containing raw gene expression data.
-#' @param method The normalization method to apply: "cpm" for counts per million, "logcpm" for log-transformed counts per million, or "logpf" for log-proportional factor.
-#' @param assay The name of the assay to normalize, default "counts".
+#' @param object A `SingleCellExperiment` or `SpatialExperiment` with raw counts.
+#' @param method Normalization method: `"cpm"`, `"logcpm"`, or `"logpf"`.
+#' @param assay Assay to normalize (default: "counts").
 #'
 #' @export
 normalize <- function(object, method = "cpm", assay = "counts") {

@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Print info about dataset — print_info • spacedeconv</title>
+    <title>Print Dataset Summary — print_info • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -46,9 +46,17 @@
     <script src="../deps/search-1.0.0/mark.min.js"></script>
     <!-- pkgdown -->
     <script src="../pkgdown.js"></script>
-    <meta property="og:title" content="Print info about dataset — print_info" />
-    <meta name="description" content="Print info about dataset" />
-    <meta property="og:description" content="Print info about dataset" />
+    <meta property="og:title" content="Print Dataset Summary — print_info" />
+    <meta
+      name="description"
+      content="Prints basic QC summaries for SingleCellExperiment, SpatialExperiment,
+and optional signature matrices (counts, zeros, UMI range, overlap)."
+    />
+    <meta
+      property="og:description"
+      content="Prints basic QC summaries for SingleCellExperiment, SpatialExperiment,
+and optional signature matrices (counts, zeros, UMI range, overlap)."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -70,7 +78,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -87,11 +95,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -145,6 +148,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -190,13 +200,17 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Print info about dataset</h1>
+            <h1>Print Dataset Summary</h1>
 
             <div class="d-none name"><code>print_info.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>Print info about dataset</p>
+            <p>
+              Prints basic QC summaries for <code>SingleCellExperiment</code>,
+              <code>SpatialExperiment</code>, and optional signature matrices
+              (counts, zeros, UMI range, overlap).
+            </p>
           </div>
 
           <div class="section level2">
@@ -223,12 +237,16 @@
               <dt id="arg-sce">
                 sce<a class="anchor" aria-label="anchor" href="#arg-sce"></a>
               </dt>
-              <dd><p>singleCellExperiment</p></dd>
+              <dd>
+                <p><code>SingleCellExperiment</code> (optional).</p>
+              </dd>
 
               <dt id="arg-spe">
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
-              <dd><p>SpatialExperiment</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code> (optional).</p>
+              </dd>
 
               <dt id="arg-signature">
                 signature<a
@@ -237,7 +255,7 @@
                   href="#arg-signature"
                 ></a>
               </dt>
-              <dd><p>signature matrix</p></dd>
+              <dd><p>Signature matrix (optional).</p></dd>
 
               <dt id="arg-assay">
                 assay<a
@@ -246,7 +264,7 @@
                   href="#arg-assay"
                 ></a>
               </dt>
-              <dd><p>assay to use for computation</p></dd>
+              <dd><p>Assay to use for computations (default: "counts").</p></dd>
             </dl>
           </div>
         </main>
@@ -259,7 +277,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

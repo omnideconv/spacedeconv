@@ -54,17 +54,17 @@
     />
     <meta
       name="description"
-      content="This function facilitates the subsetting of a SingleCellExperiment object to a specified number of cells,
-with an option to maintain an even or proportional distribution across different cell types. It offers flexibility
-in handling scenarios where insufficient cells of a specific type are available and ensures reproducibility through
-the option to set a seed for random sampling."
+      content='Randomly subsamples cells from a SingleCellExperiment either evenly across
+cell types or proportionally to their original abundance. If a cell type has
+fewer cells than requested, you can keep all of them ("asis") or drop that
+cell type ("remove").'
     />
     <meta
       property="og:description"
-      content="This function facilitates the subsetting of a SingleCellExperiment object to a specified number of cells,
-with an option to maintain an even or proportional distribution across different cell types. It offers flexibility
-in handling scenarios where insufficient cells of a specific type are available and ensures reproducibility through
-the option to set a seed for random sampling."
+      content='Randomly subsamples cells from a SingleCellExperiment either evenly across
+cell types or proportionally to their original abundance. If a cell type has
+fewer cells than requested, you can keep all of them ("asis") or drop that
+cell type ("remove").'
     />
     <meta
       property="og:image"
@@ -87,7 +87,7 @@ the option to set a seed for random sampling."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -104,11 +104,6 @@ the option to set a seed for random sampling."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +152,13 @@ the option to set a seed for random sampling."
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -214,13 +216,12 @@ the option to set a seed for random sampling."
 
           <div class="ref-description section level2">
             <p>
-              This function facilitates the subsetting of a
-              <code>SingleCellExperiment</code> object to a specified number of
-              cells, with an option to maintain an even or proportional
-              distribution across different cell types. It offers flexibility in
-              handling scenarios where insufficient cells of a specific type are
-              available and ensures reproducibility through the option to set a
-              seed for random sampling.
+              Randomly subsamples cells from a
+              <code>SingleCellExperiment</code> either evenly across cell types
+              or proportionally to their original abundance. If a cell type has
+              fewer cells than requested, you can keep all of them
+              (<code>"asis"</code>) or drop that cell type
+              (<code>"remove"</code>).
             </p>
           </div>
 
@@ -257,10 +258,8 @@ the option to set a seed for random sampling."
               </dt>
               <dd>
                 <p>
-                  A <code>SingleCellExperiment</code> object containing cell
-                  type annotations. The function applies subsetting operations
-                  on this object to achieve a targeted composition of cell
-                  types.
+                  A <code>SingleCellExperiment</code> with cell type annotations
+                  in <code>colData</code>.
                 </p>
               </dd>
 
@@ -273,11 +272,8 @@ the option to set a seed for random sampling."
               </dt>
               <dd>
                 <p>
-                  A character string indicating the column name within
-                  <code>colData</code> of the
-                  <code>SingleCellExperiment</code> object that contains cell
-                  type information. This column is used to identify and
-                  categorize cells by type for subsetting.
+                  Column name in <code>colData</code> containing cell type
+                  labels.
                 </p>
               </dd>
 
@@ -290,11 +286,9 @@ the option to set a seed for random sampling."
               </dt>
               <dd>
                 <p>
-                  Specifies the strategy for cell selection across types:
-                  <code>"even"</code> for equal numbers from each cell type, or
-                  <code>"mirror"</code> to reflect the proportional
-                  representation of cell types in the subset as in the original
-                  dataset.
+                  Subsampling strategy: <code>"even"</code> selects equal counts
+                  per type, <code>"mirror"</code> preserves original
+                  proportions.
                 </p>
               </dd>
 
@@ -306,11 +300,7 @@ the option to set a seed for random sampling."
                 ></a>
               </dt>
               <dd>
-                <p>
-                  The target total number of cells for the subsetted object.
-                  Defaults to 1000. This parameter dictates the overall size of
-                  the subsetted <code>SingleCellExperiment</code>.
-                </p>
+                <p>Target total number of cells to keep (default: 1000).</p>
               </dd>
 
               <dt id="arg-notenough">
@@ -322,37 +312,23 @@ the option to set a seed for random sampling."
               </dt>
               <dd>
                 <p>
-                  Defines the behavior when there are not enough cells of a
-                  certain type to meet the subsetting criteria:
-                  <code>"remove"</code> to exclude that cell type entirely, or
-                  <code>"asis"</code> to include all available cells of that
-                  type despite falling short of the target number.
+                  Behavior when a cell type has too few cells:
+                  <code>"asis"</code> keeps all, <code>"remove"</code> drops
+                  that cell type.
                 </p>
               </dd>
 
               <dt id="arg-seed">
                 seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a>
               </dt>
-              <dd>
-                <p>
-                  An optional numeric value to set the random seed for
-                  reproducibility of the subsetting process. This ensures that
-                  the subset selection can be replicated in future analyses.
-                </p>
-              </dd>
+              <dd><p>Random seed for reproducible sampling.</p></dd>
             </dl>
           </div>
           <div class="section level2">
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>
-              Returns a subsetted <code>SingleCellExperiment</code> object. The
-              resulting object reflects the targeted distribution and number of
-              cells as specified by the input parameters. It enables focused
-              analysis on a more manageable dataset while preserving the desired
-              representation of cell types.
-            </p>
+            <p>A subsetted <code>SingleCellExperiment</code>.</p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -364,7 +340,7 @@ the option to set a seed for random sampling."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

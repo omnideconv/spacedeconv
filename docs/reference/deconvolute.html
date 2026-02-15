@@ -52,11 +52,15 @@
     />
     <meta
       name="description"
-      content="Perform cell type deconvolution with spacedeconv."
+      content="Runs the selected deconvolution method on a SpatialExperiment. Methods may
+use a precomputed signature (from build_model()) or build internally.
+See spacedeconv::deconvolution_methods for the full list of methods."
     />
     <meta
       property="og:description"
-      content="Perform cell type deconvolution with spacedeconv."
+      content="Runs the selected deconvolution method on a SpatialExperiment. Methods may
+use a precomputed signature (from build_model()) or build internally.
+See spacedeconv::deconvolution_methods for the full list of methods."
     />
     <meta
       property="og:image"
@@ -79,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -96,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -149,6 +148,13 @@
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -205,7 +211,19 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Perform cell type deconvolution with spacedeconv.</p>
+            <p>
+              Runs the selected deconvolution method on a
+              <code>SpatialExperiment</code>. Methods may use a precomputed
+              <code>signature</code> (from
+              <code><a href="build_model.html">build_model()</a></code
+              >) or build internally. See
+              <code
+                ><a href="deconvolution_methods.html"
+                  >spacedeconv::deconvolution_methods</a
+                ></code
+              >
+              for the full list of methods.
+            </p>
           </div>
 
           <div class="section level2">
@@ -248,7 +266,9 @@
                   href="#arg-spatial-obj"
                 ></a>
               </dt>
-              <dd><p>A SpatialExperiment</p></dd>
+              <dd>
+                <p>A <code>SpatialExperiment</code> to deconvolute.</p>
+              </dd>
 
               <dt id="arg-signature">
                 signature<a
@@ -257,7 +277,11 @@
                   href="#arg-signature"
                 ></a>
               </dt>
-              <dd><p>Gene Expression Signature</p></dd>
+              <dd>
+                <p>
+                  Gene expression signature matrix (if required by the method).
+                </p>
+              </dd>
 
               <dt id="arg-single-cell-obj">
                 single_cell_obj<a
@@ -266,7 +290,12 @@
                   href="#arg-single-cell-obj"
                 ></a>
               </dt>
-              <dd><p>A SingleCellExperiment</p></dd>
+              <dd>
+                <p>
+                  A <code>SingleCellExperiment</code> with reference cells (if
+                  required).
+                </p>
+              </dd>
 
               <dt id="arg-cell-type-col">
                 cell_type_col<a
@@ -277,8 +306,8 @@
               </dt>
               <dd>
                 <p>
-                  Column name of the single_cell_obj where the cell type can be
-                  found
+                  Column name in <code>single_cell_obj</code> containing cell
+                  types.
                 </p>
               </dd>
 
@@ -291,8 +320,12 @@
               </dt>
               <dd>
                 <p>
-                  Deconvolution Method to use, see deconvolution_methods() for a
-                  full list of available methods
+                  Deconvolution method; one of
+                  <code
+                    ><a href="deconvolution_methods.html"
+                      >spacedeconv::deconvolution_methods</a
+                    ></code
+                  >.
                 </p>
               </dd>
 
@@ -303,7 +336,12 @@
                   href="#arg-batch-id-col"
                 ></a>
               </dt>
-              <dd><p>column name of batch ids in single cell object</p></dd>
+              <dd>
+                <p>
+                  Batch ID column in <code>single_cell_obj</code> (used by some
+                  methods).
+                </p>
+              </dd>
 
               <dt id="arg-assay-sc">
                 assay_sc<a
@@ -312,7 +350,7 @@
                   href="#arg-assay-sc"
                 ></a>
               </dt>
-              <dd><p>which single cell assay to use for computation</p></dd>
+              <dd><p>Single-cell assay to use (default: "counts").</p></dd>
 
               <dt id="arg-assay-sp">
                 assay_sp<a
@@ -321,7 +359,7 @@
                   href="#arg-assay-sp"
                 ></a>
               </dt>
-              <dd><p>which spatial assay to use for computation</p></dd>
+              <dd><p>Spatial assay to use (default: "counts").</p></dd>
 
               <dt id="arg-return-object">
                 return_object<a
@@ -330,7 +368,13 @@
                   href="#arg-return-object"
                 ></a>
               </dt>
-              <dd><p>Return an Object or result Table, TRUE = Object</p></dd>
+              <dd>
+                <p>
+                  If <code>TRUE</code>, return the input
+                  <code>SpatialExperiment</code> with results added to
+                  <code>colData</code>; otherwise return the result matrix.
+                </p>
+              </dd>
 
               <dt id="arg-verbose">
                 verbose<a
@@ -339,23 +383,22 @@
                   href="#arg-verbose"
                 ></a>
               </dt>
-              <dd><p>display more detailed information</p></dd>
+              <dd><p>Print extra progress information.</p></dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd>
-                <p>
-                  Further parameters passed to the selected deconvolution method
-                </p>
-              </dd>
+              <dd><p>Further parameters passed to the selected method.</p></dd>
             </dl>
           </div>
           <div class="section level2">
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>The deconvolution result as a table</p>
+            <p>
+              Deconvolution results as a matrix or a
+              <code>SpatialExperiment</code>.
+            </p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -367,7 +410,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

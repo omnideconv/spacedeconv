@@ -2,14 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{set_cibersort_binary}
 \alias{set_cibersort_binary}
-\title{Set Path to CIBERSORT R script (\code{CIBERSORT.R})}
+\title{Register the Path to the CIBERSORT Script}
 \usage{
 set_cibersort_binary(path)
 }
 \arguments{
-\item{path}{path to cibersort R script.}
+\item{path}{Path to the \code{CIBERSORT.R} script.}
 }
 \description{
-CIBERSORT is only freely available to academic users.
-A license an the binary can be obtained from https://cibersort.stanford.edu.
+Stores the path to the \code{CIBERSORT.R} script in the spacedeconv configuration and
+forwards it to \code{immunedeconv::set_cibersort_binary()} so CIBERSORT-based methods
+can run from this R session.
+}
+\details{
+CIBERSORT is only freely available to academic users. A license and script can
+be obtained from https://cibersort.stanford.edu.
 }

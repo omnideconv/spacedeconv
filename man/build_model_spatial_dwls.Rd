@@ -2,7 +2,7 @@
 % Please edit documentation in R/SpatialDWLS.R
 \name{build_model_spatial_dwls}
 \alias{build_model_spatial_dwls}
-\title{Build Model Spatial DWLS}
+\title{Build a SpatialDWLS Signature}
 \usage{
 build_model_spatial_dwls(
   single_cell_obj,
@@ -16,22 +16,27 @@ build_model_spatial_dwls(
 )
 }
 \arguments{
-\item{single_cell_obj}{SingleCellExperiment}
+\item{single_cell_obj}{\code{SingleCellExperiment} with cell type annotations.}
 
-\item{assay_sc}{Single Cell Object assay to use}
+\item{assay_sc}{Single-cell assay to use.}
 
-\item{marker_method}{provide list of marker genes or method to calculate markers (scran, gini, mast)}
+\item{marker_method}{Marker genes or method to compute markers (\code{scran},
+\code{gini}, or \code{mast}).}
 
-\item{topNgenes}{Number of top ranked marker genes to use from each cluster}
+\item{topNgenes}{Number of top-ranked marker genes per cluster.}
 
-\item{cell_type_col}{column of single_cell_obj containing cell type information}
+\item{cell_type_col}{Column containing cell type labels.}
 
-\item{dim_method}{dimension reduction method}
+\item{dim_method}{Dimension reduction method for Giotto workflow:
+\code{pca}, \code{tsne}, or \code{umap}.}
 
-\item{cluster_method}{cluster method to  use when calculating marker genes}
+\item{cluster_method}{Clustering method for Giotto workflow:
+\code{leiden}, \code{louvain}, \code{kmeans}, or \code{hclust}.}
 
-\item{...}{additional paramdataters}
+\item{...}{Additional parameters passed to Giotto helpers.}
 }
 \description{
-Build Model Spatial DWLS
+Constructs a DWLS signature matrix from single-cell data using Giotto and a
+marker-selection strategy: either compute markers with a supported method
+(\code{scran}, \code{gini}, \code{mast}) or pass a custom vector of marker genes directly.
 }

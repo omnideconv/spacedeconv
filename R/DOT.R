@@ -1,5 +1,10 @@
-#' No signature calculated, just call the deconvolute method
-#' @returns NULL
+#' No Signature for DOT
+#'
+#' DOT builds its model internally, so this function returns `NULL` and you
+#' should call `deconvolute()` with the DOT method (see
+#' `spacedeconv::deconvolution_methods`).
+#'
+#' @return NULL
 build_model_dot <- function() {
   message("This method does not build a signature, just call the deconvolute method")
   return(NULL)
@@ -7,17 +12,21 @@ build_model_dot <- function() {
 
 
 
-#' Deconvolute DOT
+#' Deconvolute with DOT
 #'
-#' @param single_cell_obj Single Cell Experiment
-#' @param spatial_obj Spatial Experiment
-#' @param cell_type_col column of SCE containing cell type information
-#' @param assay_sc assay of single_cell_obj to use
-#' @param assay_sp assay of spatial_obj to use
-#' @param result_name token to identify deconvolution results in object, default = "dot"
-#' @param ratios_weight This parameter determines how much the cell type ratios in the reference sc dataset are expected to match the ratios in the target spatial data. A higher value would match the cell type ratios more closely. By default this is 0 since we do not assume that the modalities match, but usually a value between 0.1 and 0.25 is reasonable depending on the quality of the sc data. If the two modalities are expected to match perfectly (e.g., come from the same tissue), a value closer to 1 would give the best results.
-#' @param max_spot_size this parameter determines the maximum number of cells per spot and a higher value indicates lower resolution in the spatial data. The results should be robust for the default value but will give better estimates of the absolute abundances if the appropriate parameter is passed. For Visium, this is set to 20 (default). For ST it should be set to a higher value (e.g., 200).
-#' @param ... additional parameters passed to DOTr methods
+#' Runs DOT deconvolution and returns the DOT weight matrix with column names
+#' prefixed by `result_name`.
+#'
+#' @param single_cell_obj `SingleCellExperiment`.
+#' @param spatial_obj `SpatialExperiment`.
+#' @param cell_type_col Column in `single_cell_obj` containing cell type labels.
+#' @param assay_sc Single-cell assay to use.
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (default: "dot").
+#' @param ratios_weight Strength of matching cell-type ratios between scRNA-seq
+#' and spatial data (default: 0).
+#' @param max_spot_size Maximum number of cells per spot (platform dependent).
+#' @param ... Additional parameters passed to DOT setup/run functions.
 deconvolute_dot <- function(single_cell_obj,
                             spatial_obj,
                             cell_type_col = "cell_ontology_class",

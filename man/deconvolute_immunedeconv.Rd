@@ -2,7 +2,7 @@
 % Please edit documentation in R/Immunedeconv.R
 \name{deconvolute_immunedeconv}
 \alias{deconvolute_immunedeconv}
-\title{Deconvolute Immundeconv}
+\title{Deconvolute with immunedeconv}
 \usage{
 deconvolute_immunedeconv(
   spatial_obj,
@@ -13,16 +13,17 @@ deconvolute_immunedeconv(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{method}{deconvolution algorithm}
+\item{method}{Immunedeconv method token (see \code{spacedeconv::deconvolution_methods}).}
 
-\item{assay_sp}{assay of spatial object to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{result_name}{token to identify deconvolution results in object, default = deconvolution method}
+\item{result_name}{Prefix used to label result columns (defaults to \code{method}).}
 
-\item{...}{further parameters passed to the selected method}
+\item{...}{Further parameters passed to the selected immunedeconv method.}
 }
 \description{
-Deconvolute Immundeconv
+Runs a first-generation immunedeconv method on the expression matrix
+and returns a deconvolution matrix with prefixed column names.
 }

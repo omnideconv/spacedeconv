@@ -10,10 +10,6 @@ NULL
   Sys.setenv(RETICULATE_AUTOCONFIGURE = "FALSE")
   options(Seurat.object.assay.version = "v3")
 
-  envname <- getOption("omnideconv.conda_env", default = "r-omnideconv")
-
-  cli::cli_alert("Using conda environment '{envname}'")
-
   if (!dir.exists(reticulate::miniconda_path())) {
     cli::cli_alert("Setting python version in miniconda to be 3.10")
     Sys.setenv(RETICULATE_MINICONDA_PYTHON_VERSION = "3.10")
@@ -22,9 +18,15 @@ NULL
     cli::cli_alert("Miniconda installation complete")
   }
 
-  if (!(envname %in% reticulate::conda_list()$name)) {
+  default_envname <- "spacedeconv-env"
+  envname <- getOption("spacedeconv.conda_env", default = default_envname)
+
+  conda_envs <- reticulate::conda_list()
+  if (!(envname %in% conda_envs$name)) {
     stop(cli::format_error("Conda environment '{envname}' not found."), call. = FALSE)
   }
+
+  cli::cli_alert("Using conda environment '{envname}'")
 
   reticulate::use_miniconda(condaenv = envname, required = TRUE)
 

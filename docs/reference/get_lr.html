@@ -9,7 +9,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Compute L-R score for each spot — get_lr • spacedeconv</title>
+    <title>
+      Compute Ligand-Receptor Scores per Spot — get_lr • spacedeconv
+    </title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -48,10 +50,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Compute L-R score for each spot — get_lr"
+      content="Compute Ligand-Receptor Scores per Spot — get_lr"
     />
-    <meta name="description" content="Compute L-R score for each spot" />
-    <meta property="og:description" content="Compute L-R score for each spot" />
+    <meta
+      name="description"
+      content="Calculates ligand-receptor scores for each spot using CPM-normalized
+expression and a ligand-receptor reference."
+    />
+    <meta
+      property="og:description"
+      content="Calculates ligand-receptor scores for each spot using CPM-normalized
+expression and a ligand-receptor reference."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -73,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -90,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -148,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -193,13 +205,16 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Compute L-R score for each spot</h1>
+            <h1>Compute Ligand-Receptor Scores per Spot</h1>
 
             <div class="d-none name"><code>get_lr.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>Compute L-R score for each spot</p>
+            <p>
+              Calculates ligand-receptor scores for each spot using
+              CPM-normalized expression and a ligand-receptor reference.
+            </p>
           </div>
 
           <div class="section level2">
@@ -226,7 +241,11 @@
               <dt id="arg-spe">
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
-              <dd><p>SpatialExperiment object</p></dd>
+              <dd>
+                <p>
+                  <code>SpatialExperiment</code> with a <code>cpm</code> assay.
+                </p>
+              </dd>
 
               <dt id="arg-resource">
                 resource<a
@@ -237,10 +256,9 @@
               </dt>
               <dd>
                 <p>
-                  "consensus" table from Omnipath as default, the user can
-                  provide a data frame containing L-R pairs. The data frame
-                  should contain at least the following two columns:
-                  source_genesymbol = ligands, target_genesymbol = receptors
+                  L-R reference. Defaults to the Omnipath consensus; a custom
+                  data frame must include <code>source_genesymbol</code> and
+                  <code>target_genesymbol</code>.
                 </p>
               </dd>
 
@@ -253,8 +271,7 @@
               </dt>
               <dd>
                 <p>
-                  mathematical approach to compute L-R scores. Options: min, and
-                  product L-R, default is product
+                  Scoring method: <code>"min"</code> or <code>"product"</code>.
                 </p>
               </dd>
 
@@ -266,10 +283,7 @@
                 ></a>
               </dt>
               <dd>
-                <p>
-                  choose the organism to be considered, default human, options:
-                  human or mouse
-                </p>
+                <p>Organism: <code>"human"</code> or <code>"mouse"</code>.</p>
               </dd>
             </dl>
           </div>
@@ -283,7 +297,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Isolate Regions within a SpatialExperiment Object — subsetSPE •
+      Subset a SpatialExperiment by Spatial Coordinates — subsetSPE •
       spacedeconv
     </title>
     <!-- favicons -->
@@ -51,19 +51,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Isolate Regions within a SpatialExperiment Object — subsetSPE"
+      content="Subset a SpatialExperiment by Spatial Coordinates — subsetSPE"
     />
     <meta
       name="description"
-      content="Tailor a SpatialExperiment object to focus on specific areas by defining ranges in the spatial coordinates.
-This function narrows down the dataset to include only those spots that fall within user-defined x and y coordinate
-boundaries."
+      content="Filters a SpatialExperiment to spots that fall within the provided x/y ranges
+of the spatial coordinates. If a range is NULL, the full range is used."
     />
     <meta
       property="og:description"
-      content="Tailor a SpatialExperiment object to focus on specific areas by defining ranges in the spatial coordinates.
-This function narrows down the dataset to include only those spots that fall within user-defined x and y coordinate
-boundaries."
+      content="Filters a SpatialExperiment to spots that fall within the provided x/y ranges
+of the spatial coordinates. If a range is NULL, the full range is used."
     />
     <meta
       property="og:image"
@@ -86,7 +84,7 @@ boundaries."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -103,11 +101,6 @@ boundaries."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -161,6 +154,13 @@ boundaries."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -206,17 +206,16 @@ boundaries."
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Isolate Regions within a SpatialExperiment Object</h1>
+            <h1>Subset a SpatialExperiment by Spatial Coordinates</h1>
 
             <div class="d-none name"><code>subsetSPE.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              Tailor a <code>SpatialExperiment</code> object to focus on
-              specific areas by defining ranges in the spatial coordinates. This
-              function narrows down the dataset to include only those spots that
-              fall within user-defined x and y coordinate boundaries.
+              Filters a <code>SpatialExperiment</code> to spots that fall within
+              the provided x/y ranges of the spatial coordinates. If a range is
+              <code>NULL</code>, the full range is used.
             </p>
           </div>
 
@@ -245,10 +244,7 @@ boundaries."
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
               <dd>
-                <p>
-                  The <code>SpatialExperiment</code> object representing
-                  spatially resolved transcriptomics data.
-                </p>
+                <p>A <code>SpatialExperiment</code> object.</p>
               </dd>
 
               <dt id="arg-colrange">
@@ -260,10 +256,8 @@ boundaries."
               </dt>
               <dd>
                 <p>
-                  a numeric vector of length two specifying the minimum and
-                  maximum x-coordinates (pxl_col_in_fullres) to include in the
-                  subset. If <code>NULL</code>, the full range of x-coordinates
-                  is used.
+                  Numeric vector of length 2 giving min/max x-coordinates
+                  (<code>pxl_col_in_fullres</code>).
                 </p>
               </dd>
 
@@ -276,10 +270,8 @@ boundaries."
               </dt>
               <dd>
                 <p>
-                  a numeric vector of length two specifying the minimum and
-                  maximum y-coordinates (pxl_row_in_fullres) to include in the
-                  subset. If <code>NULL</code>, the full range of y-coordinates
-                  is used.
+                  Numeric vector of length 2 giving min/max y-coordinates
+                  (<code>pxl_row_in_fullres</code>).
                 </p>
               </dd>
             </dl>
@@ -289,8 +281,8 @@ boundaries."
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
             <p>
-              Returns a <code>SpatialExperiment</code> object subsetted to
-              include only spots within the defined x and y coordinate ranges.
+              A <code>SpatialExperiment</code> subsetted to the specified
+              coordinate window.
             </p>
           </div>
         </main>
@@ -303,7 +295,7 @@ boundaries."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

@@ -7,4 +7,6 @@ Rplot.png
 /doc/
 /Meta/
 /tests/omnipathr-log/
+/vignettes/omnipathr-log/
 .notes
+vignettes/single_cell_data_3.h5ad

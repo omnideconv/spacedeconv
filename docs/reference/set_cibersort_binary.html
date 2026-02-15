@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Set Path to CIBERSORT R script (CIBERSORT.R) — set_cibersort_binary •
+      Register the Path to the CIBERSORT Script — set_cibersort_binary •
       spacedeconv
     </title>
     <!-- favicons -->
@@ -51,17 +51,19 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Set Path to CIBERSORT R script (CIBERSORT.R) — set_cibersort_binary"
+      content="Register the Path to the CIBERSORT Script — set_cibersort_binary"
     />
     <meta
       name="description"
-      content="CIBERSORT is only freely available to academic users.
-A license an the binary can be obtained from https://cibersort.stanford.edu."
+      content="Stores the path to the CIBERSORT.R script in the spacedeconv configuration and
+forwards it to immunedeconv::set_cibersort_binary() so CIBERSORT-based methods
+can run from this R session."
     />
     <meta
       property="og:description"
-      content="CIBERSORT is only freely available to academic users.
-A license an the binary can be obtained from https://cibersort.stanford.edu."
+      content="Stores the path to the CIBERSORT.R script in the spacedeconv configuration and
+forwards it to immunedeconv::set_cibersort_binary() so CIBERSORT-based methods
+can run from this R session."
     />
     <meta
       property="og:image"
@@ -84,7 +86,7 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -101,11 +103,6 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -159,6 +156,13 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -204,15 +208,23 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Set Path to CIBERSORT R script (<code>CIBERSORT.R</code>)</h1>
+            <h1>Register the Path to the CIBERSORT Script</h1>
 
             <div class="d-none name"><code>set_cibersort_binary.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              CIBERSORT is only freely available to academic users. A license an
-              the binary can be obtained from https://cibersort.stanford.edu.
+              Stores the path to the <code>CIBERSORT.R</code> script in the
+              spacedeconv configuration and forwards it to
+              <code
+                ><a
+                  href="https://icbi-lab.github.io/immunedeconv/reference/set_cibersort_binary.html"
+                  class="external-link"
+                  >immunedeconv::set_cibersort_binary()</a
+                ></code
+              >
+              so CIBERSORT-based methods can run from this R session.
             </p>
           </div>
 
@@ -240,8 +252,19 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
               <dt id="arg-path">
                 path<a class="anchor" aria-label="anchor" href="#arg-path"></a>
               </dt>
-              <dd><p>path to cibersort R script.</p></dd>
+              <dd>
+                <p>Path to the <code>CIBERSORT.R</code> script.</p>
+              </dd>
             </dl>
+          </div>
+          <div class="section level2">
+            <h2 id="details">
+              Details<a class="anchor" aria-label="anchor" href="#details"></a>
+            </h2>
+            <p>
+              CIBERSORT is only freely available to academic users. A license
+              and script can be obtained from https://cibersort.stanford.edu.
+            </p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -253,7 +276,7 @@ A license an the binary can be obtained from https://cibersort.stanford.edu."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Deconvolute Cell2location — deconvolute_cell2location • spacedeconv
+      Deconvolute with cell2location — deconvolute_cell2location • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -50,10 +50,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Deconvolute Cell2location — deconvolute_cell2location"
+      content="Deconvolute with cell2location — deconvolute_cell2location"
     />
-    <meta name="description" content="Deconvolute Cell2location" />
-    <meta property="og:description" content="Deconvolute Cell2location" />
+    <meta
+      name="description"
+      content="Runs the cell2location model (via Python/reticulate) and returns a
+deconvolution matrix, optionally rescaled to relative values."
+    />
+    <meta
+      property="og:description"
+      content="Runs the cell2location model (via Python/reticulate) and returns a
+deconvolution matrix, optionally rescaled to relative values."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -75,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -92,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -150,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -195,7 +205,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Deconvolute Cell2location</h1>
+            <h1>Deconvolute with cell2location</h1>
 
             <div class="d-none name">
               <code>deconvolute_cell2location.Rd</code>
@@ -203,7 +213,10 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Deconvolute Cell2location</p>
+            <p>
+              Runs the cell2location model (via Python/reticulate) and returns a
+              deconvolution matrix, optionally rescaled to relative values.
+            </p>
           </div>
 
           <div class="section level2">
@@ -243,7 +256,9 @@
                   href="#arg-spatial-obj"
                 ></a>
               </dt>
-              <dd><p>SpatialExperiment</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-signature">
                 signature<a
@@ -252,7 +267,7 @@
                   href="#arg-signature"
                 ></a>
               </dt>
-              <dd><p>signature</p></dd>
+              <dd><p>Signature/model input expected by cell2location.</p></dd>
 
               <dt id="arg-epochs">
                 epochs<a
@@ -261,7 +276,7 @@
                   href="#arg-epochs"
                 ></a>
               </dt>
-              <dd><p>training epochs for model</p></dd>
+              <dd><p>Training epochs for the model.</p></dd>
 
               <dt id="arg-n-cell">
                 n_cell<a
@@ -270,7 +285,7 @@
                   href="#arg-n-cell"
                 ></a>
               </dt>
-              <dd><p>cell2location hyperparameter</p></dd>
+              <dd><p>cell2location hyperparameter.</p></dd>
 
               <dt id="arg-alpha">
                 alpha<a
@@ -279,12 +294,12 @@
                   href="#arg-alpha"
                 ></a>
               </dt>
-              <dd><p>cell2location hyperparameter</p></dd>
+              <dd><p>cell2location hyperparameter.</p></dd>
 
               <dt id="arg-gpu">
                 gpu<a class="anchor" aria-label="anchor" href="#arg-gpu"></a>
               </dt>
-              <dd><p>whether to use nvidia gpu for training</p></dd>
+              <dd><p>Logical; whether to use GPU for training.</p></dd>
 
               <dt id="arg-result-name">
                 result_name<a
@@ -295,8 +310,8 @@
               </dt>
               <dd>
                 <p>
-                  token to identify deconvolution results in object, default =
-                  "card"
+                  Prefix used to label result columns (default:
+                  "cell2location").
                 </p>
               </dd>
 
@@ -307,7 +322,12 @@
                   href="#arg-values"
                 ></a>
               </dt>
-              <dd><p>relative or absolute, default: relative</p></dd>
+              <dd>
+                <p>
+                  <code>"relative"</code> to rescale to fractions, or
+                  <code>"absolute"</code> to keep raw outputs.
+                </p>
+              </dd>
             </dl>
           </div>
         </main>
@@ -320,7 +340,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

@@ -2,15 +2,15 @@
 % Please edit documentation in R/visualization.R
 \name{filter_sample_id}
 \alias{filter_sample_id}
-\title{Filter SPE to contain only one sample ID}
+\title{Filter by Sample ID}
 \usage{
 filter_sample_id(spe, sample_id)
 }
 \arguments{
-\item{spe}{SpatialExperiment}
+\item{spe}{\code{SpatialExperiment}.}
 
-\item{sample_id}{sample_id}
+\item{sample_id}{Sample ID to keep.}
 }
 \description{
-Filter SPE to contain only one sample ID
+Subsets a \code{SpatialExperiment} to a single \code{sample_id}.
 }

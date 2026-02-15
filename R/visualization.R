@@ -1,6 +1,10 @@
-#' Function to plot deconvolution results
+#' Plot Cell Types (Deprecated)
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Deprecated wrapper around `plot_spatial()` that forwards `cell_type` to the
+#' `result` argument. Generate spatial hex plots for one or more result columns in a
+#' `SpatialExperiment`. Can also plot all results for a given method prefix,
+#' overlay the tissue image, apply smoothing, control zoom/spot size, and
+#' customize color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type one or more celltype to plot
@@ -30,7 +34,7 @@
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal <unctions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot (or combined plot) of the requested results.
 #'
 #' @export
 #' @note This function is deprecated and will be removed in future versions. Please use `plot_spatial` instead.
@@ -53,9 +57,12 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 }
 
 
-#' Function to plot deconvolution results
+#' Plot Spatial Results
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Generate spatial hex plots for one or more result columns in a
+#' `SpatialExperiment`. Can also plot all results for a given method prefix,
+#' overlay the tissue image, apply smoothing, control zoom/spot size, and
+#' customize color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param result one or more results to plot
@@ -85,7 +92,7 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot (or combined plot) of the requested results.
 #'
 #' @export
 plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale = NULL,
@@ -168,9 +175,10 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
 }
 
 
-#' Function to plot deconvolution results
+#' Plot UMI Counts
 #'
-#' Generate Hex Plot of a SpatialExperiment containing UMI counts
+#' Generate a spatial hex plot of total UMI counts per spot from a
+#' `SpatialExperiment`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param palette colorspace palette (sequential)
@@ -199,7 +207,7 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
 #' @param ... additional paramters passed to internal functions
 #'
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of UMI counts.
 #'
 #' @export
 plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
@@ -236,9 +244,10 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
   ))
 }
 
-#' Function to plot deconvolution results
+#' Plot Most Abundant Cell Type per Spot
 #'
-#' Generate Hex Plot of a SpatialExperiment containing the most abundant cell types
+#' Generates a spatial hex plot showing the most abundant cell type for each
+#' spot, based on deconvolution results in a `SpatialExperiment`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param method select which results should be displayed
@@ -268,7 +277,7 @@ plot_umi_count <- function(spe, palette = "Mako", transform_scale = NULL,
 #' @param min_abundance minimum abundance of celltypes to be included in the analysis
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of most abundant cell types.
 #'
 #' @export
 plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NULL, min_spot = 0, palette = "Mako",
@@ -394,7 +403,10 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 }
 
 
-#' Plot celltype fraction comparison
+#' Plot Cell Type Comparison
+#'
+#' Computes a log ratio between two result columns and renders the spatial
+#' distribution of that comparison.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param cell_type_1 celltype to plot
@@ -425,7 +437,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
 #' @param show_legend whether to show the legend
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of a celltypes presence/absence using a threshold
+#' @returns A spatial plot of the log-ratio comparison between two cell types.
 #'
 #' @export
 plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
@@ -480,9 +492,11 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 
 
 
-#' Function to plot gene expression
+#' Plot Gene Expression
 #'
-#' Generate Hex Plot of a SpatialExperiment containing deconvolution results
+#' Generate a spatial hex plot for a single gene from a `SpatialExperiment`.
+#' The gene is taken from the selected assay (default: `counts`) and must be
+#' present in `rownames(spe)`.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
 #' @param gene gene to plot
@@ -513,7 +527,7 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 #' @param png_height when saving, png height in px
 #' @param ... additional paramters passed to internal functions
 #'
-#' @returns plot of cell type fractions
+#' @returns A spatial plot of gene expression.
 #'
 #' @export
 plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", transform_scale = NULL,
@@ -567,21 +581,15 @@ plot_gene <- function(spe, gene = NULL, assay = "counts", palette = "Mako", tran
 
 #' Plot Overview of a SpatialExperiment
 #'
-#' This function creates an interactive scatter plot of the spatial coordinates
-#' from a SpatialExperiment object. The plot is rendered using Plotly,
-#' allowing for interactive exploration with tooltips displaying the full
-#' resolution row and column coordinates and the associated nUMI values.
-#' The y-axis is inverted for better visual representation.
+#' Creates an interactive Plotly scatter plot of spatial coordinates from a
+#' `SpatialExperiment`. Points are colored by total UMI counts and include
+#' tooltips showing full-resolution row/column coordinates. The y-axis is
+#' inverted for easier visual interpretation.
 #'
-#' @param spe A SpatialExperiment object.
-#'            This is the main data object containing spatial coordinates and UMI counts.
-#' @param sample_id A character string specifying the sample ID to be used for filtering
-#'                  the SpatialExperiment object. Defaults to "sample01".
+#' @param spe A `SpatialExperiment` containing spatial coordinates and counts.
+#' @param sample_id Sample ID to filter (default: "sample01").
 #'
-#' @return An interactive Plotly object representing the spatial distribution
-#'         of UMI counts across the provided SpatialExperiment object.
-#'         Each point on the plot corresponds to a spatial location,
-#'         colored by the number of UMIs.
+#' @return An interactive Plotly object with spots colored by nUMI.
 #' @export
 plot_overview <- function(spe, sample_id = "sample01") {
   if (is.null(spe)) {
@@ -1013,9 +1021,12 @@ save_plot <- function(plot, to_plot, path, png_width, png_height) {
   dev.off()
 }
 
-#' Filter SPE to contain only one sample ID
-#' @param spe SpatialExperiment
-#' @param sample_id sample_id
+#' Filter by Sample ID
+#'
+#' Subsets a `SpatialExperiment` to a single `sample_id`.
+#'
+#' @param spe `SpatialExperiment`.
+#' @param sample_id Sample ID to keep.
 #' @export
 filter_sample_id <- function(spe, sample_id) {
   if (is.null(spe)) {

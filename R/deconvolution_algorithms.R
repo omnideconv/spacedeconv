@@ -1,20 +1,16 @@
-#' List of supported deconvolution methods
+#' Supported Deconvolution Methods
 #'
-#' @details Spatial Algorithms \cr
-#' `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`, `Cell2Location`, `DOT`
+#' Named character vector of supported methods. Names are the display labels and
+#' values are the internal method tokens used by the API.
 #'
-#' @details First-generation Methods (Immunedeconv) \cr
-#' `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`, `CIBERSORT`, `CIBERSORT (abs.)`,
-#' `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`
-#'
-#' @details First-generation Mouse Methods (Immunedeconv) \cr
-#' `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`
-#'
-#' This object is a named vector. The names correspond to the display name of the method,
-#' the values to the internal name.
+#' @details
+#' Second-generation spatial methods: `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`,
+#' `cell2location`, `DOT`.\cr
+#' First-generation immunedeconv methods: `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`,
+#' `CIBERSORT`, `CIBERSORT (abs.)`, `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`.\cr
+#' First-generation immunedeconv mouse methods: `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`.
 #'
 #' @export
-#'
 deconvolution_methods <- c(
   # spatial
   "RCTD" = "rctd",
@@ -61,22 +57,24 @@ first_gen <- c(
 )
 
 
-#' Build a reference signature
+#' Build a Reference Signature
 #'
-#' @description
-#' Build_model calculates a reference signature from annotated scRNA-seq expression data
+#' Computes a cell-type signature from annotated scRNA-seq data or dispatches to
+#' a method-specific builder. The resulting signature can be passed to
+#' `deconvolute()` as the `signature` argument. Some methods (e.g., CARD, DOT,
+#' immunedeconv) do not produce a signature and return `NULL`.
 #'
-#' @param single_cell_obj Single-cell Object
-#' @param cell_type_col Name of the annotation column containing cell type information
-#' @param method Signature calculation Algorithm
-#' @param verbose Display more information on console
-#' @param spatial_obj SpatialExperiment, required for SPOTlight
-#' @param batch_id_col column of singleCellExperiment containing batch ids
-#' @param assay_sc assay of single cell object to use
-#' @param assay_sp assay of spatial object to use
-#' @param ... additional parameters passed to the functions
+#' @param single_cell_obj Single-cell object with cell type annotations.
+#' @param cell_type_col Column name containing cell type labels.
+#' @param method Signature method; one of `spacedeconv::deconvolution_methods`.
+#' @param verbose Print extra progress information.
+#' @param spatial_obj SpatialExperiment; required for SPOTlight.
+#' @param batch_id_col Batch ID column in the single-cell object (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param ... Additional parameters passed to the selected method.
 #'
-#' @returns cell-type specific expression signature
+#' @return A cell-type signature matrix, or `NULL` for methods that build internally.
 #'
 #' @export
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
@@ -202,20 +200,23 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 
 #' Deconvolution with spacedeconv
 #'
-#' Perform cell type deconvolution with spacedeconv.
+#' Runs the selected deconvolution method on a `SpatialExperiment`. Methods may
+#' use a precomputed `signature` (from `build_model()`) or build internally.
+#' See `spacedeconv::deconvolution_methods` for the full list of methods.
 #'
-#' @param spatial_obj A SpatialExperiment
-#' @param signature Gene Expression Signature
-#' @param single_cell_obj A SingleCellExperiment
-#' @param cell_type_col Column name of the single_cell_obj where the cell type can be found
-#' @param method Deconvolution Method to use, see deconvolution_methods() for a full list of available methods
-#' @param batch_id_col column name of batch ids in single cell object
-#' @param assay_sc which single cell assay to use for computation
-#' @param assay_sp which spatial assay to use for computation
-#' @param return_object Return an Object or result Table, TRUE = Object
-#' @param verbose display more detailed information
-#' @param ... Further parameters passed to the selected deconvolution method
-#' @returns The deconvolution result as a table
+#' @param spatial_obj A `SpatialExperiment` to deconvolute.
+#' @param signature Gene expression signature matrix (if required by the method).
+#' @param single_cell_obj A `SingleCellExperiment` with reference cells (if required).
+#' @param cell_type_col Column name in `single_cell_obj` containing cell types.
+#' @param method Deconvolution method; one of `spacedeconv::deconvolution_methods`.
+#' @param batch_id_col Batch ID column in `single_cell_obj` (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param return_object If `TRUE`, return the input `SpatialExperiment` with
+#' results added to `colData`; otherwise return the result matrix.
+#' @param verbose Print extra progress information.
+#' @param ... Further parameters passed to the selected method.
+#' @return Deconvolution results as a matrix or a `SpatialExperiment`.
 #' @export
 deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
                         cell_type_col = "cell_ontology_class", method = NULL,
@@ -368,18 +369,22 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
   cli::cli_progress_done()
 }
 
-#' Build Model and Deconvolute in one step
+#' Build Model and Deconvolute in One Step
 #'
-#' @param single_cell_obj Single Cell Object containing reference data to build the model
-#' @param spatial_obj SpatialExperiment to be deconvoluted
-#' @param method deconvolution method
-#' @param cell_type_col column of single_cell_obj containing cell type information
-#' @param batch_id_col column of SpatialObject containing batch_id information
-#' @param assay_sc the assay of the single cell object to use, default = "counts"
-#' @param assay_sp the assay of the spatialExperiment to use, default = "counts"
-#' @param return_object if true return anotation spatialExperiment, if false return table
-#' @param verbose output more information
-#' @param ... further parameters passed to the selected function
+#' Convenience wrapper that builds a signature with `build_model()` and then
+#' calls `deconvolute()` using the same inputs.
+#'
+#' @param single_cell_obj Single-cell object used to build the signature.
+#' @param spatial_obj `SpatialExperiment` to deconvolute.
+#' @param method Deconvolution method; one of `spacedeconv::deconvolution_methods`.
+#' @param cell_type_col Column in `single_cell_obj` with cell type labels.
+#' @param batch_id_col Batch ID column (used by some methods).
+#' @param assay_sc Single-cell assay to use (default: "counts").
+#' @param assay_sp Spatial assay to use (default: "counts").
+#' @param return_object If `TRUE`, return an annotated `SpatialExperiment`;
+#' otherwise return the result matrix.
+#' @param verbose Print extra progress information.
+#' @param ... Additional parameters passed to the selected methods.
 #' @export
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL,
                                   cell_type_col = "cell_ontology_class",

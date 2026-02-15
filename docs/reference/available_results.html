@@ -10,8 +10,8 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Check wich deconvolutionr results are available in a SpatialExperiment
-      object — available_results • spacedeconv
+      List Available Deconvolution Results in a SpatialExperiment —
+      available_results • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +51,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Check wich deconvolutionr results are available in a SpatialExperiment object — available_results"
+      content="List Available Deconvolution Results in a SpatialExperiment — available_results"
     />
     <meta
       name="description"
-      content="Check wich deconvolutionr results are available in a SpatialExperiment object"
+      content='Returns column names in colData that correspond to deconvolution results.
+Optionally filters by a method prefix (e.g., "spatialdwls").'
     />
     <meta
       property="og:description"
-      content="Check wich deconvolutionr results are available in a SpatialExperiment object"
+      content='Returns column names in colData that correspond to deconvolution results.
+Optionally filters by a method prefix (e.g., "spatialdwls").'
     />
     <meta
       property="og:image"
@@ -82,7 +84,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +101,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +154,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,18 +206,16 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Check wich deconvolutionr results are available in a
-              SpatialExperiment object
-            </h1>
+            <h1>List Available Deconvolution Results in a SpatialExperiment</h1>
 
             <div class="d-none name"><code>available_results.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              Check wich deconvolutionr results are available in a
-              SpatialExperiment object
+              Returns column names in <code>colData</code> that correspond to
+              deconvolution results. Optionally filters by a method prefix
+              (e.g., "spatialdwls").
             </p>
           </div>
 
@@ -245,7 +247,12 @@
                   href="#arg-deconv"
                 ></a>
               </dt>
-              <dd><p>SpatialExperiment</p></dd>
+              <dd>
+                <p>
+                  A <code>SpatialExperiment</code> containing deconvolution
+                  results.
+                </p>
+              </dd>
 
               <dt id="arg-method">
                 method<a
@@ -254,7 +261,18 @@
                   href="#arg-method"
                 ></a>
               </dt>
-              <dd><p>deconvolution method (optional)</p></dd>
+              <dd>
+                <p>
+                  Optional prefix used to filter result columns (typically the
+                  internal method token from
+                  <code
+                    ><a href="deconvolution_methods.html"
+                      >spacedeconv::deconvolution_methods</a
+                    ></code
+                  >, or a custom <code>result_name</code> used when running a
+                  method).
+                </p>
+              </dd>
             </dl>
           </div>
         </main>
@@ -267,7 +285,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

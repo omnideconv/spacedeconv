@@ -2,7 +2,7 @@
 % Please edit documentation in R/benchmarking.R
 \name{plot_scatter}
 \alias{plot_scatter}
-\title{Comparative Scatterplot of Two SpatialExperiments}
+\title{Compare Two Result Columns with a Scatterplot}
 \usage{
 plot_scatter(
   spe = NULL,
@@ -42,8 +42,10 @@ plot_scatter(
 \item{title}{Title of the plot.}
 }
 \value{
-A scatterplot
+A scatterplot.
 }
 \description{
-Creates a scatterplot to compare deconvolution results between two SpatialExperiment objects.
+Creates a scatterplot to compare two result columns, either from a single
+\code{SpatialExperiment} (use \code{spe} + \code{value1} + \code{value2}) or from two different
+objects (use \code{spe1} + \code{spe2} + \code{value1} + \code{value2}).
 }

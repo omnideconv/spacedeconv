@@ -1,32 +1,25 @@
-#' Cluster spacedeconv results
+#' Cluster SpatialExperiment Results
 #'
-#' Performs clustering on data obtained from a SpatialExperiment object using
-#' specified methods. This function allows for clustering based on deconvolution
-#' results, expression data, pathway, or transcription factors (TF) analyses.
+#' Performs clustering on a `SpatialExperiment` using either expression data or
+#' selected result columns (deconvolution, pathway, or TF activity). Results are
+#' stored as new `colData` columns.
 #'
-#' @param spe A SpatialExperiment object containing the data to be clustered.
-#' @param method A character vector specifying the clustering method to use.
-#'        Options are "kmeans" and "hclust". Default is c("kmeans", "hclust").
-#' @param spmethod A character vector indicating the type of analysis for
-#'        clustering. Options include "expression", "progeny", "dorothea",
-#'        "collectri", and names of deconvolution methods. Default is based on
-#'        the available deconvolution methods.
-#' @param dist_method A character vector specifying the distance measure to be
-#'        used for "hclust" method. Options include "correlation", "euclidean",
-#'        "maximum", "manhattan", "canberra", "binary", "minkowski".
-#' @param hclust_method A character vector indicating the agglomeration method
-#'        to be used with "hclust". Options include "complete", "ward.D",
-#'        "ward.D2", "single", "average", "mcquitty", "median", "centroid".
-#' @param nclusters An integer specifying the number of clusters to create.
-#'        Default is 3.
-#' @param pca_dim An integer vector specifying PCA dimensions to be used for
-#'        clustering of expression data. This is used with Seurat::FindNeighbors.
-#'        Default is seq(1, 30).
-#' @param clusres A numeric value for the clustering resolution to be used
-#'        with Seurat::FindClusters. Default is 0.5.
+#' @param spe A `SpatialExperiment` object containing the data to be clustered.
+#' @param method Clustering method: `"kmeans"` or `"hclust"`.
+#' @param spmethod Data to cluster: `"expression"`, `"progeny"`, `"dorothea"`,
+#' `"collectri"`, or a deconvolution method token.
+#' @param dist_method Distance metric for `"hclust"`: `"correlation"`,
+#' `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"`,
+#' `"minkowski"`.
+#' @param hclust_method Agglomeration method for `"hclust"`: `"complete"`,
+#' `"ward.D"`, `"ward.D2"`, `"single"`, `"average"`, `"mcquitty"`, `"median"`,
+#' `"centroid"`.
+#' @param nclusters Number of clusters to create.
+#' @param pca_dim PCA dimensions used for expression clustering.
+#' @param clusres Resolution for Seurat-based expression clustering.
 #' @param ... Additional parameters for clustering methods.
 #'
-#' @return A modified SpatialExperiment object with added clustering results.
+#' @return `SpatialExperiment` with added clustering results in `colData`.
 #' @export
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
@@ -164,12 +157,18 @@ topfeat <- function(idx, scores, topn) {
   }
 }
 
-#' Get cluster features
-#' @param spe spatialExperiment with cluster results
-#' @param clusterid = name of the column with the clustering results
-#' @param topn number of top features to be shown
-#' @param spmethod spatial method used for the clustering, must be dorothea, collectri, progeny, expression or the name of the deconvolution method used
-#' @param zscore = if the results should be z-score scaled or not
+#' Get Cluster Features
+#'
+#' Summarizes top features per cluster from expression data or selected result
+#' columns, with optional z-score scaling. Features are ranked by their mean
+#' (or z-scored mean) within each cluster, and the top `topn` are returned.
+#'
+#' @param spe `SpatialExperiment` with clustering results.
+#' @param clusterid Name of the column containing cluster labels.
+#' @param topn Number of top features to return per cluster.
+#' @param spmethod Method used for clustering (e.g., `dorothea`, `collectri`,
+#' `progeny`, `expression`, or a deconvolution method token).
+#' @param zscore Logical; z-score scale features before ranking.
 #' @export
 get_cluster_features <- function(spe,
                                  clusterid = NULL,

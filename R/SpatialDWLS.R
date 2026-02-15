@@ -1,12 +1,20 @@
-#' Build Model Spatial DWLS
-#' @param single_cell_obj SingleCellExperiment
-#' @param assay_sc Single Cell Object assay to use
-#' @param marker_method provide list of marker genes or method to calculate markers (scran, gini, mast)
-#' @param topNgenes Number of top ranked marker genes to use from each cluster
-#' @param cell_type_col column of single_cell_obj containing cell type information
-#' @param dim_method dimension reduction method
-#' @param cluster_method cluster method to  use when calculating marker genes
-#' @param ... additional paramdataters
+#' Build a SpatialDWLS Signature
+#'
+#' Constructs a DWLS signature matrix from single-cell data using Giotto and a
+#' marker-selection strategy: either compute markers with a supported method
+#' (`scran`, `gini`, `mast`) or pass a custom vector of marker genes directly.
+#'
+#' @param single_cell_obj `SingleCellExperiment` with cell type annotations.
+#' @param assay_sc Single-cell assay to use.
+#' @param marker_method Marker genes or method to compute markers (`scran`,
+#' `gini`, or `mast`).
+#' @param topNgenes Number of top-ranked marker genes per cluster.
+#' @param cell_type_col Column containing cell type labels.
+#' @param dim_method Dimension reduction method for Giotto workflow:
+#' `pca`, `tsne`, or `umap`.
+#' @param cluster_method Clustering method for Giotto workflow:
+#' `leiden`, `louvain`, `kmeans`, or `hclust`.
+#' @param ... Additional parameters passed to Giotto helpers.
 build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marker_method = "scran", topNgenes = 100, cell_type_col = "cell_ontology_class", dim_method = "pca", cluster_method = "leiden", ...) {
   # TODO Checks
   if (!checkCol(single_cell_obj, cell_type_col)) {
@@ -14,7 +22,13 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   }
 
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
+    envname <- getOption("spacedeconv.conda_env", default = "spacedeconv-env")
+    conda_envs <- reticulate::conda_list()
+    python_path <- conda_envs$python[match(envname, conda_envs$name)]
+    if (is.na(python_path)) {
+      stop("Conda environment '", envname, "' not found.", call. = FALSE)
+    }
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
   # check if requested assay exists
@@ -65,20 +79,29 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
   return(signature)
 }
 
-#' Deconvolute Spatial DWLS
+#' Deconvolute with SpatialDWLS
 #'
-#' @param spatial_obj Spatial Experiment
-#' @param signature Signature
-#' @param assay_sp Assay of SpatialExperiment to use
-#' @param result_name token to identify deconvolution results in object, default = "spatialdwls"
-#' @param ... additional parameters
+#' Runs the SpatialDWLS workflow and returns a deconvolution matrix with column
+#' names prefixed by `result_name`.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param signature Signature matrix from `build_model_spatial_dwls()`.
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (default: "spatialdwls").
+#' @param ... Additional parameters passed to Giotto.
 deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts", result_name = "spatialdwls", ...) {
   # create Giotto Object
   spExpression <- SummarizedExperiment::assay(spatial_obj, assay_sp) %>% as("dgCMatrix")
   spCoords <- SpatialExperiment::spatialCoords(spatial_obj)
 
   if (!exists("giotto_instructions")) {
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = reticulate::conda_list()$python[which(reticulate::conda_list()$name == "r-omnideconv")])
+    envname <- getOption("spacedeconv.conda_env", default = "spacedeconv-env")
+    conda_envs <- reticulate::conda_list()
+    python_path <- conda_envs$python[match(envname, conda_envs$name)]
+    if (is.na(python_path)) {
+      stop("Conda environment '", envname, "' not found.", call. = FALSE)
+    }
+    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
 

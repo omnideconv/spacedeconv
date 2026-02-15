@@ -19,31 +19,34 @@ deconvolute(
 )
 }
 \arguments{
-\item{spatial_obj}{A SpatialExperiment}
+\item{spatial_obj}{A \code{SpatialExperiment} to deconvolute.}
 
-\item{signature}{Gene Expression Signature}
+\item{signature}{Gene expression signature matrix (if required by the method).}
 
-\item{single_cell_obj}{A SingleCellExperiment}
+\item{single_cell_obj}{A \code{SingleCellExperiment} with reference cells (if required).}
 
-\item{cell_type_col}{Column name of the single_cell_obj where the cell type can be found}
+\item{cell_type_col}{Column name in \code{single_cell_obj} containing cell types.}
 
-\item{method}{Deconvolution Method to use, see deconvolution_methods() for a full list of available methods}
+\item{method}{Deconvolution method; one of \code{spacedeconv::deconvolution_methods}.}
 
-\item{batch_id_col}{column name of batch ids in single cell object}
+\item{batch_id_col}{Batch ID column in \code{single_cell_obj} (used by some methods).}
 
-\item{assay_sc}{which single cell assay to use for computation}
+\item{assay_sc}{Single-cell assay to use (default: "counts").}
 
-\item{assay_sp}{which spatial assay to use for computation}
+\item{assay_sp}{Spatial assay to use (default: "counts").}
 
-\item{return_object}{Return an Object or result Table, TRUE = Object}
+\item{return_object}{If \code{TRUE}, return the input \code{SpatialExperiment} with
+results added to \code{colData}; otherwise return the result matrix.}
 
-\item{verbose}{display more detailed information}
+\item{verbose}{Print extra progress information.}
 
-\item{...}{Further parameters passed to the selected deconvolution method}
+\item{...}{Further parameters passed to the selected method.}
 }
 \value{
-The deconvolution result as a table
+Deconvolution results as a matrix or a \code{SpatialExperiment}.
 }
 \description{
-Perform cell type deconvolution with spacedeconv.
+Runs the selected deconvolution method on a \code{SpatialExperiment}. Methods may
+use a precomputed \code{signature} (from \code{build_model()}) or build internally.
+See \code{spacedeconv::deconvolution_methods} for the full list of methods.
 }

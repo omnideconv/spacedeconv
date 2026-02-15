@@ -2,7 +2,7 @@
 % Please edit documentation in R/SpatialDWLS.R
 \name{deconvolute_spatial_dwls}
 \alias{deconvolute_spatial_dwls}
-\title{Deconvolute Spatial DWLS}
+\title{Deconvolute with SpatialDWLS}
 \usage{
 deconvolute_spatial_dwls(
   spatial_obj,
@@ -13,16 +13,17 @@ deconvolute_spatial_dwls(
 )
 }
 \arguments{
-\item{spatial_obj}{Spatial Experiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{signature}{Signature}
+\item{signature}{Signature matrix from \code{build_model_spatial_dwls()}.}
 
-\item{assay_sp}{Assay of SpatialExperiment to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{result_name}{token to identify deconvolution results in object, default = "spatialdwls"}
+\item{result_name}{Prefix used to label result columns (default: "spatialdwls").}
 
-\item{...}{additional parameters}
+\item{...}{Additional parameters passed to Giotto.}
 }
 \description{
-Deconvolute Spatial DWLS
+Runs the SpatialDWLS workflow and returns a deconvolution matrix with column
+names prefixed by \code{result_name}.
 }

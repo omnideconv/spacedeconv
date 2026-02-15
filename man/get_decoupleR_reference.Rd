@@ -2,7 +2,7 @@
 % Please edit documentation in R/decoupleR.R
 \name{get_decoupleR_reference}
 \alias{get_decoupleR_reference}
-\title{Fetch Pathway or Transcription Factor Signatures from decoupleR}
+\title{Fetch decoupleR Reference Networks}
 \usage{
 get_decoupleR_reference(
   method = "progeny",
@@ -13,20 +13,21 @@ get_decoupleR_reference(
 )
 }
 \arguments{
-\item{method}{The computational method to use for obtaining the reference: "progeny", "dorothea" or "collectri}
+\item{method}{Reference to retrieve: \code{"progeny"}, \code{"dorothea"}, or \code{"collectri"}.}
 
-\item{organism}{The target organism for the reference signatures ("human", "mouse", etc.).}
+\item{organism}{Target organism (e.g., \code{"human"} or \code{"mouse"}).}
 
-\item{n_genes}{The number of top genes to return for Progeny pathways. Only applicable if \code{method} is "progeny".}
+\item{n_genes}{Number of top genes for Progeny (only used with \code{"progeny"}).}
 
-\item{confidence}{A vector of confidence levels (A, B, C, D, E) to filter the transcription factor targets from DoRothEA.
-Only applicable if \code{method} is "dorothea".}
+\item{confidence}{Confidence levels (A-E) to filter DoRothEA targets (only
+used with \code{"dorothea"}).}
 
-\item{...}{Additional parameters to fine-tune the method's execution.}
+\item{...}{Additional parameters passed to \code{decoupleR}.}
 }
 \value{
-A data frame containing the requested reference
+A data frame containing the requested reference.
 }
 \description{
-This function retrieves references for Progeny, DoRothEA or CollecTRI from the \code{decoupleR} package.
+Retrieves pathway or transcription factor target networks from \code{decoupleR} (Progeny, DoRothEA,
+or CollecTRI).
 }

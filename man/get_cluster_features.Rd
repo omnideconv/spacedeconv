@@ -2,7 +2,7 @@
 % Please edit documentation in R/cluster.R
 \name{get_cluster_features}
 \alias{get_cluster_features}
-\title{Get cluster features}
+\title{Get Cluster Features}
 \usage{
 get_cluster_features(
   spe,
@@ -13,16 +13,19 @@ get_cluster_features(
 )
 }
 \arguments{
-\item{spe}{spatialExperiment with cluster results}
+\item{spe}{\code{SpatialExperiment} with clustering results.}
 
-\item{clusterid}{= name of the column with the clustering results}
+\item{clusterid}{Name of the column containing cluster labels.}
 
-\item{topn}{number of top features to be shown}
+\item{topn}{Number of top features to return per cluster.}
 
-\item{spmethod}{spatial method used for the clustering, must be dorothea, collectri, progeny, expression or the name of the deconvolution method used}
+\item{spmethod}{Method used for clustering (e.g., \code{dorothea}, \code{collectri},
+\code{progeny}, \code{expression}, or a deconvolution method token).}
 
-\item{zscore}{= if the results should be z-score scaled or not}
+\item{zscore}{Logical; z-score scale features before ranking.}
 }
 \description{
-Get cluster features
+Summarizes top features per cluster from expression data or selected result
+columns, with optional z-score scaling. Features are ranked by their mean
+(or z-scored mean) within each cluster, and the top \code{topn} are returned.
 }

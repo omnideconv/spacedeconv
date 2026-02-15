@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Fetch Pathway or Transcription Factor Signatures from decoupleR —
-      get_decoupleR_reference • spacedeconv
+      Fetch decoupleR Reference Networks — get_decoupleR_reference • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +50,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Fetch Pathway or Transcription Factor Signatures from decoupleR — get_decoupleR_reference"
+      content="Fetch decoupleR Reference Networks — get_decoupleR_reference"
     />
     <meta
       name="description"
-      content="This function retrieves references for Progeny, DoRothEA or CollecTRI from the decoupleR package."
+      content="Retrieves pathway or transcription factor target networks from decoupleR (Progeny, DoRothEA,
+or CollecTRI)."
     />
     <meta
       property="og:description"
-      content="This function retrieves references for Progeny, DoRothEA or CollecTRI from the decoupleR package."
+      content="Retrieves pathway or transcription factor target networks from decoupleR (Progeny, DoRothEA,
+or CollecTRI)."
     />
     <meta
       property="og:image"
@@ -82,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,9 +205,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Fetch Pathway or Transcription Factor Signatures from decoupleR
-            </h1>
+            <h1>Fetch decoupleR Reference Networks</h1>
 
             <div class="d-none name">
               <code>get_decoupleR_reference.Rd</code>
@@ -213,8 +214,8 @@
 
           <div class="ref-description section level2">
             <p>
-              This function retrieves references for Progeny, DoRothEA or
-              CollecTRI from the <code>decoupleR</code> package.
+              Retrieves pathway or transcription factor target networks from
+              <code>decoupleR</code> (Progeny, DoRothEA, or CollecTRI).
             </p>
           </div>
 
@@ -254,8 +255,8 @@
               </dt>
               <dd>
                 <p>
-                  The computational method to use for obtaining the reference:
-                  "progeny", "dorothea" or "collectri
+                  Reference to retrieve: <code>"progeny"</code>,
+                  <code>"dorothea"</code>, or <code>"collectri"</code>.
                 </p>
               </dd>
 
@@ -268,8 +269,8 @@
               </dt>
               <dd>
                 <p>
-                  The target organism for the reference signatures ("human",
-                  "mouse", etc.).
+                  Target organism (e.g., <code>"human"</code> or
+                  <code>"mouse"</code>).
                 </p>
               </dd>
 
@@ -282,8 +283,8 @@
               </dt>
               <dd>
                 <p>
-                  The number of top genes to return for Progeny pathways. Only
-                  applicable if <code>method</code> is "progeny".
+                  Number of top genes for Progeny (only used with
+                  <code>"progeny"</code>).
                 </p>
               </dd>
 
@@ -296,9 +297,8 @@
               </dt>
               <dd>
                 <p>
-                  A vector of confidence levels (A, B, C, D, E) to filter the
-                  transcription factor targets from DoRothEA. Only applicable if
-                  <code>method</code> is "dorothea".
+                  Confidence levels (A-E) to filter DoRothEA targets (only used
+                  with <code>"dorothea"</code>).
                 </p>
               </dd>
 
@@ -306,9 +306,7 @@
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
               <dd>
-                <p>
-                  Additional parameters to fine-tune the method's execution.
-                </p>
+                <p>Additional parameters passed to <code>decoupleR</code>.</p>
               </dd>
             </dl>
           </div>
@@ -316,7 +314,7 @@
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>A data frame containing the requested reference</p>
+            <p>A data frame containing the requested reference.</p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -328,7 +326,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

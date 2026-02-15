@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      No signature calculated, just call the deconvolute method —
-      build_model_immunedeconv • spacedeconv
+      No Signature for Immunedeconv — build_model_immunedeconv • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +50,19 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="No signature calculated, just call the deconvolute method — build_model_immunedeconv"
+      content="No Signature for Immunedeconv — build_model_immunedeconv"
     />
     <meta
       name="description"
-      content="No signature calculated, just call the deconvolute method"
+      content="First-generation immunedeconv methods do not require a custom signature, so
+this function returns NULL and you should call deconvolute() with the
+desired immunedeconv method (see spacedeconv::deconvolution_methods)."
     />
     <meta
       property="og:description"
-      content="No signature calculated, just call the deconvolute method"
+      content="First-generation immunedeconv methods do not require a custom signature, so
+this function returns NULL and you should call deconvolute() with the
+desired immunedeconv method (see spacedeconv::deconvolution_methods)."
     />
     <meta
       property="og:image"
@@ -82,7 +85,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +102,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +155,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,7 +207,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>No signature calculated, just call the deconvolute method</h1>
+            <h1>No Signature for Immunedeconv</h1>
 
             <div class="d-none name">
               <code>build_model_immunedeconv.Rd</code>
@@ -210,7 +215,18 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>No signature calculated, just call the deconvolute method</p>
+            <p>
+              First-generation immunedeconv methods do not require a custom
+              signature, so this function returns <code>NULL</code> and you
+              should call
+              <code><a href="deconvolute.html">deconvolute()</a></code> with the
+              desired immunedeconv method (see
+              <code
+                ><a href="deconvolution_methods.html"
+                  >spacedeconv::deconvolution_methods</a
+                ></code
+              >).
+            </p>
           </div>
 
           <div class="section level2">
@@ -228,7 +244,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

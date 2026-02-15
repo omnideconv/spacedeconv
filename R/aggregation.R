@@ -1,25 +1,20 @@
 #' Aggregate Deconvolution Results
 #'
-#' Aggregates deconvolution results by merging result columns in the spatial object.
-#' This function now supports aggregating multiple cell types by passing a list of
-#' cell types. The older method of specifying two separate cell types is deprecated
-#' but still supported for backward compatibility.
+#' Combines multiple result columns into a single aggregated column in a
+#' `SpatialExperiment`. You can pass a list of cell types (`cell_types`) or use
+#' the deprecated two-parameter form (`cell_type_1`, `cell_type_2`) for backward
+#' compatibility.
 #'
-#' @param spatial_obj SpatialExperiment containing deconvolution results.
-#' @param cell_types A list of cell types to aggregate. This is the preferred method
-#' for specifying cell types to aggregate. If this parameter is used, 'cell_type_1'
-#' and 'cell_type_2' are ignored.
-#' @param cell_type_1 (Deprecated) The first cell type to aggregate, included for
-#' backward compatibility. Use 'cell_types' for new code.
-#' @param cell_type_2 (Deprecated) The second cell type to aggregate, included for
-#' backward compatibility. Use 'cell_types' for new code.
-#' @param name Optional new name for the aggregated result. If not provided, a name
-#' is generated automatically by concatenating the cell type names.
-#' @param remove Logical, specifies whether to remove the provided cell types from
-#' the spatial object after aggregation.
+#' @param spatial_obj `SpatialExperiment` containing deconvolution results.
+#' @param cell_types List of cell types to aggregate (preferred). If provided,
+#' `cell_type_1` and `cell_type_2` are ignored.
+#' @param cell_type_1 (Deprecated) First cell type to aggregate.
+#' @param cell_type_2 (Deprecated) Second cell type to aggregate.
+#' @param name Optional name for the aggregated result. Defaults to concatenated
+#' cell type names.
+#' @param remove Logical; remove the original cell type columns after aggregation.
 #'
-#' @return A SpatialExperiment object containing the aggregation of the provided
-#' cell types.
+#' @return `SpatialExperiment` with the aggregated result added to `colData`.
 #'
 #' @export
 aggregate_results <- function(spatial_obj = NULL, cell_types = NULL, cell_type_1 = NULL, cell_type_2 = NULL,

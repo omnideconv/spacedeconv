@@ -1,6 +1,8 @@
-#' Comparative Scatterplot of Two SpatialExperiments
+#' Compare Two Result Columns with a Scatterplot
 #'
-#' Creates a scatterplot to compare deconvolution results between two SpatialExperiment objects.
+#' Creates a scatterplot to compare two result columns, either from a single
+#' `SpatialExperiment` (use `spe` + `value1` + `value2`) or from two different
+#' objects (use `spe1` + `spe2` + `value1` + `value2`).
 #'
 #' @param spe SpatialExperiment with quantification results
 #' @param value1 Deconvolution result to plot from the first object.
@@ -14,7 +16,7 @@
 #' @param coord_range Numeric vector of length 2 to set coordinate limits.
 #' @param title Title of the plot.
 #'
-#' @return A scatterplot
+#' @return A scatterplot.
 #' @export
 plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot") {
   if (!is.null(spe)) {
@@ -126,8 +128,10 @@ plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, l
 
 #' Compare Signatures
 #'
-#' @param signature1 signature
-#' @param signature2 signature
+#' Creates a scatterplot comparing two signature matrices across shared genes.
+#'
+#' @param signature1 Signature matrix.
+#' @param signature2 Signature matrix.
 #' @export
 compare_signatures <- function(signature1, signature2) {
   df1 <- data.frame(signature1)

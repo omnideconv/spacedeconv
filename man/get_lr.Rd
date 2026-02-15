@@ -2,19 +2,21 @@
 % Please edit documentation in R/get_lr.R
 \name{get_lr}
 \alias{get_lr}
-\title{Compute L-R score for each spot}
+\title{Compute Ligand-Receptor Scores per Spot}
 \usage{
 get_lr(spe, resource = "Consensus", method = "min", organism = "human")
 }
 \arguments{
-\item{spe}{SpatialExperiment object}
+\item{spe}{\code{SpatialExperiment} with a \code{cpm} assay.}
 
-\item{resource}{"consensus" table from Omnipath as default, the user can provide a data frame containing L-R pairs. The data frame should contain at least the following two columns: source_genesymbol = ligands, target_genesymbol = receptors}
+\item{resource}{L-R reference. Defaults to the Omnipath consensus; a custom
+data frame must include \code{source_genesymbol} and \code{target_genesymbol}.}
 
-\item{method}{mathematical approach to compute L-R scores. Options: min, and product L-R, default is product}
+\item{method}{Scoring method: \code{"min"} or \code{"product"}.}
 
-\item{organism}{choose the organism to be considered, default human, options: human or mouse}
+\item{organism}{Organism: \code{"human"} or \code{"mouse"}.}
 }
 \description{
-Compute L-R score for each spot
+Calculates ligand-receptor scores for each spot using CPM-normalized
+expression and a ligand-receptor reference.
 }

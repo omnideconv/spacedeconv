@@ -1,14 +1,15 @@
-#' Heatmap correlation of cell types based on gene expression values
+#' Correlation Heatmap of Signature Matrix
 #'
-#' Generates a heatmap of cell type correlations and p-values as asterisks based on signature matrix
+#' Generates a correlation heatmap from a signature matrix and marks
+#' significance with asterisks.
 #'
-#' @param sig signature matrix
-#' @param cor_method correlation method "pearson" or "spearman"
-#' @param log logarithmic transformation of signature matrix
-#' @param matrix return correlation and correlation probability values as matrix
-#' @param ... additional parameters passed to corrplot function
+#' @param sig Signature matrix.
+#' @param cor_method Correlation method: `"pearson"` or `"spearman"`.
+#' @param log Logical; apply `log(x + 1)` before correlation.
+#' @param matrix Logical; print correlation and p-value matrices.
+#' @param ... Additional parameters passed to `corrplot()`.
 #'
-#' @returns correlation heatmap of cell types based on gene expression
+#' @returns Correlation heatmap of cell types based on expression.
 #'
 #' @export
 

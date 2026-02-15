@@ -54,17 +54,17 @@
     />
     <meta
       name="description"
-      content="Aggregates deconvolution results by merging result columns in the spatial object.
-This function now supports aggregating multiple cell types by passing a list of
-cell types. The older method of specifying two separate cell types is deprecated
-but still supported for backward compatibility."
+      content="Combines multiple result columns into a single aggregated column in a
+SpatialExperiment. You can pass a list of cell types (cell_types) or use
+the deprecated two-parameter form (cell_type_1, cell_type_2) for backward
+compatibility."
     />
     <meta
       property="og:description"
-      content="Aggregates deconvolution results by merging result columns in the spatial object.
-This function now supports aggregating multiple cell types by passing a list of
-cell types. The older method of specifying two separate cell types is deprecated
-but still supported for backward compatibility."
+      content="Combines multiple result columns into a single aggregated column in a
+SpatialExperiment. You can pass a list of cell types (cell_types) or use
+the deprecated two-parameter form (cell_type_1, cell_type_2) for backward
+compatibility."
     />
     <meta
       property="og:image"
@@ -87,7 +87,7 @@ but still supported for backward compatibility."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -104,11 +104,6 @@ but still supported for backward compatibility."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +152,13 @@ but still supported for backward compatibility."
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -214,11 +216,11 @@ but still supported for backward compatibility."
 
           <div class="ref-description section level2">
             <p>
-              Aggregates deconvolution results by merging result columns in the
-              spatial object. This function now supports aggregating multiple
-              cell types by passing a list of cell types. The older method of
-              specifying two separate cell types is deprecated but still
-              supported for backward compatibility.
+              Combines multiple result columns into a single aggregated column
+              in a <code>SpatialExperiment</code>. You can pass a list of cell
+              types (<code>cell_types</code>) or use the deprecated
+              two-parameter form (<code>cell_type_1</code>,
+              <code>cell_type_2</code>) for backward compatibility.
             </p>
           </div>
 
@@ -258,7 +260,10 @@ but still supported for backward compatibility."
                 ></a>
               </dt>
               <dd>
-                <p>SpatialExperiment containing deconvolution results.</p>
+                <p>
+                  <code>SpatialExperiment</code> containing deconvolution
+                  results.
+                </p>
               </dd>
 
               <dt id="arg-cell-types">
@@ -270,9 +275,8 @@ but still supported for backward compatibility."
               </dt>
               <dd>
                 <p>
-                  A list of cell types to aggregate. This is the preferred
-                  method for specifying cell types to aggregate. If this
-                  parameter is used, 'cell_type_1' and 'cell_type_2' are
+                  List of cell types to aggregate (preferred). If provided,
+                  <code>cell_type_1</code> and <code>cell_type_2</code> are
                   ignored.
                 </p>
               </dd>
@@ -284,12 +288,7 @@ but still supported for backward compatibility."
                   href="#arg-cell-type-"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  (Deprecated) The first cell type to aggregate, included for
-                  backward compatibility. Use 'cell_types' for new code.
-                </p>
-              </dd>
+              <dd><p>(Deprecated) First cell type to aggregate.</p></dd>
 
               <dt id="arg-cell-type-">
                 cell_type_2<a
@@ -298,21 +297,15 @@ but still supported for backward compatibility."
                   href="#arg-cell-type-"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  (Deprecated) The second cell type to aggregate, included for
-                  backward compatibility. Use 'cell_types' for new code.
-                </p>
-              </dd>
+              <dd><p>(Deprecated) Second cell type to aggregate.</p></dd>
 
               <dt id="arg-name">
                 name<a class="anchor" aria-label="anchor" href="#arg-name"></a>
               </dt>
               <dd>
                 <p>
-                  Optional new name for the aggregated result. If not provided,
-                  a name is generated automatically by concatenating the cell
-                  type names.
+                  Optional name for the aggregated result. Defaults to
+                  concatenated cell type names.
                 </p>
               </dd>
 
@@ -325,8 +318,8 @@ but still supported for backward compatibility."
               </dt>
               <dd>
                 <p>
-                  Logical, specifies whether to remove the provided cell types
-                  from the spatial object after aggregation.
+                  Logical; remove the original cell type columns after
+                  aggregation.
                 </p>
               </dd>
             </dl>
@@ -336,8 +329,8 @@ but still supported for backward compatibility."
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
             <p>
-              A SpatialExperiment object containing the aggregation of the
-              provided cell types.
+              <code>SpatialExperiment</code> with the aggregated result added to
+              <code>colData</code>.
             </p>
           </div>
         </main>
@@ -350,7 +343,7 @@ but still supported for backward compatibility."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

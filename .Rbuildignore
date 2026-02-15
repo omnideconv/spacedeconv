@@ -9,3 +9,6 @@
 ^.pre-commit-config.yaml
 ^doc$
 ^Meta$
+^omnipathr-log$
+^tests/omnipathr-log$
+^vignettes/omnipathr-log$

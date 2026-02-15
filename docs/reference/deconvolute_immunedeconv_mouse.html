@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Deconvolute Immunedeconv mouse — deconvolute_immunedeconv_mouse •
+      Deconvolute with immunedeconv (mouse) — deconvolute_immunedeconv_mouse •
       spacedeconv
     </title>
     <!-- favicons -->
@@ -51,10 +51,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Deconvolute Immunedeconv mouse — deconvolute_immunedeconv_mouse"
+      content="Deconvolute with immunedeconv (mouse) — deconvolute_immunedeconv_mouse"
     />
-    <meta name="description" content="Deconvolute Immunedeconv mouse" />
-    <meta property="og:description" content="Deconvolute Immunedeconv mouse" />
+    <meta
+      name="description"
+      content="Runs a mouse-specific immunedeconv method on the expression matrix
+and returns a deconvolution matrix with prefixed column names."
+    />
+    <meta
+      property="og:description"
+      content="Runs a mouse-specific immunedeconv method on the expression matrix
+and returns a deconvolution matrix with prefixed column names."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -76,7 +84,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -93,11 +101,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -151,6 +154,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -196,7 +206,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Deconvolute Immunedeconv mouse</h1>
+            <h1>Deconvolute with immunedeconv (mouse)</h1>
 
             <div class="d-none name">
               <code>deconvolute_immunedeconv_mouse.Rd</code>
@@ -204,7 +214,10 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Deconvolute Immunedeconv mouse</p>
+            <p>
+              Runs a mouse-specific immunedeconv method on the expression matrix
+              and returns a deconvolution matrix with prefixed column names.
+            </p>
           </div>
 
           <div class="section level2">
@@ -243,7 +256,9 @@
                   href="#arg-spatial-obj"
                 ></a>
               </dt>
-              <dd><p>SpatialExperiment</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-method">
                 method<a
@@ -252,7 +267,16 @@
                   href="#arg-method"
                 ></a>
               </dt>
-              <dd><p>deconvolution algorithm</p></dd>
+              <dd>
+                <p>
+                  Mouse immunedeconv method token (see
+                  <code
+                    ><a href="deconvolution_methods.html"
+                      >spacedeconv::deconvolution_methods</a
+                    ></code
+                  >).
+                </p>
+              </dd>
 
               <dt id="arg-rmgenes">
                 rmgenes<a
@@ -261,7 +285,7 @@
                   href="#arg-rmgenes"
                 ></a>
               </dt>
-              <dd><p>genes to remove from the analysis</p></dd>
+              <dd><p>Genes to remove from the analysis.</p></dd>
 
               <dt id="arg-algorithm">
                 algorithm<a
@@ -272,8 +296,8 @@
               </dt>
               <dd>
                 <p>
-                  statistical algorithm for SeqImmuCC (ignored by all other
-                  methods)
+                  Statistical algorithm for <code>seqImmuCC</code> (ignored by
+                  other methods).
                 </p>
               </dd>
 
@@ -284,7 +308,7 @@
                   href="#arg-assay-sp"
                 ></a>
               </dt>
-              <dd><p>assay of spatial object to use</p></dd>
+              <dd><p>Spatial assay to use.</p></dd>
 
               <dt id="arg-result-name">
                 result_name<a
@@ -295,15 +319,17 @@
               </dt>
               <dd>
                 <p>
-                  token to identify deconvolution results in object, default =
-                  deconvolution method
+                  Prefix used to label result columns (defaults to
+                  <code>method</code>).
                 </p>
               </dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd><p>additional parameters passed to function</p></dd>
+              <dd>
+                <p>Additional parameters passed to the selected method.</p>
+              </dd>
             </dl>
           </div>
         </main>
@@ -316,7 +342,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

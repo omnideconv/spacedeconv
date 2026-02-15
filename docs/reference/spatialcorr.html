@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>create a correlation plot — spatialcorr • spacedeconv</title>
+    <title>Create a Correlation Plot — spatialcorr • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -48,10 +48,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="create a correlation plot — spatialcorr"
+      content="Create a Correlation Plot — spatialcorr"
     />
-    <meta name="description" content="create a correlation plot" />
-    <meta property="og:description" content="create a correlation plot" />
+    <meta
+      name="description"
+      content="Computes a correlation matrix across selected result columns and visualizes
+it with corrplot, including adjusted p-values."
+    />
+    <meta
+      property="og:description"
+      content="Computes a correlation matrix across selected result columns and visualizes
+it with corrplot, including adjusted p-values."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -73,7 +81,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -90,11 +98,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -148,6 +151,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -193,13 +203,17 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>create a correlation plot</h1>
+            <h1>Create a Correlation Plot</h1>
 
             <div class="d-none name"><code>spatialcorr.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>create a correlation plot</p>
+            <p>
+              Computes a correlation matrix across selected result columns and
+              visualizes it with <code>corrplot</code>, including adjusted
+              p-values.
+            </p>
           </div>
 
           <div class="section level2">
@@ -239,7 +253,9 @@
               <dt id="arg-spe">
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
-              <dd><p>the spe object</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-method">
                 method<a
@@ -250,8 +266,8 @@
               </dt>
               <dd>
                 <p>
-                  method to used for correlation analysis - deconvolution method
-                  or decoupleR e.g. "cell2location"
+                  Method prefix to select result columns (e.g., a deconvolution
+                  token or decoupleR output such as "cell2location").
                 </p>
               </dd>
 
@@ -264,8 +280,14 @@
               </dt>
               <dd>
                 <p>
-                  method used to adjust p-values for multiple testing, see
-                  stats::p.asjust.methods for details
+                  Method to adjust p-values for multiple testing (see
+                  <code
+                    ><a
+                      href="https://rdrr.io/r/stats/p.adjust.html"
+                      class="external-link"
+                      >stats::p.adjust.methods</a
+                    ></code
+                  >).
                 </p>
               </dd>
 
@@ -278,8 +300,8 @@
               </dt>
               <dd>
                 <p>
-                  if not provided, the function selects variables based on the
-                  specified method, it can also be a vector
+                  Optional vector of column names to use instead of
+                  <code>method</code>.
                 </p>
               </dd>
 
@@ -290,7 +312,7 @@
                   href="#arg-sig-level"
                 ></a>
               </dt>
-              <dd><p>it can also be a vector</p></dd>
+              <dd><p>Significance level(s) for marking correlations.</p></dd>
 
               <dt id="arg-type">
                 type<a class="anchor" aria-label="anchor" href="#arg-type"></a>
@@ -338,10 +360,8 @@
               </dt>
               <dd>
                 <p>
-                  represents the method parameter in the original corrplot
-                  function.The layout of the correlation plot. color is default.
-                  Choose between "circle", "square", "ellipse", "number",
-                  "shade", "color", "pie"
+                  Corrplot layout: "circle", "square", "ellipse", "number",
+                  "shade", "color", or "pie".
                 </p>
               </dd>
 
@@ -380,7 +400,9 @@
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd><p>additional parameters passed to corrplot function</p></dd>
+              <dd>
+                <p>Additional parameters passed to <code>corrplot()</code>.</p>
+              </dd>
             </dl>
           </div>
         </main>
@@ -393,7 +415,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

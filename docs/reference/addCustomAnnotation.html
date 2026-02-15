@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Extend a SpatialExperiment with a New Annotation Column —
-      addCustomAnnotation • spacedeconv
+      Add a Custom Annotation Column — addCustomAnnotation • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,19 +50,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Extend a SpatialExperiment with a New Annotation Column — addCustomAnnotation"
+      content="Add a Custom Annotation Column — addCustomAnnotation"
     />
     <meta
       name="description"
-      content="This function is designed to annotate a SpatialExperiment object by appending a custom annotation
-column to its colData. This feature allows users to integrate additional metadata or experimental
-results that can be useful for subsequent analyses or visualizations."
+      content="Appends a new column to colData with user-provided values. This can be
+used to add metadata for downstream analyses or visualization."
     />
     <meta
       property="og:description"
-      content="This function is designed to annotate a SpatialExperiment object by appending a custom annotation
-column to its colData. This feature allows users to integrate additional metadata or experimental
-results that can be useful for subsequent analyses or visualizations."
+      content="Appends a new column to colData with user-provided values. This can be
+used to add metadata for downstream analyses or visualization."
     />
     <meta
       property="og:image"
@@ -86,7 +83,7 @@ results that can be useful for subsequent analyses or visualizations."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -103,11 +100,6 @@ results that can be useful for subsequent analyses or visualizations."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -161,6 +153,13 @@ results that can be useful for subsequent analyses or visualizations."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -206,18 +205,16 @@ results that can be useful for subsequent analyses or visualizations."
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Extend a SpatialExperiment with a New Annotation Column</h1>
+            <h1>Add a Custom Annotation Column</h1>
 
             <div class="d-none name"><code>addCustomAnnotation.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              This function is designed to annotate a
-              <code>SpatialExperiment</code> object by appending a custom
-              annotation column to its <code>colData</code>. This feature allows
-              users to integrate additional metadata or experimental results
-              that can be useful for subsequent analyses or visualizations.
+              Appends a new column to <code>colData</code> with user-provided
+              values. This can be used to add metadata for downstream analyses
+              or visualization.
             </p>
           </div>
 
@@ -250,10 +247,7 @@ results that can be useful for subsequent analyses or visualizations."
                 ></a>
               </dt>
               <dd>
-                <p>
-                  A <code>SpatialExperiment</code> object that will be extended
-                  with the new annotation.
-                </p>
+                <p>A <code>SpatialExperiment</code> to annotate.</p>
               </dd>
 
               <dt id="arg-columnname">
@@ -263,12 +257,7 @@ results that can be useful for subsequent analyses or visualizations."
                   href="#arg-columnname"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  A <code>character</code> string that names the new annotation
-                  column to be added.
-                </p>
-              </dd>
+              <dd><p>Name of the new annotation column.</p></dd>
 
               <dt id="arg-values">
                 values<a
@@ -279,8 +268,8 @@ results that can be useful for subsequent analyses or visualizations."
               </dt>
               <dd>
                 <p>
-                  A numeric or character vector containing the annotation values
-                  to be assigned to each spot
+                  Vector of annotation values (length must match
+                  <code>ncol(spatialExp)</code>).
                 </p>
               </dd>
             </dl>
@@ -290,9 +279,8 @@ results that can be useful for subsequent analyses or visualizations."
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
             <p>
-              The function returns an updated
-              <code>SpatialExperiment</code> object that includes the newly
-              added annotation column within its <code>colData</code>.
+              The updated <code>SpatialExperiment</code> with the new annotation
+              column.
             </p>
           </div>
         </main>
@@ -305,7 +293,7 @@ results that can be useful for subsequent analyses or visualizations."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

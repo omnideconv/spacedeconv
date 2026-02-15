@@ -1,9 +1,13 @@
-#' Set Path to CIBERSORT R script (`CIBERSORT.R`)
+#' Register the Path to the CIBERSORT Script
 #'
-#' CIBERSORT is only freely available to academic users.
-#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#' Stores the path to the `CIBERSORT.R` script in the spacedeconv configuration and
+#' forwards it to `immunedeconv::set_cibersort_binary()` so CIBERSORT-based methods
+#' can run from this R session.
 #'
-#' @param path path to cibersort R script.
+#' CIBERSORT is only freely available to academic users. A license and script can
+#' be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path Path to the `CIBERSORT.R` script.
 #'
 #' @export
 set_cibersort_binary <- function(path) {
@@ -11,12 +15,16 @@ set_cibersort_binary <- function(path) {
   assign("cibersort_binary", path, envir = config_env)
 }
 
-#' Set Path to CIBERSORT matrix file (`LM22.txt`)
+#' Register the Path to the CIBERSORT Signature Matrix
 #'
-#' CIBERSORT is only freely available to academic users.
-#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#' Stores the path to the `LM22.txt` signature matrix in the spacedeconv configuration
+#' and forwards it to `immunedeconv::set_cibersort_mat()` so CIBERSORT-based methods
+#' can access the signature from this R session.
 #'
-#' @param path path to cibersort matrix.
+#' CIBERSORT is only freely available to academic users. A license and matrix can
+#' be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path Path to the `LM22.txt` signature matrix file.
 #'
 #' @export
 set_cibersort_mat <- function(path) {
@@ -235,10 +243,15 @@ attachToken <- function(deconvolution, token = "deconv") {
   return(deconvolution)
 }
 
-#' Check wich deconvolutionr results are available in a SpatialExperiment object
+#' List Available Deconvolution Results in a SpatialExperiment
 #'
-#' @param deconv SpatialExperiment
-#' @param method deconvolution method (optional)
+#' Returns column names in `colData` that correspond to deconvolution results.
+#' Optionally filters by a method prefix (e.g., "spatialdwls").
+#'
+#' @param deconv A `SpatialExperiment` containing deconvolution results.
+#' @param method Optional prefix used to filter result columns (typically the
+#' internal method token from `spacedeconv::deconvolution_methods`, or a custom
+#' `result_name` used when running a method).
 #'
 #' @export
 available_results <- function(deconv, method = NULL) {
@@ -275,26 +288,18 @@ checkENSEMBL <- function(names) {
 
 
 
-#' Annotate Specific Spots within a SpatialExperiment Object
+#' Annotate Specific Spots in a SpatialExperiment
 #'
-#' This function allows for the annotation of specified spots within a `SpatialExperiment` object.
-#' Users can define a list of spots to be annotated and assign positive or negative values to these spots.
-#' This is particularly useful for distinguishing or marking spots based on certain criteria or experimental results.
+#' Adds a new `colData` column that marks selected spots with `value_pos` and all
+#' other spots with `value_neg`.
 #'
-#' @param spe A `SpatialExperiment` object representing the spatially resolved data.
-#' This is the target object where the annotations will be applied.
-#' @param spots A character vector or list specifying the spots within the `SpatialExperiment` object to annotate.
-#' These spots should correspond to the column names of the `SpatialExperiment` object that represent specific spatial locations or features.
-#' @param value_pos The value to assign to the spots specified in the `spots` parameter.
-#' This value denotes a positive annotation, indicating that the spots meet a certain condition or criterion.
-#' @param value_neg The value to assign to spots not specified in the `spots` parameter.
-#' This value denotes a negative annotation, indicating that the spots do not meet the specified condition or criterion.
-#' @param name A character string specifying the name of the annotation.
-#' This name will be used to label the column in the `SpatialExperiment` object that contains the annotation values.
+#' @param spe A `SpatialExperiment` to annotate.
+#' @param spots Character vector of spot IDs (column names) to mark.
+#' @param value_pos Value assigned to selected spots.
+#' @param value_neg Value assigned to all other spots.
+#' @param name Name of the new annotation column.
 #'
-#' @return Returns a `SpatialExperiment` object that includes the new annotations.
-#' The function adds a column to the `colData` of the `SpatialExperiment` object, where the column name is specified by the `name` parameter.
-#' Spots specified in the `spots` parameter are annotated with the `value_pos` value, while all other spots are annotated with the `value_neg` value.
+#' @return The updated `SpatialExperiment` with the new annotation column.
 #'
 #' @export
 annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name = "annotation") {
@@ -306,20 +311,16 @@ annotate_spots <- function(spe, spots, value_pos = TRUE, value_neg = FALSE, name
   return(spe)
 }
 
-#' Extend a SpatialExperiment with a New Annotation Column
+#' Add a Custom Annotation Column
 #'
-#' This function is designed to annotate a `SpatialExperiment` object by appending a custom annotation
-#' column to its `colData`. This feature allows users to integrate additional metadata or experimental
-#' results that can be useful for subsequent analyses or visualizations.
+#' Appends a new column to `colData` with user-provided values. This can be
+#' used to add metadata for downstream analyses or visualization.
 #'
-#' @param spatialExp A `SpatialExperiment` object that will be extended with the new annotation.
+#' @param spatialExp A `SpatialExperiment` to annotate.
+#' @param columnName Name of the new annotation column.
+#' @param values Vector of annotation values (length must match `ncol(spatialExp)`).
 #'
-#' @param columnName A `character` string that names the new annotation column to be added.
-#'
-#' @param values A numeric or character vector containing the annotation values to be assigned to each spot
-#'
-#' @return The function returns an updated `SpatialExperiment` object that includes the newly added annotation
-#' column within its `colData`.
+#' @return The updated `SpatialExperiment` with the new annotation column.
 #'
 #' @export
 addCustomAnnotation <- function(spatialExp, columnName, values) {

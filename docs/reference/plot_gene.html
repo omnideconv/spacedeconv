@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Function to plot gene expression — plot_gene • spacedeconv</title>
+    <title>Plot Gene Expression — plot_gene • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -46,17 +46,18 @@
     <script src="../deps/search-1.0.0/mark.min.js"></script>
     <!-- pkgdown -->
     <script src="../pkgdown.js"></script>
-    <meta
-      property="og:title"
-      content="Function to plot gene expression — plot_gene"
-    />
+    <meta property="og:title" content="Plot Gene Expression — plot_gene" />
     <meta
       name="description"
-      content="Generate Hex Plot of a SpatialExperiment containing deconvolution results"
+      content="Generate a spatial hex plot for a single gene from a SpatialExperiment.
+The gene is taken from the selected assay (default: counts) and must be
+present in rownames(spe)."
     />
     <meta
       property="og:description"
-      content="Generate Hex Plot of a SpatialExperiment containing deconvolution results"
+      content="Generate a spatial hex plot for a single gene from a SpatialExperiment.
+The gene is taken from the selected assay (default: counts) and must be
+present in rownames(spe)."
     />
     <meta
       property="og:image"
@@ -79,7 +80,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -96,11 +97,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -154,6 +150,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -199,15 +202,17 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Function to plot gene expression</h1>
+            <h1>Plot Gene Expression</h1>
 
             <div class="d-none name"><code>plot_gene.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              Generate Hex Plot of a SpatialExperiment containing deconvolution
-              results
+              Generate a spatial hex plot for a single gene from a
+              <code>SpatialExperiment</code>. The gene is taken from the
+              selected assay (default: <code>counts</code>) and must be present
+              in <code>rownames(spe)</code>.
             </p>
           </div>
 
@@ -510,7 +515,7 @@
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>plot of cell type fractions</p>
+            <p>A spatial plot of gene expression.</p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -522,7 +527,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

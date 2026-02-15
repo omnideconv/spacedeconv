@@ -9,9 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>
-      Plot celltype fraction comparison — plot_comparison • spacedeconv
-    </title>
+    <title>Plot Cell Type Comparison — plot_comparison • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -50,12 +48,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Plot celltype fraction comparison — plot_comparison"
+      content="Plot Cell Type Comparison — plot_comparison"
     />
-    <meta name="description" content="Plot celltype fraction comparison" />
+    <meta
+      name="description"
+      content="Computes a log ratio between two result columns and renders the spatial
+distribution of that comparison."
+    />
     <meta
       property="og:description"
-      content="Plot celltype fraction comparison"
+      content="Computes a log ratio between two result columns and renders the spatial
+distribution of that comparison."
     />
     <meta
       property="og:image"
@@ -78,7 +81,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -95,11 +98,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -153,6 +151,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -198,13 +203,16 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Plot celltype fraction comparison</h1>
+            <h1>Plot Cell Type Comparison</h1>
 
             <div class="d-none name"><code>plot_comparison.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>Plot celltype fraction comparison</p>
+            <p>
+              Computes a log ratio between two result columns and renders the
+              spatial distribution of that comparison.
+            </p>
           </div>
 
           <div class="section level2">
@@ -508,7 +516,9 @@
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>plot of a celltypes presence/absence using a threshold</p>
+            <p>
+              A spatial plot of the log-ratio comparison between two cell types.
+            </p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -520,7 +530,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

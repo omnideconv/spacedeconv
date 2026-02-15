@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Build Model SPOTlight — build_model_spotlight • spacedeconv</title>
+    <title>Build a SPOTlight Model — build_model_spotlight • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -48,10 +48,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Build Model SPOTlight — build_model_spotlight"
+      content="Build a SPOTlight Model — build_model_spotlight"
     />
-    <meta name="description" content="Build Model SPOTlight" />
-    <meta property="og:description" content="Build Model SPOTlight" />
+    <meta
+      name="description"
+      content="Trains the SPOTlight model using single-cell and spatial data. Marker
+genes can be supplied or computed from the single-cell object."
+    />
+    <meta
+      property="og:description"
+      content="Trains the SPOTlight model using single-cell and spatial data. Marker
+genes can be supplied or computed from the single-cell object."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -73,7 +81,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -90,11 +98,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -148,6 +151,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -193,13 +203,17 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Build Model SPOTlight</h1>
+            <h1>Build a SPOTlight Model</h1>
 
             <div class="d-none name"><code>build_model_spotlight.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>Build Model SPOTlight</p>
+            <p>
+              Trains the SPOTlight model using single-cell and spatial data.
+              Marker genes can be supplied or computed from the single-cell
+              object.
+            </p>
           </div>
 
           <div class="section level2">
@@ -237,7 +251,9 @@
                   href="#arg-single-cell-obj"
                 ></a>
               </dt>
-              <dd><p>SingleCellExperiment</p></dd>
+              <dd>
+                <p><code>SingleCellExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-cell-type-col">
                 cell_type_col<a
@@ -246,7 +262,7 @@
                   href="#arg-cell-type-col"
                 ></a>
               </dt>
-              <dd><p>Column where cell type information can be found</p></dd>
+              <dd><p>Column with cell type labels.</p></dd>
 
               <dt id="arg-spatial-obj">
                 spatial_obj<a
@@ -255,7 +271,9 @@
                   href="#arg-spatial-obj"
                 ></a>
               </dt>
-              <dd><p>SpatialExperiment</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-assay-sc">
                 assay_sc<a
@@ -264,7 +282,7 @@
                   href="#arg-assay-sc"
                 ></a>
               </dt>
-              <dd><p>single cell assay to use</p></dd>
+              <dd><p>Single-cell assay to use.</p></dd>
 
               <dt id="arg-assay-sp">
                 assay_sp<a
@@ -273,7 +291,7 @@
                   href="#arg-assay-sp"
                 ></a>
               </dt>
-              <dd><p>spatial assay to use</p></dd>
+              <dd><p>Spatial assay to use.</p></dd>
 
               <dt id="arg-markers">
                 markers<a
@@ -284,9 +302,9 @@
               </dt>
               <dd>
                 <p>
-                  (Optional) Marker Gene DataFrame, if NULL markers will be
-                  calculated from 'single_cell_obj' based on the authors
-                  suggestion
+                  Optional marker-gene data frame. If <code>NULL</code>, markers
+                  are computed from <code>single_cell_obj</code> using the
+                  authors' suggested approach.
                 </p>
               </dd>
             </dl>
@@ -301,7 +319,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

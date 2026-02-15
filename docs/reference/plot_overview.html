@@ -54,19 +54,17 @@
     />
     <meta
       name="description"
-      content="This function creates an interactive scatter plot of the spatial coordinates
-from a SpatialExperiment object. The plot is rendered using Plotly,
-allowing for interactive exploration with tooltips displaying the full
-resolution row and column coordinates and the associated nUMI values.
-The y-axis is inverted for better visual representation."
+      content="Creates an interactive Plotly scatter plot of spatial coordinates from a
+SpatialExperiment. Points are colored by total UMI counts and include
+tooltips showing full-resolution row/column coordinates. The y-axis is
+inverted for easier visual interpretation."
     />
     <meta
       property="og:description"
-      content="This function creates an interactive scatter plot of the spatial coordinates
-from a SpatialExperiment object. The plot is rendered using Plotly,
-allowing for interactive exploration with tooltips displaying the full
-resolution row and column coordinates and the associated nUMI values.
-The y-axis is inverted for better visual representation."
+      content="Creates an interactive Plotly scatter plot of spatial coordinates from a
+SpatialExperiment. Points are colored by total UMI counts and include
+tooltips showing full-resolution row/column coordinates. The y-axis is
+inverted for easier visual interpretation."
     />
     <meta
       property="og:image"
@@ -89,7 +87,7 @@ The y-axis is inverted for better visual representation."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -106,11 +104,6 @@ The y-axis is inverted for better visual representation."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -159,6 +152,13 @@ The y-axis is inverted for better visual representation."
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -216,12 +216,11 @@ The y-axis is inverted for better visual representation."
 
           <div class="ref-description section level2">
             <p>
-              This function creates an interactive scatter plot of the spatial
-              coordinates from a SpatialExperiment object. The plot is rendered
-              using Plotly, allowing for interactive exploration with tooltips
-              displaying the full resolution row and column coordinates and the
-              associated nUMI values. The y-axis is inverted for better visual
-              representation.
+              Creates an interactive Plotly scatter plot of spatial coordinates
+              from a <code>SpatialExperiment</code>. Points are colored by total
+              UMI counts and include tooltips showing full-resolution row/column
+              coordinates. The y-axis is inverted for easier visual
+              interpretation.
             </p>
           </div>
 
@@ -251,8 +250,8 @@ The y-axis is inverted for better visual representation."
               </dt>
               <dd>
                 <p>
-                  A SpatialExperiment object. This is the main data object
-                  containing spatial coordinates and UMI counts.
+                  A <code>SpatialExperiment</code> containing spatial
+                  coordinates and counts.
                 </p>
               </dd>
 
@@ -263,25 +262,14 @@ The y-axis is inverted for better visual representation."
                   href="#arg-sample-id"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  A character string specifying the sample ID to be used for
-                  filtering the SpatialExperiment object. Defaults to
-                  "sample01".
-                </p>
-              </dd>
+              <dd><p>Sample ID to filter (default: "sample01").</p></dd>
             </dl>
           </div>
           <div class="section level2">
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>
-              An interactive Plotly object representing the spatial distribution
-              of UMI counts across the provided SpatialExperiment object. Each
-              point on the plot corresponds to a spatial location, colored by
-              the number of UMIs.
-            </p>
+            <p>An interactive Plotly object with spots colored by nUMI.</p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -293,7 +281,7 @@ The y-axis is inverted for better visual representation."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

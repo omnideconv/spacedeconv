@@ -14,33 +14,26 @@ subsetSCE(
 )
 }
 \arguments{
-\item{sce}{A \code{SingleCellExperiment} object containing cell type annotations. The function applies subsetting
-operations on this object to achieve a targeted composition of cell types.}
+\item{sce}{A \code{SingleCellExperiment} with cell type annotations in \code{colData}.}
 
-\item{cell_type_col}{A character string indicating the column name within \code{colData} of the \code{SingleCellExperiment}
-object that contains cell type information. This column is used to identify and categorize cells by type for subsetting.}
+\item{cell_type_col}{Column name in \code{colData} containing cell type labels.}
 
-\item{scenario}{Specifies the strategy for cell selection across types: \code{"even"} for equal numbers from each cell
-type, or \code{"mirror"} to reflect the proportional representation of cell types in the subset as in the original dataset.}
+\item{scenario}{Subsampling strategy: \code{"even"} selects equal counts per type,
+\code{"mirror"} preserves original proportions.}
 
-\item{ncells}{The target total number of cells for the subsetted object. Defaults to 1000. This parameter dictates
-the overall size of the subsetted \code{SingleCellExperiment}.}
+\item{ncells}{Target total number of cells to keep (default: 1000).}
 
-\item{notEnough}{Defines the behavior when there are not enough cells of a certain type to meet the subsetting criteria:
-\code{"remove"} to exclude that cell type entirely, or \code{"asis"} to include all available cells of that type despite falling short
-of the target number.}
+\item{notEnough}{Behavior when a cell type has too few cells: \code{"asis"} keeps all,
+\code{"remove"} drops that cell type.}
 
-\item{seed}{An optional numeric value to set the random seed for reproducibility of the subsetting process. This ensures
-that the subset selection can be replicated in future analyses.}
+\item{seed}{Random seed for reproducible sampling.}
 }
 \value{
-Returns a subsetted \code{SingleCellExperiment} object. The resulting object reflects the targeted distribution and
-number of cells as specified by the input parameters. It enables focused analysis on a more manageable dataset while
-preserving the desired representation of cell types.
+A subsetted \code{SingleCellExperiment}.
 }
 \description{
-This function facilitates the subsetting of a \code{SingleCellExperiment} object to a specified number of cells,
-with an option to maintain an even or proportional distribution across different cell types. It offers flexibility
-in handling scenarios where insufficient cells of a specific type are available and ensures reproducibility through
-the option to set a seed for random sampling.
+Randomly subsamples cells from a \code{SingleCellExperiment} either evenly across
+cell types or proportionally to their original abundance. If a cell type has
+fewer cells than requested, you can keep all of them (\code{"asis"}) or drop that
+cell type (\code{"remove"}).
 }

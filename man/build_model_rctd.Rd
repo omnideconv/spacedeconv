@@ -2,10 +2,12 @@
 % Please edit documentation in R/RCTD.R
 \name{build_model_rctd}
 \alias{build_model_rctd}
-\title{RCTD builds the model internally, please just use the deconvolute method}
+\title{No Signature for RCTD}
 \usage{
 build_model_rctd()
 }
 \description{
-RCTD builds the model internally, please just use the deconvolute method
+RCTD builds its model internally, so this function returns \code{NULL} and you
+should call \code{deconvolute()} with the RCTD method (see
+\code{spacedeconv::deconvolution_methods}).
 }

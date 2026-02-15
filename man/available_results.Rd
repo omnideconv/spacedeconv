@@ -2,15 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{available_results}
 \alias{available_results}
-\title{Check wich deconvolutionr results are available in a SpatialExperiment object}
+\title{List Available Deconvolution Results in a SpatialExperiment}
 \usage{
 available_results(deconv, method = NULL)
 }
 \arguments{
-\item{deconv}{SpatialExperiment}
+\item{deconv}{A \code{SpatialExperiment} containing deconvolution results.}
 
-\item{method}{deconvolution method (optional)}
+\item{method}{Optional prefix used to filter result columns (typically the
+internal method token from \code{spacedeconv::deconvolution_methods}, or a custom
+\code{result_name} used when running a method).}
 }
 \description{
-Check wich deconvolutionr results are available in a SpatialExperiment object
+Returns column names in \code{colData} that correspond to deconvolution results.
+Optionally filters by a method prefix (e.g., "spatialdwls").
 }

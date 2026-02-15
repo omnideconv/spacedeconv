@@ -1,11 +1,15 @@
-#' Build Model SPOTlight
+#' Build a SPOTlight Model
 #'
-#' @param single_cell_obj SingleCellExperiment
-#' @param cell_type_col Column where cell type information can be found
-#' @param spatial_obj SpatialExperiment
-#' @param assay_sc single cell assay to use
-#' @param assay_sp spatial assay to use
-#' @param markers (Optional) Marker Gene DataFrame, if NULL markers will be calculated from 'single_cell_obj' based on the authors suggestion
+#' Trains the SPOTlight model using single-cell and spatial data. Marker
+#' genes can be supplied or computed from the single-cell object.
+#'
+#' @param single_cell_obj `SingleCellExperiment`.
+#' @param cell_type_col Column with cell type labels.
+#' @param spatial_obj `SpatialExperiment`.
+#' @param assay_sc Single-cell assay to use.
+#' @param assay_sp Spatial assay to use.
+#' @param markers Optional marker-gene data frame. If `NULL`, markers are
+#' computed from `single_cell_obj` using the authors' suggested approach.
 build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class", spatial_obj, assay_sc = "counts", assay_sp = "counts", markers = NULL) {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is null or missing, but is required")
@@ -62,12 +66,15 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
 }
 
 
-#' Deconvolute SPOTlight
+#' Deconvolute with SPOTlight
 #'
-#' @param spatial_obj SpatialExperiment
-#' @param model SPOTlight Model
-#' @param assay_sp spatial assay to use for the computation
-#' @param result_name token to identify deconvolution results in object, default = "spotlight"
+#' Runs SPOTlight deconvolution and returns a deconvolution matrix with column
+#' names prefixed by `result_name`.
+#'
+#' @param spatial_obj `SpatialExperiment`.
+#' @param model SPOTlight model from `build_model_spotlight()`.
+#' @param assay_sp Spatial assay to use.
+#' @param result_name Prefix used to label result columns (default: "spotlight").
 deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts", result_name = "spotlight") {
   if (is.null(spatial_obj)) {
     stop("Parameter 'spatial_obj' missing or null, but is required")

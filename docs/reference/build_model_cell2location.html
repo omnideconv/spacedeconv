@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Build Model Cell2location — build_model_cell2location • spacedeconv
+      Build a cell2location Model — build_model_cell2location • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -50,10 +50,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Build Model Cell2location — build_model_cell2location"
+      content="Build a cell2location Model — build_model_cell2location"
     />
-    <meta name="description" content="Build Model Cell2location" />
-    <meta property="og:description" content="Build Model Cell2location" />
+    <meta
+      name="description"
+      content="Wraps the cell2location Python workflow via reticulate to train a reference
+model from single-cell data. Returns the trained model object."
+    />
+    <meta
+      property="og:description"
+      content="Wraps the cell2location Python workflow via reticulate to train a reference
+model from single-cell data. Returns the trained model object."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -75,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -92,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -150,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -195,7 +205,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Build Model Cell2location</h1>
+            <h1>Build a cell2location Model</h1>
 
             <div class="d-none name">
               <code>build_model_cell2location.Rd</code>
@@ -203,7 +213,11 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Build Model Cell2location</p>
+            <p>
+              Wraps the cell2location Python workflow via reticulate to train a
+              reference model from single-cell data. Returns the trained model
+              object.
+            </p>
           </div>
 
           <div class="section level2">
@@ -245,7 +259,10 @@
                 ></a>
               </dt>
               <dd>
-                <p>SingleCellExperiment containing reference expression</p>
+                <p>
+                  <code>SingleCellExperiment</code> containing reference
+                  expression.
+                </p>
               </dd>
 
               <dt id="arg-epochs">
@@ -255,7 +272,7 @@
                   href="#arg-epochs"
                 ></a>
               </dt>
-              <dd><p>number of epochs to train the network</p></dd>
+              <dd><p>Number of training epochs.</p></dd>
 
               <dt id="arg-assay-sc">
                 assay_sc<a
@@ -264,7 +281,7 @@
                   href="#arg-assay-sc"
                 ></a>
               </dt>
-              <dd><p>assay to extract</p></dd>
+              <dd><p>Single-cell assay to use.</p></dd>
 
               <dt id="arg-batch-id-col">
                 batch_id_col<a
@@ -273,7 +290,7 @@
                   href="#arg-batch-id-col"
                 ></a>
               </dt>
-              <dd><p>batch_id_col column</p></dd>
+              <dd><p>Batch ID column name.</p></dd>
 
               <dt id="arg-cell-type-col">
                 cell_type_col<a
@@ -282,9 +299,7 @@
                   href="#arg-cell-type-col"
                 ></a>
               </dt>
-              <dd>
-                <p>column of single_cell_obj containing cell type labels</p>
-              </dd>
+              <dd><p>Column with cell type labels.</p></dd>
 
               <dt id="arg-cell-count-cutoff">
                 cell_count_cutoff<a
@@ -293,7 +308,7 @@
                   href="#arg-cell-count-cutoff"
                 ></a>
               </dt>
-              <dd><p>cell2location parameter</p></dd>
+              <dd><p>cell2location parameter.</p></dd>
 
               <dt id="arg-cell-percentage-cutoff">
                 cell_percentage_cutoff<a
@@ -302,7 +317,7 @@
                   href="#arg-cell-percentage-cutoff"
                 ></a>
               </dt>
-              <dd><p>cell2location parameter</p></dd>
+              <dd><p>cell2location parameter.</p></dd>
 
               <dt id="arg-nonz-mean-cutoff">
                 nonz_mean_cutoff<a
@@ -311,12 +326,12 @@
                   href="#arg-nonz-mean-cutoff"
                 ></a>
               </dt>
-              <dd><p>cell2location parameter</p></dd>
+              <dd><p>cell2location parameter.</p></dd>
 
               <dt id="arg-gpu">
                 gpu<a class="anchor" aria-label="anchor" href="#arg-gpu"></a>
               </dt>
-              <dd><p>whether to train on GPU</p></dd>
+              <dd><p>Logical; whether to train on GPU.</p></dd>
             </dl>
           </div>
         </main>
@@ -329,7 +344,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

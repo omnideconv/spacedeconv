@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Build Model and Deconvolute in one step — build_and_deconvolute •
+      Build Model and Deconvolute in One Step — build_and_deconvolute •
       spacedeconv
     </title>
     <!-- favicons -->
@@ -51,15 +51,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Build Model and Deconvolute in one step — build_and_deconvolute"
+      content="Build Model and Deconvolute in One Step — build_and_deconvolute"
     />
     <meta
       name="description"
-      content="Build Model and Deconvolute in one step"
+      content="Convenience wrapper that builds a signature with build_model() and then
+calls deconvolute() using the same inputs."
     />
     <meta
       property="og:description"
-      content="Build Model and Deconvolute in one step"
+      content="Convenience wrapper that builds a signature with build_model() and then
+calls deconvolute() using the same inputs."
     />
     <meta
       property="og:image"
@@ -82,7 +84,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +101,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +154,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,13 +206,19 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Build Model and Deconvolute in one step</h1>
+            <h1>Build Model and Deconvolute in One Step</h1>
 
             <div class="d-none name"><code>build_and_deconvolute.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>Build Model and Deconvolute in one step</p>
+            <p>
+              Convenience wrapper that builds a signature with
+              <code><a href="build_model.html">build_model()</a></code> and then
+              calls
+              <code><a href="deconvolute.html">deconvolute()</a></code> using
+              the same inputs.
+            </p>
           </div>
 
           <div class="section level2">
@@ -250,12 +260,7 @@
                   href="#arg-single-cell-obj"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  Single Cell Object containing reference data to build the
-                  model
-                </p>
-              </dd>
+              <dd><p>Single-cell object used to build the signature.</p></dd>
 
               <dt id="arg-spatial-obj">
                 spatial_obj<a
@@ -264,7 +269,9 @@
                   href="#arg-spatial-obj"
                 ></a>
               </dt>
-              <dd><p>SpatialExperiment to be deconvoluted</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code> to deconvolute.</p>
+              </dd>
 
               <dt id="arg-method">
                 method<a
@@ -273,7 +280,16 @@
                   href="#arg-method"
                 ></a>
               </dt>
-              <dd><p>deconvolution method</p></dd>
+              <dd>
+                <p>
+                  Deconvolution method; one of
+                  <code
+                    ><a href="deconvolution_methods.html"
+                      >spacedeconv::deconvolution_methods</a
+                    ></code
+                  >.
+                </p>
+              </dd>
 
               <dt id="arg-cell-type-col">
                 cell_type_col<a
@@ -284,7 +300,7 @@
               </dt>
               <dd>
                 <p>
-                  column of single_cell_obj containing cell type information
+                  Column in <code>single_cell_obj</code> with cell type labels.
                 </p>
               </dd>
 
@@ -295,9 +311,7 @@
                   href="#arg-batch-id-col"
                 ></a>
               </dt>
-              <dd>
-                <p>column of SpatialObject containing batch_id information</p>
-              </dd>
+              <dd><p>Batch ID column (used by some methods).</p></dd>
 
               <dt id="arg-assay-sc">
                 assay_sc<a
@@ -306,11 +320,7 @@
                   href="#arg-assay-sc"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  the assay of the single cell object to use, default = "counts"
-                </p>
-              </dd>
+              <dd><p>Single-cell assay to use (default: "counts").</p></dd>
 
               <dt id="arg-assay-sp">
                 assay_sp<a
@@ -319,11 +329,7 @@
                   href="#arg-assay-sp"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  the assay of the spatialExperiment to use, default = "counts"
-                </p>
-              </dd>
+              <dd><p>Spatial assay to use (default: "counts").</p></dd>
 
               <dt id="arg-return-object">
                 return_object<a
@@ -334,8 +340,9 @@
               </dt>
               <dd>
                 <p>
-                  if true return anotation spatialExperiment, if false return
-                  table
+                  If <code>TRUE</code>, return an annotated
+                  <code>SpatialExperiment</code>; otherwise return the result
+                  matrix.
                 </p>
               </dd>
 
@@ -346,12 +353,14 @@
                   href="#arg-verbose"
                 ></a>
               </dt>
-              <dd><p>output more information</p></dd>
+              <dd><p>Print extra progress information.</p></dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd><p>further parameters passed to the selected function</p></dd>
+              <dd>
+                <p>Additional parameters passed to the selected methods.</p>
+              </dd>
             </dl>
           </div>
         </main>
@@ -364,7 +373,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

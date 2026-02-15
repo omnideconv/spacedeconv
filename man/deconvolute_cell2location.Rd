@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cell2location.R
 \name{deconvolute_cell2location}
 \alias{deconvolute_cell2location}
-\title{Deconvolute Cell2location}
+\title{Deconvolute with cell2location}
 \usage{
 deconvolute_cell2location(
   spatial_obj,
@@ -16,22 +16,24 @@ deconvolute_cell2location(
 )
 }
 \arguments{
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{signature}{signature}
+\item{signature}{Signature/model input expected by cell2location.}
 
-\item{epochs}{training epochs for model}
+\item{epochs}{Training epochs for the model.}
 
-\item{n_cell}{cell2location hyperparameter}
+\item{n_cell}{cell2location hyperparameter.}
 
-\item{alpha}{cell2location hyperparameter}
+\item{alpha}{cell2location hyperparameter.}
 
-\item{gpu}{whether to use nvidia gpu for training}
+\item{gpu}{Logical; whether to use GPU for training.}
 
-\item{result_name}{token to identify deconvolution results in object, default = "card"}
+\item{result_name}{Prefix used to label result columns (default: "cell2location").}
 
-\item{values}{relative or absolute, default: relative}
+\item{values}{\code{"relative"} to rescale to fractions, or \code{"absolute"} to keep
+raw outputs.}
 }
 \description{
-Deconvolute Cell2location
+Runs the cell2location model (via Python/reticulate) and returns a
+deconvolution matrix, optionally rescaled to relative values.
 }

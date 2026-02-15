@@ -2,24 +2,23 @@
 % Please edit documentation in R/subset.R
 \name{subsetSPE}
 \alias{subsetSPE}
-\title{Isolate Regions within a SpatialExperiment Object}
+\title{Subset a SpatialExperiment by Spatial Coordinates}
 \usage{
 subsetSPE(spe, colRange = NULL, rowRange = NULL)
 }
 \arguments{
-\item{spe}{The \code{SpatialExperiment} object representing spatially resolved transcriptomics data.}
+\item{spe}{A \code{SpatialExperiment} object.}
 
-\item{colRange}{a numeric vector of length two specifying the minimum and maximum x-coordinates
-(pxl_col_in_fullres) to include in the subset. If \code{NULL}, the full range of x-coordinates is used.}
+\item{colRange}{Numeric vector of length 2 giving min/max x-coordinates
+(\code{pxl_col_in_fullres}).}
 
-\item{rowRange}{a numeric vector of length two specifying the minimum and maximum y-coordinates
-(pxl_row_in_fullres) to include in the subset. If \code{NULL}, the full range of y-coordinates is used.}
+\item{rowRange}{Numeric vector of length 2 giving min/max y-coordinates
+(\code{pxl_row_in_fullres}).}
 }
 \value{
-Returns a \code{SpatialExperiment} object subsetted to include only spots within the defined x and y coordinate ranges.
+A \code{SpatialExperiment} subsetted to the specified coordinate window.
 }
 \description{
-Tailor a \code{SpatialExperiment} object to focus on specific areas by defining ranges in the spatial coordinates.
-This function narrows down the dataset to include only those spots that fall within user-defined x and y coordinate
-boundaries.
+Filters a \code{SpatialExperiment} to spots that fall within the provided x/y ranges
+of the spatial coordinates. If a range is \code{NULL}, the full range is used.
 }

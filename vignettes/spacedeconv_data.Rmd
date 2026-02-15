@@ -33,10 +33,8 @@ data("spatial_data_4")
 
 
 # Reference Data
-To build cell-type specific signatures for second-generation deconvolution spacedeconv utilized annotated single-cell reference data. Your single cell data needs to include cell-type annotations and can be one of the following formats: 
-
-* [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html#1_Class_structure) (recommended)
-* [Seurat](https://satijalab.org/seurat/)
+To build cell-type specific signatures for second-generation deconvolution spacedeconv utilized annotated single-cell reference data.
+Your single cell data needs to include cell-type annotations and should be a [SingleCellExperiment](https://bioconductor.org/books/3.13/OSCA.intro/the-singlecellexperiment-class.html) object.
 
 Cell type information needs to be available. You can specify the column containing the annotation with the `cell_type_col` parameter. The same applies to batch ID information required for CARD with the parameter `batch_id_col`.
 
@@ -62,18 +60,12 @@ Spatially resolved data needs to be available in the SpatialExperiment format. F
 spe <- SpatialExperiment::read10xVisium(path_to_directory)
 ```
 
-Spatial data available as a Seurat Object can be converted into a SpatialExperiment:
-
-```{r seuratConversion, eval=FALSE}
-spe <- seurat_to_spatialexperiment(seurat_object)
-```
-
 # Normalization
 SpaceDeconv offers an additional function for convenient normalization of SpatialExperiments. The normalization is saved in a new assay, so make sure the correct data is used during deconvolution by providing the desired assay with the parameters `assay_sc` and `assay_sp`. As normalization method `cpm` and `logcpm` are available. 
 
 ```{r deconvolution, eval = TRUE}
 spe <- spacedeconv::preprocess(spatial_data_1)
-spe <- normalize(spe, method = "cpm")
+spe <- spacedeconv::normalize(spe, method = "cpm")
 
 # make sure to use cpm assay in deconvolution step
 deconvolution <- deconvolute(spe, method = "quantiseq", assay_sp = "cpm")

@@ -1,6 +1,9 @@
 #' Convert Input Files to SingleCellExperiment
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param obj object provided by the user, will be converted to sce
+#' @noRd
 #'
 convert_to_sce <- function(obj) {
   sce <- NULL
@@ -26,10 +29,13 @@ convert_to_sce <- function(obj) {
 
 #' Convert AnnData to SingleCellExperiment
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param ad AnnData object
 #'
 #' @return SingleCellObject
 #' Thanks to Omnideconv
+#' @noRd
 #' @export
 anndata_to_singlecellexperiment <- function(ad) {
   # anndata_checkload()
@@ -66,9 +72,12 @@ anndata_to_singlecellexperiment <- function(ad) {
   return(sce)
 }
 #' Convert Seurat to SpatialExperiment
+#'
+#' `r lifecycle::badge("experimental")`
 #' @param seurat Seurat Object
 #' @returns SpatialExperiment
 #'
+#' @noRd
 #' @export
 seurat_to_spatialexperiment <- function(seurat) {
   # sce = Seurat::as.SingleCellExperiment(seurat)
@@ -85,10 +94,13 @@ seurat_to_spatialexperiment <- function(seurat) {
   )
 
 
+  coords <- as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")])
+  colnames(coords) <- c("pxl_row_in_fullres", "pxl_col_in_fullres")
+
   spe <- SpatialExperiment::SpatialExperiment(
     assays = list(counts = Seurat::GetAssayData(seurat, "Spatial", slot = "counts")),
     # spatialCoords = as.matrix(Seurat::GetTissueCoordinates(seurat)) ,
-    spatialCoords = as.matrix(seurat@images[[images]]@coordinates[c("imagerow", "imagecol")]),
+    spatialCoords = coords,
     imgData = img
   )
 
@@ -100,7 +112,10 @@ seurat_to_spatialexperiment <- function(seurat) {
 # }
 
 #' Convert AnnData to SpatialExperiment
+#'
+#' `r lifecycle::badge("experimental")`
 #' @param ad anndata object
+#' @noRd
 #' @export
 anndata_to_spatialexperiment <- function(ad) {
   expr <- Matrix::t(Matrix::Matrix(ad$X, sparse = T))
@@ -152,8 +167,11 @@ anndata_to_spatialexperiment <- function(ad) {
 
 
 #' Convert Spatial Experiment to AnnData
+#'
+#' `r lifecycle::badge("experimental")`
 #' @param spe Spatial experiment
 #' @param assay assay to use
+#' @noRd
 #' @export
 spe_to_ad <- function(spe, assay = "counts") {
   if (is.null(spe)) {

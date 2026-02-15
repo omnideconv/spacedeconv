@@ -13,10 +13,10 @@ _spacedeconv_ is a unified interface to first- and second-generation deconvoluti
 
 Since many different packages need to be included, we highly recommend to install _spacedeconv_ in a new Conda environment with the following commands.
 
-First, a tool for fast dependency resolution is needed, therefore we recommend installing mamba if not already available:
+First, a tool for fast dependency resolution is needed, therefore we recommend installing [micromamba]("https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html") (or mamba / conda with libmamba solver) if not already available:
 
 ```r
-conda install -c conda-forge mamba
+"${SHELL}" <(curl -L micro.mamba.pm/install.sh)
 ```
 
 Download the environment.yml file of this github repo:
@@ -25,24 +25,24 @@ Download the environment.yml file of this github repo:
 wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
 ```
 
-Create a new environment called "r-omnideconv" via mamba with the environment.yml file and flexible channel priority:
+Create a new environment called "spacedeconv-env" via micromamba with the environment.yml file and flexible channel priority:
 
 ```r
-CONDA_CHANNEL_PRIORITY=flexible mamba env create -f environment.yml
+micromamba env create -f environment.yml --channel-priority flexible
 ```
 
-Start R inside the r-omnideconv conda environment:
+Start R inside the spacedeconv-env conda environment:
 
 ```r
-conda activate r-omnideconv
+conda activate spacedeconv-env
 R
 ```
 
 Install the missing packages that are not available via conda as well as _spacedeconv_:
 
 ```r
-pak::pkg_install("drieslab/Giotto@v3.3.2", upgrade = FALSE)
-devtools::install_github("YingMa0107/CARD", ref = "2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", upgrade = "never")
+pak::pkg_install("drieslab/Giotto@v3.3.2", dependencies = FALSE, upgrade = FALSE)
+pak::pkg_install("YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
 ```
 
@@ -56,6 +56,14 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE
 - Pathway and Transcription Factor analysis (decoupleR integration)
 - Ligand-Receptor analysis
 - Easy integration into spatial transcriptomics workflows
+
+<div align="center">
+  <img src="man/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"/>
+</div>
+
+<div align="center">
+  <img src="man/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"/>
+</div>
 
 ## :floppy_disk: Data requirements
 
@@ -107,6 +115,8 @@ signature <- spacedeconv::build_model(
   method = "spatialdwls", verbose = T
 )
 ```
+
+You can see all supported deconvolution methods with `spacedeconv::deconvolution_methods`.
 
 ### 4. Deconvolution
 

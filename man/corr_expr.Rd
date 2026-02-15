@@ -2,24 +2,25 @@
 % Please edit documentation in R/correlation_expression.R
 \name{corr_expr}
 \alias{corr_expr}
-\title{Heatmap correlation of cell types based on gene expression values}
+\title{Correlation Heatmap of Signature Matrix}
 \usage{
 corr_expr(sig, log = FALSE, cor_method = "pearson", matrix = FALSE, ...)
 }
 \arguments{
-\item{sig}{signature matrix}
+\item{sig}{Signature matrix.}
 
-\item{log}{logarithmic transformation of signature matrix}
+\item{log}{Logical; apply \code{log(x + 1)} before correlation.}
 
-\item{cor_method}{correlation method "pearson" or "spearman"}
+\item{cor_method}{Correlation method: \code{"pearson"} or \code{"spearman"}.}
 
-\item{matrix}{return correlation and correlation probability values as matrix}
+\item{matrix}{Logical; print correlation and p-value matrices.}
 
-\item{...}{additional parameters passed to corrplot function}
+\item{...}{Additional parameters passed to \code{corrplot()}.}
 }
 \value{
-correlation heatmap of cell types based on gene expression
+Correlation heatmap of cell types based on expression.
 }
 \description{
-Generates a heatmap of cell type correlations and p-values as asterisks based on signature matrix
+Generates a correlation heatmap from a signature matrix and marks
+significance with asterisks.
 }

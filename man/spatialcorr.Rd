@@ -2,7 +2,7 @@
 % Please edit documentation in R/spatial_correlation.R
 \name{spatialcorr}
 \alias{spatialcorr}
-\title{create a correlation plot}
+\title{Create a Correlation Plot}
 \usage{
 spatialcorr(
   spe,
@@ -20,15 +20,17 @@ spatialcorr(
 )
 }
 \arguments{
-\item{spe}{the spe object}
+\item{spe}{\code{SpatialExperiment}.}
 
-\item{method}{method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"}
+\item{method}{Method prefix to select result columns (e.g., a deconvolution
+token or decoupleR output such as "cell2location").}
 
-\item{adjust}{method used to adjust p-values for multiple testing, see stats::p.asjust.methods for details}
+\item{adjust}{Method to adjust p-values for multiple testing (see
+\code{stats::p.adjust.methods}).}
 
-\item{variables}{if not provided, the function selects variables based on the specified method, it can also be a vector}
+\item{variables}{Optional vector of column names to use instead of \code{method}.}
 
-\item{sig.level}{it can also be a vector}
+\item{sig.level}{Significance level(s) for marking correlations.}
 
 \item{type}{Character, 'full' 'upper' or 'lower' (default), display full matrix, lower triangular or upper triangular matrix.}
 
@@ -36,14 +38,16 @@ spatialcorr(
 
 \item{order}{Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.}
 
-\item{plot_layout}{represents the method parameter in the original corrplot function.The layout of the correlation plot. color is default. Choose between "circle", "square", "ellipse", "number", "shade", "color", "pie"}
+\item{plot_layout}{Corrplot layout: "circle", "square", "ellipse", "number",
+"shade", "color", or "pie".}
 
 \item{insig}{If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).}
 
 \item{addCoef.col}{to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.}
 
-\item{...}{additional parameters passed to corrplot function}
+\item{...}{Additional parameters passed to \code{corrplot()}.}
 }
 \description{
-create a correlation plot
+Computes a correlation matrix across selected result columns and visualizes
+it with \code{corrplot}, including adjusted p-values.
 }

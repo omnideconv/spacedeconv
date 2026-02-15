@@ -1,19 +1,15 @@
-#' Scale relative cell fractions to absolute by providing cell densities
+#' Scale Relative Cell Fractions to Absolute Counts
 #'
-#' This function calculates absolute cell densities for a SpatialExperiment object
-#' by scaling a specified column of relative cell fractions with provided absolute cell densities.
-#' The result is added as a new column in the `colData` of the SPE object.
+#' Multiplies a relative fraction column by a cell-count column and stores the
+#' result in `colData`.
 #'
-#' @param spe An SpatialExperiment object containing spatial transcriptomics data.
-#' @param value A string specifying the name of the column in `colData(spe)` that contains
-#'              relative cell fractions/deconvolution results to be scaled.
-#' @param cell_counts A named vector of absolute cell densities, where names correspond
-#'                       to the rownames in `colData(spe)`.
-#' @param resName Optional; a string specifying the name of the new column to be added
-#'                to `colData(spe)` that will contain the absolute cell densities.
-#'                If NULL, defaults to appending "_absolute" to the `value` parameter.
+#' @param spe A `SpatialExperiment`.
+#' @param value Column name in `colData(spe)` with relative fractions.
+#' @param cell_counts Column name in `colData(spe)` with absolute cell counts.
+#' @param resName Optional name for the output column. Defaults to
+#' `paste0(value, "_absolute")`.
 #'
-#' @return SPE object with added absolute celltype counts for each spot
+#' @return `SpatialExperiment` with the scaled counts added to `colData`.
 #'
 #' @export
 scale_cell_counts <- function(spe, value, cell_counts, resName = NULL) {

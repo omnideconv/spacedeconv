@@ -2,13 +2,14 @@
 % Please edit documentation in R/gene_conversion.R
 \name{convert_human_to_mouse}
 \alias{convert_human_to_mouse}
-\title{map human to mouse genes}
+\title{Map Human to Mouse Gene Symbols}
 \usage{
 convert_human_to_mouse(humangenes)
 }
 \arguments{
-\item{humangenes}{a vector containing human genes to be converted to mouse}
+\item{humangenes}{Vector of human gene symbols to convert.}
 }
 \description{
-map human to mouse genes
+Converts human gene symbols to mouse gene symbols using
+\code{Orthology.eg.db} mappings.
 }

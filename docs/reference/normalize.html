@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Normalize Gene Expression Data in SingleCellExperiment or
-      SpatialExperiment Objects — normalize • spacedeconv
+      Normalize Expression Data in SCE/SPE Objects — normalize • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,17 +50,23 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Normalize Gene Expression Data in SingleCellExperiment or SpatialExperiment Objects — normalize"
+      content="Normalize Expression Data in SCE/SPE Objects — normalize"
     />
     <meta
       name="description"
-      content="This function applies normalization to the gene expression data stored within a SingleCellExperiment or SpatialExperiment object.
-It supports both counts per million (CPM) and log-transformed counts per million (logCPM) normalization methods."
+      content="Adds a normalized assay (cpm, logcpm, or logpf) to a
+SingleCellExperiment or SpatialExperiment. The original assay
+is left unchanged. cpm computes counts per million, logcpm is
+log(cpm + 1), and logpf is log((counts + 1) / (gene_mean + 1))
+with gene-wise means computed from counts + 1."
     />
     <meta
       property="og:description"
-      content="This function applies normalization to the gene expression data stored within a SingleCellExperiment or SpatialExperiment object.
-It supports both counts per million (CPM) and log-transformed counts per million (logCPM) normalization methods."
+      content="Adds a normalized assay (cpm, logcpm, or logpf) to a
+SingleCellExperiment or SpatialExperiment. The original assay
+is left unchanged. cpm computes counts per million, logcpm is
+log(cpm + 1), and logpf is log((counts + 1) / (gene_mean + 1))
+with gene-wise means computed from counts + 1."
     />
     <meta
       property="og:image"
@@ -84,7 +89,7 @@ It supports both counts per million (CPM) and log-transformed counts per million
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -101,11 +106,6 @@ It supports both counts per million (CPM) and log-transformed counts per million
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -159,6 +159,13 @@ It supports both counts per million (CPM) and log-transformed counts per million
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -204,21 +211,21 @@ It supports both counts per million (CPM) and log-transformed counts per million
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Normalize Gene Expression Data in SingleCellExperiment or
-              SpatialExperiment Objects
-            </h1>
+            <h1>Normalize Expression Data in SCE/SPE Objects</h1>
 
             <div class="d-none name"><code>normalize.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              This function applies normalization to the gene expression data
-              stored within a <code>SingleCellExperiment</code> or
-              <code>SpatialExperiment</code> object. It supports both counts per
-              million (CPM) and log-transformed counts per million (logCPM)
-              normalization methods.
+              Adds a normalized assay (<code>cpm</code>, <code>logcpm</code>, or
+              <code>logpf</code>) to a <code>SingleCellExperiment</code> or
+              <code>SpatialExperiment</code>. The original assay is left
+              unchanged. <code>cpm</code> computes counts per million,
+              <code>logcpm</code> is <code>log(cpm + 1)</code>, and
+              <code>logpf</code> is
+              <code>log((counts + 1) / (gene_mean + 1))</code> with gene-wise
+              means computed from <code>counts + 1</code>.
             </p>
           </div>
 
@@ -253,8 +260,7 @@ It supports both counts per million (CPM) and log-transformed counts per million
               <dd>
                 <p>
                   A <code>SingleCellExperiment</code> or
-                  <code>SpatialExperiment</code> object containing raw gene
-                  expression data.
+                  <code>SpatialExperiment</code> with raw counts.
                 </p>
               </dd>
 
@@ -267,9 +273,8 @@ It supports both counts per million (CPM) and log-transformed counts per million
               </dt>
               <dd>
                 <p>
-                  The normalization method to apply: "cpm" for counts per
-                  million, "logcpm" for log-transformed counts per million, or
-                  "logpf" for log-proportional factor.
+                  Normalization method: <code>"cpm"</code>,
+                  <code>"logcpm"</code>, or <code>"logpf"</code>.
                 </p>
               </dd>
 
@@ -280,9 +285,7 @@ It supports both counts per million (CPM) and log-transformed counts per million
                   href="#arg-assay"
                 ></a>
               </dt>
-              <dd>
-                <p>The name of the assay to normalize, default "counts".</p>
-              </dd>
+              <dd><p>Assay to normalize (default: "counts").</p></dd>
             </dl>
           </div>
         </main>
@@ -295,7 +298,7 @@ It supports both counts per million (CPM) and log-transformed counts per million
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

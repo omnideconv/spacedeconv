@@ -10,8 +10,8 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Compute Pathway and Transcription Factor Activities and integrate into
-      SpatialExperiment Using decoupleR — compute_activities • spacedeconv
+      Compute Pathway and Transcription Factor Activities with decoupleR —
+      compute_activities • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,17 +51,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Compute Pathway and Transcription Factor Activities and integrate into SpatialExperiment Using decoupleR — compute_activities"
+      content="Compute Pathway and Transcription Factor Activities with decoupleR — compute_activities"
     />
     <meta
       name="description"
-      content="This function computes pathway activities or transcription factor activities using a SpatialExperiment object
-using various computational methods provided by the decoupleR package."
+      content="Computes pathway or transcription factor activities from a SpatialExperiment
+using methods provided by the decoupleR package."
     />
     <meta
       property="og:description"
-      content="This function computes pathway activities or transcription factor activities using a SpatialExperiment object
-using various computational methods provided by the decoupleR package."
+      content="Computes pathway or transcription factor activities from a SpatialExperiment
+using methods provided by the decoupleR package."
     />
     <meta
       property="og:image"
@@ -84,7 +84,7 @@ using various computational methods provided by the decoupleR package."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -101,11 +101,6 @@ using various computational methods provided by the decoupleR package."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -159,6 +154,13 @@ using various computational methods provided by the decoupleR package."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -205,8 +207,7 @@ using various computational methods provided by the decoupleR package."
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
             <h1>
-              Compute Pathway and Transcription Factor Activities and integrate
-              into SpatialExperiment Using decoupleR
+              Compute Pathway and Transcription Factor Activities with decoupleR
             </h1>
 
             <div class="d-none name"><code>compute_activities.Rd</code></div>
@@ -214,9 +215,8 @@ using various computational methods provided by the decoupleR package."
 
           <div class="ref-description section level2">
             <p>
-              This function computes pathway activities or transcription factor
-              activities using a <code>SpatialExperiment</code> object using
-              various computational methods provided by the
+              Computes pathway or transcription factor activities from a
+              <code>SpatialExperiment</code> using methods provided by the
               <code>decoupleR</code> package.
             </p>
           </div>
@@ -254,8 +254,7 @@ using various computational methods provided by the decoupleR package."
               </dt>
               <dd>
                 <p>
-                  The <code>SpatialExperiment</code> object containing spatially
-                  resolved expression data.
+                  <code>SpatialExperiment</code> containing expression data.
                 </p>
               </dd>
 
@@ -268,12 +267,12 @@ using various computational methods provided by the decoupleR package."
               </dt>
               <dd>
                 <p>
-                  A reference dataframe, computed using
+                  Reference data frame from
                   <code
                     ><a href="get_decoupleR_reference.html"
                       >get_decoupleR_reference()</a
                     ></code
-                  >
+                  >.
                 </p>
               </dd>
 
@@ -286,9 +285,9 @@ using various computational methods provided by the decoupleR package."
               </dt>
               <dd>
                 <p>
-                  The method used to compute activities, such as "wmean",
-                  "viper", "gsva", etc. see <code>decoupleR</code> documentation
-                  for details.
+                  Activity method (e.g., <code>"wmean"</code>,
+                  <code>"viper"</code>, <code>"gsva"</code>); see
+                  <code>decoupleR</code> docs for options.
                 </p>
               </dd>
 
@@ -299,12 +298,7 @@ using various computational methods provided by the decoupleR package."
                   href="#arg-assay"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  The name of the assay within the
-                  <code>SpatialExperiment</code> to use for calculations.
-                </p>
-              </dd>
+              <dd><p>Assay to use for calculations.</p></dd>
 
               <dt id="arg-statistic">
                 statistic<a
@@ -314,19 +308,13 @@ using various computational methods provided by the decoupleR package."
                 ></a>
               </dt>
               <dd>
-                <p>
-                  In cases where the chosen method produces multiple results,
-                  this parameter allows selection of a specific statistic for
-                  inclusion in the output.
-                </p>
+                <p>If multiple statistics are produced, select one to store.</p>
               </dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd>
-                <p>Further arguments passed to the computational methods.</p>
-              </dd>
+              <dd><p>Further arguments passed to the selected method.</p></dd>
             </dl>
           </div>
           <div class="section level2">
@@ -334,9 +322,8 @@ using various computational methods provided by the decoupleR package."
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
             <p>
-              The function returns the input
-              <code>SpatialExperiment</code> object with additional metadata
-              columns representing the computed activities.
+              <code>SpatialExperiment</code> with activity scores added to
+              <code>colData</code>.
             </p>
           </div>
         </main>
@@ -349,7 +336,7 @@ using various computational methods provided by the decoupleR package."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_ndetected_genes.R
 \name{plot_ndetected_genes}
 \alias{plot_ndetected_genes}
-\title{Plot number of detected genes}
+\title{Plot Detected Genes per Spot}
 \usage{
 plot_ndetected_genes(
   spe,
@@ -75,8 +75,9 @@ plot_ndetected_genes(
 \item{assay}{assay}
 }
 \value{
-plot number of detected genes
+A spatial plot of detected gene counts.
 }
 \description{
-Generating a spatial plot of the number of detected genes of the SpatialExperiment
+Generate a spatial plot showing the number of genes detected per spot in a
+\code{SpatialExperiment}.
 }

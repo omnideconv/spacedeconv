@@ -10,8 +10,8 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Preprocess Single Cell and Spatial Data for analysis in spacedeconv —
-      preprocess • spacedeconv
+      Preprocess Single Cell and Spatial Data for spacedeconv — preprocess •
+      spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +51,21 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Preprocess Single Cell and Spatial Data for analysis in spacedeconv — preprocess"
+      content="Preprocess Single Cell and Spatial Data for spacedeconv — preprocess"
     />
     <meta
       name="description"
-      content="This function prepares SingleCellExperiment or SpatialExperiment objects for downstream analysis by performing a series of preprocessing steps. These steps include converting non-SpatialExperiment objects to SingleCellExperiment format, filtering based on UMI counts, optionally removing mitochondrial genes, and ensuring data integrity."
+      content="Converts input to SingleCellExperiment when needed and applies common QC
+filters: UMI thresholds, removal of all-zero genes, optional mitochondrial
+gene removal, and duplicate-gene handling. Also emits a warning if Ensembl
+identifiers are detected."
     />
     <meta
       property="og:description"
-      content="This function prepares SingleCellExperiment or SpatialExperiment objects for downstream analysis by performing a series of preprocessing steps. These steps include converting non-SpatialExperiment objects to SingleCellExperiment format, filtering based on UMI counts, optionally removing mitochondrial genes, and ensuring data integrity."
+      content="Converts input to SingleCellExperiment when needed and applies common QC
+filters: UMI thresholds, removal of all-zero genes, optional mitochondrial
+gene removal, and duplicate-gene handling. Also emits a warning if Ensembl
+identifiers are detected."
     />
     <meta
       property="og:image"
@@ -82,7 +88,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +105,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +158,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,23 +210,18 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Preprocess Single Cell and Spatial Data for analysis in
-              spacedeconv
-            </h1>
+            <h1>Preprocess Single Cell and Spatial Data for spacedeconv</h1>
 
             <div class="d-none name"><code>preprocess.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              This function prepares <code>SingleCellExperiment</code> or
-              <code>SpatialExperiment</code> objects for downstream analysis by
-              performing a series of preprocessing steps. These steps include
-              converting non-SpatialExperiment objects to
-              <code>SingleCellExperiment</code> format, filtering based on UMI
-              counts, optionally removing mitochondrial genes, and ensuring data
-              integrity.
+              Converts input to <code>SingleCellExperiment</code> when needed
+              and applies common QC filters: UMI thresholds, removal of all-zero
+              genes, optional mitochondrial gene removal, and duplicate-gene
+              handling. Also emits a warning if Ensembl identifiers are
+              detected.
             </p>
           </div>
 
@@ -258,11 +261,10 @@
               </dt>
               <dd>
                 <p>
-                  The input object, which can be a
-                  <code>SingleCellExperiment</code>,
-                  <code>SpatialExperiment</code>, AnnData, or Seurat object. The
-                  function will convert AnnData or Seurat objects to
-                  <code>SingleCellExperiment</code> if needed.
+                  Input object (<code>SingleCellExperiment</code>,
+                  <code>SpatialExperiment</code>, AnnData, or Seurat).
+                  AnnData/Seurat are converted to
+                  <code>SingleCellExperiment</code>.
                 </p>
               </dd>
 
@@ -273,13 +275,7 @@
                   href="#arg-min-umi"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  The minimum UMI count threshold for cells or spots to be
-                  included in the analysis. This filter helps to remove
-                  low-quality observations that might not provide reliable data.
-                </p>
-              </dd>
+              <dd><p>Minimum UMI count per cell/spot to keep.</p></dd>
 
               <dt id="arg-max-umi">
                 max_umi<a
@@ -289,11 +285,7 @@
                 ></a>
               </dt>
               <dd>
-                <p>
-                  The maximum UMI count threshold, used to exclude cells or
-                  spots with extremely high UMI counts. This parameter is
-                  optional.
-                </p>
+                <p>Maximum UMI count per cell/spot to keep (optional).</p>
               </dd>
 
               <dt id="arg-assay">
@@ -303,12 +295,7 @@
                   href="#arg-assay"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  The name of the assay to use to compute the preprocessing
-                  Default is "counts"
-                </p>
-              </dd>
+              <dd><p>Assay to use for filtering (default: "counts").</p></dd>
 
               <dt id="arg-remove-mito">
                 remove_mito<a
@@ -318,10 +305,7 @@
                 ></a>
               </dt>
               <dd>
-                <p>
-                  A logical flag indicating whether mitochondrial genes should
-                  be removed from the dataset.
-                </p>
+                <p>Logical; drop genes with <code>MT-</code> prefix.</p>
               </dd>
             </dl>
           </div>
@@ -335,7 +319,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

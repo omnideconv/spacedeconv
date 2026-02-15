@@ -50,8 +50,16 @@
       property="og:title"
       content="Calculate Gene Set Score — gene_set_score"
     />
-    <meta name="description" content="Calculate Gene Set Score" />
-    <meta property="og:description" content="Calculate Gene Set Score" />
+    <meta
+      name="description"
+      content="Computes a per-spot gene set score (sum of log expression) and stores it in
+colData."
+    />
+    <meta
+      property="og:description"
+      content="Computes a per-spot gene set score (sum of log expression) and stores it in
+colData."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -73,7 +81,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -90,11 +98,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -143,6 +146,13 @@
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -199,7 +209,10 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Calculate Gene Set Score</p>
+            <p>
+              Computes a per-spot gene set score (sum of log expression) and
+              stores it in <code>colData</code>.
+            </p>
           </div>
 
           <div class="section level2">
@@ -226,7 +239,9 @@
               <dt id="arg-spe">
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
-              <dd><p>SpatialExperiment object</p></dd>
+              <dd>
+                <p><code>SpatialExperiment</code>.</p>
+              </dd>
 
               <dt id="arg-genes">
                 genes<a
@@ -235,7 +250,7 @@
                   href="#arg-genes"
                 ></a>
               </dt>
-              <dd><p>vectors of genes to calculate gene set score</p></dd>
+              <dd><p>Vector of gene symbols for the gene set.</p></dd>
 
               <dt id="arg-assay">
                 assay<a
@@ -244,19 +259,21 @@
                   href="#arg-assay"
                 ></a>
               </dt>
-              <dd><p>name of the assay to use, default is "cpm"</p></dd>
+              <dd><p>Assay to use (default: "cpm").</p></dd>
 
               <dt id="arg-name">
                 name<a class="anchor" aria-label="anchor" href="#arg-name"></a>
               </dt>
-              <dd><p>name of the result column</p></dd>
+              <dd><p>Name of the result column.</p></dd>
             </dl>
           </div>
           <div class="section level2">
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>updated SpatialExperiment object including the gene set score</p>
+            <p>
+              Updated <code>SpatialExperiment</code> with the gene set score.
+            </p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -268,7 +285,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

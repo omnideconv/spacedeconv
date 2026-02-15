@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Build Model Spatial DWLS — build_model_spatial_dwls • spacedeconv
+      Build a SpatialDWLS Signature — build_model_spatial_dwls • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -50,10 +50,20 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Build Model Spatial DWLS — build_model_spatial_dwls"
+      content="Build a SpatialDWLS Signature — build_model_spatial_dwls"
     />
-    <meta name="description" content="Build Model Spatial DWLS" />
-    <meta property="og:description" content="Build Model Spatial DWLS" />
+    <meta
+      name="description"
+      content="Constructs a DWLS signature matrix from single-cell data using Giotto and a
+marker-selection strategy: either compute markers with a supported method
+(scran, gini, mast) or pass a custom vector of marker genes directly."
+    />
+    <meta
+      property="og:description"
+      content="Constructs a DWLS signature matrix from single-cell data using Giotto and a
+marker-selection strategy: either compute markers with a supported method
+(scran, gini, mast) or pass a custom vector of marker genes directly."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -75,7 +85,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -92,11 +102,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -150,6 +155,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -195,7 +207,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Build Model Spatial DWLS</h1>
+            <h1>Build a SpatialDWLS Signature</h1>
 
             <div class="d-none name">
               <code>build_model_spatial_dwls.Rd</code>
@@ -203,7 +215,13 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>Build Model Spatial DWLS</p>
+            <p>
+              Constructs a DWLS signature matrix from single-cell data using
+              Giotto and a marker-selection strategy: either compute markers
+              with a supported method (<code>scran</code>, <code>gini</code>,
+              <code>mast</code>) or pass a custom vector of marker genes
+              directly.
+            </p>
           </div>
 
           <div class="section level2">
@@ -243,7 +261,11 @@
                   href="#arg-single-cell-obj"
                 ></a>
               </dt>
-              <dd><p>SingleCellExperiment</p></dd>
+              <dd>
+                <p>
+                  <code>SingleCellExperiment</code> with cell type annotations.
+                </p>
+              </dd>
 
               <dt id="arg-assay-sc">
                 assay_sc<a
@@ -252,7 +274,7 @@
                   href="#arg-assay-sc"
                 ></a>
               </dt>
-              <dd><p>Single Cell Object assay to use</p></dd>
+              <dd><p>Single-cell assay to use.</p></dd>
 
               <dt id="arg-marker-method">
                 marker_method<a
@@ -263,8 +285,8 @@
               </dt>
               <dd>
                 <p>
-                  provide list of marker genes or method to calculate markers
-                  (scran, gini, mast)
+                  Marker genes or method to compute markers (<code>scran</code>,
+                  <code>gini</code>, or <code>mast</code>).
                 </p>
               </dd>
 
@@ -275,11 +297,7 @@
                   href="#arg-topngenes"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  Number of top ranked marker genes to use from each cluster
-                </p>
-              </dd>
+              <dd><p>Number of top-ranked marker genes per cluster.</p></dd>
 
               <dt id="arg-cell-type-col">
                 cell_type_col<a
@@ -288,11 +306,7 @@
                   href="#arg-cell-type-col"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  column of single_cell_obj containing cell type information
-                </p>
-              </dd>
+              <dd><p>Column containing cell type labels.</p></dd>
 
               <dt id="arg-dim-method">
                 dim_method<a
@@ -301,7 +315,12 @@
                   href="#arg-dim-method"
                 ></a>
               </dt>
-              <dd><p>dimension reduction method</p></dd>
+              <dd>
+                <p>
+                  Dimension reduction method for Giotto workflow:
+                  <code>pca</code>, <code>tsne</code>, or <code>umap</code>.
+                </p>
+              </dd>
 
               <dt id="arg-cluster-method">
                 cluster_method<a
@@ -311,13 +330,17 @@
                 ></a>
               </dt>
               <dd>
-                <p>cluster method to use when calculating marker genes</p>
+                <p>
+                  Clustering method for Giotto workflow: <code>leiden</code>,
+                  <code>louvain</code>, <code>kmeans</code>, or
+                  <code>hclust</code>.
+                </p>
               </dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd><p>additional paramdataters</p></dd>
+              <dd><p>Additional parameters passed to Giotto helpers.</p></dd>
             </dl>
           </div>
         </main>
@@ -330,7 +353,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

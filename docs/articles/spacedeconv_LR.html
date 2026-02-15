@@ -64,7 +64,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -81,11 +81,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -134,6 +129,13 @@
                     class="dropdown-item"
                     href="../articles/spacedeconv_faq.html"
                     >FAQ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
                   >
                 </li>
                 <li>
@@ -195,7 +197,7 @@
             <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv">spacedeconv</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; → Setting up spacedeconv environment..</span></span>
-<span><span class="co">#&gt; → Using conda environment 'r-omnideconv'</span></span>
+<span><span class="co">#&gt; → Using conda environment 'spacedeconv-env'</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.omnipathdb.org/" class="external-link">OmnipathR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: SingleCellExperiment</span></span>
@@ -384,16 +386,7 @@
 <span>  result <span class="op">=</span> <span class="st">"lr_LGALS3.LAG3"</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  density <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">spacedeconv</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: `label` cannot be a <span style="color: #0000BB;">&lt;ggplot2::element_blank&gt;</span> object.</span></span></code></pre>
+<span><span class="op">)</span></span></code></pre>
             </div>
             <p>
               <img
@@ -408,8 +401,7 @@
 <span>  result <span class="op">=</span> <span class="st">"lr_CD274.PDCD1"</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  density <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `label` cannot be a <span style="color: #0000BB;">&lt;ggplot2::element_blank&gt;</span> object.</span></span></code></pre>
+<span><span class="op">)</span></span></code></pre>
             </div>
             <p>
               <img
@@ -428,7 +420,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

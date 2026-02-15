@@ -2,7 +2,7 @@
 % Please edit documentation in R/RCTD.R
 \name{deconvolute_rctd}
 \alias{deconvolute_rctd}
-\title{RCTD Deconvolution}
+\title{Deconvolute with RCTD}
 \usage{
 deconvolute_rctd(
   single_cell_obj,
@@ -17,24 +17,25 @@ deconvolute_rctd(
 )
 }
 \arguments{
-\item{single_cell_obj}{SingleCellExperiment}
+\item{single_cell_obj}{\code{SingleCellExperiment}.}
 
-\item{cell_type_col}{Column containting cell type annotation}
+\item{cell_type_col}{Column containing cell type labels.}
 
-\item{spatial_obj}{SpatialExperiment}
+\item{spatial_obj}{\code{SpatialExperiment}.}
 
-\item{assay_sc}{single cell assay to use}
+\item{assay_sc}{Single-cell assay to use.}
 
-\item{assay_sp}{spatial assay to use}
+\item{assay_sp}{Spatial assay to use.}
 
-\item{n_umi_sc}{(optional) named list of umi counts for each cell}
+\item{n_umi_sc}{Optional named vector of UMI counts per cell.}
 
-\item{n_umi_sp}{(optional) named list of umi counts for each spot}
+\item{n_umi_sp}{Optional named vector of UMI counts per spot.}
 
-\item{n_cores}{Number of CPU cores to use for the calculation, NULL = use all cores}
+\item{n_cores}{Number of CPU cores to use; \code{NULL} uses all cores.}
 
-\item{result_name}{token to identify deconvolution results in object, default = "rctd"}
+\item{result_name}{Prefix used to label result columns (default: "rctd").}
 }
 \description{
-RCTD Deconvolution
+Runs the RCTD workflow and returns a deconvolution matrix with column names
+prefixed by \code{result_name}.
 }

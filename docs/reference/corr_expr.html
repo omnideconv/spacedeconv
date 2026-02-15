@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Heatmap correlation of cell types based on gene expression values —
-      corr_expr • spacedeconv
+      Correlation Heatmap of Signature Matrix — corr_expr • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +50,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Heatmap correlation of cell types based on gene expression values — corr_expr"
+      content="Correlation Heatmap of Signature Matrix — corr_expr"
     />
     <meta
       name="description"
-      content="Generates a heatmap of cell type correlations and p-values as asterisks based on signature matrix"
+      content="Generates a correlation heatmap from a signature matrix and marks
+significance with asterisks."
     />
     <meta
       property="og:description"
-      content="Generates a heatmap of cell type correlations and p-values as asterisks based on signature matrix"
+      content="Generates a correlation heatmap from a signature matrix and marks
+significance with asterisks."
     />
     <meta
       property="og:image"
@@ -82,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,17 +205,15 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Heatmap correlation of cell types based on gene expression values
-            </h1>
+            <h1>Correlation Heatmap of Signature Matrix</h1>
 
             <div class="d-none name"><code>corr_expr.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              Generates a heatmap of cell type correlations and p-values as
-              asterisks based on signature matrix
+              Generates a correlation heatmap from a signature matrix and marks
+              significance with asterisks.
             </p>
           </div>
 
@@ -240,12 +241,16 @@
               <dt id="arg-sig">
                 sig<a class="anchor" aria-label="anchor" href="#arg-sig"></a>
               </dt>
-              <dd><p>signature matrix</p></dd>
+              <dd><p>Signature matrix.</p></dd>
 
               <dt id="arg-log">
                 log<a class="anchor" aria-label="anchor" href="#arg-log"></a>
               </dt>
-              <dd><p>logarithmic transformation of signature matrix</p></dd>
+              <dd>
+                <p>
+                  Logical; apply <code>log(x + 1)</code> before correlation.
+                </p>
+              </dd>
 
               <dt id="arg-cor-method">
                 cor_method<a
@@ -254,7 +259,12 @@
                   href="#arg-cor-method"
                 ></a>
               </dt>
-              <dd><p>correlation method "pearson" or "spearman"</p></dd>
+              <dd>
+                <p>
+                  Correlation method: <code>"pearson"</code> or
+                  <code>"spearman"</code>.
+                </p>
+              </dd>
 
               <dt id="arg-matrix">
                 matrix<a
@@ -263,24 +273,21 @@
                   href="#arg-matrix"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  return correlation and correlation probability values as
-                  matrix
-                </p>
-              </dd>
+              <dd><p>Logical; print correlation and p-value matrices.</p></dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
               </dt>
-              <dd><p>additional parameters passed to corrplot function</p></dd>
+              <dd>
+                <p>Additional parameters passed to <code>corrplot()</code>.</p>
+              </dd>
             </dl>
           </div>
           <div class="section level2">
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>correlation heatmap of cell types based on gene expression</p>
+            <p>Correlation heatmap of cell types based on expression.</p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -292,7 +299,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

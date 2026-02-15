@@ -10,8 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      List of supported deconvolution methods — deconvolution_methods •
-      spacedeconv
+      Supported Deconvolution Methods — deconvolution_methods • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,15 +50,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="List of supported deconvolution methods — deconvolution_methods"
+      content="Supported Deconvolution Methods — deconvolution_methods"
     />
     <meta
       name="description"
-      content="List of supported deconvolution methods"
+      content="Named character vector of supported methods. Names are the display labels and
+values are the internal method tokens used by the API."
     />
     <meta
       property="og:description"
-      content="List of supported deconvolution methods"
+      content="Named character vector of supported methods. Names are the display labels and
+values are the internal method tokens used by the API."
     />
     <meta
       property="og:image"
@@ -82,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -99,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -157,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -202,13 +205,16 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>List of supported deconvolution methods</h1>
+            <h1>Supported Deconvolution Methods</h1>
 
             <div class="d-none name"><code>deconvolution_methods.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
-            <p>List of supported deconvolution methods</p>
+            <p>
+              Named character vector of supported methods. Names are the display
+              labels and values are the internal method tokens used by the API.
+            </p>
           </div>
 
           <div class="section level2">
@@ -233,27 +239,18 @@
               Details<a class="anchor" aria-label="anchor" href="#details"></a>
             </h2>
             <p>
-              Spatial Algorithms <br /><code>RCTD</code>,
+              Second-generation spatial methods: <code>RCTD</code>,
               <code>SPOTlight</code>, <code>CARD</code>,
-              <code>spatialDWLS</code>, <code>Cell2Location</code>,
-              <code>DOT</code>
-            </p>
-            <p>
-              First-generation Methods (Immunedeconv) <br /><code
-                >MCPcounter</code
-              >, <code>EPIC</code>, <code>quanTIseq</code>, <code>xCell</code>,
+              <code>spatialDWLS</code>, <code>cell2location</code>,
+              <code>DOT</code>.<br />
+              First-generation immunedeconv methods: <code>MCPcounter</code>,
+              <code>EPIC</code>, <code>quanTIseq</code>, <code>xCell</code>,
               <code>CIBERSORT</code>, <code>CIBERSORT (abs.)</code>,
               <code>TIMER</code>, <code>ConsensusTME</code>, <code>ABIS</code>,
-              <code>ESTIMATE</code>
-            </p>
-            <p>
-              First-generation Mouse Methods (Immunedeconv) <br /><code
-                >mMCPcounter</code
-              >, <code>seqImmuCC</code>, <code>DCQ</code>, <code>BASE</code>
-            </p>
-            <p>
-              This object is a named vector. The names correspond to the display
-              name of the method, the values to the internal name.
+              <code>ESTIMATE</code>.<br />
+              First-generation immunedeconv mouse methods:
+              <code>mMCPcounter</code>, <code>seqImmuCC</code>,
+              <code>DCQ</code>, <code>BASE</code>.
             </p>
           </div>
         </main>
@@ -266,7 +263,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

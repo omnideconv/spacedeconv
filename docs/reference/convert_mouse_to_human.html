@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      map mouse to human genes — convert_mouse_to_human • spacedeconv
+      Map Mouse to Human Gene Symbols — convert_mouse_to_human • spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -50,10 +50,18 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="map mouse to human genes — convert_mouse_to_human"
+      content="Map Mouse to Human Gene Symbols — convert_mouse_to_human"
     />
-    <meta name="description" content="map mouse to human genes" />
-    <meta property="og:description" content="map mouse to human genes" />
+    <meta
+      name="description"
+      content="Converts mouse gene symbols to human gene symbols using
+Orthology.eg.db mappings."
+    />
+    <meta
+      property="og:description"
+      content="Converts mouse gene symbols to human gene symbols using
+Orthology.eg.db mappings."
+    />
     <meta
       property="og:image"
       content="https://omnideconv.github.io/spacedeconv/logo.png"
@@ -75,7 +83,7 @@
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -92,11 +100,6 @@
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -150,6 +153,13 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -195,7 +205,7 @@
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>map mouse to human genes</h1>
+            <h1>Map Mouse to Human Gene Symbols</h1>
 
             <div class="d-none name">
               <code>convert_mouse_to_human.Rd</code>
@@ -203,7 +213,10 @@
           </div>
 
           <div class="ref-description section level2">
-            <p>map mouse to human genes</p>
+            <p>
+              Converts mouse gene symbols to human gene symbols using
+              <code>Orthology.eg.db</code> mappings.
+            </p>
           </div>
 
           <div class="section level2">
@@ -234,9 +247,7 @@
                   href="#arg-mousegenes"
                 ></a>
               </dt>
-              <dd>
-                <p>a vector containing mouse genes to be converted to human</p>
-              </dd>
+              <dd><p>Vector of mouse gene symbols to convert.</p></dd>
             </dl>
           </div>
         </main>
@@ -249,7 +260,7 @@
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

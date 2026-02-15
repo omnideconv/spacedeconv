@@ -1,9 +1,12 @@
-#' Print info about dataset
+#' Print Dataset Summary
 #'
-#' @param sce singleCellExperiment
-#' @param spe SpatialExperiment
-#' @param signature signature matrix
-#' @param assay assay to use for computation
+#' Prints basic QC summaries for `SingleCellExperiment`, `SpatialExperiment`,
+#' and optional signature matrices (counts, zeros, UMI range, overlap).
+#'
+#' @param sce `SingleCellExperiment` (optional).
+#' @param spe `SpatialExperiment` (optional).
+#' @param signature Signature matrix (optional).
+#' @param assay Assay to use for computations (default: "counts").
 #' @export
 print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay = "counts") {
   # check for correct class

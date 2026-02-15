@@ -10,8 +10,8 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>
-      Scale relative cell fractions to absolute by providing cell densities —
-      scale_cell_counts • spacedeconv
+      Scale Relative Cell Fractions to Absolute Counts — scale_cell_counts •
+      spacedeconv
     </title>
     <!-- favicons -->
     <link
@@ -51,19 +51,17 @@
     <script src="../pkgdown.js"></script>
     <meta
       property="og:title"
-      content="Scale relative cell fractions to absolute by providing cell densities — scale_cell_counts"
+      content="Scale Relative Cell Fractions to Absolute Counts — scale_cell_counts"
     />
     <meta
       name="description"
-      content="This function calculates absolute cell densities for a SpatialExperiment object
-by scaling a specified column of relative cell fractions with provided absolute cell densities.
-The result is added as a new column in the colData of the SPE object."
+      content="Multiplies a relative fraction column by a cell-count column and stores the
+result in colData."
     />
     <meta
       property="og:description"
-      content="This function calculates absolute cell densities for a SpatialExperiment object
-by scaling a specified column of relative cell fractions with provided absolute cell densities.
-The result is added as a new column in the colData of the SPE object."
+      content="Multiplies a relative fraction column by a cell-count column and stores the
+result in colData."
     />
     <meta
       property="og:image"
@@ -86,7 +84,7 @@ The result is added as a new column in the colData of the SPE object."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -103,11 +101,6 @@ The result is added as a new column in the colData of the SPE object."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -161,6 +154,13 @@ The result is added as a new column in the colData of the SPE object."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -206,21 +206,15 @@ The result is added as a new column in the colData of the SPE object."
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>
-              Scale relative cell fractions to absolute by providing cell
-              densities
-            </h1>
+            <h1>Scale Relative Cell Fractions to Absolute Counts</h1>
 
             <div class="d-none name"><code>scale_cell_counts.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              This function calculates absolute cell densities for a
-              SpatialExperiment object by scaling a specified column of relative
-              cell fractions with provided absolute cell densities. The result
-              is added as a new column in the <code>colData</code> of the SPE
-              object.
+              Multiplies a relative fraction column by a cell-count column and
+              stores the result in <code>colData</code>.
             </p>
           </div>
 
@@ -249,10 +243,7 @@ The result is added as a new column in the colData of the SPE object."
                 spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a>
               </dt>
               <dd>
-                <p>
-                  An SpatialExperiment object containing spatial transcriptomics
-                  data.
-                </p>
+                <p>A <code>SpatialExperiment</code>.</p>
               </dd>
 
               <dt id="arg-value">
@@ -264,9 +255,8 @@ The result is added as a new column in the colData of the SPE object."
               </dt>
               <dd>
                 <p>
-                  A string specifying the name of the column in
-                  <code>colData(spe)</code> that contains relative cell
-                  fractions/deconvolution results to be scaled.
+                  Column name in <code>colData(spe)</code> with relative
+                  fractions.
                 </p>
               </dd>
 
@@ -279,8 +269,8 @@ The result is added as a new column in the colData of the SPE object."
               </dt>
               <dd>
                 <p>
-                  A named vector of absolute cell densities, where names
-                  correspond to the rownames in <code>colData(spe)</code>.
+                  Column name in <code>colData(spe)</code> with absolute cell
+                  counts.
                 </p>
               </dd>
 
@@ -293,10 +283,8 @@ The result is added as a new column in the colData of the SPE object."
               </dt>
               <dd>
                 <p>
-                  Optional; a string specifying the name of the new column to be
-                  added to <code>colData(spe)</code> that will contain the
-                  absolute cell densities. If NULL, defaults to appending
-                  "_absolute" to the <code>value</code> parameter.
+                  Optional name for the output column. Defaults to
+                  <code>paste0(value, "_absolute")</code>.
                 </p>
               </dd>
             </dl>
@@ -305,7 +293,10 @@ The result is added as a new column in the colData of the SPE object."
             <h2 id="value">
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
-            <p>SPE object with added absolute celltype counts for each spot</p>
+            <p>
+              <code>SpatialExperiment</code> with the scaled counts added to
+              <code>colData</code>.
+            </p>
           </div>
         </main>
         <aside class="col-md-3">
@@ -317,7 +308,7 @@ The result is added as a new column in the colData of the SPE object."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">

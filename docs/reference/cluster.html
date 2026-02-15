@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Cluster spacedeconv results — cluster • spacedeconv</title>
+    <title>Cluster SpatialExperiment Results — cluster • spacedeconv</title>
     <!-- favicons -->
     <link
       rel="icon"
@@ -46,18 +46,21 @@
     <script src="../deps/search-1.0.0/mark.min.js"></script>
     <!-- pkgdown -->
     <script src="../pkgdown.js"></script>
-    <meta property="og:title" content="Cluster spacedeconv results — cluster" />
+    <meta
+      property="og:title"
+      content="Cluster SpatialExperiment Results — cluster"
+    />
     <meta
       name="description"
-      content="Performs clustering on data obtained from a SpatialExperiment object using
-specified methods. This function allows for clustering based on deconvolution
-results, expression data, pathway, or transcription factors (TF) analyses."
+      content="Performs clustering on a SpatialExperiment using either expression data or
+selected result columns (deconvolution, pathway, or TF activity). Results are
+stored as new colData columns."
     />
     <meta
       property="og:description"
-      content="Performs clustering on data obtained from a SpatialExperiment object using
-specified methods. This function allows for clustering based on deconvolution
-results, expression data, pathway, or transcription factors (TF) analyses."
+      content="Performs clustering on a SpatialExperiment using either expression data or
+selected result columns (deconvolution, pathway, or TF activity). Results are
+stored as new colData columns."
     />
     <meta
       property="og:image"
@@ -80,7 +83,7 @@ results, expression data, pathway, or transcription factors (TF) analyses."
           data-bs-toggle="tooltip"
           data-bs-placement="bottom"
           title=""
-          >0.1.1</small
+          >1.0.0</small
         >
 
         <button
@@ -97,11 +100,6 @@ results, expression data, pathway, or transcription factors (TF) analyses."
 
         <div id="navbar" class="collapse navbar-collapse ms-3">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../articles/spacedeconv.html"
-                >Get started</a
-              >
-            </li>
             <li class="active nav-item">
               <a class="nav-link" href="../reference/index.html">Reference</a>
             </li>
@@ -155,6 +153,13 @@ results, expression data, pathway, or transcription factors (TF) analyses."
                 <li>
                   <a
                     class="dropdown-item"
+                    href="../articles/spacedeconv_import.html"
+                    >AnnData/Seurat Import</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
                     href="../articles/spacedeconv_LR.html"
                     >Ligand-Receptor Analysis</a
                   >
@@ -200,17 +205,17 @@ results, expression data, pathway, or transcription factors (TF) analyses."
         <main id="main" class="col-md-9">
           <div class="page-header">
             <img src="../logo.png" class="logo" alt="" />
-            <h1>Cluster spacedeconv results</h1>
+            <h1>Cluster SpatialExperiment Results</h1>
 
             <div class="d-none name"><code>cluster.Rd</code></div>
           </div>
 
           <div class="ref-description section level2">
             <p>
-              Performs clustering on data obtained from a SpatialExperiment
-              object using specified methods. This function allows for
-              clustering based on deconvolution results, expression data,
-              pathway, or transcription factors (TF) analyses.
+              Performs clustering on a <code>SpatialExperiment</code> using
+              either expression data or selected result columns (deconvolution,
+              pathway, or TF activity). Results are stored as new
+              <code>colData</code> columns.
             </p>
           </div>
 
@@ -253,8 +258,8 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               </dt>
               <dd>
                 <p>
-                  A SpatialExperiment object containing the data to be
-                  clustered.
+                  A <code>SpatialExperiment</code> object containing the data to
+                  be clustered.
                 </p>
               </dd>
 
@@ -267,9 +272,8 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               </dt>
               <dd>
                 <p>
-                  A character vector specifying the clustering method to use.
-                  Options are "kmeans" and "hclust". Default is c("kmeans",
-                  "hclust").
+                  Clustering method: <code>"kmeans"</code> or
+                  <code>"hclust"</code>.
                 </p>
               </dd>
 
@@ -282,10 +286,9 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               </dt>
               <dd>
                 <p>
-                  A character vector indicating the type of analysis for
-                  clustering. Options include "expression", "progeny",
-                  "dorothea", "collectri", and names of deconvolution methods.
-                  Default is based on the available deconvolution methods.
+                  Data to cluster: <code>"expression"</code>,
+                  <code>"progeny"</code>, <code>"dorothea"</code>,
+                  <code>"collectri"</code>, or a deconvolution method token.
                 </p>
               </dd>
 
@@ -298,10 +301,11 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               </dt>
               <dd>
                 <p>
-                  A character vector specifying the distance measure to be used
-                  for "hclust" method. Options include "correlation",
-                  "euclidean", "maximum", "manhattan", "canberra", "binary",
-                  "minkowski".
+                  Distance metric for <code>"hclust"</code>:
+                  <code>"correlation"</code>, <code>"euclidean"</code>,
+                  <code>"maximum"</code>, <code>"manhattan"</code>,
+                  <code>"canberra"</code>, <code>"binary"</code>,
+                  <code>"minkowski"</code>.
                 </p>
               </dd>
 
@@ -314,10 +318,11 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               </dt>
               <dd>
                 <p>
-                  A character vector indicating the agglomeration method to be
-                  used with "hclust". Options include "complete", "ward.D",
-                  "ward.D2", "single", "average", "mcquitty", "median",
-                  "centroid".
+                  Agglomeration method for <code>"hclust"</code>:
+                  <code>"complete"</code>, <code>"ward.D"</code>,
+                  <code>"ward.D2"</code>, <code>"single"</code>,
+                  <code>"average"</code>, <code>"mcquitty"</code>,
+                  <code>"median"</code>, <code>"centroid"</code>.
                 </p>
               </dd>
 
@@ -328,12 +333,7 @@ results, expression data, pathway, or transcription factors (TF) analyses."
                   href="#arg-nclusters"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  An integer specifying the number of clusters to create.
-                  Default is 3.
-                </p>
-              </dd>
+              <dd><p>Number of clusters to create.</p></dd>
 
               <dt id="arg-pca-dim">
                 pca_dim<a
@@ -342,13 +342,7 @@ results, expression data, pathway, or transcription factors (TF) analyses."
                   href="#arg-pca-dim"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  An integer vector specifying PCA dimensions to be used for
-                  clustering of expression data. This is used with
-                  Seurat::FindNeighbors. Default is seq(1, 30).
-                </p>
-              </dd>
+              <dd><p>PCA dimensions used for expression clustering.</p></dd>
 
               <dt id="arg-clusres">
                 clusres<a
@@ -357,12 +351,7 @@ results, expression data, pathway, or transcription factors (TF) analyses."
                   href="#arg-clusres"
                 ></a>
               </dt>
-              <dd>
-                <p>
-                  A numeric value for the clustering resolution to be used with
-                  Seurat::FindClusters. Default is 0.5.
-                </p>
-              </dd>
+              <dd><p>Resolution for Seurat-based expression clustering.</p></dd>
 
               <dt id="arg--">
                 ...<a class="anchor" aria-label="anchor" href="#arg--"></a>
@@ -375,7 +364,8 @@ results, expression data, pathway, or transcription factors (TF) analyses."
               Value<a class="anchor" aria-label="anchor" href="#value"></a>
             </h2>
             <p>
-              A modified SpatialExperiment object with added clustering results.
+              <code>SpatialExperiment</code> with added clustering results in
+              <code>colData</code>.
             </p>
           </div>
         </main>
@@ -388,7 +378,7 @@ results, expression data, pathway, or transcription factors (TF) analyses."
 
       <footer>
         <div class="pkgdown-footer-left">
-          <p>Developed by Constantin Zackl.</p>
+          <p>Developed by Constantin Zackl, Felix Petschko.</p>
         </div>
 
         <div class="pkgdown-footer-right">
