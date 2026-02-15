@@ -61,6 +61,10 @@ pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE
   <img src="man/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"/>
 </div>
 
+<div align="center">
+  <img src="man/figures/spacedeconv_summary.png" alt="spacedeconv summary diagram" width="800"/>
+</div>
+
 ## :floppy_disk: Data requirements
 
 Spatial transcriptomics data: _[SpatialExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SpatialExperiment/inst/doc/SpatialExperiment.html)_
