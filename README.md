@@ -41,6 +41,7 @@ R
 Install the missing packages that are not available via conda as well as _spacedeconv_:
 
 ```r
+pak::pkg_install("cran::wrMisc", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("drieslab/Giotto@v3.3.2", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)

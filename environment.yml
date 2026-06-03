@@ -4,11 +4,11 @@
 name: spacedeconv-env
 
 channels:
-  - pytorch
-  - nvidia
   - conda-forge
   - bioconda
-  - r
+  - pytorch
+  - nvidia
+  - nodefaults
 
 dependencies:
   - r-base = 4.3.3
@@ -16,9 +16,6 @@ dependencies:
   - python = 3.10
   - compilers
   - r-devtools
-
-  # R packages from r channel
-  - r-wrmisc
 
   # conda-forge R packages
   - r-pak
