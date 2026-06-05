@@ -5,7 +5,7 @@
 #'
 #' @details
 #' Second-generation spatial methods: `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`,
-#' `cell2location`, `DOT`.\cr
+#' `cell2location`, `DOT`, `Rectangle`.\cr
 #' First-generation immunedeconv methods: `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`,
 #' `CIBERSORT`, `CIBERSORT (abs.)`, `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`.\cr
 #' First-generation immunedeconv mouse methods: `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`.
@@ -19,6 +19,7 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
+  "Rectangle" = "rectangle",
   # immunedeconv
   "MCPcounter" = "mcp_counter",
   "EPIC" = "epic",
@@ -139,6 +140,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     },
     dot = {
       build_model_dot()
+    },
+    rectangle = {
+      build_model_rectangle()
     },
 
     ################
@@ -298,6 +302,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     },
     dot = {
       deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
+    },
+    rectangle = {
+      deconvolute_rectangle(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
 
     ################
