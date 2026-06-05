@@ -117,14 +117,18 @@ print_info <- function(sce = NULL, spe = NULL, signature = NULL, assay = "counts
   if (!is.null(signature)) {
     cli::cli_h3("Signature")
 
-    cli::cli_text("Number of Genes: {.val {nrow(signature)}}")
-    cli::cli_text("Number of Cell Types: {.val {ncol(signature)}}")
-    cli::cli_alert("{.val {colnames(signature)}}")
+    if (!is.null(dim(signature)) && length(dim(signature)) == 2) {
+      cli::cli_text("Number of Genes: {.val {nrow(signature)}}")
+      cli::cli_text("Number of Cell Types: {.val {ncol(signature)}}")
+      cli::cli_alert("{.val {colnames(signature)}}")
 
-    if (!is.null(spe)) {
-      overlapGenes <- sum(rownames(spe) %in% rownames(signature))
-      overlapGenesPercent <- round(overlapGenes / length(rownames(signature)) * 100, 2)
-      cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
+      if (!is.null(spe)) {
+        overlapGenes <- sum(rownames(spe) %in% rownames(signature))
+        overlapGenesPercent <- round(overlapGenes / length(rownames(signature)) * 100, 2)
+        cli::cli_alert_info("{.val {overlapGenes}} ({overlapGenesPercent}%) signature genes are available in spatial object")
+      }
+    } else {
+      cli::cli_text("Signature object: {.val {class(signature)[1]}}")
     }
   }
 }
