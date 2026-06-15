@@ -5,7 +5,7 @@
 \alias{deconvolution_methods}
 \title{Supported Deconvolution Methods}
 \format{
-An object of class \code{character} of length 20.
+An object of class \code{character} of length 21.
 }
 \usage{
 deconvolution_methods
@@ -16,7 +16,7 @@ values are the internal method tokens used by the API.
 }
 \details{
 Second-generation spatial methods: \code{RCTD}, \code{SPOTlight}, \code{CARD}, \code{spatialDWLS},
-\code{cell2location}, \code{DOT}.\cr
+\code{cell2location}, \code{DOT}, \code{Rectangle}.\cr
 First-generation immunedeconv methods: \code{MCPcounter}, \code{EPIC}, \code{quanTIseq}, \code{xCell},
 \code{CIBERSORT}, \code{CIBERSORT (abs.)}, \code{TIMER}, \code{ConsensusTME}, \code{ABIS}, \code{ESTIMATE}.\cr
 First-generation immunedeconv mouse methods: \code{mMCPcounter}, \code{seqImmuCC}, \code{DCQ}, \code{BASE}.
