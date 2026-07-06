@@ -117,10 +117,6 @@ subsetSCE <- function(sce, cell_type_col = "celltype_major", scenario = "even", 
 }
 
 
-
-
-
-
 #' Subset a SpatialExperiment by Spatial Coordinates
 #'
 #' Filters a `SpatialExperiment` to spots that fall within the provided x/y ranges

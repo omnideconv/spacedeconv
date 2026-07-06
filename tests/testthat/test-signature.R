@@ -21,7 +21,6 @@ test_that("Immunedeconv models works", {
 })
 
 
-
 # Test for input validation in build_model
 test_that("build_model requires non-null single_cell_obj", {
   expect_error(build_model(NULL, method = "rctd"), "Parameter 'single_cell_obj' missing or null, but is required")

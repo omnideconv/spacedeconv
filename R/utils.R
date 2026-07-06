@@ -287,7 +287,6 @@ checkENSEMBL <- function(names) {
 }
 
 
-
 #' Annotate Specific Spots in a SpatialExperiment
 #'
 #' Adds a new `colData` column that marks selected spots with `value_pos` and all
