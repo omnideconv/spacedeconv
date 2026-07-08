@@ -156,9 +156,10 @@ cite both our package and the method(s) you are using.
 
 > Constantin Zackl, Maria Zopoglou, Reto Stauffer, Markus Ausserhofer, Marieke E. Ijsselsteijn, Gregor Sturm, Noel Filipe da Cunha Carvalho de Miranda, Francesca Finotello. spacedeconv: deconvolution of tissue architecture from spatial transcriptomics, PREPRINT available at Research Square https://doi.org/10.21203/rs.3.rs-5102166/v1.
 
-**Note:** Rectangle support is currently available on the `dev` branch. To try it
-now, switch to the `dev` branch and follow the installation instructions in the
-README there.
+> [!NOTE]
+> Rectangle support is currently available on the `dev` branch. To try it now,
+> switch to the `dev` branch and follow the installation instructions in the
+> README there.
 
 | Method                                                         | Usable with signature() |                                     Licence                                     | Citation                                                                                                                                                                                                                            |
 | -------------------------------------------------------------- | :---------------------: | :-----------------------------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
