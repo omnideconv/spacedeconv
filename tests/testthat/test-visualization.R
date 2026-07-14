@@ -23,8 +23,6 @@ test_that("Plot Umi Count works", {
 })
 
 
-
-
 test_that("Plot_post_abundant works", {
   p <- plot_most_abundant(spe, method = "estimate")
 

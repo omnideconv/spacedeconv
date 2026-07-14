@@ -491,7 +491,6 @@ plot_comparison <- function(spe, cell_type_1 = NULL, cell_type_2 = NULL,
 }
 
 
-
 #' Plot Gene Expression
 #'
 #' Generate a spatial hex plot for a single gene from a `SpatialExperiment`.
@@ -734,8 +733,6 @@ make_baseplot <- function(spe, df, to_plot, palette = "Mako", transform_scale = 
     # for the scales package
     accuracy <- 10^(-nDigits)
   }
-
-
 
 
   # Check if plot is smoothed
