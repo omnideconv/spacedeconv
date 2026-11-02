@@ -123,9 +123,6 @@ plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, l
 }
 
 
-
-
-
 #' Compare Signatures
 #'
 #' Creates a scatterplot comparing two signature matrices across shared genes.

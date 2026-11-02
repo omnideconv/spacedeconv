@@ -11,7 +11,6 @@ build_model_dot <- function() {
 }
 
 
-
 #' Deconvolute with DOT
 #'
 #' Runs DOT deconvolution and returns the DOT weight matrix with column names

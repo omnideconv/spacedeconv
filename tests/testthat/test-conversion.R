@@ -11,7 +11,6 @@ test_that("convert human to mouse with valid gene symbols", {
 })
 
 
-
 ad <- spe_to_ad(spe, assay = "counts")
 
 test_that("spe_to_ad returns an AnnData object", {
