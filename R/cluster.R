@@ -59,7 +59,6 @@ cluster <- function(spe,
     cli::cli_alert_info(paste("Cluster resolution:", toString(clusres)))
 
 
-
     cli::cli_progress_step("Extracting data", msg_done = "Extracted data for clustering")
 
     # create seurat object
@@ -139,7 +138,6 @@ cluster <- function(spe,
   }
 
 
-
   cli::cli_progress_done()
 
   return(spe)
@@ -197,7 +195,6 @@ get_cluster_features <- function(spe,
   # ]
   # clusters <- clusters[, clusterid]
   clusters <- colData(spe)[, clusterid]
-
 
 
   # Scores

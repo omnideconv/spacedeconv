@@ -930,7 +930,7 @@
             value: function (e) {
               if (e) {
                 if (3 === e.nodeType)
-                  for (; e.nextSibling && 3 === e.nextSibling.nodeType; )
+                  for (; e.nextSibling && 3 === e.nextSibling.nodeType;)
                     ((e.nodeValue += e.nextSibling.nodeValue),
                       e.parentNode.removeChild(e.nextSibling));
                 else this.normalizeTextNode(e.firstChild);
