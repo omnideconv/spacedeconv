@@ -12,7 +12,8 @@ plot_boxplot(
   title = NULL,
   xlab = NULL,
   ylab = "Mean value",
-  colors = NULL
+  colors = NULL,
+  point_size = 3
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ by point color (e.g. methods). Each group/source pair must be unique.}
 \item{ylab}{Y-axis label, default "Mean value".}
 
 \item{colors}{Optional named character vector mapping sources to colors.}
+
+\item{point_size}{Size of the points in the plot and legend, in ggplot2 size units.}
 }
 \value{
 A ggplot object. Its \code{data} contains \code{column}, \code{group}, \code{source}, and

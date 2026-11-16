@@ -13,6 +13,7 @@
 #' @param title,xlab Optional plot title and x-axis label.
 #' @param ylab Y-axis label, default "Mean value".
 #' @param colors Optional named character vector mapping sources to colors.
+#' @param point_size Size of the points in the plot and legend, in ggplot2 size units.
 #' @return A ggplot object. Its `data` contains `column`, `group`, `source`, and
 #'   `mean`. Further styling, including percentage axes, can be added with ggplot2.
 #' @details Values are used without normalization or aggregation of cell types.
@@ -20,7 +21,7 @@
 #'   warning. Constant columns are retained. No statistical tests are performed.
 #' @export
 plot_boxplot <- function(spe, column, groups, sources, title = NULL, xlab = NULL,
-                         ylab = "Mean value", colors = NULL) {
+                         ylab = "Mean value", colors = NULL, point_size = 3) {
   if (!methods::is(spe, "SpatialExperiment")) stop("spe must be a SpatialExperiment.")
   if (!is.character(column) || !length(column) || anyNA(column) || anyDuplicated(column)) {
     stop("column must contain distinct column names.")
@@ -59,7 +60,7 @@ plot_boxplot <- function(spe, column, groups, sources, title = NULL, xlab = NULL
     ggplot2::geom_boxplot(ggplot2::aes(group = group), width = .65,
       outlier.shape = NA, fill = "grey92", color = "grey35", linewidth = .5) +
     ggplot2::geom_point(ggplot2::aes(color = source, group = source),
-      position = ggplot2::position_dodge(width = .48), size = 3) +
+      position = ggplot2::position_dodge(width = .48), size = point_size) +
     ggplot2::labs(title = title, x = xlab, y = ylab, color = "Source") +
     ggplot2::theme_bw(base_size = 14) +
     ggplot2::theme(legend.position = "right", plot.title = ggplot2::element_text(hjust = 0.5),
