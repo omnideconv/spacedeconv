@@ -13,6 +13,8 @@ spatialcorr(
   labels = NULL,
   title = NULL,
   label_title = "Source | Feature | Mean",
+  annotation_legend_param = list(),
+  label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"),
   ...
 )
 }
@@ -39,6 +41,11 @@ labels. Defaults to the column names.}
 "Source | Feature | Mean"; NULL omits it.
 For example, "Method | Cell type | Mean relative abundance". This is free
 text and does not affect the values or labels.}
+
+\item{annotation_legend_param}{Named list of category legend settings passed
+to \code{\link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation()}}, such as \code{nrow} or \code{labels_gp}.}
+
+\item{label_title_gp}{Graphical parameters for the heading above row labels.}
 
 \item{...}{Additional arguments to \code{\link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap()}}, such as
 \code{row_names_gp}, \code{column_title_gp}, or \code{heatmap_legend_param}. These override

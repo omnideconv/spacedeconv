@@ -97,3 +97,28 @@ test_that("row labels and their heading can be hidden independently", {
   expect_false(hidden$heatmap@ht_list[[1]]@row_names_param$show)
   expect_equal(hidden$corr, no_heading$corr)
 })
+
+test_that("custom legend and heading styles survive moving legends below the heatmap", {
+  local_test_device()
+  spe <- result_spe()
+  columns <- c("quantiseq_A", "quantiseq_B")
+  out <- spatialcorr(spe, columns,
+    categories = c(quantiseq_A = "A", quantiseq_B = "B"),
+    annotation_legend_param = list(nrow = 2, labels_gp = grid::gpar(fontsize = 20)),
+    label_title_gp = grid::gpar(fontsize = 20, fontface = "bold"))
+  redrawn <- ComplexHeatmap::draw(out$heatmap@ht_list[[1]],
+    heatmap_legend_side = "bottom", annotation_legend_side = "bottom")
+  expect_identical(redrawn@heatmap_legend_param$side, "bottom")
+  expect_identical(redrawn@annotation_legend_param$side, "bottom")
+  ht <- redrawn@ht_list[[1]]
+  legend <- ht@top_annotation@anno_list$Category@legend_param
+  expect_equal(legend$nrow, 2)
+  expect_equal(legend$labels_gp$fontsize, 20)
+  heading <- ht@right_annotation@anno_list$Labels@name_param
+  expect_equal(heading$gp$fontsize, 20)
+  expect_identical(heading$just, c("left", "bottom"))
+  expect_equal(heading$x, grid::unit(0, "npc"))
+  expect_equal(out$corr, cor(as.matrix(colData(spe)[, columns])))
+  expect_error(spatialcorr(spe, columns, annotation_legend_param = list(2)), "named list")
+  expect_error(spatialcorr(spe, columns, label_title_gp = 20), "gpar")
+})

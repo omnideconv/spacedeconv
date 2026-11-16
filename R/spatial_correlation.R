@@ -18,6 +18,9 @@
 #'   "Source | Feature | Mean"; NULL omits it.
 #'   For example, "Method | Cell type | Mean relative abundance". This is free
 #'   text and does not affect the values or labels.
+#' @param annotation_legend_param Named list of category legend settings passed
+#'   to [ComplexHeatmap::HeatmapAnnotation()], such as `nrow` or `labels_gp`.
+#' @param label_title_gp Graphical parameters for the heading above row labels.
 #' @param ... Additional arguments to [ComplexHeatmap::Heatmap()], such as
 #'   `row_names_gp`, `column_title_gp`, or `heatmap_legend_param`. These override
 #'   styling defaults, but cannot override the matrix, ordering, labels, title,
@@ -37,7 +40,9 @@
 #' @export
 spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
                         category_colors = NULL, labels = NULL, title = NULL,
-                        label_title = "Source | Feature | Mean", ...) {
+                        label_title = "Source | Feature | Mean",
+                        annotation_legend_param = list(),
+                        label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"), ...) {
   if (!methods::is(spe, "SpatialExperiment")) stop("spe must be a SpatialExperiment.")
   if (!is.character(column) || length(column) < 2L || anyNA(column) || anyDuplicated(column)) {
     stop("column must contain at least two distinct column names.")
@@ -66,6 +71,13 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
   if (!is.null(label_title) && (!is.character(label_title) || length(label_title) != 1L || is.na(label_title))) {
     stop("label_title must be a single string or NULL.")
   }
+  if (!is.list(annotation_legend_param) ||
+      (length(annotation_legend_param) && (is.null(names(annotation_legend_param)) ||
+       anyNA(names(annotation_legend_param)) || any(names(annotation_legend_param) == "") ||
+       anyDuplicated(names(annotation_legend_param))))) {
+    stop("annotation_legend_param must be a uniquely named list.")
+  }
+  if (!inherits(label_title_gp, "gpar")) stop("label_title_gp must be a grid::gpar object.")
   extra <- list(...)
   reserved <- c("matrix", "name", "cluster_rows", "cluster_columns", "row_order",
                 "column_order", "row_split", "column_split", "row_km", "column_km",
@@ -102,10 +114,12 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
     }
     ann <- data.frame(Category = unname(categories[column]))
     colors <- list(Category = category_colors[groups])
+    legend_params <- list(title_gp = grid::gpar(fontsize = 18, fontface = "bold"),
+                          labels_gp = grid::gpar(fontsize = 12))
+    legend_params[names(annotation_legend_param)] <- annotation_legend_param
     top <- ComplexHeatmap::HeatmapAnnotation(df = ann, col = colors,
       show_annotation_name = FALSE,
-      annotation_legend_param = list(Category = list(
-        title_gp = grid::gpar(fontsize = 18, fontface = "bold"), labels_gp = grid::gpar(fontsize = 12))))
+      annotation_legend_param = list(Category = legend_params))
     left <- ComplexHeatmap::rowAnnotation(df = ann, col = colors, show_legend = FALSE,
       show_annotation_name = FALSE)
   }
@@ -122,7 +136,7 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
   args[names(extra)] <- extra
   if (!is.null(label_title) && isTRUE(args$show_row_names)) {
     # A text annotation retains its heading when the returned heatmap is redrawn.
-    heading_gp <- grid::gpar(fontsize = 12, fontface = "bold")
+    heading_gp <- label_title_gp
     label_width <- grid::unit.pmax(
       ComplexHeatmap::max_text_width(args$row_labels, gp = args$row_names_gp),
       ComplexHeatmap::max_text_width(label_title, gp = heading_gp))
@@ -132,6 +146,8 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
         just = "left", location = grid::unit(0, "npc"), width = label_width, show_name = TRUE),
       annotation_label = label_title, annotation_name_side = "top",
       annotation_name_rot = 0, annotation_name_gp = heading_gp)
+    args$right_annotation@anno_list$Labels@name_param$x <- grid::unit(0, "npc")
+    args$right_annotation@anno_list$Labels@name_param$just <- c("left", "bottom")
   }
   heatmap <- ComplexHeatmap::draw(do.call(ComplexHeatmap::Heatmap, args),
     merge_legends = TRUE, padding = grid::unit(c(2, 2, 2, 10), "mm"))
