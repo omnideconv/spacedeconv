@@ -17,7 +17,9 @@ plot_scatter(
   coord_range = NULL,
   title = "Comparative Scatterplot",
   xlab = value1,
-  ylab = value2
+  ylab = value2,
+  point_size = 2,
+  stats_size = 15
 )
 }
 \arguments{
@@ -46,6 +48,10 @@ axis limits in original data units. NULL uses automatic limits.}
 
 \item{xlab, ylab}{Axis labels; default to the selected column names. Use NULL
 to omit a label.}
+
+\item{point_size}{Size of the points, in ggplot2 size units.}
+
+\item{stats_size}{Font size of the Pearson r and p-value annotation, in points.}
 }
 \value{
 A scatterplot.

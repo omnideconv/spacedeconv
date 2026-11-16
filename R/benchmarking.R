@@ -19,13 +19,16 @@
 #' @param xlab,ylab Axis labels; default to the selected column names. Use NULL
 #'   to omit a label.
 #'
+#' @param point_size Size of the points, in ggplot2 size units.
+#' @param stats_size Font size of the Pearson r and p-value annotation, in points.
+#'
 #' @details The annotation reports Pearson's r and its standard correlation-test
 #'   p-value, which does not account for spatial dependence between spots.
 #'   The solid line is a linear regression; the dashed line represents equality.
 #'
 #' @return A scatterplot.
 #' @export
-plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot", xlab = value1, ylab = value2) {
+plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, log_scale = FALSE, dot_color = "#1f77b4", point_alpha = 0.8, fix_coords = FALSE, coord_range = NULL, title = "Comparative Scatterplot", xlab = value1, ylab = value2, point_size = 2, stats_size = 15) {
   if (!is.null(spe)) {
     if (!is(spe, "SpatialExperiment")) {
       cli::cli_alert_danger("Provided object has to be a SpatialExperiment")
@@ -101,7 +104,7 @@ plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, l
 
   # Construct plot
   plot <- ggplot(df, aes(x = value1, y = value2)) +
-    geom_point(color = dot_color, size = 2, alpha = point_alpha, shape = 16) +
+    geom_point(color = dot_color, size = point_size, alpha = point_alpha, shape = 16) +
     ggplot2::geom_smooth(method = "lm", color = "#454545", se = FALSE) + # Regression line
     geom_abline(slope = 1, linetype = "dashed", col = "gray") +
     ggplot2::labs(x = xlab, y = ylab) +
@@ -122,7 +125,7 @@ plot_scatter <- function(spe = NULL, value1, value2, spe1 = NULL, spe2 = NULL, l
     label = paste0(sprintf("r = %.2f", cor_value), "\n", p_label),
     x = grid::unit(0.05, "npc"), y = grid::unit(0.95, "npc"),
     just = c("left", "top"),
-    gp = grid::gpar(col = "#454545", fontsize = 15)))
+    gp = grid::gpar(col = "#454545", fontsize = stats_size)))
 
   # Apply log scale if log_scale is TRUE
   if (log_scale) {
