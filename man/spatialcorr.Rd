@@ -15,6 +15,7 @@ spatialcorr(
   label_title = "Source | Feature | Mean",
   annotation_legend_param = list(),
   label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"),
+  draw_param = list(),
   ...
 )
 }
@@ -27,7 +28,8 @@ in the desired display order.}
 \item{cor_method}{Correlation method: "pearson", "spearman", or "kendall".}
 
 \item{categories}{Optional named character vector mapping column names to
-categories, shown as color strips above and beside the heatmap.}
+categories, shown as color strips above and beside the heatmap. Contiguous
+category blocks are separated by thin lines and framed on the diagonal.}
 
 \item{category_colors}{Optional named vector mapping categories to colors.
 When NULL, colors are assigned automatically in category appearance order.}
@@ -46,6 +48,10 @@ text and does not affect the values or labels.}
 to \code{\link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation()}}, such as \code{nrow} or \code{labels_gp}.}
 
 \item{label_title_gp}{Graphical parameters for the heading above row labels.}
+
+\item{draw_param}{Named list of settings passed to \code{\link[ComplexHeatmap:draw-dispatch]{ComplexHeatmap::draw()}},
+such as \code{heatmap_legend_side}, \code{annotation_legend_side}, or \code{padding}.
+Cannot override the heatmap object, ordering, clustering, or splitting.}
 
 \item{...}{Additional arguments to \code{\link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap()}}, such as
 \code{row_names_gp}, \code{column_title_gp}, or \code{heatmap_legend_param}. These override

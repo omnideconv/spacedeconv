@@ -8,7 +8,8 @@
 #'   in the desired display order.
 #' @param cor_method Correlation method: "pearson", "spearman", or "kendall".
 #' @param categories Optional named character vector mapping column names to
-#'   categories, shown as color strips above and beside the heatmap.
+#'   categories, shown as color strips above and beside the heatmap. Contiguous
+#'   category blocks are separated by thin lines and framed on the diagonal.
 #' @param category_colors Optional named vector mapping categories to colors.
 #'   When NULL, colors are assigned automatically in category appearance order.
 #' @param labels Optional named character vector mapping column names to row
@@ -21,6 +22,9 @@
 #' @param annotation_legend_param Named list of category legend settings passed
 #'   to [ComplexHeatmap::HeatmapAnnotation()], such as `nrow` or `labels_gp`.
 #' @param label_title_gp Graphical parameters for the heading above row labels.
+#' @param draw_param Named list of settings passed to [ComplexHeatmap::draw()],
+#'   such as `heatmap_legend_side`, `annotation_legend_side`, or `padding`.
+#'   Cannot override the heatmap object, ordering, clustering, or splitting.
 #' @param ... Additional arguments to [ComplexHeatmap::Heatmap()], such as
 #'   `row_names_gp`, `column_title_gp`, or `heatmap_legend_param`. These override
 #'   styling defaults, but cannot override the matrix, ordering, labels, title,
@@ -42,7 +46,8 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
                         category_colors = NULL, labels = NULL, title = NULL,
                         label_title = "Source | Feature | Mean",
                         annotation_legend_param = list(),
-                        label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"), ...) {
+                        label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"),
+                        draw_param = list(), ...) {
   if (!methods::is(spe, "SpatialExperiment")) stop("spe must be a SpatialExperiment.")
   if (!is.character(column) || length(column) < 2L || anyNA(column) || anyDuplicated(column)) {
     stop("column must contain at least two distinct column names.")
@@ -89,6 +94,14 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
   if (any(names(extra) %in% reserved)) {
     stop("Cannot override fixed heatmap arguments: ", paste(intersect(names(extra), reserved), collapse = ", "))
   }
+  if (!is.list(draw_param) ||
+      (length(draw_param) && (is.null(names(draw_param)) || anyNA(names(draw_param)) ||
+       any(names(draw_param) == "") || anyDuplicated(names(draw_param))))) {
+    stop("draw_param must be a uniquely named list.")
+  }
+  if (any(names(draw_param) %in% c("object", reserved, "km", "split"))) {
+    stop("draw_param cannot override the heatmap object, ordering, clustering, or splitting.")
+  }
   m <- as.matrix(selected)
   spots <- colnames(spe)
   if (is.null(spots)) spots <- as.character(seq_len(ncol(spe)))
@@ -106,6 +119,8 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
   column <- colnames(m)
   r <- stats::cor(m, method = cor_method)
   if (any(!is.finite(r))) stop("Correlation calculation produced nonfinite values.")
+  # Start the page before measuring labels to avoid an empty first PDF page.
+  if (!identical(draw_param$newpage, FALSE)) grid::grid.newpage()
   top <- left <- NULL
   if (!is.null(categories)) {
     groups <- unique(unname(categories[column]))
@@ -120,7 +135,8 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
     top <- ComplexHeatmap::HeatmapAnnotation(df = ann, col = colors,
       show_annotation_name = FALSE,
       annotation_legend_param = list(Category = legend_params))
-    left <- ComplexHeatmap::rowAnnotation(df = ann, col = colors, show_legend = FALSE,
+    left <- ComplexHeatmap::rowAnnotation(Category_rows = ann$Category,
+      col = list(Category_rows = category_colors[groups]), show_legend = FALSE,
       show_annotation_name = FALSE)
   }
   legend_name <- switch(cor_method, pearson = "Pearson r", spearman = "Spearman rho", kendall = "Kendall tau")
@@ -149,8 +165,34 @@ spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
     args$right_annotation@anno_list$Labels@name_param$x <- grid::unit(0, "npc")
     args$right_annotation@anno_list$Labels@name_param$just <- c("left", "bottom")
   }
-  heatmap <- ComplexHeatmap::draw(do.call(ComplexHeatmap::Heatmap, args),
-    merge_legends = TRUE, padding = grid::unit(c(2, 2, 2, 10), "mm"))
+  if (!is.null(categories)) {
+    # Store decorations on the heatmap so they survive subsequent draw() calls.
+    edges <- c(0, cumsum(rle(unname(categories[column]))$lengths) / length(column))
+    boundaries <- head(edges[-1], -1)
+    user_post_fun <- args$post_fun
+    args$post_fun <- function(ht) {
+      line_gp <- grid::gpar(col = "black", lwd = 0.7)
+      ComplexHeatmap::decorate_heatmap_body(legend_name, {
+        if (length(boundaries)) grid::grid.segments(x0 = boundaries, x1 = boundaries, y0 = 0, y1 = 1, gp = line_gp)
+        if (length(boundaries)) grid::grid.segments(x0 = 0, x1 = 1, y0 = 1 - boundaries, y1 = 1 - boundaries, gp = line_gp)
+        centers <- (head(edges, -1) + tail(edges, -1)) / 2
+        grid::grid.rect(x = centers, y = 1 - centers, width = diff(edges), height = diff(edges),
+          gp = grid::gpar(fill = NA, col = "black", lwd = 3), name = "category_blocks")
+      })
+      ComplexHeatmap::decorate_annotation("Category", {
+        if (length(boundaries)) grid::grid.segments(x0 = boundaries, x1 = boundaries, y0 = 0, y1 = 1, gp = line_gp)
+      })
+      ComplexHeatmap::decorate_annotation("Category_rows", {
+        if (length(boundaries)) grid::grid.segments(x0 = 0, x1 = 1, y0 = 1 - boundaries, y1 = 1 - boundaries, gp = line_gp)
+      })
+      if (!is.null(user_post_fun)) user_post_fun(ht)
+    }
+  }
+  draw_args <- list(merge_legends = TRUE, padding = grid::unit(c(2, 2, 2, 10), "mm"))
+  draw_args[names(draw_param)] <- draw_param
+  draw_args$newpage <- FALSE
+  heatmap <- do.call(ComplexHeatmap::draw,
+    c(list(object = do.call(ComplexHeatmap::Heatmap, args)), draw_args))
   invisible(list(corr = r, heatmap = heatmap, used_spots = spots[valid],
                  excluded_spots = spots[!valid], excluded_columns = excluded_columns))
 }
