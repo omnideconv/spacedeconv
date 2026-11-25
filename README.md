@@ -15,41 +15,19 @@ Since many different packages need to be included, we highly recommend to instal
 
 First, a tool for fast dependency resolution is needed, therefore we recommend installing [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) (or mamba / conda with libmamba solver) if not already available:
 
-```r
+```bash
 "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
 ```
 
-Download the environment.yml file of this github repo:
+Download the environment file and the R installer, create the Conda environment, and run the installer in that environment.
 
-```r
-wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/environment.yml -O environment.yml
-```
-
-Create a new environment called "spacedeconv-env" via micromamba with the environment.yml file and flexible channel priority:
-
-```r
+```bash
+wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/tools/{environment.yml,install.R}
 micromamba env create -f environment.yml --channel-priority flexible
+micromamba run -n spacedeconv-env Rscript install.R
 ```
 
-Start R inside the spacedeconv-env conda environment:
-
-```r
-conda activate spacedeconv-env
-R
-```
-
-Install the missing packages that are not available via conda as well as _spacedeconv_:
-
-```r
-pak::pkg_install("cran::wrMisc", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("drieslab/Giotto@v3.3.2", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("xuranw/MuSiC@f21fe67f5670d5e9fca0ad7550abaae3423eb59c", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("saezlab/DOT", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("federicomarini/quantiseqr@1bc02b04350d190ed29de3f9c179f92ad70337af", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("saezlab/OmnipathR@v4.0.4", dependencies = FALSE, upgrade = FALSE)
-pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
-```
+The installer adds the remaining R packages and installs _spacedeconv_ from the repository's `main` branch.
 
 ## :sparkles: Features
 

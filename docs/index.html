@@ -82,18 +82,11 @@
 <p>Since many different packages need to be included, we highly recommend to install <em>spacedeconv</em> in a new Conda environment with the following commands.</p>
 <p>First, a tool for fast dependency resolution is needed, therefore we recommend installing <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html" class="external-link">micromamba</a> (or mamba / conda with libmamba solver) if not already available:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="st">"${SHELL}"</span> <span class="sc">&lt;</span>(curl <span class="sc">-</span>L micro.mamba.pm<span class="sc">/</span>install.sh)</span></code></pre></div>
-<p>Download the environment.yml file of this github repo:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>wget https<span class="sc">:</span><span class="er">//</span>raw.githubusercontent.com<span class="sc">/</span>omnideconv<span class="sc">/</span>spacedeconv<span class="sc">/</span>main<span class="sc">/</span>environment.yml <span class="sc">-</span>O environment.yml</span></code></pre></div>
-<p>Create a new environment called “spacedeconv-env” via micromamba with the environment.yml file and flexible channel priority:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>micromamba env create <span class="sc">-</span>f environment.yml <span class="sc">--</span>channel<span class="sc">-</span>priority flexible</span></code></pre></div>
-<p>Start R inside the spacedeconv-env conda environment:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>conda activate spacedeconv<span class="sc">-</span>env</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>R</span></code></pre></div>
-<p>Install the missing packages that are not available via conda as well as <em>spacedeconv</em>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"drieslab/Giotto@v3.3.2"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"omnideconv/spacedeconv"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span>, upgrade <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>Download the environment file and the R installer, create the Conda environment, and run the installer in that environment.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>wget https://raw.githubusercontent.com/omnideconv/spacedeconv/main/tools/{environment.yml,install.R}</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>micromamba env create -f environment.yml --channel-priority flexible</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>micromamba run -n spacedeconv-env Rscript install.R</span></code></pre></div>
+<p>The installer adds the remaining R packages and installs <em>spacedeconv</em> from the repository’s <code>main</code> branch.</p>
 </div>
 <div class="section level2">
 <h2 id="sparkles-features">
