@@ -27,6 +27,7 @@
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_dot.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_immunedeconv.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_rctd.html</loc></url>
+<url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_rectangle.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_spatial_dwls.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/build_model_spotlight.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/checkCol.html</loc></url>
@@ -48,6 +49,7 @@
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_immunedeconv.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_immunedeconv_mouse.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_rctd.html</loc></url>
+<url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_rectangle.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_spatial_dwls.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolute_spotlight.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/deconvolution_methods.html</loc></url>
@@ -70,6 +72,7 @@
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/is_hexcolor.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/make_baseplot.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/normalize.html</loc></url>
+<url><loc>https://felixpetschko.github.io/spacedeconv/reference/plot_boxplot.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/plot_celltype.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/plot_comparison.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/plot_gene.html</loc></url>
@@ -103,3 +106,4 @@
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/subsetSPE.html</loc></url>
 <url><loc>https://felixpetschko.github.io/spacedeconv/reference/topfeat.html</loc></url>
 </urlset>
+

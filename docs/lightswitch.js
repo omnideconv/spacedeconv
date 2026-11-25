@@ -35,7 +35,7 @@ function bsSetupThemeToggle () {
     document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
       const buttonTheme = element.getAttribute('data-bs-theme-value')
       const isActive = buttonTheme == theme
-
+      
       element.classList.toggle('active', isActive)
       element.setAttribute('aria-pressed', isActive)
 

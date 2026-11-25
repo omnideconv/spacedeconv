@@ -35,7 +35,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/spacedeconv_clustering.html">Clustering</a></li>
@@ -68,14 +68,14 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>FAQ</h1>
-
-
+            
+      
 
       <div class="d-none name"><code>spacedeconv_faq.Rmd</code></div>
     </div>
 
-
-
+    
+    
 <div class="section level4">
 <h4 id="my-spatialexperiment-contains-ensembl-ids--can-i-still-perform-deconvolution">My SpatialExperiment contains ENSEMBL IDs. Can i still perform
 deconvolution?<a class="anchor" aria-label="anchor" href="#my-spatialexperiment-contains-ensembl-ids--can-i-still-perform-deconvolution"></a>
@@ -134,14 +134,16 @@ this vignette.</p>
 <pre><code><span><span class="co">## → Using conda environment 'spacedeconv-env'</span></span></code></pre>
 <pre><code><span><span class="co">##             RCTD        SPOTlight             CARD      spatialDWLS </span></span>
 <span><span class="co">##           "rctd"      "spotlight"           "card"    "spatialdwls" </span></span>
-<span><span class="co">##    cell2location              DOT       MCPcounter             EPIC </span></span>
-<span><span class="co">##  "cell2location"            "dot"    "mcp_counter"           "epic" </span></span>
-<span><span class="co">##        quanTIseq            xCell        CIBERSORT CIBERSORT (abs.) </span></span>
-<span><span class="co">##      "quantiseq"          "xcell"      "cibersort"  "cibersort_abs" </span></span>
-<span><span class="co">##            TIMER     ConsensusTME             ABIS         ESTIMATE </span></span>
-<span><span class="co">##          "timer"  "consensus_tme"           "abis"       "estimate" </span></span>
-<span><span class="co">##      mMCPcounter        seqImmuCC              DCQ             BASE </span></span>
-<span><span class="co">##   "mmcp_counter"      "seqimmucc"            "dcq"           "base"</span></span></code></pre>
+<span><span class="co">##    cell2location              DOT        Rectangle       MCPcounter </span></span>
+<span><span class="co">##  "cell2location"            "dot"      "rectangle"    "mcp_counter" </span></span>
+<span><span class="co">##             EPIC        quanTIseq            xCell        CIBERSORT </span></span>
+<span><span class="co">##           "epic"      "quantiseq"          "xcell"      "cibersort" </span></span>
+<span><span class="co">## CIBERSORT (abs.)            TIMER     ConsensusTME             ABIS </span></span>
+<span><span class="co">##  "cibersort_abs"          "timer"  "consensus_tme"           "abis" </span></span>
+<span><span class="co">##         ESTIMATE      mMCPcounter        seqImmuCC              DCQ </span></span>
+<span><span class="co">##       "estimate"   "mmcp_counter"      "seqimmucc"            "dcq" </span></span>
+<span><span class="co">##             BASE </span></span>
+<span><span class="co">##           "base"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

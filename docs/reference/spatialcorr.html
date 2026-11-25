@@ -61,6 +61,9 @@ heatmap in the supplied column order, without clustering.</p>
 <span>  labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label_title <span class="op">=</span> <span class="st">"Source | Feature | Mean"</span>,</span>
+<span>  annotation_legend_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  label_title_gp <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>fontsize <span class="op">=</span> <span class="fl">12</span>, fontface <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>  draw_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -84,7 +87,8 @@ in the desired display order.</p></dd>
 
 <dt id="arg-categories">categories<a class="anchor" aria-label="anchor" href="#arg-categories"></a></dt>
 <dd><p>Optional named character vector mapping column names to
-categories, shown as color strips above and beside the heatmap.</p></dd>
+categories, shown as color strips above and beside the heatmap. Contiguous
+category blocks are separated by thin lines and framed on the diagonal.</p></dd>
 
 
 <dt id="arg-category-colors">category_colors<a class="anchor" aria-label="anchor" href="#arg-category-colors"></a></dt>
@@ -106,6 +110,21 @@ labels. Defaults to the column names.</p></dd>
 "Source | Feature | Mean"; NULL omits it.
 For example, "Method | Cell type | Mean relative abundance". This is free
 text and does not affect the values or labels.</p></dd>
+
+
+<dt id="arg-annotation-legend-param">annotation_legend_param<a class="anchor" aria-label="anchor" href="#arg-annotation-legend-param"></a></dt>
+<dd><p>Named list of category legend settings passed
+to <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/HeatmapAnnotation.html" class="external-link">ComplexHeatmap::HeatmapAnnotation()</a></code>, such as <code>nrow</code> or <code>labels_gp</code>.</p></dd>
+
+
+<dt id="arg-label-title-gp">label_title_gp<a class="anchor" aria-label="anchor" href="#arg-label-title-gp"></a></dt>
+<dd><p>Graphical parameters for the heading above row labels.</p></dd>
+
+
+<dt id="arg-draw-param">draw_param<a class="anchor" aria-label="anchor" href="#arg-draw-param"></a></dt>
+<dd><p>Named list of settings passed to <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html" class="external-link">ComplexHeatmap::draw()</a></code>,
+such as <code>heatmap_legend_side</code>, <code>annotation_legend_side</code>, or <code>padding</code>.
+Cannot override the heatmap object, ordering, clustering, or splitting.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -151,3 +170,4 @@ select explicit columns with <code>column</code> rather than a method prefix.</p
 
 
   </body></html>
+
