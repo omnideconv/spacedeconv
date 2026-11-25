@@ -47,6 +47,7 @@ pak::pkg_install("xuranw/MuSiC@f21fe67f5670d5e9fca0ad7550abaae3423eb59c", depend
 pak::pkg_install("YingMa0107/CARD@2d64b91abb5cdd0c7f576b1c5d4727c84e7c93a0", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("saezlab/DOT", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("federicomarini/quantiseqr@1bc02b04350d190ed29de3f9c179f92ad70337af", dependencies = FALSE, upgrade = FALSE)
+pak::pkg_install("saezlab/OmnipathR@v4.0.4", dependencies = FALSE, upgrade = FALSE)
 pak::pkg_install("omnideconv/spacedeconv", dependencies = FALSE, upgrade = FALSE)
 ```
 

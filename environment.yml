@@ -82,6 +82,7 @@ dependencies:
   - r-future.apply
   - r-ggrepel
   - r-jsonlite
+  - r-logger # required by the OmniPathR source installation
   - r-magrittr
   - r-matrixstats >= 0.55.0
   - r-progressr
@@ -99,7 +100,6 @@ dependencies:
   - bioconductor-delayedarray
   - bioconductor-decoupler
   - bioconductor-complexheatmap
-  - bioconductor-omnipathr # currently not available for R 4.4 at bioconda
   - bioconductor-dropletutils
   - bioconductor-spotlight = 1.6.3
   - bioconductor-scuttle
