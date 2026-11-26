@@ -9,7 +9,11 @@ _spacedeconv_ is a unified interface to first- and second-generation deconvoluti
 
 ## :arrow_down: Installation
 
-**Note:** The current _spacedeconv_ installation is only available for the **linux-64** platform.
+### System requirements
+
+The supplied Conda environment targets 64-bit Linux (x86_64) and uses R 4.3.3 and Python 3.10. In principle, all supported deconvolution methods can run on a single CPU core. CPU parallelism can be configured for RCTD (`n_cores`), Rectangle (`n_cpus`), and xCell (`parallel.sz`, passed through `immunedeconv`). cell2location can run on a CPU with `gpu = FALSE`, although we recommend a CUDA-compatible NVIDIA GPU for this method. Memory and runtime depend on the method and on the numbers of spots, genes, and reference cells.
+
+### Install with Conda
 
 Since many different packages need to be included, we highly recommend to install _spacedeconv_ in a new Conda environment with the following commands.
 
@@ -172,8 +176,6 @@ cite both our package and the method(s) you are using.
 First-generation methods use predefined signatures or gene sets and are accessed through immunedeconv ([Sturm et al., 2019](https://doi.org/10.1093/bioinformatics/btz363); [Merotto et al., 2024](https://doi.org/10.1093/bioadv/vbae032) for mouse deconvolution). Please cite both immunedeconv and the original method. Second-generation methods use a user-provided annotated single-cell or single-nucleus reference.
 
 “Originally developed for” indicates the method’s original application. Bulk methods are applied to spatial spots as individual samples in spacedeconv. Species entries describe the standard references available through spacedeconv. For reference-dependent methods, species support depends on a suitable annotated reference and compatible gene identifiers.
-
-All methods can run on CPUs; for cell2location, GPU acceleration is supported and recommended. Memory requirements depend on the method and dataset size, including the numbers of spots, genes, and reference cells.
 
 | Method | Generation | Originally developed for | Species | License | Citation |
 |---|---|---|---|---|---|
