@@ -78,7 +78,14 @@
 <h2 id="arrow_down-installation">
 <span class="emoji" data-emoji="arrow_down">⬇️</span> Installation<a class="anchor" aria-label="anchor" href="#arrow_down-installation"></a>
 </h2>
-<p><strong>Note:</strong> The current <em>spacedeconv</em> installation is only available for the <strong>linux-64</strong> platform.</p>
+<div class="section level3">
+<h3 id="system-requirements">System requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
+</h3>
+<p>The supplied Conda environment targets 64-bit Linux (x86_64) and uses R 4.3.3 and Python 3.10. In principle, all supported deconvolution methods can run on a single CPU core. CPU parallelism can be configured for RCTD (<code>n_cores</code>), Rectangle (<code>n_cpus</code>), and xCell (<code>parallel.sz</code>, passed through <code>immunedeconv</code>). cell2location can run on a CPU with <code>gpu = FALSE</code>, although we recommend a CUDA-compatible NVIDIA GPU for this method. Memory and runtime depend on the method and on the numbers of spots, genes, and reference cells.</p>
+</div>
+<div class="section level3">
+<h3 id="install-with-conda">Install with Conda<a class="anchor" aria-label="anchor" href="#install-with-conda"></a>
+</h3>
 <p>Since many different packages need to be included, we highly recommend to install <em>spacedeconv</em> in a new Conda environment with the following commands.</p>
 <p>First, a tool for fast dependency resolution is needed, therefore we recommend installing <a href="https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html" class="external-link">micromamba</a> (or mamba / conda with libmamba solver) if not already available:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="st">"</span><span class="va">${SHELL}</span><span class="st">"</span> <span class="op">&lt;(</span><span class="ex">curl</span> <span class="at">-L</span> micro.mamba.pm/install.sh<span class="op">)</span></span></code></pre></div>
@@ -87,6 +94,7 @@
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">micromamba</span> env create <span class="at">-f</span> environment.yml <span class="at">--channel-priority</span> flexible</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">micromamba</span> run <span class="at">-n</span> spacedeconv-env Rscript install.R</span></code></pre></div>
 <p>The installer adds the remaining R packages and installs <em>spacedeconv</em> from the repository’s <code>main</code> branch.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="sparkles-features">
@@ -213,7 +221,6 @@
 </blockquote>
 <p>First-generation methods use predefined signatures or gene sets and are accessed through immunedeconv (<a href="https://doi.org/10.1093/bioinformatics/btz363" class="external-link">Sturm et al., 2019</a>; <a href="https://doi.org/10.1093/bioadv/vbae032" class="external-link">Merotto et al., 2024</a> for mouse deconvolution). Please cite both immunedeconv and the original method. Second-generation methods use a user-provided annotated single-cell or single-nucleus reference.</p>
 <p>“Originally developed for” indicates the method’s original application. Bulk methods are applied to spatial spots as individual samples in spacedeconv. Species entries describe the standard references available through spacedeconv. For reference-dependent methods, species support depends on a suitable annotated reference and compatible gene identifiers.</p>
-<p>All methods can run on CPUs; for cell2location, GPU acceleration is supported and recommended. Memory requirements depend on the method and dataset size, including the numbers of spots, genes, and reference cells.</p>
 <table style="width:99%;" class="table">
 <colgroup>
 <col width="16%">
