@@ -16,14 +16,14 @@ convert_human_to_mouse <- function(humangenes) {
     mappedSymbols <- sapply(splitGenes, function(x) {
       gns <- tryCatch(
         {
-          mapIds(org.Hs.eg.db, x, "ENTREZID", "SYMBOL")
+          AnnotationDbi::mapIds(org.Hs.eg.db::org.Hs.eg.db, x, "ENTREZID", "SYMBOL")
         },
         error = function(e) NA
       )
       if (!is.na(gns)) {
         mapped <- tryCatch(
           {
-            select(Orthology.eg.db, gns, "Mus_musculus", "Homo_sapiens")
+            AnnotationDbi::select(Orthology.eg.db::Orthology.eg.db, gns, "Mus_musculus", "Homo_sapiens")
           },
           error = function(e) {
             return(NA)
@@ -32,7 +32,7 @@ convert_human_to_mouse <- function(humangenes) {
         if (!is.na(mapped$Mus_musculus)) {
           msymb <- tryCatch(
             {
-              mapIds(org.Mm.eg.db, as.character(mapped$Mus_musculus), "SYMBOL", "ENTREZID")
+              AnnotationDbi::mapIds(org.Mm.eg.db::org.Mm.eg.db, as.character(mapped$Mus_musculus), "SYMBOL", "ENTREZID")
             },
             error = function(e) NA
           )
@@ -72,14 +72,14 @@ convert_mouse_to_human <- function(mousegenes) {
     mappedSymbols <- sapply(splitGenes, function(x) {
       gns <- tryCatch(
         {
-          mapIds(org.Mm.eg.db, x, "ENTREZID", "SYMBOL")
+          AnnotationDbi::mapIds(org.Mm.eg.db::org.Mm.eg.db, x, "ENTREZID", "SYMBOL")
         },
         error = function(e) NA
       )
       if (!is.na(gns)) {
         mapped <- tryCatch(
           {
-            select(Orthology.eg.db, gns, "Homo_sapiens", "Mus_musculus")
+            AnnotationDbi::select(Orthology.eg.db::Orthology.eg.db, gns, "Homo_sapiens", "Mus_musculus")
           },
           error = function(e) {
             return(NA)
@@ -88,7 +88,7 @@ convert_mouse_to_human <- function(mousegenes) {
         if (!is.na(mapped$Homo_sapiens)) {
           hsymb <- tryCatch(
             {
-              mapIds(org.Hs.eg.db, as.character(mapped$Homo_sapiens), "SYMBOL", "ENTREZID")
+              AnnotationDbi::mapIds(org.Hs.eg.db::org.Hs.eg.db, as.character(mapped$Homo_sapiens), "SYMBOL", "ENTREZID")
             },
             error = function(e) NA
           )

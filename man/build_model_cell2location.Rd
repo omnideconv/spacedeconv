@@ -13,10 +13,13 @@ build_model_cell2location(
   cell_count_cutoff = 5,
   cell_percentage_cutoff = 0.03,
   nonz_mean_cutoff = 1.12,
-  gpu = TRUE
+  gpu = TRUE,
+  posterior_samples = 1000
 )
 }
 \arguments{
+\item{posterior_samples}{Number of samples for posterior summaries.}
+
 \item{single_cell_obj}{\code{SingleCellExperiment} containing reference expression.}
 
 \item{epochs}{Number of training epochs.}

@@ -33,10 +33,14 @@ build_model(
 
 \item{assay_sp}{Spatial assay to use (default: "counts").}
 
-\item{...}{Additional parameters passed to the selected method.}
+\item{...}{Additional parameters passed to the selected method. SPOTlight
+requires \code{markers}, a data frame with \code{gene}, \code{cluster} and \code{mean.AUC} columns;
+see \code{\link[=build_model_spotlight]{build_model_spotlight()}}.}
 }
 \value{
-A cell-type signature matrix, or \code{NULL} for methods that build internally.
+A cell-type signature matrix, a method-specific model (including a
+Python \code{RectangleSignatureResult} for Rectangle), or \code{NULL} for methods that
+build internally.
 }
 \description{
 Computes a cell-type signature from annotated scRNA-seq data or dispatches to

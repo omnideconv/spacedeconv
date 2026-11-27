@@ -23,6 +23,7 @@ reference:
       - deconvolute
       - build_and_deconvolute
       - available_results
+      - import_deconvolution_results
   - title: Custom access to methods
     contents:
       - starts_with("build_model_")
@@ -37,6 +38,7 @@ reference:
       - plot_most_abundant
       - plot_comparison
       - plot_scatter
+      - plot_boxplot
       - plot_overview
   - title: Sample Data
     contents:
@@ -71,7 +73,6 @@ reference:
       - check_and_install
       - convertImmunedeconvMatrix
       - doGiottoWorkflow
-      - getMarkersSPOTlight
       - getMatricesFromSCE
       - get_results_from_object
       - required_packages

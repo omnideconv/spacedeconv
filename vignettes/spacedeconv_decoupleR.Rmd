@@ -1,7 +1,6 @@
 ---
 title: "DecoupleR integration"
 output: html_document
-date: "2024-02-27"
 vignette: >
   %\VignetteIndexEntry{DecoupleR integration}
   %\VignetteEngine{knitr::knitr}
@@ -19,7 +18,7 @@ library(spacedeconv)
 library(decoupleR)
 ```
 
-To compute activities you need to obtain a reference from OmniPathR. The `method` can be one of "progeny", "dorothea" or "collectri". 
+Built-in references can be retrieved via decoupleR by selecting the reference database with the `method` argument: "progeny", "dorothea", or "collectri". Custom reference tables can also be supplied directly, as shown below.
 
 ```{r, collapse=TRUE}
 ref <- get_decoupleR_reference(method = "progeny", organism = "human")
@@ -34,4 +33,44 @@ spatial_data_3 <- preprocess(spatial_data_3)
 spatial_data_3 <- spacedeconv::normalize(spatial_data_3)
 
 spe <- compute_activities(spatial_data_3, reference = ref, method = "wmean", assay = "cpm")
+```
+
+Custom references can be passed directly to `compute_activities()` as a table
+with `source` (gene set or regulator), `target` (gene identifier), and `weight`.
+Use weight 1 for unsigned membership, or biologically justified weights when
+available. Gene identifiers must match the expression assay row names and
+organism. At least five matching genes per set are required, and each
+source-target pair should occur only once. Activity scoring methods such as ULM use the supplied weights, whereas
+AUCell, FGSEA, GSVA, and ORA ignore them.
+
+```{r, eval=FALSE}
+# Illustrative genes only; use a validated signature or database gene set for analysis.
+ref <- data.frame(
+  source = rep("my_signature", 5),
+  target = c("STAT1", "IRF1", "CXCL9", "CXCL10", "IDO1"),
+  weight = rep(1, 5)
+)
+spe <- compute_activities(spatial_data_3, reference = ref, method = "ulm", assay = "cpm")
+# Scores are stored in colData(spe), e.g. spe$decoupleR_my_signature.
+```
+
+For example, [MSigDB Hallmark gene sets](https://www.gsea-msigdb.org/gsea/msigdb/collections.jsp)
+can be retrieved via decoupleR and converted to a custom reference. This example
+uses human gene symbols. The initial download retrieves the full MSigDB resource
+and may take a while.
+
+```{r, eval=FALSE}
+msigdb <- decoupleR::get_resource("MSigDB")
+hallmark <- subset(msigdb, collection == "hallmark")
+ref <- unique(data.frame(source = hallmark$geneset, target = hallmark$genesymbol))
+ref <- ref[!is.na(ref$target) & nzchar(ref$target), ]
+ref$weight <- 1
+
+# Optional: keep only selected Hallmark gene sets.
+# ref <- ref[ref$source %in% c("HALLMARK_HYPOXIA", "HALLMARK_INTERFERON_GAMMA_RESPONSE"), ]
+
+spe <- compute_activities(spatial_data_3, reference = ref, method = "ulm", assay = "cpm")
+# Example result columns:
+# spe$decoupleR_HALLMARK_HYPOXIA
+# spe$decoupleR_HALLMARK_INTERFERON_GAMMA_RESPONSE
 ```

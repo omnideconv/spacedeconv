@@ -21,6 +21,8 @@ normalize <- function(object, method = "cpm", assay = "counts") {
     stop("Parameter 'object' is null or missing, but is required!")
   }
 
+  method <- match.arg(method, c("cpm", "logcpm", "logpf"))
+
   # check if rownames and colnames are set
   if (checkRowColumn(object)) {
     stop("Rownames or colnames not set for expression object but need to be available!")
@@ -33,13 +35,13 @@ normalize <- function(object, method = "cpm", assay = "counts") {
 
   if (class(object)[[1]] %in% c("SingleCellExperiment", "SpatialExperiment")) {
     if (method == "cpm") {
-      SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(SummarizedExperiment::assay(object, assay)), "dgCMatrix")
+      SummarizedExperiment::assay(object, "cpm") <- as(edgeR::cpm(SummarizedExperiment::assay(object, assay)), "CsparseMatrix")
     } else if (method == "logcpm") {
-      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(SummarizedExperiment::assay(object, assay)) + 1), "dgCMatrix") # log(cpm+1)
+      SummarizedExperiment::assay(object, "logcpm") <- as(log(edgeR::cpm(SummarizedExperiment::assay(object, assay)) + 1), "CsparseMatrix") # log(cpm+1)
     } else if (method == "logpf") {
       assay_data <- SummarizedExperiment::assay(object, assay) + 1
       mean_read_count <- Matrix::rowMeans(assay_data)
-      SummarizedExperiment::assay(object, "logpf") <- as(log(assay_data / (mean_read_count + 1)), "dgCMatrix")
+      SummarizedExperiment::assay(object, "logpf") <- as(log(assay_data / (mean_read_count + 1)), "CsparseMatrix")
     }
   } else {
     message("normalization currently only implemented for SingleCellExperiment and SpatialExperiment")

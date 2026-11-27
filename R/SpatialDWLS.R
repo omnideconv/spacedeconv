@@ -28,7 +28,7 @@ build_model_spatial_dwls <- function(single_cell_obj, assay_sc = "counts", marke
     if (is.na(python_path)) {
       stop("Conda environment '", envname, "' not found.", call. = FALSE)
     }
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
+    giotto_instructions <- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
   # check if requested assay exists
@@ -101,7 +101,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
     if (is.na(python_path)) {
       stop("Conda environment '", envname, "' not found.", call. = FALSE)
     }
-    giotto_instructions <<- Giotto::createGiottoInstructions(python_path = python_path)
+    giotto_instructions <- Giotto::createGiottoInstructions(python_path = python_path)
   }
 
 
@@ -113,6 +113,7 @@ deconvolute_spatial_dwls <- function(spatial_obj, signature, assay_sp = "counts"
 
   df <- data.frame(Giotto::getSpatialEnrichment(deconvolution, output = "data.table"))
 
+  rownames(df) <- df$cell_ID
   df$cell_ID <- NULL
 
   # attach method token

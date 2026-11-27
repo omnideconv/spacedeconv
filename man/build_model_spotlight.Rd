@@ -10,10 +10,13 @@ build_model_spotlight(
   spatial_obj,
   assay_sc = "counts",
   assay_sp = "counts",
-  markers = NULL
+  markers = NULL,
+  ...
 )
 }
 \arguments{
+\item{...}{Additional training parameters passed to \code{SPOTlight::trainNMF()}.}
+
 \item{single_cell_obj}{\code{SingleCellExperiment}.}
 
 \item{cell_type_col}{Column with cell type labels.}
@@ -24,10 +27,12 @@ build_model_spotlight(
 
 \item{assay_sp}{Spatial assay to use.}
 
-\item{markers}{Optional marker-gene data frame. If \code{NULL}, markers are
-computed from \code{single_cell_obj} using the authors' suggested approach.}
+\item{markers}{Required data.frame or S4Vectors DataFrame with columns \code{gene},
+\code{cluster} and numeric \code{mean.AUC} weights in (0, 1]. Cluster labels must match
+\code{cell_type_col}. Each cell type needs a marker present in both expression
+objects. Gene/cluster pairs must be unique. \code{NULL} raises an error.}
 }
 \description{
 Trains the SPOTlight model using single-cell and spatial data. Marker
-genes can be supplied or computed from the single-cell object.
+genes must be supplied explicitly; automatic marker discovery is not supported.
 }

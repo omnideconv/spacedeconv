@@ -1,150 +1,198 @@
-# library(spacedeconv)
-# WARNING: the following functions were not found although spacedeconv was loaded
-# "cor.mtest"
-
-# library(corrplot)
-
-#' Create a Correlation Plot
+#' Create a Correlation Heatmap
 #'
-#' Computes a correlation matrix across selected result columns and visualizes
-#' it with `corrplot`, including adjusted p-values.
-#' @param spe `SpatialExperiment`.
-#' @param method Method prefix to select result columns (e.g., a deconvolution
-#' token or decoupleR output such as "cell2location").
-#' @param adjust Method to adjust p-values for multiple testing (see
-#' `stats::p.adjust.methods`).
-#' @param variables Optional vector of column names to use instead of `method`.
-#' @param sig.level Significance level(s) for marking correlations.
-#' @param type Character, 'full' 'upper' or 'lower' (default), display full matrix, lower triangular or upper triangular matrix.
-#' @param diag Logical, whether display the correlation coefficients on the principal diagonal. default is FALSE
-#' @param order Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.
-#' @param insig If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).
-#' @param plot_layout Corrplot layout: "circle", "square", "ellipse", "number",
-#' "shade", "color", or "pie".
-#' @param addCoef.col to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.
-#' @param ... Additional parameters passed to `corrplot()`.
+#' Correlates numeric columns of `colData(spe)` across spots and draws a full
+#' heatmap in the supplied column order, without clustering.
+#'
+#' @param spe A `SpatialExperiment`.
+#' @param column Character vector of at least two numeric `colData` column names,
+#'   in the desired display order.
+#' @param cor_method Correlation method: "pearson", "spearman", or "kendall".
+#' @param categories Optional named character vector mapping column names to
+#'   categories, shown as color strips above and beside the heatmap. Contiguous
+#'   category blocks are separated by thin lines and framed on the diagonal.
+#' @param category_colors Optional named vector mapping categories to colors.
+#'   When NULL, colors are assigned automatically in category appearance order.
+#' @param labels Optional named character vector mapping column names to row
+#'   labels. Defaults to the column names.
+#' @param title Optional heatmap title; NULL omits it.
+#' @param label_title Heading above the row labels, defaulting to
+#'   "Source | Feature | Mean"; NULL omits it.
+#'   For example, "Method | Cell type | Mean relative abundance". This is free
+#'   text and does not affect the values or labels.
+#' @param annotation_legend_param Named list of category legend settings passed
+#'   to [ComplexHeatmap::HeatmapAnnotation()], such as `nrow` or `labels_gp`.
+#' @param label_title_gp Graphical parameters for the heading above row labels.
+#' @param draw_param Named list of settings passed to [ComplexHeatmap::draw()],
+#'   such as `heatmap_legend_side`, `annotation_legend_side`, or `padding`.
+#'   Cannot override the heatmap object, ordering, clustering, or splitting.
+#' @param ... Additional arguments to [ComplexHeatmap::Heatmap()], such as
+#'   `row_names_gp`, `column_title_gp`, or `heatmap_legend_param`. These override
+#'   styling defaults, but cannot override the matrix, ordering, labels, title,
+#'   category annotations, or enable clustering or splitting.
+#'
+#' @details Values are used as supplied: no normalization, cell-type aggregation,
+#'   or percentage conversion is performed. Spots with any nonfinite selected
+#'   value are excluded jointly, then constant columns are excluded, with warnings.
+#'   At least two spots and two variable columns must remain. No p-values are
+#'   calculated. This interface replaces the former corrplot-based interface;
+#'   select explicit columns with `column` rather than a method prefix.
+#'
+#' @return Invisibly, a list containing `corr` (correlation matrix), `heatmap`
+#'   (the drawn ComplexHeatmap object), `used_spots`, `excluded_spots` (spot names,
+#'   or positional identifiers if unnamed), and `excluded_columns` (constant
+#'   column names). The heatmap can be redrawn with `ComplexHeatmap::draw()`.
 #' @export
-
-spatialcorr <- function(spe,
-                        method, # method to used for correlation analysis - deconvolution method or decoupleR e.g. "cell2location"
-                        adjust = "fdr", # method used to adjust p-values for multiple testing
-                        variables = NULL, # if not provided, the function selects variables based on the specified method
-                        sig.level = 0.05,
-                        type = "lower",
-                        diag = FALSE,
-                        order = "original",
-                        plot_layout = "color",
-                        insig = "label_sig", # to label or not the significant values
-                        addCoef.col = NULL,
-                        ...) {
-  # CHECKS
-  # spe
-  if (is.null(spe)) {
-    stop("Parameter 'spe' is null or missing, but is required.")
+spatialcorr <- function(spe, column, cor_method = "pearson", categories = NULL,
+                        category_colors = NULL, labels = NULL, title = NULL,
+                        label_title = "Source | Feature | Mean",
+                        annotation_legend_param = list(),
+                        label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"),
+                        draw_param = list(), ...) {
+  if (!methods::is(spe, "SpatialExperiment")) stop("spe must be a SpatialExperiment.")
+  if (!is.character(column) || length(column) < 2L || anyNA(column) || anyDuplicated(column)) {
+    stop("column must contain at least two distinct column names.")
   }
-
-  # method availability in the spe object
-  if (!any(startsWith(method, available_results(spe)) | startsWith(available_results(spe), method))) {
-    stop("The specified 'method' does not exist in the spe.")
+  if (any(!column %in% names(SummarizedExperiment::colData(spe)))) {
+    stop("One or more selected columns do not exist in colData(spe).")
   }
-
-  # method and variables missing
-  if (is.null(method) && is.null(variables)) {
-    stop("Parameter 'method' and 'variables' is null or missing, but one of them is required.")
+  selected <- SummarizedExperiment::colData(spe)[, column, drop = FALSE]
+  if (!all(vapply(selected, function(x) is.numeric(x) && is.null(dim(x)), logical(1)))) {
+    stop("Selected columns must be numeric vectors.")
   }
-
-  # adjust - check if its a valid method
-  valid_adjust_methods <- c("bonferroni", "holm", "hochberg", "hommel", "fdr")
-  if (!(adjust %in% valid_adjust_methods)) {
-    stop("Invalid adjustment method. Choose one of: ", paste(valid_adjust_methods, collapse = ", "))
+  cor_method <- match.arg(cor_method, c("pearson", "spearman", "kendall"))
+  # Match metadata by names, never by the order of the supplied vectors.
+  check_mapping <- function(x, keys, argument) {
+    if (!is.character(x) || is.null(names(x)) || anyNA(x) ||
+        anyNA(names(x)) || anyDuplicated(names(x)) || any(!keys %in% names(x))) {
+      stop(argument, " must be a named character vector covering all selected names.")
+    }
   }
-
-  # variables - check if its a vector and if they exist in the object
-  if (!is.null(variables) && !is.vector(variables)) {
-    stop("'variables' must be a vector.")
+  if (!is.null(labels)) check_mapping(labels, column, "labels")
+  if (!is.null(categories)) check_mapping(categories, column, "categories")
+  if (!is.null(category_colors)) {
+    if (is.null(categories)) stop("category_colors requires categories.")
+    check_mapping(category_colors, unique(categories[column]), "category_colors")
   }
-
-  if (!is.null(variables) && any(!variables %in% colnames(colData(spe)))) {
-    stop("One or more specified variables do not exist in the spe object.")
+  if (!is.null(label_title) && (!is.character(label_title) || length(label_title) != 1L || is.na(label_title))) {
+    stop("label_title must be a single string or NULL.")
   }
-
-  # sig.level
-  if (sig.level <= 0 || sig.level >= 1) {
-    stop("'sig.level' must be between 0 and 1.")
+  if (!is.list(annotation_legend_param) ||
+      (length(annotation_legend_param) && (is.null(names(annotation_legend_param)) ||
+       anyNA(names(annotation_legend_param)) || any(names(annotation_legend_param) == "") ||
+       anyDuplicated(names(annotation_legend_param))))) {
+    stop("annotation_legend_param must be a uniquely named list.")
   }
-
-  # check if valid type
-  valid_type <- c("full", "lower", "upper")
-  if (!(type %in% valid_type)) {
-    stop("Invalid argument provided for the 'type' parameter. Choose one of: ", paste(valid_type, collapse = ", "))
+  if (!inherits(label_title_gp, "gpar")) stop("label_title_gp must be a grid::gpar object.")
+  extra <- list(...)
+  reserved <- c("matrix", "name", "cluster_rows", "cluster_columns", "row_order",
+                "column_order", "row_split", "column_split", "row_km", "column_km",
+                "row_labels", "column_labels", "column_title", "top_annotation",
+                "left_annotation", "right_annotation")
+  if (length(extra) && (is.null(names(extra)) || any(names(extra) == "") || anyDuplicated(names(extra)))) {
+    stop("Additional heatmap arguments must have unique names.")
   }
-
-  # Check if diag is logical
-  if (!is.logical(diag)) {
-    stop("Parameter 'diag' must be logical (TRUE or FALSE).")
+  if (any(names(extra) %in% reserved)) {
+    stop("Cannot override fixed heatmap arguments: ", paste(intersect(names(extra), reserved), collapse = ", "))
   }
-
-  # check if valid order
-  valid_order <- c("original", "AOE", "FPC", "hclust", "alphabet")
-  if (!(order %in% valid_order)) {
-    stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_order, collapse = ", "))
+  if (!is.list(draw_param) ||
+      (length(draw_param) && (is.null(names(draw_param)) || anyNA(names(draw_param)) ||
+       any(names(draw_param) == "") || anyDuplicated(names(draw_param))))) {
+    stop("draw_param must be a uniquely named list.")
   }
-
-  # check if valid plot_layout
-  valid_plot <- c("circle", "square", "ellipse", "number", "shade", "color", "pie")
-  if (!(plot_layout %in% valid_plot)) {
-    stop("Invalid argument provided for the 'order' parameter. Choose one of: ", paste(valid_plot, collapse = ", "))
+  if (any(names(draw_param) %in% c("object", reserved, "km", "split"))) {
+    stop("draw_param cannot override the heatmap object, ordering, clustering, or splitting.")
   }
-
-  # check if valid plot_layout
-  if (plot_layout == "number") {
-    print("Consider setting the 'insig' parameter to: 'blank', otherwise the significance markers (asterisks or X) would overlap with the correlation values")
+  m <- as.matrix(selected)
+  spots <- colnames(spe)
+  if (is.null(spots)) spots <- as.character(seq_len(ncol(spe)))
+  valid <- rowSums(!is.finite(m)) == 0L
+  if (any(!valid)) warning("Excluded ", sum(!valid), " spots with nonfinite selected values.", call. = FALSE)
+  m <- m[valid, , drop = FALSE]
+  if (nrow(m) < 2L) stop("At least two complete spots are required.")
+  variable <- vapply(seq_len(ncol(m)), function(i) length(unique(m[, i])) > 1L, logical(1))
+  excluded_columns <- column[!variable]
+  if (length(excluded_columns)) {
+    warning("Excluded constant columns: ", paste(excluded_columns, collapse = ", "), call. = FALSE)
   }
-
-
-
-  # Select variables of interests
-  # If variables is not provided but method is specified, the function selects variables based on those available in the dataset that start with the specified method.
-  if (is.null(variables) && !is.null(method)) {
-    selvar <- available_results(spe)[startsWith(available_results(spe), method)]
-
-    # If variables is provided, it selects the intersection of the specified variables and the available variables in the dataset.
-  } else {
-    selvar <- intersect(available_results(spe), variables)
+  m <- m[, variable, drop = FALSE]
+  if (ncol(m) < 2L) stop("At least two nonconstant columns are required.")
+  column <- colnames(m)
+  r <- stats::cor(m, method = cor_method)
+  if (any(!is.finite(r))) stop("Correlation calculation produced nonfinite values.")
+  # Start the page before measuring labels to avoid an empty first PDF page.
+  if (!identical(draw_param$newpage, FALSE)) grid::grid.newpage()
+  top <- left <- NULL
+  if (!is.null(categories)) {
+    groups <- unique(unname(categories[column]))
+    if (is.null(category_colors)) {
+      category_colors <- setNames(grDevices::hcl.colors(length(groups), "Dark 3"), groups)
+    }
+    ann <- data.frame(Category = unname(categories[column]))
+    colors <- list(Category = category_colors[groups])
+    legend_params <- list(title_gp = grid::gpar(fontsize = 18, fontface = "bold"),
+                          labels_gp = grid::gpar(fontsize = 12))
+    legend_params[names(annotation_legend_param)] <- annotation_legend_param
+    top <- ComplexHeatmap::HeatmapAnnotation(df = ann, col = colors,
+      show_annotation_name = FALSE,
+      annotation_legend_param = list(Category = legend_params))
+    left <- ComplexHeatmap::rowAnnotation(Category_rows = ann$Category,
+      col = list(Category_rows = category_colors[groups]), show_legend = FALSE,
+      show_annotation_name = FALSE)
   }
-  m <- as.matrix(colData(spe)[, selvar])
-
-  cor_res <- cor.mtest(m)
-  r <- cor_res$uppCI # correlation
-  p <- cor_res$p # p-value
-
-  # Correct for multiple testing
-  tmp <- p.adjust(p[lower.tri(p)], method = adjust) # Adjust p-values for multiple testing using the specified method
-  p.adj <- matrix(1, ncol = ncol(p), nrow = nrow(p))
-  colnames(p.adj) <- colnames(r)
-  rownames(p.adj) <- rownames(r)
-  p.adj[lower.tri(p.adj)] <- tmp
-  p.adj[upper.tri(p.adj)] <- t(p.adj)[upper.tri(p.adj)] # symmetrical matrix
-  diag(p.adj) <- 0 # diag set to 0
-
-  corrplot(r,
-    p.mat = p.adj,
-    method = plot_layout, # default is color
-    diag = diag, # default is FALSE, or defined above
-    type = type, # default is "lower", or else defined above
-    sig.level = sig.level,
-    insig = insig, # add significant level asterisks
-    pch.cex = 0.9,
-    pch.col = "black",
-    tl.col = "black",
-    mar = c(0, 0, 2, 0),
-    cex.lab = 1.6,
-    cex.main = 1.5,
-    order = order, # default is "original", or else defined above
-    addCoef.col = addCoef.col, # default is NULL
-    ...
-  )
-
-  # Return matrix of correlations and adjusted p-values
-  invisible(list(corr = r, padj = p.adj))
+  legend_name <- switch(cor_method, pearson = "Pearson r", spearman = "Spearman rho", kendall = "Kendall tau")
+  args <- list(matrix = r, name = legend_name,
+    col = circlize::colorRamp2(c(-1, 0, 1), c("#2166AC", "#FFFFFF", "#B2182B")),
+    cluster_rows = FALSE, cluster_columns = FALSE, top_annotation = top, left_annotation = left,
+    row_labels = if (is.null(labels)) column else unname(labels[column]),
+    row_names_max_width = grid::unit(13, "cm"), row_names_gp = grid::gpar(fontsize = 10.5),
+    show_row_names = TRUE, show_column_names = FALSE, column_title = if (is.null(title)) character(0) else title,
+    column_title_gp = grid::gpar(fontsize = 22), border = TRUE,
+    heatmap_legend_param = list(at = c(-1, -.5, 0, .5, 1),
+      title_gp = grid::gpar(fontsize = 18, fontface = "bold"), labels_gp = grid::gpar(fontsize = 12)))
+  args[names(extra)] <- extra
+  if (!is.null(label_title) && isTRUE(args$show_row_names)) {
+    # A text annotation retains its heading when the returned heatmap is redrawn.
+    heading_gp <- label_title_gp
+    label_width <- grid::unit.pmax(
+      ComplexHeatmap::max_text_width(args$row_labels, gp = args$row_names_gp),
+      ComplexHeatmap::max_text_width(label_title, gp = heading_gp))
+    args$show_row_names <- FALSE
+    args$right_annotation <- ComplexHeatmap::rowAnnotation(
+      Labels = ComplexHeatmap::anno_text(args$row_labels, gp = args$row_names_gp,
+        just = "left", location = grid::unit(0, "npc"), width = label_width, show_name = TRUE),
+      annotation_label = label_title, annotation_name_side = "top",
+      annotation_name_rot = 0, annotation_name_gp = heading_gp)
+    args$right_annotation@anno_list$Labels@name_param$x <- grid::unit(0, "npc")
+    args$right_annotation@anno_list$Labels@name_param$just <- c("left", "bottom")
+  }
+  if (!is.null(categories)) {
+    # Store decorations on the heatmap so they survive subsequent draw() calls.
+    edges <- c(0, cumsum(rle(unname(categories[column]))$lengths) / length(column))
+    boundaries <- head(edges[-1], -1)
+    user_post_fun <- args$post_fun
+    args$post_fun <- function(ht) {
+      line_gp <- grid::gpar(col = "black", lwd = 0.7)
+      ComplexHeatmap::decorate_heatmap_body(legend_name, {
+        if (length(boundaries)) grid::grid.segments(x0 = boundaries, x1 = boundaries, y0 = 0, y1 = 1, gp = line_gp)
+        if (length(boundaries)) grid::grid.segments(x0 = 0, x1 = 1, y0 = 1 - boundaries, y1 = 1 - boundaries, gp = line_gp)
+        centers <- (head(edges, -1) + tail(edges, -1)) / 2
+        grid::grid.rect(x = centers, y = 1 - centers, width = diff(edges), height = diff(edges),
+          gp = grid::gpar(fill = NA, col = "black", lwd = 3), name = "category_blocks")
+      })
+      ComplexHeatmap::decorate_annotation("Category", {
+        if (length(boundaries)) grid::grid.segments(x0 = boundaries, x1 = boundaries, y0 = 0, y1 = 1, gp = line_gp)
+      })
+      ComplexHeatmap::decorate_annotation("Category_rows", {
+        if (length(boundaries)) grid::grid.segments(x0 = 0, x1 = 1, y0 = 1 - boundaries, y1 = 1 - boundaries, gp = line_gp)
+      })
+      if (!is.null(user_post_fun)) user_post_fun(ht)
+    }
+  }
+  draw_args <- list(merge_legends = TRUE, padding = grid::unit(c(2, 2, 2, 10), "mm"))
+  draw_args[names(draw_param)] <- draw_param
+  draw_args$newpage <- FALSE
+  heatmap <- do.call(ComplexHeatmap::draw,
+    c(list(object = do.call(ComplexHeatmap::Heatmap, args)), draw_args))
+  invisible(list(corr = r, heatmap = heatmap, used_spots = spots[valid],
+                 excluded_spots = spots[!valid], excluded_columns = excluded_columns))
 }

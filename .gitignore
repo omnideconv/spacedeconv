@@ -10,3 +10,5 @@ Rplot.png
 /vignettes/omnipathr-log/
 .notes
 vignettes/single_cell_data_3.h5ad
+/test-results/
+/tests/testthat/Rplots.pdf

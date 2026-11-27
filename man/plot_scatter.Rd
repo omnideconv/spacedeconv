@@ -15,15 +15,19 @@ plot_scatter(
   point_alpha = 0.8,
   fix_coords = FALSE,
   coord_range = NULL,
-  title = "Comparative Scatterplot"
+  title = "Comparative Scatterplot",
+  xlab = value1,
+  ylab = value2,
+  point_size = 2,
+  stats_size = 15
 )
 }
 \arguments{
 \item{spe}{SpatialExperiment with quantification results}
 
-\item{value1}{Deconvolution result to plot from the first object.}
+\item{value1}{Numeric colData column to plot on the x-axis (e.g. cell abundance or activity).}
 
-\item{value2}{Deconvolution result to plot from the second object.}
+\item{value2}{Numeric colData column to plot on the y-axis.}
 
 \item{spe1}{First SpatialExperiment object.}
 
@@ -35,11 +39,19 @@ plot_scatter(
 
 \item{point_alpha}{Alpha for the dots, controlling transparency.}
 
-\item{fix_coords}{Logical, whether to fix coordinate system to be equal.}
+\item{fix_coords}{Logical, whether to use equal axis ranges and a 1:1 aspect ratio.}
 
-\item{coord_range}{Numeric vector of length 2 to set coordinate limits.}
+\item{coord_range}{Optional increasing numeric vector of length 2 setting both
+axis limits in original data units. NULL uses automatic limits.}
 
-\item{title}{Title of the plot.}
+\item{title}{Title of the plot, or NULL to omit it.}
+
+\item{xlab, ylab}{Axis labels; default to the selected column names. Use NULL
+to omit a label.}
+
+\item{point_size}{Size of the points, in ggplot2 size units.}
+
+\item{stats_size}{Font size of the Pearson r and p-value annotation, in points.}
 }
 \value{
 A scatterplot.
@@ -48,4 +60,9 @@ A scatterplot.
 Creates a scatterplot to compare two result columns, either from a single
 \code{SpatialExperiment} (use \code{spe} + \code{value1} + \code{value2}) or from two different
 objects (use \code{spe1} + \code{spe2} + \code{value1} + \code{value2}).
+}
+\details{
+The annotation reports Pearson's r and its standard correlation-test
+p-value, which does not account for spatial dependence between spots.
+The solid line is a linear regression; the dashed line represents equality.
 }

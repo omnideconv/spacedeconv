@@ -5,7 +5,7 @@
 #'
 #' @details
 #' Second-generation spatial methods: `RCTD`, `SPOTlight`, `CARD`, `spatialDWLS`,
-#' `cell2location`, `DOT`.\cr
+#' `cell2location`, `DOT`, `Rectangle`.\cr
 #' First-generation immunedeconv methods: `MCPcounter`, `EPIC`, `quanTIseq`, `xCell`,
 #' `CIBERSORT`, `CIBERSORT (abs.)`, `TIMER`, `ConsensusTME`, `ABIS`, `ESTIMATE`.\cr
 #' First-generation immunedeconv mouse methods: `mMCPcounter`, `seqImmuCC`, `DCQ`, `BASE`.
@@ -19,6 +19,7 @@ deconvolution_methods <- c(
   "spatialDWLS" = "spatialdwls",
   "cell2location" = "cell2location",
   "DOT" = "dot",
+  "Rectangle" = "rectangle",
   # immunedeconv
   "MCPcounter" = "mcp_counter",
   "EPIC" = "epic",
@@ -72,9 +73,13 @@ first_gen <- c(
 #' @param batch_id_col Batch ID column in the single-cell object (used by some methods).
 #' @param assay_sc Single-cell assay to use (default: "counts").
 #' @param assay_sp Spatial assay to use (default: "counts").
-#' @param ... Additional parameters passed to the selected method.
+#' @param ... Additional parameters passed to the selected method. SPOTlight
+#' requires `markers`, a data frame with `gene`, `cluster` and `mean.AUC` columns;
+#' see [build_model_spotlight()].
 #'
-#' @return A cell-type signature matrix, or `NULL` for methods that build internally.
+#' @return A cell-type signature matrix, a method-specific model (including a
+#' Python `RectangleSignatureResult` for Rectangle), or `NULL` for methods that
+#' build internally.
 #'
 #' @export
 build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", method = NULL, verbose = FALSE, spatial_obj = NULL, batch_id_col = NULL, assay_sc = "counts", assay_sp = "counts", ...) {
@@ -86,14 +91,14 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     stop("Parameter 'single_cell_obj' missing or null, but is required")
   }
 
-  # check if method null or not supported
-  if (is.null(method) || !(method %in% deconvolution_methods)) {
+  if (length(method) != 1L || is.na(method)) {
     stop("Parameter 'method' is null or not supported")
   }
-
-  # if got the methods name and not the token
   if (method %in% names(deconvolution_methods)) {
     method <- deconvolution_methods[[method]]
+  }
+  if (!method %in% deconvolution_methods) {
+    stop("Parameter 'method' is null or not supported")
   }
 
   # convert to sparse matrices
@@ -139,6 +144,9 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
     },
     dot = {
       build_model_dot()
+    },
+    rectangle = {
+      build_model_rectangle(single_cell_obj, spatial_obj, cell_type_col, assay_sc, assay_sp, ...)
     },
 
     ################
@@ -205,7 +213,8 @@ build_model <- function(single_cell_obj, cell_type_col = "cell_ontology_class", 
 #' See `spacedeconv::deconvolution_methods` for the full list of methods.
 #'
 #' @param spatial_obj A `SpatialExperiment` to deconvolute.
-#' @param signature Gene expression signature matrix (if required by the method).
+#' @param signature Signature matrix or method-specific model returned by
+#' `build_model()` (if required by the method).
 #' @param single_cell_obj A `SingleCellExperiment` with reference cells (if required).
 #' @param cell_type_col Column name in `single_cell_obj` containing cell types.
 #' @param method Deconvolution method; one of `spacedeconv::deconvolution_methods`.
@@ -299,6 +308,9 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
     dot = {
       deconvolute_dot(single_cell_obj = single_cell_obj, spatial_obj = spatial_obj, cell_type_col = cell_type_col, assay_sc = assay_sc, assay_sp = assay_sp, ...)
     },
+    rectangle = {
+      deconvolute_rectangle(spatial_obj, signature, assay_sp = assay_sp, ...)
+    },
 
     ################
     # immunedeconv #
@@ -384,7 +396,8 @@ deconvolute <- function(spatial_obj, signature = NULL, single_cell_obj = NULL,
 #' @param return_object If `TRUE`, return an annotated `SpatialExperiment`;
 #' otherwise return the result matrix.
 #' @param verbose Print extra progress information.
-#' @param ... Additional parameters passed to the selected methods.
+#' @param ... Additional parameters passed to the selected methods. SPOTlight
+#' requires `markers`; see [build_model_spotlight()].
 #' @export
 build_and_deconvolute <- function(single_cell_obj, spatial_obj, method = NULL,
                                   cell_type_col = "cell_ontology_class",

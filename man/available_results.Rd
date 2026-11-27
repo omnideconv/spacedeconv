@@ -11,7 +11,8 @@ available_results(deconv, method = NULL)
 
 \item{method}{Optional prefix used to filter result columns (typically the
 internal method token from \code{spacedeconv::deconvolution_methods}, or a custom
-\code{result_name} used when running a method).}
+\code{result_name} used when running or importing a method). Prefixes are matched
+at the underscore separating the method name from the result name.}
 }
 \description{
 Returns column names in \code{colData} that correspond to deconvolution results.

@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
         displayMode: mathElements[i].classList.contains("display"),
         throwOnError: false,
         macros: macros,
-        fleqn: false,
+        fleqn: false
       });
-    }
-  }
-});
+    }}});

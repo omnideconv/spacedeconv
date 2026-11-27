@@ -111,7 +111,7 @@ deconv <- spacedeconv::deconvolute(
 ```
 
 ```{r cluster, message=FALSE, warning=FALSE}
-clustered <- spacedeconv::cluster(deconv, data = "expression", clusres = 0.5)
+clustered <- spacedeconv::cluster(deconv, spmethod = "expression", clusres = 0.5)
 ```
 
 ```{r plot, message=FALSE, warning=FALSE}

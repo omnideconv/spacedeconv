@@ -7,7 +7,7 @@
 #' @param spe A `SpatialExperiment` object containing the data to be clustered.
 #' @param method Clustering method: `"kmeans"` or `"hclust"`.
 #' @param spmethod Data to cluster: `"expression"`, `"progeny"`, `"dorothea"`,
-#' `"collectri"`, or a deconvolution method token.
+#' `"collectri"`, a deconvolution method token, or a custom result prefix.
 #' @param dist_method Distance metric for `"hclust"`: `"correlation"`,
 #' `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"`,
 #' `"minkowski"`.
@@ -23,12 +23,17 @@
 #' @export
 cluster <- function(spe,
                     method = c("kmeans", "hclust"),
-                    spmethod = c("expression", "progeny", "dorothea", "collectri", unname(deconvolution_methods)),
+                    spmethod = "expression",
                     dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
                     hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty", "median", "centroid"),
                     nclusters = 3,
                     pca_dim = seq(1, 30),
                     clusres = 0.5, ...) {
+  if ("data" %in% names(substitute(list(...)))[-1L]) {
+    stop("Argument 'data' is not supported. Use 'spmethod' to select the data to cluster.",
+         call. = FALSE)
+  }
+
   cli::cli_rule(left = "spacedeconv")
   cli::cli_progress_step("testing parameter", msg_done = "parameter OK")
 
@@ -41,11 +46,12 @@ cluster <- function(spe,
   # convert to sparse matrices
   spe <- check_datatype(spe)
 
-  spmethod <- match.arg(spmethod)
-
-  # if (!data %in% c("expression", "deconvolution", "pathway", "tf")) {
-  #   stop("`data` must be one of the following: expression, deconvolution, pathway, tf")
-  # }
+  if (!is.character(spmethod) || length(spmethod) != 1L || is.na(spmethod) || !nzchar(spmethod)) {
+    stop("spmethod must be 'expression' or a single result prefix.", call. = FALSE)
+  }
+  if (spmethod != "expression" && length(available_results(spe, method = spmethod)) == 0L) {
+    stop(paste("No result columns found for prefix:", spmethod), call. = FALSE)
+  }
 
   if (spmethod == "expression") {
     # convert the spe to a seurat object
@@ -97,7 +103,7 @@ cluster <- function(spe,
       SummarizedExperiment::colData(spe)[cname] <- cluster
       cli::cli_progress_update()
     }
-  } else if (spmethod %in% c("progeny", "dorothea", "collectri", unname(deconvolution_methods))) {
+  } else {
     dist_method <- match.arg(dist_method)
     hclust_method <- match.arg(hclust_method)
     method <- match.arg(method)
@@ -113,6 +119,9 @@ cluster <- function(spe,
     tmp <- SummarizedExperiment::colData(spe)[available_results(spe,
       method = spmethod
     )]
+    if (!all(vapply(as.list(tmp), is.numeric, logical(1))) || any(!is.finite(as.matrix(tmp)))) {
+      stop("Clustering requires finite numeric result columns.", call. = FALSE)
+    }
     # clusters
     cli::cli_progress_bar("Clustering", total = length(nclusters))
     for (i in nclusters) {
@@ -167,7 +176,8 @@ topfeat <- function(idx, scores, topn) {
 #' @param clusterid Name of the column containing cluster labels.
 #' @param topn Number of top features to return per cluster.
 #' @param spmethod Method used for clustering (e.g., `dorothea`, `collectri`,
-#' `progeny`, `expression`, or a deconvolution method token).
+#' `progeny`, `expression`, a deconvolution method token, or a
+#' custom result prefix).
 #' @param zscore Logical; z-score scale features before ranking.
 #' @export
 get_cluster_features <- function(spe,
@@ -183,11 +193,11 @@ get_cluster_features <- function(spe,
     stop("Parameter 'clusterid' is null or missing, but is required")
   }
   if (is.null(spmethod)) {
-    spmethod <- unlist(strsplit(clusterid, "_"))[2]
+    spmethod <- sub("^cluster_(.*)_(nclusters|res)_[^_]+$", "\\1", clusterid)
   }
 
   # check if spmethod is actually available
-  if (!any(grepl(spmethod, names(colData(spe))))) {
+  if (spmethod != "expression" && length(available_results(spe, method = spmethod)) == 0L) {
     stop(paste("spmethod", spmethod, "not found in spe object"))
   }
 

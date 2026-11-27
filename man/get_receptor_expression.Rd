@@ -12,7 +12,7 @@ get_receptor_expression(gene_pair, cpm_df)
 \item{cpm_df}{A dataframe containing gene expression data, with row names as gene names and columns as different samples or spots.}
 }
 \value{
-A numeric vector of the expression values of the specified receptor across the samples or spots in \code{cpm_df}. If the receptor is a gene complex, the function returns the mean expression value of the component genes. If any component gene is missing or has zero expression, a vector of zeros is returned.
+A numeric vector of the expression values of the specified receptor across the samples or spots in \code{cpm_df}. If the receptor is a gene complex, the function returns the mean expression value of the component genes. Missing component genes give zero for all spots; zero expression in a component gives zero only for the affected spots.
 }
 \description{
 This function calculates the expression values of a specified receptor (gene or gene complex) from a given expression dataset.

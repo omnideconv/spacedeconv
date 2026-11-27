@@ -39,7 +39,7 @@ def py_build_model_cell2location(adata_ref,
                                   cell_type_column = "celltype_major", 
                                   cell_count_cutoff=5, 
                                   cell_percentage_cutoff=0.03, 
-                                  nonz_mean_cutoff=1.12, gpu = True):
+                                  nonz_mean_cutoff=1.12, gpu = True, posterior_samples=1000):
                                   
   """
   Build a model using cell2location
@@ -78,12 +78,12 @@ def py_build_model_cell2location(adata_ref,
   # setup model
   mod = cell2location.models.RegressionModel(adata_ref)
   print ("Training Model")
-  mod.train(max_epochs = epochs)
+  mod.train(max_epochs = epochs, use_gpu=gpu)
   
   # export model to anndata object
   print ("finished training, extracting results")
   adata_ref = mod.export_posterior(
-    adata_ref, sample_kwargs={'num_samples': 1000, 'batch_size': 2500, 'use_gpu': gpu}
+    adata_ref, sample_kwargs={'num_samples': posterior_samples, 'batch_size': 2500, 'use_gpu': gpu}
   )
   
   # export estimated expression in each cluster
@@ -109,7 +109,7 @@ def py_deconvolute_cell2location(sp_obj,
                                  n_cell=10, 
                                  alpha=20, 
                                  gpu = True, 
-                                 returnValue = "q05"):
+                                 returnValue = "q05", posterior_samples=1000):
   """
   Deconvolute using cell2location 
   
@@ -160,7 +160,7 @@ def py_deconvolute_cell2location(sp_obj,
             
   # export fractions
   sp_obj = mod.export_posterior(
-    sp_obj, sample_kwargs = {'num_samples': 1000, 'batch_size': mod.adata.n_obs, 'use_gpu': gpu}
+    sp_obj, sample_kwargs = {'num_samples': posterior_samples, 'batch_size': mod.adata.n_obs, 'use_gpu': gpu}
   )
   # means_cell_abundance_w_sf, stds_cell_abundance_w_sf, q05_cell_abundance_w_sf, q95_cell_abundance_w_sf
   

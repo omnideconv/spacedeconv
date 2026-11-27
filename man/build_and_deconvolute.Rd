@@ -37,7 +37,8 @@ otherwise return the result matrix.}
 
 \item{verbose}{Print extra progress information.}
 
-\item{...}{Additional parameters passed to the selected methods.}
+\item{...}{Additional parameters passed to the selected methods. SPOTlight
+requires \code{markers}; see \code{\link[=build_model_spotlight]{build_model_spotlight()}}.}
 }
 \description{
 Convenience wrapper that builds a signature with \code{build_model()} and then

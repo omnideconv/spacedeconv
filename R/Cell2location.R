@@ -12,7 +12,8 @@
 #' @param cell_percentage_cutoff cell2location parameter.
 #' @param nonz_mean_cutoff cell2location parameter.
 #' @param gpu Logical; whether to train on GPU.
-build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = "counts", batch_id_col = "sample_id", cell_type_col = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = TRUE) {
+#' @param posterior_samples Number of samples for posterior summaries.
+build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = "counts", batch_id_col = "sample_id", cell_type_col = "celltype_major", cell_count_cutoff = 5, cell_percentage_cutoff = 0.03, nonz_mean_cutoff = 1.12, gpu = TRUE, posterior_samples = 1000) {
   # build anndata, gene names as rownames
 
   # init_python()
@@ -20,16 +21,17 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
   ad <- spe_to_ad(single_cell_obj, assay = assay_sc) # using the spatial function
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv"))
+  python <- new.env(parent = baseenv())
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv"), envir = python)
 
-  model <- py_build_model_cell2location(ad,
+  model <- python$py_build_model_cell2location(ad,
     epochs = as.integer(epochs), # int!
     batch_id_col = batch_id_col,
     cell_type_column = cell_type_col,
     cell_count_cutoff = as.integer(cell_count_cutoff), # int!
     cell_percentage_cutoff = cell_percentage_cutoff,
     nonz_mean_cutoff = nonz_mean_cutoff,
-    gpu = gpu
+    gpu = gpu, posterior_samples = as.integer(posterior_samples)
   )
 }
 
@@ -44,23 +46,25 @@ build_model_cell2location <- function(single_cell_obj, epochs = 250, assay_sc = 
 #' @param n_cell cell2location hyperparameter.
 #' @param alpha cell2location hyperparameter.
 #' @param gpu Logical; whether to use GPU for training.
+#' @param posterior_samples Number of samples for posterior summaries.
 #' @param result_name Prefix used to label result columns (default: "cell2location").
 #' @param values `"relative"` to rescale to fractions, or `"absolute"` to keep
 #' raw outputs.
-deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "cell2location", values = "relative") {
+deconvolute_cell2location <- function(spatial_obj, signature = NULL, epochs = 30000, n_cell = 10, alpha = 20, gpu = TRUE, result_name = "cell2location", values = "relative", posterior_samples = 1000) {
   # init_python()
 
   # TURN INTO ANNDATA
   ad <- spe_to_ad(spatial_obj)
 
   # source python script
-  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv")) # ("~/spacedeconv/inst/python/cell2location.py")
+  python <- new.env(parent = baseenv())
+  reticulate::source_python(system.file("python", "cell2location_spacedeconv.py", package = "spacedeconv"), envir = python) # ("~/spacedeconv/inst/python/cell2location.py")
 
-  deconv <- py_deconvolute_cell2location(
+  deconv <- python$py_deconvolute_cell2location(
     sp_obj = ad,
     signature = signature, # must be pandas
     epochs = as.integer(epochs),
-    n_cell = as.integer(n_cell), alpha = as.integer(alpha), gpu = gpu
+    n_cell = as.integer(n_cell), alpha = as.integer(alpha), gpu = gpu, posterior_samples = as.integer(posterior_samples)
   )
 
   deconv <- attachToken(deconv, result_name)

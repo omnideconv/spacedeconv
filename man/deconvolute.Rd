@@ -21,7 +21,8 @@ deconvolute(
 \arguments{
 \item{spatial_obj}{A \code{SpatialExperiment} to deconvolute.}
 
-\item{signature}{Gene expression signature matrix (if required by the method).}
+\item{signature}{Signature matrix or method-specific model returned by
+\code{build_model()} (if required by the method).}
 
 \item{single_cell_obj}{A \code{SingleCellExperiment} with reference cells (if required).}
 

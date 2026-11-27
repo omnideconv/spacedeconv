@@ -165,10 +165,14 @@ spacedeconv::plot_spatial(deconv,
 ```
 
 ### Aggregate cell types
-Aggregate cell types using the `aggregate` function. Internall the deconvolution results are summed up and get a new name. The aggregation can be visualized with all available plotting functions.
+Aggregate cell types using `aggregate_results()`. The selected deconvolution results are summed and stored under a new name. The aggregation can be visualized with all available plotting functions.
 
-```{r aggregation, eval=FALSE}
-spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
+```{r aggregation}
+deconv <- spacedeconv::aggregate_results(
+  deconv,
+  cell_types = c("spatialdwls_Cancer.Epithelial", "spatialdwls_Normal.Epithelial"),
+  name = "spatialdwls_Epithelial"
+)
 ```
 
 
@@ -183,3 +187,70 @@ spe <- aggregate(spe, cell_type_1, cell_type_2, newName)
 * `title_size` font size of title
 * `legend_size` legend 
 * `title` set a custom title
+
+
+# Comparing results
+
+The following examples reuse the slide and single-cell reference above. Add CARD
+results to compare two methods using the same cell-type annotations.
+
+```{r comparison-data, message=FALSE}
+deconv <- spacedeconv::deconvolute(
+  spatial_obj = deconv,
+  single_cell_obj = single_cell_data_3,
+  cell_type_col = "celltype_major",
+  batch_id_col = "orig.ident",
+  method = "card",
+  assay_sc = "counts",
+  assay_sp = "counts"
+)
+
+column <- c("spatialdwls_B.cells", "card_B.cells",
+            "spatialdwls_CAFs", "card_CAFs",
+            "spatialdwls_Endothelial", "card_Endothelial")
+cell_types <- setNames(rep(c("B cells", "CAFs", "Endothelial"), each = 2), column)
+methods <- setNames(rep(c("spatialDWLS", "CARD"), times = 3), column)
+```
+
+## Correlation heatmap
+
+`spatialcorr()` compares the spatial patterns of selected columns using Pearson
+correlation by default. A high correlation indicates similar patterns across
+spots, but does not imply agreement in absolute abundance.
+
+```{r comparison-heatmap, fig.width=10, fig.height=6}
+spacedeconv::spatialcorr(
+  deconv, column = column, categories = cell_types,
+  labels = setNames(paste(methods, cell_types, sep = " | "), column),
+  label_title = "Method | Cell type",
+  title = "Correlation of cell-type estimates"
+)
+```
+
+## Pairwise scatterplot
+
+`plot_scatter()` compares two columns spot by spot. The solid line shows the
+linear fit; the dashed line indicates equal values. Axis labels and titles can
+be customized, including for other numeric annotations such as activity scores.
+
+```{r comparison-scatter, fig.width=7, fig.height=7}
+spacedeconv::plot_scatter(
+  deconv, value1 = "spatialdwls_CAFs", value2 = "card_CAFs",
+  xlab = "spatialDWLS", ylab = "CARD", title = "CAF relative abundance",
+  fix_coords = TRUE, coord_range = c(0, 1), point_alpha = 0.3
+)
+```
+
+## Mean abundance across methods
+
+`plot_boxplot()` shows one point per method and cell type, averaged across spots.
+The boxes summarize these method means, not variation across spots or confidence
+intervals. This small example uses two methods; additional methods can be added
+to the column and mapping vectors above.
+
+```{r comparison-boxplot, fig.width=9, fig.height=6}
+spacedeconv::plot_boxplot(
+  deconv, column = column, groups = cell_types, sources = methods,
+  title = "Mean cell-type abundance", ylab = "Mean relative abundance"
+) + ggplot2::labs(color = "Method")
+```

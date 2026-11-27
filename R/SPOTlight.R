@@ -1,16 +1,19 @@
 #' Build a SPOTlight Model
 #'
 #' Trains the SPOTlight model using single-cell and spatial data. Marker
-#' genes can be supplied or computed from the single-cell object.
+#' genes must be supplied explicitly; automatic marker discovery is not supported.
 #'
 #' @param single_cell_obj `SingleCellExperiment`.
 #' @param cell_type_col Column with cell type labels.
 #' @param spatial_obj `SpatialExperiment`.
 #' @param assay_sc Single-cell assay to use.
 #' @param assay_sp Spatial assay to use.
-#' @param markers Optional marker-gene data frame. If `NULL`, markers are
-#' computed from `single_cell_obj` using the authors' suggested approach.
-build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class", spatial_obj, assay_sc = "counts", assay_sp = "counts", markers = NULL) {
+#' @param markers Required data.frame or S4Vectors DataFrame with columns `gene`,
+#' `cluster` and numeric `mean.AUC` weights in (0, 1]. Cluster labels must match
+#' `cell_type_col`. Each cell type needs a marker present in both expression
+#' objects. Gene/cluster pairs must be unique. `NULL` raises an error.
+#' @param ... Additional training parameters passed to `SPOTlight::trainNMF()`.
+build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class", spatial_obj, assay_sc = "counts", assay_sp = "counts", markers = NULL, ...) {
   if (is.null(single_cell_obj)) {
     stop("Parameter 'single_cell_obj' is null or missing, but is required")
   }
@@ -43,13 +46,37 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
     assay_sp <- names(SummarizedExperiment::assays(spatial_obj))[1] # change to first available assay request not available
   }
 
-  groups <- colData(single_cell_obj)[[cell_type_col]] # cell type vector
+  groups <- as.character(SummarizedExperiment::colData(single_cell_obj)[[cell_type_col]])
   if (is.null(markers)) {
-    message("No markers provided, calculating markers based on the authors suggestion")
-    mgs <- getMarkersSPOTlight(
-      single_cell_obj = single_cell_obj,
-      cell_type_col = cell_type_col
-    )
+    stop("SPOTlight requires 'markers': supply a data frame with gene, cluster and mean.AUC columns. Automatic marker discovery is not supported.", call. = FALSE)
+  }
+  if (!(is.data.frame(markers) || methods::is(markers, "DataFrame")) ||
+      !all(c("gene", "cluster", "mean.AUC") %in% names(markers)) || nrow(markers) == 0L) {
+    stop("SPOTlight 'markers' must be a non-empty data frame with gene, cluster and mean.AUC columns.", call. = FALSE)
+  }
+  mgs <- as.data.frame(markers)
+  for (column in c("gene", "cluster")) {
+    if (!(is.character(mgs[[column]]) || is.factor(mgs[[column]])) ||
+        anyNA(mgs[[column]]) || any(!nzchar(trimws(as.character(mgs[[column]]))))) {
+      stop("SPOTlight marker gene and cluster labels must be non-empty strings without NA.", call. = FALSE)
+    }
+    mgs[[column]] <- as.character(mgs[[column]])
+  }
+  if (!is.numeric(mgs$mean.AUC) || any(!is.finite(mgs$mean.AUC)) ||
+      any(mgs$mean.AUC <= 0 | mgs$mean.AUC > 1)) {
+    stop("SPOTlight marker mean.AUC weights must be finite numeric values in (0, 1].", call. = FALSE)
+  }
+  if (anyDuplicated(mgs[c("gene", "cluster")])) {
+    stop("SPOTlight markers contain duplicate gene/cluster pairs.", call. = FALSE)
+  }
+  if (anyNA(groups) || any(!nzchar(trimws(groups))) ||
+      !setequal(unique(mgs$cluster), unique(groups))) {
+    stop("SPOTlight marker clusters must match all cell types in 'cell_type_col', without missing labels.", call. = FALSE)
+  }
+  shared_genes <- intersect(rownames(single_cell_obj), rownames(spatial_obj))
+  covered <- mgs$cluster[mgs$gene %in% shared_genes]
+  if (!all(unique(groups) %in% covered)) {
+    stop("SPOTlight requires at least one marker per cell type present in both expression objects.", call. = FALSE)
   }
 
   model <- SPOTlight::trainNMF(
@@ -59,7 +86,8 @@ build_model_spotlight <- function(single_cell_obj, cell_type_col = "cell_ontolog
     mgs = mgs,
     weight_id = "mean.AUC",
     slot_sc = assay_sc, # not sure about this one!
-    slot_sp = assay_sp
+    slot_sp = assay_sp,
+    ...
   )
 
   return(model)
@@ -90,6 +118,18 @@ deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts"
   mod <- model$mod
   ref <- model$topic
 
+  # SPOTlight 1.6.3 passes its cell-type-by-topic reference directly to NNLS,
+  # although NNLS needs topics as rows and cell types as columns. Its output
+  # labels also come from reference rows rather than coefficient columns.
+  cell_types <- rownames(ref)
+  topics <- rownames(NMF::coef(mod))
+  if (is.null(cell_types) || is.null(topics) ||
+      anyDuplicated(cell_types) || !setequal(colnames(ref), topics)) {
+    stop("SPOTlight reference must have unique cell-type names and match the model topics.",
+         call. = FALSE)
+  }
+  ref <- t(ref[, topics, drop = FALSE])
+
   # deconvolute
   deconv <- SPOTlight::runDeconvolution(
     x = spatial_obj,
@@ -99,38 +139,10 @@ deconvolute_spotlight <- function(spatial_obj, model = NULL, assay_sp = "counts"
   )
 
   deconvolution <- deconv$mat
+  colnames(deconvolution) <- cell_types
 
   # attach method token
   deconvolution <- attachToken(deconvolution, result_name)
 
   return(deconvolution)
-}
-
-#' Calculate Markers
-#'
-#' @param single_cell_obj SingleCellExperiment
-#' @param cell_type_col Column containing the cell type
-#'
-#' This Procedure reflects the suggestions of the SPOTlight authors, however,
-#' they also state that there are other ways to calculate markers
-getMarkersSPOTlight <- function(single_cell_obj, cell_type_col = "cell_ontology_class") {
-  # TODO checks! Check if cell_type_col actually exists in single_cell_obj
-
-  groups <- colData(single_cell_obj)[[cell_type_col]]
-  single_cell_obj <- scuttle::logNormCounts(single_cell_obj) #  only if not log normalized yet!?
-  mgs <- scran::scoreMarkers(single_cell_obj, groups = groups)
-  mgs_fil <- lapply(names(mgs), function(i) {
-    x <- mgs[[i]]
-    # Filter and keep relevant marker genes, those with AUC > 0.8
-    x <- x[x$mean.AUC > 0.8, ]
-    # Sort the genes from highest to lowest weight
-    x <- x[order(x$mean.AUC, decreasing = TRUE), ]
-    # Add gene and cluster id to the dataframe
-    x$gene <- rownames(x)
-    x$cluster <- i
-    data.frame(x)
-  })
-  mgs_df <- do.call(rbind, mgs_fil)
-
-  return(mgs_df) # could also return a subset
 }

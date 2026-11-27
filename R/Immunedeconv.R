@@ -158,7 +158,7 @@ convertImmunedeconvMatrix <- function(deconvResult) {
 
 
   # use column 1 as rownames and transpose
-  result <- deconvResult[, 2:ncol(deconvResult)]
+  result <- deconvResult[, 2:ncol(deconvResult), drop = FALSE]
   result <- as.matrix(result)
   rownames(result) <- deconvResult$cell_type
   result <- t(result)

@@ -2,52 +2,77 @@
 % Please edit documentation in R/spatial_correlation.R
 \name{spatialcorr}
 \alias{spatialcorr}
-\title{Create a Correlation Plot}
+\title{Create a Correlation Heatmap}
 \usage{
 spatialcorr(
   spe,
-  method,
-  adjust = "fdr",
-  variables = NULL,
-  sig.level = 0.05,
-  type = "lower",
-  diag = FALSE,
-  order = "original",
-  plot_layout = "color",
-  insig = "label_sig",
-  addCoef.col = NULL,
+  column,
+  cor_method = "pearson",
+  categories = NULL,
+  category_colors = NULL,
+  labels = NULL,
+  title = NULL,
+  label_title = "Source | Feature | Mean",
+  annotation_legend_param = list(),
+  label_title_gp = grid::gpar(fontsize = 12, fontface = "bold"),
+  draw_param = list(),
   ...
 )
 }
 \arguments{
-\item{spe}{\code{SpatialExperiment}.}
+\item{spe}{A \code{SpatialExperiment}.}
 
-\item{method}{Method prefix to select result columns (e.g., a deconvolution
-token or decoupleR output such as "cell2location").}
+\item{column}{Character vector of at least two numeric \code{colData} column names,
+in the desired display order.}
 
-\item{adjust}{Method to adjust p-values for multiple testing (see
-\code{stats::p.adjust.methods}).}
+\item{cor_method}{Correlation method: "pearson", "spearman", or "kendall".}
 
-\item{variables}{Optional vector of column names to use instead of \code{method}.}
+\item{categories}{Optional named character vector mapping column names to
+categories, shown as color strips above and beside the heatmap. Contiguous
+category blocks are separated by thin lines and framed on the diagonal.}
 
-\item{sig.level}{Significance level(s) for marking correlations.}
+\item{category_colors}{Optional named vector mapping categories to colors.
+When NULL, colors are assigned automatically in category appearance order.}
 
-\item{type}{Character, 'full' 'upper' or 'lower' (default), display full matrix, lower triangular or upper triangular matrix.}
+\item{labels}{Optional named character vector mapping column names to row
+labels. Defaults to the column names.}
 
-\item{diag}{Logical, whether display the correlation coefficients on the principal diagonal. default is FALSE}
+\item{title}{Optional heatmap title; NULL omits it.}
 
-\item{order}{Character, the ordering method of the correlation matrix.'original' for original order (default),'AOE' for the angular order of the eigenvectors, 'FPC' for the first principal component order, 'hclust' for the hierarchical clustering order,'alphabet' for alphabetical order.}
+\item{label_title}{Heading above the row labels, defaulting to
+"Source | Feature | Mean"; NULL omits it.
+For example, "Method | Cell type | Mean relative abundance". This is free
+text and does not affect the values or labels.}
 
-\item{plot_layout}{Corrplot layout: "circle", "square", "ellipse", "number",
-"shade", "color", or "pie".}
+\item{annotation_legend_param}{Named list of category legend settings passed
+to \code{\link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation()}}, such as \code{nrow} or \code{labels_gp}.}
 
-\item{insig}{If 'blank', wipe away the corresponding glyphs; if 'p-value', add p-values the corresponding glyphs; if 'pch', add characters (see pch for details) on corresponding glyphs; if 'n', don't take any measures; if 'label_sig' (default), mark significant correlations with pch (see sig.level).}
+\item{label_title_gp}{Graphical parameters for the heading above row labels.}
 
-\item{addCoef.col}{to add labels to the plot showing the correlation values, default is NULL, the user can choose any other color to add and color the values.}
+\item{draw_param}{Named list of settings passed to \code{\link[ComplexHeatmap:draw-dispatch]{ComplexHeatmap::draw()}},
+such as \code{heatmap_legend_side}, \code{annotation_legend_side}, or \code{padding}.
+Cannot override the heatmap object, ordering, clustering, or splitting.}
 
-\item{...}{Additional parameters passed to \code{corrplot()}.}
+\item{...}{Additional arguments to \code{\link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap()}}, such as
+\code{row_names_gp}, \code{column_title_gp}, or \code{heatmap_legend_param}. These override
+styling defaults, but cannot override the matrix, ordering, labels, title,
+category annotations, or enable clustering or splitting.}
+}
+\value{
+Invisibly, a list containing \code{corr} (correlation matrix), \code{heatmap}
+(the drawn ComplexHeatmap object), \code{used_spots}, \code{excluded_spots} (spot names,
+or positional identifiers if unnamed), and \code{excluded_columns} (constant
+column names). The heatmap can be redrawn with \code{ComplexHeatmap::draw()}.
 }
 \description{
-Computes a correlation matrix across selected result columns and visualizes
-it with \code{corrplot}, including adjusted p-values.
+Correlates numeric columns of \code{colData(spe)} across spots and draws a full
+heatmap in the supplied column order, without clustering.
+}
+\details{
+Values are used as supplied: no normalization, cell-type aggregation,
+or percentage conversion is performed. Spots with any nonfinite selected
+value are excluded jointly, then constant columns are excluded, with warnings.
+At least two spots and two variable columns must remain. No p-values are
+calculated. This interface replaces the former corrplot-based interface;
+select explicit columns with \code{column} rather than a method prefix.
 }

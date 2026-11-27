@@ -1,37 +1,33 @@
-spe <- readRDS(system.file("testdata", "spe.rds", package = "spacedeconv"))
-sce <- readRDS(system.file("testdata", "sce.rds", package = "spacedeconv"))
-
-
-
-test_that("Immunedeconv models works", {
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "mcp_counter"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "epic"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "quantiseq"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "xcell"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "cibersort"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "cibersort_abs"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "timer"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "consensus_tme"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "abis"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "estimate"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "mmcp_counter"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "seqimmucc"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "dcq"), info = "Signature is null (which it should be)")
-  expect_null(object = spacedeconv::build_model(single_cell_obj = sce, cell_type_col = "celltype_major", method = "base"), info = "Signature is null (which it should be)", )
+test_that("method registry is unambiguous and signature-free methods return NULL", {
+  expect_false(anyDuplicated(unname(deconvolution_methods)) > 0)
+  expect_true(all(nzchar(names(deconvolution_methods))))
+  for (method in c(unname(first_gen), "rctd", "card", "dot")) {
+    expect_null(build_model(small_sce(), cell_type_col = "celltype", method = method))
+  }
+  expect_error(build_model(NULL, method = "rctd"), "missing or null")
+  expect_error(build_model(small_sce(), method = "unknown"), "not supported")
+  expect_error(deconvolute(NULL), "missing or null")
+  expect_error(deconvolute(small_spe(), method = "unknown"), "not recognized")
 })
 
-
-
-# Test for input validation in build_model
-test_that("build_model requires non-null single_cell_obj", {
-  expect_error(build_model(NULL, method = "rctd"), "Parameter 'single_cell_obj' missing or null, but is required")
+test_that("documented display names work for model building", {
+  expect_null(build_model(small_sce(), method = "RCTD", cell_type_col = "celltype"))
 })
 
-test_that("build_model requires supported method", {
-  expect_error(build_model(sce, method = "unsupported_method"), "Parameter 'method' is null or not supported")
-})
-
-# Test for functionality of deconvolute
-test_that("deconvolute requires non-null spatial_obj", {
-  expect_error(deconvolute(NULL), "Parameter 'spatial_obj' is missing or null, but is required.")
+test_that("the convenience wrapper forwards the model, assays and return mode", {
+  model <- matrix(1, 2, 2)
+  raw <- matrix(.5, 6, 2)
+  received <- NULL
+  local_mocked_bindings(
+    build_model = function(...) model,
+    deconvolute = function(...) { received <<- list(...); raw })
+  out <- build_and_deconvolute(small_sce(), small_spe(), method = "rctd",
+    cell_type_col = "celltype", assay_sc = "reference_counts",
+    assay_sp = "spatial_counts", return_object = FALSE, n_cores = 1)
+  expect_identical(out, raw)
+  expect_identical(received$signature, model)
+  expect_identical(received$assay_sc, "reference_counts")
+  expect_identical(received$assay_sp, "spatial_counts")
+  expect_false(received$return_object)
+  expect_equal(received$n_cores, 1)
 })

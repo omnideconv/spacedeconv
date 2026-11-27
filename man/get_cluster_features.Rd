@@ -20,7 +20,8 @@ get_cluster_features(
 \item{topn}{Number of top features to return per cluster.}
 
 \item{spmethod}{Method used for clustering (e.g., \code{dorothea}, \code{collectri},
-\code{progeny}, \code{expression}, or a deconvolution method token).}
+\code{progeny}, \code{expression}, a deconvolution method token, or a
+custom result prefix).}
 
 \item{zscore}{Logical; z-score scale features before ranking.}
 }

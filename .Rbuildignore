@@ -12,3 +12,5 @@
 ^omnipathr-log$
 ^tests/omnipathr-log$
 ^vignettes/omnipathr-log$
+
+^test-results$

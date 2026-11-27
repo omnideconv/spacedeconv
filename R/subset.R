@@ -154,7 +154,7 @@ subsetSPE <- function(spe, colRange = NULL, rowRange = NULL) {
 
   # Subset the coordinates based on the specified range
   subsetCoords <- coords[coords[, 1] >= colRange[1] & coords[, 1] <= colRange[2] &
-    coords[, 2] >= rowRange[1] & coords[, 2] <= rowRange[2], ]
+    coords[, 2] >= rowRange[1] & coords[, 2] <= rowRange[2], , drop = FALSE]
 
   # Find the indices of the subset
   indices <- match(rownames(subsetCoords), rownames(coords))

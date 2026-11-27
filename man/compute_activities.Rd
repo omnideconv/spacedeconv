@@ -16,7 +16,15 @@ compute_activities(
 \arguments{
 \item{spe}{\code{SpatialExperiment} containing expression data.}
 
-\item{reference}{Reference data frame from \code{get_decoupleR_reference()}.}
+\item{reference}{A data frame with \code{source} (gene set or regulator), \code{target}
+(gene identifier), and \code{weight} or \code{mor} (weight or regulatory direction).
+Custom tables can be supplied directly; built-in references are retrieved with
+\code{get_decoupleR_reference()}. If both weight columns are present, \code{mor} is used.
+The activity scoring methods AUCell, FGSEA, GSVA, and ORA do not use weights. Gene identifiers must match
+the expression assay row names and organism. At least five matching genes
+per set are required. Each source-target pair should occur only once.
+Custom tables with \code{weight} and no database-specific metadata use the
+\code{decoupleR_} column prefix.}
 
 \item{method}{Activity method (e.g., \code{"wmean"}, \code{"viper"}, \code{"gsva"}); see
 \code{decoupleR} docs for options.}
@@ -33,4 +41,17 @@ compute_activities(
 \description{
 Computes pathway or transcription factor activities from a \code{SpatialExperiment}
 using methods provided by the \code{decoupleR} package.
+}
+\examples{
+# Illustrative genes only; use a biologically justified reference for analysis.
+ref <- data.frame(
+  source = rep("my_signature", 5),
+  target = c("STAT1", "IRF1", "CXCL9", "CXCL10", "IDO1"),
+  weight = rep(1, 5)
+)
+# Use known regulatory weights instead of 1 when available.
+\dontrun{
+# spe must contain a normalized expression assay named "cpm".
+spe <- compute_activities(spe, reference = ref, method = "ulm", assay = "cpm")
+}
 }

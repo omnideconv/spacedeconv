@@ -7,8 +7,7 @@
 cluster(
   spe,
   method = c("kmeans", "hclust"),
-  spmethod = c("expression", "progeny", "dorothea", "collectri",
-    unname(deconvolution_methods)),
+  spmethod = "expression",
   dist_method = c("correlation", "euclidean", "maximum", "manhattan", "canberra",
     "binary", "minkowski"),
   hclust_method = c("complete", "ward.D", "ward.D2", "single", "average", "mcquitty",
@@ -25,7 +24,7 @@ cluster(
 \item{method}{Clustering method: \code{"kmeans"} or \code{"hclust"}.}
 
 \item{spmethod}{Data to cluster: \code{"expression"}, \code{"progeny"}, \code{"dorothea"},
-\code{"collectri"}, or a deconvolution method token.}
+\code{"collectri"}, a deconvolution method token, or a custom result prefix.}
 
 \item{dist_method}{Distance metric for \code{"hclust"}: \code{"correlation"},
 \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"},

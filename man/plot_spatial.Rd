@@ -37,7 +37,8 @@ plot_spatial(
 \arguments{
 \item{spe}{deconvolution result in Form of a SpatialExperiment}
 
-\item{result}{one or more results to plot}
+\item{result}{One or more result column names, or a built-in/custom result
+prefix to plot all corresponding columns.}
 
 \item{palette}{colorspace palette (sequential)}
 

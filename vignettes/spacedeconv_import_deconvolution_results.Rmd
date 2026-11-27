@@ -1,0 +1,186 @@
+---
+title: "Importing external deconvolution results"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Importing external deconvolution results}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", error = FALSE)
+micromamba <- Sys.which("micromamba")
+if (!nzchar(micromamba)) {
+  stop("Building this vignette requires micromamba and the r-omnideconv environment with omnideconv and Bisque installed.")
+}
+# Share temporary input/output files between the two R processes.
+build_dir <- tempfile("spacedeconv-external-")
+dir.create(build_dir)
+knitr::opts_knit$set(root.dir = build_dir)
+```
+
+This vignette shows how to import cell-type estimates obtained with external
+deconvolution tools into spacedeconv for spatial visualization and downstream
+analysis. As an example, we use omnideconv to run Bisque on spatial
+transcriptomics data, import the resulting estimates into a SpatialExperiment,
+and visualize and cluster spots based on their estimated cell-type composition.
+
+# Install omnideconv
+
+Install **omnideconv in a Conda environment named `r-omnideconv`**, following the
+[omnideconv installation instructions](https://omnideconv.org/omnideconv/#installation).
+Choose the minimal installation and install the dependencies for **Bisque**,
+which is the only deconvolution method used here. Keep spacedeconv in its own
+`spacedeconv-env` environment.
+
+The code below can be run interactively in two separate R sessions: one in
+`r-omnideconv` and one in `spacedeconv-env`, both using the same working directory.
+
+# Preparing the input files
+
+For demonstration, we load and preprocess the example datasets included with
+spacedeconv. For your own analysis, use your spatial transcriptomics data and
+an appropriate annotated single-cell reference instead. Run the following in
+an R session in `spacedeconv-env`:
+
+```{r save_inputs}
+library(spacedeconv)
+library(SingleCellExperiment)
+
+data("spatial_data_3")
+data("single_cell_data_1")
+data("single_cell_data_2")
+data("single_cell_data_3")
+
+spe <- spacedeconv::preprocess(spatial_data_3)
+# Bisque requires reference cells from at least two donors (three or more recommended).
+sce <- cbind(single_cell_data_1, single_cell_data_2, single_cell_data_3)
+sce <- spacedeconv::preprocess(sce)
+
+saveRDS(spe, "spatial_data.rds")
+saveRDS(SummarizedExperiment::assay(spe, "counts"), "spatial_counts.rds")
+saveRDS(sce, "single_cell_reference.rds")
+```
+
+Keep these files in the working directory used by both sessions. The supplied
+single-cell datasets come from three different donors in the same breast cancer
+study. They contain the `celltype_major` annotation and the donor identifier
+`orig.ident`. Preprocessing retains raw counts, as required for Bisque.
+For your own data, use an appropriate reference with at least two donors
+(three or more recommended) and substitute the annotation and donor columns.
+
+# Run omnideconv on spatial data
+
+Activate the omnideconv environment in your terminal and start R:
+
+```{bash, eval=FALSE}
+micromamba activate r-omnideconv
+R
+```
+
+Each spatial spot is supplied as one sample: rows are genes and columns are
+spots. For [Bisque](https://omnideconv.org/omnideconv/reference/deconvolute_bisque.html), use raw
+counts for both the spatial data and the annotated single-cell reference.
+Gene identifiers and organism must agree between the two datasets.
+
+This example reads `spatial_counts.rds` (a gene-by-spot count matrix) and
+`single_cell_reference.rds` (a `SingleCellExperiment` with a `counts` assay and
+`celltype_major` annotations and `orig.ident` donor IDs).
+
+```{r omnideconv, eval=FALSE}
+library(omnideconv)
+
+spatial_counts <- readRDS("spatial_counts.rds")
+reference <- readRDS("single_cell_reference.rds")
+
+fractions <- omnideconv::deconvolute(
+  bulk_gene_expression = as.matrix(spatial_counts),
+  single_cell_object = reference,
+  cell_type_column_name = "celltype_major",
+  batch_ids = reference$orig.ident,
+  assay_name = "counts",
+  method = "bisque"
+)
+
+saveRDS(fractions, "bisque_results.rds")
+```
+
+```{r run_omnideconv, include=FALSE}
+# Execute exactly the displayed chunk, without loading omnideconv in this session.
+script <- file.path(build_dir, "omnideconv_step.R")
+log_file <- file.path(build_dir, "omnideconv.log")
+writeLines(knitr::knit_code$get("omnideconv"), script)
+status <- withr::with_envvar(
+  c(R_HOME = NA, R_LIBS = NA, R_LIBS_USER = NA, R_LIBS_SITE = NA,
+    RETICULATE_PYTHON = NA, RETICULATE_PYTHON_ENV = NA),
+  system2(micromamba,
+    c("run", "-n", "r-omnideconv", "Rscript", shQuote(script)),
+    stdout = log_file, stderr = log_file)
+)
+if (status != 0L || !file.exists("bisque_results.rds")) {
+  details <- paste(tail(readLines(log_file, warn = FALSE), 30), collapse = "\n")
+  stop("The omnideconv step failed. Check the r-omnideconv environment.\n", details)
+}
+```
+
+The result has spots as rows and cell types as columns. Spot IDs are retained
+for importing the results. Spatial coordinates are not used in this
+omnideconv call; they remain in the original spatial object. Method suitability
+for sparse spot data should be assessed for the dataset being analyzed.
+
+# Import into spacedeconv
+
+Switch environments and start a new R session:
+
+```{bash, eval=FALSE}
+micromamba activate spacedeconv-env
+R
+```
+
+Load the original `SpatialExperiment` and import the results:
+
+```{r import_results}
+library(spacedeconv)
+
+spe <- readRDS("spatial_data.rds")
+fractions <- readRDS("bisque_results.rds")
+
+spe <- import_deconvolution_results(
+  spe,
+  results = fractions,
+  result_name = "bisque"
+)
+
+available_results(spe, method = "bisque")
+```
+
+The importer aligns rows by spot ID and stores columns such as
+`bisque_T.cells` in `colData(spe)`. Results must cover all spots in `spe`;
+values must be finite and non-negative. Values are not normalized, and existing
+columns are not overwritten. Expression data, coordinates, and images are preserved.
+
+# Visualize and cluster
+
+Use the same result name to plot the imported cell-type estimates or cluster
+spots by their estimated composition:
+
+```{r downstream, fig.width=10, fig.height=8, out.width="100%", fig.alt="Spatial cell-type fractions and clusters derived from imported Bisque results."}
+plot_spatial(spe, result = "bisque", density = FALSE,
+             title_size = 10, font_size = 8, legend_size = 12)
+
+spe <- spacedeconv::cluster(
+  spe,
+  spmethod = "bisque",
+  method = "hclust",
+  dist_method = "euclidean",
+  nclusters = 3
+)
+
+plot_spatial(spe, result = "cluster_bisque_nclusters_3", density = FALSE)
+get_cluster_features(spe, clusterid = "cluster_bisque_nclusters_3", topn = 3)
+```
+
+For datasets with a different sample ID, pass that ID to `plot_spatial()` via
+`sample_id`. The same import workflow works with results from other tools:
+provide a numeric spot-by-cell-type matrix with row and column names, and choose
+a distinct `result_name`.

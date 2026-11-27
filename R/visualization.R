@@ -65,7 +65,8 @@ plot_celltype <- function(spe, cell_type = NULL, palette = "Mako", transform_sca
 #' customize color palettes.
 #'
 #' @param spe deconvolution result in Form of a SpatialExperiment
-#' @param result one or more results to plot
+#' @param result One or more result column names, or a built-in/custom result
+#' prefix to plot all corresponding columns.
 #' @param palette colorspace palette (sequential)
 #' @param transform_scale data transform_scaleation to use, "log"
 #' @param reverse_palette reverse color palette
@@ -111,9 +112,18 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
     stop("Parameter 'result' is null or missing, but is required")
   }
 
-  # check that celltypes are present in object
-  if (!all(result %in% names(colData(spe))) && !result %in% deconvolution_methods && !result == "c2l" && !result == "progeny" && !result == "dorothea" && !result == "cluster") {
-    stop("Provides cell types are not present in SpatialExperiment")
+  if (!is.character(result) || length(result) == 0L || anyNA(result) || any(!nzchar(result))) {
+    stop("result must contain column names or a result prefix.", call. = FALSE)
+  }
+  if (all(result %in% names(colData(spe)))) {
+    selected_results <- result
+  } else if (length(result) == 1L) {
+    selected_results <- available_results(spe, method = result)
+  } else {
+    selected_results <- character()
+  }
+  if (length(selected_results) == 0L) {
+    stop("No result columns found for the supplied names or prefix.", call. = FALSE)
   }
 
   spe <- filter_sample_id(spe, sample_id)
@@ -122,10 +132,10 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
 
 
   # if a method is passed then make grid, otherwise, only one
-  if (result %in% deconvolution_methods || result == "c2l" || result == "progeny" || result == "dorothea" || result == "cluster") {
-    plot <- make_baseplot(spe, df,
+  if (length(selected_results) > 1L) {
+    plot <- patchwork::wrap_plots(make_baseplot(spe, df,
       palette = palette,
-      to_plot = available_results(spe, method = result)[1], sample_id = sample_id,
+      to_plot = selected_results[1], sample_id = sample_id,
       image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,
@@ -134,9 +144,9 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
       title_size = title_size, font_size = font_size, legend_size = legend_size,
       density = density, save = save, path = path, png_width = png_width,
       png_height = png_height, show_legend = show_legend, ...
-    )
+    ))
 
-    for (result in available_results(spe, method = result)[-1]) {
+    for (result in selected_results[-1]) {
       plot <- plot + make_baseplot(spe, df,
         palette = palette,
         to_plot = result, sample_id = sample_id,
@@ -155,7 +165,7 @@ plot_spatial <- function(spe, result = NULL, palette = "Mako", transform_scale =
   } else {
     return(make_baseplot(spe, df,
       palette = palette,
-      to_plot = result, sample_id = sample_id,
+      to_plot = selected_results[1], sample_id = sample_id,
       image_id = image_id, show_image = show_image, background = background, zoom = zoom,
       palette_type = palette_type, offset_rotation = offset_rotation,
       transform_scale = transform_scale, reverse_palette = reverse_palette,
@@ -298,7 +308,7 @@ plot_most_abundant <- function(spe, method = NULL, cell_type = NULL, remove = NU
   }
 
   if (!is.null(method)) {
-    available <- available_results(spe)[startsWith(available_results(spe), method)]
+    available <- available_results(spe, method = method)
   } else {
     available <- available_results(spe)
   }
@@ -601,14 +611,14 @@ plot_overview <- function(spe, sample_id = "sample01") {
     nUMI = colSums(counts(spe))
   ))
 
-  plot_ly(
+  plotly::plot_ly(
     data = df, x = ~pxl_col_in_fullres, y = ~pxl_row_in_fullres,
     type = "scatter", mode = "markers",
     marker = list(size = 4, color = ~nUMI, colorscale = "Viridis", colorbar = list(title = "nUMI")),
     text = ~ paste("Row:", pxl_row_in_fullres, "Col:", pxl_col_in_fullres),
     hoverinfo = "text"
   ) %>%
-    layout(
+    plotly::layout(
       title = "SpatialExperiment Overview",
       xaxis = list(title = "pxl_col_in_fullres"),
       yaxis = list(title = "pxl_row_in_fullres", autorange = "reversed", scaleanchor = "x", scaleratio = 1)

@@ -147,9 +147,9 @@ anndata_to_spatialexperiment <- function(ad) {
 
     # plot(as.raster(lowres))
     if (is.null(df)) {
-      df <- DataFrame(sample_id = sample, image_id = "lowres", data = I(list(SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor)
+      df <- DataFrame(sample_id = sample, image_id = "lowres", data = I(list(SpatialExperiment::SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor)
     } else {
-      df <- rbind(df, data.frame(sample_id = sample, image_id = "lowres", data = I(list(SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor))
+      df <- rbind(df, data.frame(sample_id = sample, image_id = "lowres", data = I(list(SpatialExperiment::SpatialImage(as.raster(lowres)))), scaleFactor = scalefactor))
     }
   }
 

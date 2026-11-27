@@ -24,11 +24,11 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
   }
 
   if (method == "progeny") {
-    reference <- decoupleR::get_progeny(organism = organism, top = n_genes, ...)
+    reference <- fetch_activity_reference("progeny", organism = organism, top = n_genes, ...)
   } else if (method == "dorothea") {
-    reference <- decoupleR::get_dorothea(organism = organism, ...) ############## missing parameters!
+    reference <- fetch_activity_reference("dorothea", organism = organism, ...) ############## missing parameters!
   } else if (method == "collectri") {
-    reference <- decoupleR::get_collectri(organism = organism, ...)
+    reference <- fetch_activity_reference("collectri", organism = organism, ...)
   } else {
     reference <- NULL
     cli::cli_alert_danger("DecoupleR method not supported")
@@ -50,7 +50,15 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 #' using methods provided by the `decoupleR` package.
 #'
 #' @param spe `SpatialExperiment` containing expression data.
-#' @param reference Reference data frame from `get_decoupleR_reference()`.
+#' @param reference A data frame with `source` (gene set or regulator), `target`
+#' (gene identifier), and `weight` or `mor` (weight or regulatory direction).
+#' Custom tables can be supplied directly; built-in references are retrieved with
+#' `get_decoupleR_reference()`. If both weight columns are present, `mor` is used.
+#' The activity scoring methods AUCell, FGSEA, GSVA, and ORA do not use weights. Gene identifiers must match
+#' the expression assay row names and organism. At least five matching genes
+#' per set are required. Each source-target pair should occur only once.
+#' Custom tables with `weight` and no database-specific metadata use the
+#' `decoupleR_` column prefix.
 #' @param method Activity method (e.g., `"wmean"`, `"viper"`, `"gsva"`); see
 #' `decoupleR` docs for options.
 #' @param assay Assay to use for calculations.
@@ -58,7 +66,18 @@ get_decoupleR_reference <- function(method = "progeny", organism = "human", n_ge
 #' @param ... Further arguments passed to the selected method.
 #'
 #' @return `SpatialExperiment` with activity scores added to `colData`.
-#'
+#' @examples
+#' # Illustrative genes only; use a biologically justified reference for analysis.
+#' ref <- data.frame(
+#'   source = rep("my_signature", 5),
+#'   target = c("STAT1", "IRF1", "CXCL9", "CXCL10", "IDO1"),
+#'   weight = rep(1, 5)
+#' )
+#' # Use known regulatory weights instead of 1 when available.
+#' \dontrun{
+#' # spe must contain a normalized expression assay named "cpm".
+#' spe <- compute_activities(spe, reference = ref, method = "ulm", assay = "cpm")
+#' }
 #' @export
 compute_activities <- function(spe, reference, method = "wmean", assay = "cpm", statistic = NULL, ...) {
   requireNamespace("decoupleR")
@@ -132,7 +151,8 @@ compute_activities <- function(spe, reference, method = "wmean", assay = "cpm", 
 
   df <- tidyr::pivot_wider(df, names_from = "source", values_from = "score", id_cols = "condition")
 
-  df$condition <- NULL # remove spot
+  df <- df[match(colnames(spe), df$condition), , drop = FALSE]
+  df$condition <- NULL # IDs have been aligned to the input spots
 
   # check if dorothea or progeny reference, for naming
   if ("p_value" %in% names(reference)) {
@@ -152,4 +172,12 @@ compute_activities <- function(spe, reference, method = "wmean", assay = "cpm", 
   cli::cli_progress_done()
 
   return(spe)
+}
+
+# Isolate the remote-data boundary so tests do not depend on a live service.
+fetch_activity_reference <- function(method, organism, ...) {
+  switch(method,
+    progeny = decoupleR::get_progeny(organism = organism, ...),
+    dorothea = decoupleR::get_dorothea(organism = organism, ...),
+    collectri = decoupleR::get_collectri(organism = organism, ...))
 }

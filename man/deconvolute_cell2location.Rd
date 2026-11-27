@@ -12,10 +12,13 @@ deconvolute_cell2location(
   alpha = 20,
   gpu = TRUE,
   result_name = "cell2location",
-  values = "relative"
+  values = "relative",
+  posterior_samples = 1000
 )
 }
 \arguments{
+\item{posterior_samples}{Number of samples for posterior summaries.}
+
 \item{spatial_obj}{\code{SpatialExperiment}.}
 
 \item{signature}{Signature/model input expected by cell2location.}

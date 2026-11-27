@@ -77,13 +77,13 @@ deconvolute_dot <- function(single_cell_obj,
   cellTypes <- SingleCellExperiment::colData(single_cell_obj)[[cell_type_col]]
 
   # create DOT objects
-  dot.srt <- setup.srt(srt_data = spExpression, srt_coords = spCoords, ...) # additional parameters passed as ...
-  dot.ref <- setup.ref(ref_data = scExpression, ref_annotations = cellTypes, ...)
+  dot.srt <- DOTr::setup.srt(srt_data = spExpression, srt_coords = spCoords, ...) # additional parameters passed as ...
+  dot.ref <- DOTr::setup.ref(ref_data = scExpression, ref_annotations = cellTypes, ...)
 
-  dot <- create.DOT(dot.srt, dot.ref, ...)
+  dot <- DOTr::create.DOT(dot.srt, dot.ref, ...)
 
   # Run Deconvolution
-  dot <- run.DOT.lowresolution(dot, ratios_weight = ratios_weight, max_spot_size = max_spot_size, ...) # additional parameters passed as ...
+  dot <- DOTr::run.DOT.lowresolution(dot, ratios_weight = ratios_weight, max_spot_size = max_spot_size, ...) # additional parameters passed as ...
 
   # attach token
   deconvolution_result <- attachToken(dot@weights, result_name) # add dot_ to column names

@@ -11,10 +11,11 @@ get_ligand_expression <- function(gene_pair, cpm_df) {
   if (grepl("_", first_gene)) {
     sub_genes <- unlist(strsplit(first_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
-    if (all(sub_genes %in% rownames(cpm_df)) &&
-      all(cpm_df[sub_genes, ] != 0)) {
+    if (all(sub_genes %in% rownames(cpm_df))) {
       # Calculate the mean expression values for each sub-gene across spots
-      expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
+      components <- as.matrix(cpm_df[sub_genes, , drop = FALSE])
+      expression_values <- colMeans(components)
+      expression_values[colSums(components == 0) > 0] <- 0
     } else {
       # If any sub_gene does not exist or has zero expression, return a vector of zeros
       expression_values <- rep(0, ncol(cpm_df))
@@ -33,7 +34,7 @@ get_ligand_expression <- function(gene_pair, cpm_df) {
 #' @description This function calculates the expression values of a specified receptor (gene or gene complex) from a given expression dataset.
 #' @param gene_pair A string representing a gene or a gene complex, where gene complexes are indicated by genes separated by underscores, and the receptor gene is specified after a "~".
 #' @param cpm_df A dataframe containing gene expression data, with row names as gene names and columns as different samples or spots.
-#' @return A numeric vector of the expression values of the specified receptor across the samples or spots in `cpm_df`. If the receptor is a gene complex, the function returns the mean expression value of the component genes. If any component gene is missing or has zero expression, a vector of zeros is returned.
+#' @return A numeric vector of the expression values of the specified receptor across the samples or spots in `cpm_df`. If the receptor is a gene complex, the function returns the mean expression value of the component genes. Missing component genes give zero for all spots; zero expression in a component gives zero only for the affected spots.
 get_receptor_expression <- function(gene_pair, cpm_df) {
   second_gene <- sub(".*~", "", gene_pair) # Extract the second gene/gene complex after "~"
 
@@ -41,10 +42,11 @@ get_receptor_expression <- function(gene_pair, cpm_df) {
   if (grepl("_", second_gene)) {
     sub_genes <- unlist(strsplit(second_gene, "_"))
     # Check if all sub_genes exist in rownames(cpm_df) and have non-zero expression values
-    if (all(sub_genes %in% rownames(cpm_df)) &&
-      all(cpm_df[sub_genes, ] != 0)) {
+    if (all(sub_genes %in% rownames(cpm_df))) {
       # Calculate the mean expression values for each sub-gene across spots
-      expression_values <- apply(cpm_df[sub_genes, ], 2, mean)
+      components <- as.matrix(cpm_df[sub_genes, , drop = FALSE])
+      expression_values <- colMeans(components)
+      expression_values[colSums(components == 0) > 0] <- 0
     } else {
       # If any sub_gene does not exist or has zero expression, return a vector of zeros
       expression_values <- rep(0, ncol(cpm_df))
@@ -111,7 +113,7 @@ get_lr <- function(spe,
   # check if mouse organism is provided
   if (organism == "mouse") {
     # if resource not defined or resource defined as "Consensus" then take the LIANA Consensus
-    if (is.null(resource) || resource == "Consensus") {
+    if (is.null(resource) || identical(resource, "Consensus")) {
       # import the omnipath intercell network
       resource <- import_intercell_network()
       cis <- c(
@@ -190,7 +192,7 @@ get_lr <- function(spe,
     # check if the organism is human
     if (is.null(organism) || organism == "human") {
       # if nothing is provided then take the LIANA consensus
-      if (is.null(resource) || resource == "Consensus") {
+      if (is.null(resource) || identical(resource, "Consensus")) {
         cli::cli_alert_info("Using the Consensus reference")
         resource <- import_intercell_network()
         cis <- c(
