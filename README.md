@@ -154,7 +154,7 @@ in published benchmarking analyses, while also considering the feasibility
 of integration, installation, and maintenance. Results from external
 deconvolution tools not directly supported by _spacedeconv_ can also be imported
 for downstream analysis and visualization, as demonstrated in the
-[external deconvolution results vignette](https://felixpetschko.github.io/spacedeconv/articles/spacedeconv_import_deconvolution_results.html).
+[external deconvolution results vignette](https://omnideconv.org/spacedeconv/articles/spacedeconv_import_deconvolution_results.html).
 
 To balance a minimal installation burden for users with convenient access
 to high-performing methods, we plan to consider incorporating newly published
