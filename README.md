@@ -76,7 +76,7 @@ data("spatial_data_3")
 # data("spatial_data_4")
 ```
 
-Alternatively, load data from a repository such as GitHub or Zenodo. Spatial data should be provided as a `SpatialExperiment` and single-cell reference data as a `SingleCellExperiment`. The example below downloads the same `spatial_data_3` and `single_cell_data_3` objects from the [spacedeconv GitHub repository](https://github.com/omnideconv/spacedeconv/tree/main/data).
+Alternatively, load data from a repository such as GitHub or Zenodo. Spatial data should be provided as a `SpatialExperiment` and single-cell reference data as a `SingleCellExperiment`. The example below downloads the same `spatial_data_3` and `single_cell_data_3` objects from [GitHub](https://github.com/omnideconv/spacedeconv/tree/main/data).
 
 ```r
 download.file(
