@@ -79,7 +79,7 @@
 <p>We provide wrapper functions to spatially quantify Pathway and
 Transcription Factor activities using DecoupleR.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv" class="external-link">spacedeconv</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv">spacedeconv</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## → Setting up spacedeconv environment..</span></span></code></pre>
 <pre><code><span><span class="co">## → Using conda environment 'spacedeconv-env'</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -101,7 +101,7 @@ directly, as shown below.</p>
 <span><span class="co">## Warning in organism_table_safe(oma_organisms, oma_code = character(),</span></span>
 <span><span class="co">## ncbi_tax_id = integer(), : Failed to load organism names by `oma_organisms`,</span></span>
 <span><span class="co">## the names from this resource will be missing. Reason: missing columns</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[35s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Got decoupleR reference <span style="color: #B2B2B2;">[6.1s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ref</span><span class="op">)</span></span>
 <span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
@@ -119,38 +119,38 @@ directly, as shown below.</p>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/preprocess.html">preprocess</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[85ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[52ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 137 observations with umi count below threshold</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[1.1s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 137 observations with umi count below threshold <span style="color: #B2B2B2;">[799ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Removing 13049 variables with all zero expression</span></span>
 <span><span class="co">## Warning in preprocess(spatial_data_3): There are 13 mitochondrial genes</span></span>
 <span><span class="co">## present. Consider removing them.</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[268ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Removed 13049 variables with all zero expression <span style="color: #B2B2B2;">[160ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers</span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> Warning: ENSEMBL identifiers detected in gene names</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BBBB;">ℹ</span> Consider using Gene Names for first-generation deconvolution tools</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[13ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Checking for ENSEMBL Identifiers<span style="color: #00BB00;">✔</span> Finished Preprocessing <span style="color: #B2B2B2;">[10ms]</span></span></span>
 <span><span class="va">spatial_data_3</span> <span class="op">&lt;-</span> <span class="fu">spacedeconv</span><span class="fu">::</span><span class="fu"><a href="../reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">spatial_data_3</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[26ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[17ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Normalizing using cpm</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[2.7s]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> Finished normalization using cpm <span style="color: #B2B2B2;">[3.1s]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please note the normalization is stored in an additional assay</span></span>
 <span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_activities.html">compute_activities</a></span><span class="op">(</span><span class="va">spatial_data_3</span>, reference <span class="op">=</span> <span class="va">ref</span>, method <span class="op">=</span> <span class="st">"wmean"</span>, assay <span class="op">=</span> <span class="st">"cpm"</span><span class="op">)</span></span>
 <span><span class="co">## ── spacedeconv ─────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> testing parameter</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[27ms]</span></span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> parameter OK <span style="color: #B2B2B2;">[11ms]</span></span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR</span></span>
 <span><span class="co">## → Calculated multiple results, using corr_wmean  , other available results:  norm_wmeanCalculated multiple results, using corr_wmean  , other available results:  wmean</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[48.9s]</span></span></span></code></pre></div>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Running decoupleR<span style="color: #00BB00;">✔</span> Finished <span style="color: #B2B2B2;">[32.3s]</span></span></span></code></pre></div>
 <p>Custom references can be passed directly to
 <code><a href="../reference/compute_activities.html">compute_activities()</a></code> as a table with <code>source</code>
 (gene set or regulator), <code>target</code> (gene identifier), and

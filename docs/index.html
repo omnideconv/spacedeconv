@@ -18,7 +18,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Unified Interface to spatial transcriptomics deconvolution tools">
 <meta name="description" content="Collection of deconvolution tools for spatial transcriptomics data.">
 <meta property="og:description" content="Collection of deconvolution tools for spatial transcriptomics data.">
-<meta property="og:image" content="https://felixpetschko.github.io/spacedeconv/logo.png">
+<meta property="og:image" content="https://omnideconv.github.io/spacedeconv/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -131,7 +131,7 @@
 </h3>
 <p>To explore the package, start by loading some of the built-in example datasets.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv" class="external-link">spacedeconv</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://omnideconv.github.io/spacedeconv">spacedeconv</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># data("single_cell_data_1")</span></span>
 <span><span class="co"># data("single_cell_data_2")</span></span>
@@ -142,7 +142,7 @@
 <span><span class="co"># data("spatial_data_2")</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial_data_3"</span><span class="op">)</span></span>
 <span><span class="co"># data("spatial_data_4")</span></span></code></pre></div>
-<p>Alternatively, load data from a repository such as GitHub or Zenodo. Spatial data should be provided as a <code>SpatialExperiment</code> and single-cell reference data as a <code>SingleCellExperiment</code>. The example below downloads the same <code>spatial_data_3</code> and <code>single_cell_data_3</code> objects from GitHub.</p>
+<p>Alternatively, load data from a repository such as GitHub or Zenodo. Spatial data should be provided as a <code>SpatialExperiment</code> and single-cell reference data as a <code>SingleCellExperiment</code>. The example below downloads the same <code>spatial_data_3</code> and <code>single_cell_data_3</code> objects from GitHub. For more information on importing single-cell reference data, see the <a href="https://omnideconv.org/spacedeconv/articles/spacedeconv_import_data.html" class="external-link">AnnData/Seurat import vignette</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"https://raw.githubusercontent.com/omnideconv/spacedeconv/main/data/spatial_data_3.RData"</span>,</span>
@@ -210,7 +210,7 @@
 <div class="section level2">
 <h2 id="available-methods-licenses-and-citations">Available methods, licenses, and citations<a class="anchor" aria-label="anchor" href="#available-methods-licenses-and-citations"></a>
 </h2>
-<p>We focused on supporting methods that have demonstrated robust performance in published benchmarking analyses, while also considering the feasibility of integration, installation, and maintenance. Results from external deconvolution tools not directly supported by <em>spacedeconv</em> can also be imported for downstream analysis and visualization, as demonstrated in the <a href="https://felixpetschko.github.io/spacedeconv/articles/spacedeconv_import_deconvolution_results.html">external deconvolution results vignette</a>.</p>
+<p>We focused on supporting methods that have demonstrated robust performance in published benchmarking analyses, while also considering the feasibility of integration, installation, and maintenance. Results from external deconvolution tools not directly supported by <em>spacedeconv</em> can also be imported for downstream analysis and visualization, as demonstrated in the <a href="https://omnideconv.org/spacedeconv/articles/spacedeconv_import_deconvolution_results.html" class="external-link">external deconvolution results vignette</a>.</p>
 <p>To balance a minimal installation burden for users with convenient access to high-performing methods, we plan to consider incorporating newly published methods upon request or through contributions from their developers, provided that independent or published benchmarking evidence demonstrates a substantial performance gain over the methods already supported.</p>
 <p>Note that, while <em>spacedeconv</em> itself is free (<a href="https://github.com/omnideconv/spacedeconv/blob/main/LICENSE" class="external-link">GPL 3.0</a>), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.</p>
 <blockquote>
